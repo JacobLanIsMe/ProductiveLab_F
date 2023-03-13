@@ -1,30 +1,27 @@
 <div class="main-table-frame">
-    <table class="table table-light table-hover table-striped">
+    <table class="table table-light table-hover">
         <thead class="table-warning">
             <tr>
-                <th scope="col">#</th>
-                <th scope="col">First</th>
-                <th scope="col">Last</th>
-                <th scope="col">Handle</th>
+                <th scope="col">療程編號</th>
+                <th scope="col">療程天數</th>
+                <th scope="col">手術日期</th>
+                <th scope="col">病歷號</th>
+                <th scope="col">姓名</th>
+                <th scope="col">主治醫師</th>
+                <th scope="col">術式療程</th>
+                <th scope="col">狀態</th>
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <th scope="row">1</th>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td>@mdo</td>
-            </tr>
-            <tr>
-                <th scope="row">2</th>
-                <td>Jacob</td>
-                <td>Thornton</td>
-                <td>@fat</td>
-            </tr>
-            <tr>
-                <th scope="row">3</th>
-                <td colspan="2">Larry the Bird</td>
-                <td>@twitter</td>
+            <tr *ngFor="let item of mainPageInfos" [routerLink]="['/index', item.courseOfTreatmentId]">
+                <th scope="row">{{item.courseOfTreatmentId}}</th>
+                <td>{{item.treatmentDay }}</td>
+                <td>{{item.surgicalTime | date: "yyyy/MM/dd hh:00" }}</td>
+                <td>{{item.medicalRecordNumber}}</td>
+                <td>{{item.name}}</td>
+                <td>{{item.doctor}}</td>
+                <td>{{item.treatmentName}}</td>
+                <td>{{item.treatmentStatus}}</td>
             </tr>
         </tbody>
     </table>

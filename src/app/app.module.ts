@@ -7,6 +7,10 @@ import { LoginComponent } from './login/login.component';
 import { IndexComponent } from './index/index.component';
 import { HeaderComponent } from './index/header/header.component';
 import { MainPageComponent } from './index/main-page/main-page.component';
+import { HttpClientModule } from '@angular/common/http';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { TreatmentSummaryComponent } from './index/treatment-summary/treatment-summary.component';
+
 
 @NgModule({
   declarations: [
@@ -14,11 +18,14 @@ import { MainPageComponent } from './index/main-page/main-page.component';
     LoginComponent,
     IndexComponent,
     HeaderComponent,
-    MainPageComponent
+    MainPageComponent,
+    PageNotFoundComponent,
+    TreatmentSummaryComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
