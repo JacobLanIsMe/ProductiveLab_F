@@ -1,0 +1,19 @@
+.main-table-frame{
+    margin:0 auto;
+    height: 80vh;
+    width:95vw;
+    overflow: auto;
+}
+
+table{
+    font-size: 14px;
+}
+
+thead tr th{
+    position:sticky;
+    top:0;
+}
+
+tbody{
+    cursor:pointer;
+}

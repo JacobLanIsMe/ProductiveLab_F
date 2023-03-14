@@ -1,0 +1,28 @@
+<div class="main-table-frame">
+    <table class="table table-light table-hover">
+        <thead class="table-warning">
+            <tr>
+                <th scope="col">療程編號</th>
+                <th scope="col">療程天數</th>
+                <th scope="col">手術日期</th>
+                <th scope="col">病歷號</th>
+                <th scope="col">姓名</th>
+                <th scope="col">主治醫師</th>
+                <th scope="col">術式療程</th>
+                <th scope="col">狀態</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of mainPageInfos" [routerLink]="['/index', 'case', 'treatmentSummary', item.courseOfTreatmentId]">
+                <th scope="row">{{item.courseOfTreatmentId}}</th>
+                <td>{{item.treatmentDay }}</td>
+                <td>{{item.surgicalTime | date: "yyyy/MM/dd hh:00" }}</td>
+                <td>{{item.medicalRecordNumber}}</td>
+                <td>{{item.name}}</td>
+                <td>{{item.doctor}}</td>
+                <td>{{item.treatmentName}}</td>
+                <td>{{item.treatmentStatus}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
