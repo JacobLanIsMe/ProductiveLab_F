@@ -1,6 +1,5 @@
-import { RouteService } from './../../@Service/route.service';
+import { RouteService } from '../../../@Service/route.service';
 import { ActivatedRoute } from '@angular/router';
-
 import { Component, OnInit } from '@angular/core';
 
 @Component({

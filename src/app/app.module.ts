@@ -9,7 +9,10 @@ import { HeaderComponent } from './index/header/header.component';
 import { MainPageComponent } from './index/main-page/main-page.component';
 import { HttpClientModule } from '@angular/common/http';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
-import { TreatmentSummaryComponent } from './index/treatment-summary/treatment-summary.component';
+import { TreatmentSummaryComponent } from './index/case/treatment-summary/treatment-summary.component';
+import { CaseComponent } from './index/case/case.component';
+import { FunctionHeaderComponent } from './index/case/function-header/function-header.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 
 @NgModule({
@@ -20,12 +23,15 @@ import { TreatmentSummaryComponent } from './index/treatment-summary/treatment-s
     HeaderComponent,
     MainPageComponent,
     PageNotFoundComponent,
-    TreatmentSummaryComponent
+    TreatmentSummaryComponent,
+    CaseComponent,
+    FunctionHeaderComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    FontAwesomeModule
   ],
   providers: [],
   bootstrap: [AppComponent]

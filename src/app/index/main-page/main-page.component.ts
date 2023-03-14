@@ -1,7 +1,6 @@
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { RouteService } from './../../@Service/route.service';
-
 import { MainPageService } from './../../@Service/main-page.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MainPageDto } from 'src/app/@Models/main-page.model';
