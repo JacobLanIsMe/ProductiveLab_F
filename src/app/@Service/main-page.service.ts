@@ -10,7 +10,9 @@ export class MainPageService {
 
   constructor(private http: HttpClient) { }
   mainPageInfos: MainPageDto[] = [];
+  selectedCourseId: string = "";
   GetLabMainPageInfo(){
     return this.http.get<MainPageDto[]>("/api/LabMainPage/GetMainPageInfo");
   }
+
 }

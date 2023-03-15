@@ -1,3 +1,5 @@
+import { FunctionHeaderService } from './../../../@Service/function-header.service';
+import { MainPageService } from './../../../@Service/main-page.service';
 import { RouteService } from '../../../@Service/route.service';
 import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
@@ -8,11 +10,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./treatment-summary.component.css']
 })
 export class TreatmentSummaryComponent implements OnInit {
-  constructor(private route:ActivatedRoute, private routeService: RouteService){};
+  constructor(){};
   ngOnInit(): void {
-    this.route.paramMap.subscribe(params=>{
-      this.routeService.hasRouteIdParam(params);
-    })
+    
   }
-
+  
 }

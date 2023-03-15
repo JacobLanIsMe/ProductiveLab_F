@@ -1,8 +1,9 @@
+import { FunctionHeaderService } from './../../@Service/function-header.service';
 import { RouteService } from './../../@Service/route.service';
 
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { Subscription, Subject } from 'rxjs';
 
 @Component({
   selector: 'app-header',
@@ -10,15 +11,15 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit{
-  constructor(private route: ActivatedRoute, private routeService: RouteService){}
+  constructor(private functionHeaderService: FunctionHeaderService){}
   ngOnDestroy(): void {
-    this.paramsSubscription?.unsubscribe();
+    this.functionNameSubscription?.unsubscribe();
   }
   ngOnInit(): void {
-    this.paramsSubscription = this.routeService.hasId.subscribe(data=>{
-      this.isTreatmentSummaryPage = data;
+    this.functionNameSubscription = this.functionHeaderService.selectedFunctionName.subscribe(functionName => {
+      this.functionName = functionName;
     })
   }
-  paramsSubscription: Subscription | undefined;
-  isTreatmentSummaryPage: boolean = false;
+  functionNameSubscription: Subscription | undefined;
+  functionName: string = "";
 }

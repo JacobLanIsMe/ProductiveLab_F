@@ -1,6 +1,7 @@
 export class MainPageDto{
     constructor(
-        public courseOfTreatmentId: number,
+        public courseOfTreatmentSqlId: number,
+        public courseOfTreatmentId: string,
         public treatmentDay: string,
         public surgicalTime: Date,
         public medicalRecordNumber: number,

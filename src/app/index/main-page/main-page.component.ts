@@ -1,3 +1,5 @@
+import { FunctionHeaderService } from './../../@Service/function-header.service';
+import { FunctionHeaderComponent } from './../case/function-header/function-header.component';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { RouteService } from './../../@Service/route.service';
@@ -12,7 +14,7 @@ import { MainPageDto } from 'src/app/@Models/main-page.model';
 })
 export class MainPageComponent implements OnInit, OnDestroy {
   mainPageInfos: MainPageDto[] = [];
-  constructor(private mainPageService: MainPageService, private routeService: RouteService, private route: ActivatedRoute){}
+  constructor(private mainPageService: MainPageService, private routeService: RouteService, private route: ActivatedRoute, private functionHeaderService: FunctionHeaderService){}
   ngOnDestroy(): void {
     this.paramsSubscription?.unsubscribe();
   }
@@ -20,10 +22,11 @@ export class MainPageComponent implements OnInit, OnDestroy {
     this.mainPageService.GetLabMainPageInfo().subscribe(response=>{
       this.mainPageInfos = response;
     });
-    this.paramsSubscription = this.route.paramMap.subscribe(params=>{
-      this.routeService.hasRouteIdParam(params);
-    })
+    this.functionHeaderService.selectedFunctionName.next("");
   }
   paramsSubscription: Subscription | undefined;
-
+  onSelectCourse(courseId: string){
+    this.mainPageService.selectedCourseId = courseId;
+    this.functionHeaderService.selectedFunctionName.next("療程總覽");
+  }
 }
