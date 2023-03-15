@@ -20,11 +20,12 @@ import { ThawEmbryoComponent } from './index/case/thaw-embryo/thaw-embryo.compon
 import { ObservationNoteComponent } from './index/case/observation-note/observation-note.component';
 import { FreezeSpermComponent } from './index/case/freeze-sperm/freeze-sperm.component';
 import { TransferInFromOtherComponent } from './index/case/transfer-in-from-other/transfer-in-from-other.component';
-import { ManageMediumComponent } from './index/case/manage-medium/manage-medium.component';
+import { ManageMediumComponent } from './index/manage-medium/manage-medium.component';
 import { UploadReportComponent } from './index/case/upload-report/upload-report.component';
-import { OvumBankTransferComponent } from './index/case/ovum-bank-transfer/ovum-bank-transfer.component';
-import { SearchStorageUnitComponent } from './index/case/search-storage-unit/search-storage-unit.component';
+import { OvumBankTransferComponent } from './index/ovum-bank-transfer/ovum-bank-transfer.component';
+import { SearchStorageUnitComponent } from './index/search-storage-unit/search-storage-unit.component';
 import { OperateSpermComponent } from './index/case/operate-sperm/operate-sperm.component';
+import { LogoutComponent } from './index/logout/logout.component';
 
 
 @NgModule({
@@ -49,7 +50,8 @@ import { OperateSpermComponent } from './index/case/operate-sperm/operate-sperm.
     SearchStorageUnitComponent,
     OperateSpermComponent,
     ManageMediumComponent,
-    UploadReportComponent
+    UploadReportComponent,
+    LogoutComponent
   ],
   imports: [
     BrowserModule,

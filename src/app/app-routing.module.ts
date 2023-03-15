@@ -1,7 +1,7 @@
-import { SearchStorageUnitComponent } from './index/case/search-storage-unit/search-storage-unit.component';
-import { OvumBankTransferComponent } from './index/case/ovum-bank-transfer/ovum-bank-transfer.component';
+import { SearchStorageUnitComponent } from './index/search-storage-unit/search-storage-unit.component';
+import { OvumBankTransferComponent } from './index/ovum-bank-transfer/ovum-bank-transfer.component';
 import { UploadReportComponent } from './index/case/upload-report/upload-report.component';
-import { ManageMediumComponent } from './index/case/manage-medium/manage-medium.component';
+import { ManageMediumComponent } from './index/manage-medium/manage-medium.component';
 import { TransferInFromOtherComponent } from './index/case/transfer-in-from-other/transfer-in-from-other.component';
 import { OperateSpermComponent } from './index/case/operate-sperm/operate-sperm.component';
 import { FreezeSpermComponent } from './index/case/freeze-sperm/freeze-sperm.component';
@@ -33,13 +33,8 @@ const routes: Routes = [
       {path: "freezeSperm/:id", component: FreezeSpermComponent},
       {path: "operateSperm/:id", component: OperateSpermComponent},
       {path: "transferInFromOther/:id", component: TransferInFromOtherComponent},
-      {path: "manageMedium/:id", component: ManageMediumComponent},
       {path: "uploadReport/:id", component: UploadReportComponent},
-      {path: "ovumBankTransfer/:id", component: OvumBankTransferComponent},
-      {path: "searchStorageUnit/:id", component: SearchStorageUnitComponent},
-      
     ]},
-    
   ]},
   {path: "", redirectTo:"/index/main",pathMatch:"full"},
   {path: "*", component:PageNotFoundComponent}

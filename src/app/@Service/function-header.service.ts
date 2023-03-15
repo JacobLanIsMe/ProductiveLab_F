@@ -11,6 +11,6 @@ export class FunctionHeaderService {
   constructor(private http: HttpClient) { }
   selectedFunctionName = new Subject<string>();
   getFunctions(){
-    return this.http.get<FunctionDto[]>("/api/FunctionManager/GetFunctions");
+    return this.http.get<FunctionDto[]>("/api/FunctionManager/GetCaseSpecificFunctions");
   }
 }

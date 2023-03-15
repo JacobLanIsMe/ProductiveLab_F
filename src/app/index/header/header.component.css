@@ -10,10 +10,9 @@
 
 .nav-div{
     width:95vw;
+    margin: 0 auto;
     height:60px;
     line-height: 60px;
-    margin: 0 auto;
-
 }
 
 .brand-div{
@@ -33,3 +32,6 @@
     font-weight: bolder;
 }
 
+.function{
+    cursor: pointer;
+}
