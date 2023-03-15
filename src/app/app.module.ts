@@ -13,6 +13,19 @@ import { TreatmentSummaryComponent } from './index/case/treatment-summary/treatm
 import { CaseComponent } from './index/case/case.component';
 import { FunctionHeaderComponent } from './index/case/function-header/function-header.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { FreezingSummaryComponent } from './index/case/freezing-summary/freezing-summary.component';
+import { OvumPickupNoteComponent } from './index/case/ovum-pickup-note/ovum-pickup-note.component';
+import { ThawOvumComponent } from './index/case/thaw-ovum/thaw-ovum.component';
+import { ThawEmbryoComponent } from './index/case/thaw-embryo/thaw-embryo.component';
+import { ObservationNoteComponent } from './index/case/observation-note/observation-note.component';
+import { FreezeSpermComponent } from './index/case/freeze-sperm/freeze-sperm.component';
+import { TransferInFromOtherComponent } from './index/case/transfer-in-from-other/transfer-in-from-other.component';
+import { ManageMediumComponent } from './index/manage-medium/manage-medium.component';
+import { UploadReportComponent } from './index/case/upload-report/upload-report.component';
+import { OvumBankTransferComponent } from './index/ovum-bank-transfer/ovum-bank-transfer.component';
+import { SearchStorageUnitComponent } from './index/search-storage-unit/search-storage-unit.component';
+import { OperateSpermComponent } from './index/case/operate-sperm/operate-sperm.component';
+import { LogoutComponent } from './index/logout/logout.component';
 
 
 @NgModule({
@@ -25,7 +38,20 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     PageNotFoundComponent,
     TreatmentSummaryComponent,
     CaseComponent,
-    FunctionHeaderComponent
+    FunctionHeaderComponent,
+    FreezingSummaryComponent,
+    OvumPickupNoteComponent,
+    ThawOvumComponent,
+    ThawEmbryoComponent,
+    ObservationNoteComponent,
+    FreezeSpermComponent,
+    TransferInFromOtherComponent,
+    OvumBankTransferComponent,
+    SearchStorageUnitComponent,
+    OperateSpermComponent,
+    ManageMediumComponent,
+    UploadReportComponent,
+    LogoutComponent
   ],
   imports: [
     BrowserModule,

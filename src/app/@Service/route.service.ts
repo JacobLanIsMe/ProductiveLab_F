@@ -8,13 +8,16 @@ import { Injectable } from '@angular/core';
 export class RouteService {
 
   constructor() { }
-  hasId = new Subject<boolean>();
-  hasRouteIdParam(params: ParamMap){
-    if (params.get("id")){
-      this.hasId.next(true);
-    }
-    else{
-      this.hasId.next(false);
-    }
-  }
+
+  // allRoute = []
+
+  // hasId = new Subject<boolean>();
+  // hasRouteIdParam(params: ParamMap){
+  //   if (params.get("id")){
+  //     this.hasId.next(true);
+  //   }
+  //   else{
+  //     this.hasId.next(false);
+  //   }
+  // }
 }

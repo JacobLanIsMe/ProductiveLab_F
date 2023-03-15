@@ -1,3 +1,4 @@
+import { MainPageService } from './../../../@Service/main-page.service';
 import { FunctionDto } from './../../../@Models/function.model';
 import { FunctionHeaderService } from './../../../@Service/function-header.service';
 import { Component, OnInit } from '@angular/core';
@@ -9,14 +10,18 @@ import { faCoffee } from '@fortawesome/free-solid-svg-icons';
   styleUrls: ['./function-header.component.css']
 })
 export class FunctionHeaderComponent implements OnInit {
-  constructor(private functionHeaderService: FunctionHeaderService){}
+  constructor(private functionHeaderService: FunctionHeaderService, private mainPageService: MainPageService){}
+  
   ngOnInit(): void {
     this.functionHeaderService.getFunctions().subscribe(response=>{
       this.functions = response;
-      // this.faCoffee = response[0].icon;
-      
+      console.log(response);
     });
+    this.courseId = this.mainPageService.selectedCourseId;
   }
   functions: FunctionDto[] = [];
-  faCoffee = faCoffee;
+  courseId: string = "";
+  onSelectFunction(functionName: string){
+    this.functionHeaderService.selectedFunctionName.next(functionName);
+  }
 }
