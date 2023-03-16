@@ -8,9 +8,14 @@ import { Subject } from 'rxjs';
 })
 export class FunctionHeaderService {
 
-  constructor(private http: HttpClient) { }
-  selectedFunctionName = new Subject<string>();
-  getFunctions(){
+  constructor(private http: HttpClient) {}
+  commonFunctions: FunctionDto[] = [];
+  caseSpecificFunctions: FunctionDto[] = [];
+  selectedFunction = new Subject<FunctionDto>();
+  getCommonFunctions(){
+    return this.http.get<FunctionDto[]>("/api/FunctionManager/GetCommonFunctions")
+  }
+  getCaseSpecificFunctions(){
     return this.http.get<FunctionDto[]>("/api/FunctionManager/GetCaseSpecificFunctions");
   }
 }

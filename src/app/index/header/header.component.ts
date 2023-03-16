@@ -4,7 +4,7 @@ import { FunctionHeaderService } from './../../@Service/function-header.service'
 import { RouteService } from './../../@Service/route.service';
 
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Subscription, Subject } from 'rxjs';
 
 @Component({
@@ -13,46 +13,31 @@ import { Subscription, Subject } from 'rxjs';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit{
-  constructor(private functionHeaderService: FunctionHeaderService, private headerService: HeaderService){}
+  constructor(private router: Router, private functionHeaderService: FunctionHeaderService){}
   ngOnDestroy(): void {
-    this.functionNameSubscription?.unsubscribe();
+    this.functionSubscription?.unsubscribe();
   }
   ngOnInit(): void {
-    this.functionNameSubscription = this.functionHeaderService.selectedFunctionName.subscribe(functionName => {
-      this.functionName = functionName;
+    this.functionHeaderService.selectedFunction.subscribe(selectedFunction=>{
+      this.selectedFunction = selectedFunction;
     })
-    this.headerService.getCommonFunctions().subscribe(res=>{
+    this.functionHeaderService.getCommonFunctions().subscribe(res=>{
       this.commonFunctions = res;
+      this.functionHeaderService.commonFunctions = res;
+      this.selectedFunction = res[0];
+    })
+    this.functionHeaderService.getCaseSpecificFunctions().subscribe(res=>{
+      this.functionHeaderService.caseSpecificFunctions = res;
     })
   }
-  functionNameSubscription: Subscription | undefined;
-  functionName: string = "";
+  functionSubscription: Subscription | undefined;
+  selectedFunction?: FunctionDto;
   commonFunctions: FunctionDto[] = [];
-  isOpenManageMedium = false;
-  isOpenOvumBankTransfer = false;
-  isOpenSearchStorageUnit = false;
-  isOpenLogout = false;
-  onOpenComponent(functionName: string){
-    this.resetOpenedComponent();
-    switch(functionName){
-      case "培養液管理":
-        this.isOpenManageMedium = true;
-        break;
-      case "捐卵庫轉移":
-        this.isOpenOvumBankTransfer = true;
-        break;
-      case "剩餘儲位查詢":
-        this.isOpenSearchStorageUnit = true;
-        break;
-      case "登出":
-        this.isOpenLogout = true;
-        break;
-    }
+  onOpenFunction(selectedFunction: FunctionDto){
+    this.functionHeaderService.selectedFunction.next(selectedFunction);
   }
-  resetOpenedComponent(){
-    this.isOpenManageMedium = false;
-    this.isOpenOvumBankTransfer = false;
-    this.isOpenSearchStorageUnit = false;
-    this.isOpenLogout = false;
+  onBackToMain(){
+    this.functionHeaderService.selectedFunction.next(this.functionHeaderService.commonFunctions[0]);
+    this.router.navigate(["/index", "main"]);
   }
 }

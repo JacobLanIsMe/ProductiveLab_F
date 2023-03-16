@@ -2,10 +2,17 @@
     <div class="d-flex justify-content-between align-item-center nav-div">
         <div class="text-warning-emphasis">
             胚胎實驗室管理系統
-            <span [class.boldFont]="functionName == ''" [routerLink]="['/index','main']" style="cursor:pointer"> >
-                個案總表</span>
-            <span *ngIf="functionName != ''" [class.boldFont]="functionName != ''"> > {{functionName}}</span>
+            <span *ngIf="selectedFunction">
+                <span *ngIf="selectedFunction.functionTypeId === 1" 
+                    [class.boldFont]="selectedFunction.functionTypeId === 1"> >
+                    {{selectedFunction.name}}</span>
+                <span *ngIf="selectedFunction.functionTypeId !== 1" 
+                    style="cursor:pointer" (click)="onBackToMain()"> >
+                    個案總表</span>
+                <span *ngIf="selectedFunction.functionTypeId !== 1" [class.boldFont]="selectedFunction.functionTypeId !== 1"> > {{selectedFunction.name}}</span>
+            </span>
         </div>
+    
         <img src="https://huayuivf.com/wp-content/uploads/2021/12/image-1.svg" alt="" class="brand-div">
         <div>
             <div class="btn-group">
@@ -15,17 +22,13 @@
                     通用功能
                 </button>
                 <ul class="dropdown-menu dropdown-menu-end">
-                    <li *ngFor="let function of commonFunctions" (click)="onOpenComponent(function.name)">
-                        <a class="dropdown-item lh-base function">{{function.name}}</a>
+                    <li *ngFor="let function of commonFunctions" (click)="onOpenFunction(function)">
+                        <a class="dropdown-item lh-base function" [routerLink]="['/index', function.route]">{{function.name}}</a>
                     </li>
                     <li><hr class="dropdown-divider"></li>
-                    <li (click)="onOpenComponent('登出')"><a class="dropdown-item lh-base function">登出</a></li>
+                    <li><a class="dropdown-item lh-base function">登出</a></li>
                 </ul>
             </div>
         </div>
     </div>
 </div>
-<app-manage-medium *ngIf="isOpenManageMedium"></app-manage-medium>
-<app-ovum-bank-transfer *ngIf="isOpenOvumBankTransfer"></app-ovum-bank-transfer>
-<app-search-storage-unit *ngIf="isOpenSearchStorageUnit"></app-search-storage-unit>
-<app-logout *ngIf="isOpenLogout"></app-logout>

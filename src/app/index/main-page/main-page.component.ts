@@ -6,6 +6,7 @@ import { RouteService } from './../../@Service/route.service';
 import { MainPageService } from './../../@Service/main-page.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MainPageDto } from 'src/app/@Models/main-page.model';
+import { HeaderService } from 'src/app/@Service/header.service';
 
 @Component({
   selector: 'app-main-page',
@@ -14,7 +15,7 @@ import { MainPageDto } from 'src/app/@Models/main-page.model';
 })
 export class MainPageComponent implements OnInit, OnDestroy {
   mainPageInfos: MainPageDto[] = [];
-  constructor(private mainPageService: MainPageService, private routeService: RouteService, private route: ActivatedRoute, private functionHeaderService: FunctionHeaderService){}
+  constructor(private mainPageService: MainPageService, private functionHeaderService: FunctionHeaderService){}
   ngOnDestroy(): void {
     this.paramsSubscription?.unsubscribe();
   }
@@ -22,11 +23,10 @@ export class MainPageComponent implements OnInit, OnDestroy {
     this.mainPageService.GetLabMainPageInfo().subscribe(response=>{
       this.mainPageInfos = response;
     });
-    this.functionHeaderService.selectedFunctionName.next("");
   }
   paramsSubscription: Subscription | undefined;
   onSelectCourse(courseId: string){
     this.mainPageService.selectedCourseId = courseId;
-    this.functionHeaderService.selectedFunctionName.next("療程總覽");
+    this.functionHeaderService.selectedFunction.next(this.functionHeaderService.caseSpecificFunctions[0]);
   }
 }

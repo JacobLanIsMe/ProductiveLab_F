@@ -26,6 +26,7 @@ import { OvumBankTransferComponent } from './index/ovum-bank-transfer/ovum-bank-
 import { SearchStorageUnitComponent } from './index/search-storage-unit/search-storage-unit.component';
 import { OperateSpermComponent } from './index/case/operate-sperm/operate-sperm.component';
 import { LogoutComponent } from './index/logout/logout.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -57,7 +58,8 @@ import { LogoutComponent } from './index/logout/logout.component';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    ReactiveFormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

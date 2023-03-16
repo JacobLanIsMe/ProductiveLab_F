@@ -23,6 +23,9 @@ const routes: Routes = [
   {path: "login", component:LoginComponent},
   {path: "index", component: IndexComponent, children:[
     {path: "main", component: MainPageComponent},
+    {path: "manageMedium", component: ManageMediumComponent},
+    {path: "searchStorageUnit", component: SearchStorageUnitComponent},
+    {path: "ovumBankTransfer", component: OvumBankTransferComponent},
     {path: "case", component: CaseComponent, children:[
       {path: "treatmentSummary/:id", component: TreatmentSummaryComponent},
       {path: "freezingSummary/:id", component: FreezingSummaryComponent},

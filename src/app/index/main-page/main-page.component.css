@@ -1,7 +1,5 @@
 .main-table-frame{
-    margin:0 auto;
     height: 80vh;
-    width:95vw;
     overflow: auto;
 }
 
