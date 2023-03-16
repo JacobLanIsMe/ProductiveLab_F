@@ -1,3 +1,4 @@
+import { DateService } from './../../@Service/date.service';
 import { ManageMediumService } from './../../@Service/manage-medium.service';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
@@ -11,32 +12,19 @@ import { faSquarePlus } from '@fortawesome/free-solid-svg-icons';
   styleUrls: ['./manage-medium.component.css']
 })
 export class ManageMediumComponent implements OnInit {
-  constructor(private manageMediumService: ManageMediumService){}
+  constructor(private manageMediumService: ManageMediumService, private dateService: DateService){}
   ngOnInit(): void {
     this.mediumForm = new FormGroup({
       "name": new FormControl(null, Validators.required),
-      "openDate": new FormControl(this.getTodayDate(), Validators.required),
+      "openDate": new FormControl(this.dateService.getTodayDateString(new Date()), Validators.required),
       "expirationDate": new FormControl(null, Validators.required),
       "lotNumber": new FormControl(null, Validators.required) 
     })
+    this.dateService.getTodayTimeString(new Date());
   }
   mediumForm!: FormGroup;
   faSquarePlus: IconDefinition = faSquarePlus;
-  getTodayDate(){
-    const today = new Date();
-    const year = today.getFullYear();
-    let month = today.getMonth();
-    const date = today.getDate();
-    let newMonth = "";
-    if (month !== 10 && month !== 11 && month !== 12){
-      newMonth = `0${month+1}`;
-    } 
-    else {
-      newMonth = `${month}`;
-    }
-    return `${year}-${newMonth}-${date}`;
-  }
-
+  
   getNameControl(){
     return this.mediumForm.controls["name"];
   }
