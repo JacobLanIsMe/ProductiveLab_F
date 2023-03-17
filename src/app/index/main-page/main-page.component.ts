@@ -1,12 +1,8 @@
 import { FunctionHeaderService } from './../../@Service/function-header.service';
-import { FunctionHeaderComponent } from './../case/function-header/function-header.component';
-import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { RouteService } from './../../@Service/route.service';
 import { MainPageService } from './../../@Service/main-page.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { MainPageDto } from 'src/app/@Models/main-page.model';
-import { HeaderService } from 'src/app/@Service/header.service';
+import { MainPageDto } from 'src/app/@Models/mainPageDto.model';
 
 @Component({
   selector: 'app-main-page',

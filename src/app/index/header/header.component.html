@@ -22,7 +22,7 @@
                     通用功能
                 </button>
                 <ul class="dropdown-menu dropdown-menu-end">
-                    <li *ngFor="let function of commonFunctions" (click)="onOpenFunction(function)">
+                    <li *ngFor="let function of commonFunctions">
                         <a class="dropdown-item lh-base function" [routerLink]="['/index', function.route]">{{function.name}}</a>
                     </li>
                     <li><hr class="dropdown-divider"></li>

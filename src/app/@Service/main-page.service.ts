@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map, Subject } from 'rxjs';
-import { MainPageDto } from '../@Models/main-page.model';
+import { MainPageDto } from '../@Models/mainPageDto.model';
 
 @Injectable({
   providedIn: 'root'

@@ -1,4 +1,4 @@
-import { FunctionDto } from './../@Models/function.model';
+import { FunctionDto } from '../@Models/functionDto.model';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
@@ -17,5 +17,17 @@ export class FunctionHeaderService {
   }
   getCaseSpecificFunctions(){
     return this.http.get<FunctionDto[]>("/api/FunctionManager/GetCaseSpecificFunctions");
+  }
+  getCurrentFunction(functionUrl: string){
+    this.commonFunctions.forEach(x=>{
+      if (x.route == functionUrl){
+        this.selectedFunction.next(x);
+      }
+    })
+    this.caseSpecificFunctions.forEach(x=>{
+      if (x.route == functionUrl){
+        this.selectedFunction.next(x);
+      }
+    })
   }
 }

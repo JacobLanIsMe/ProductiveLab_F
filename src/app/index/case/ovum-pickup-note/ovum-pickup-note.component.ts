@@ -1,3 +1,5 @@
+import { MediumDto } from './../../../@Models/mediumDto.model';
+import { ManageMediumService } from './../../../@Service/manage-medium.service';
 import { DateService } from './../../../@Service/date.service';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
@@ -9,8 +11,9 @@ import { faBoxesPacking, faClock, faList, faPerson, faWater } from '@fortawesome
   styleUrls: ['./ovum-pickup-note.component.css']
 })
 export class OvumPickupNoteComponent implements OnInit {
-  constructor(private dateService: DateService){}
+  constructor(private dateService: DateService, private manageMediumService: ManageMediumService){}
   ngOnInit(): void {
+    
     this.ovumPickupForm = new FormGroup({
       "operationTime": new FormGroup({
         "triggerTime": new FormControl(this.dateService.getTodayDateTimeString(new Date()), Validators.required),
@@ -29,8 +32,13 @@ export class OvumPickupNoteComponent implements OnInit {
       "embryologist": new FormControl("", Validators.required),
       "incubator": new FormArray([this.createIncubatorFormGroup()]),
     })
+    this.manageMediumService.getInUseMedium().subscribe(res=>{
+      this.inUseMedium = res;
+      console.log(this.inUseMedium);
+    }) 
   }
   ovumPickupForm!: FormGroup;
+  inUseMedium?: MediumDto;
   faClock = faClock;
   faList = faList;
   faBoxPacking = faBoxesPacking;
