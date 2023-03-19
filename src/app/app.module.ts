@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
@@ -27,6 +26,8 @@ import { SearchStorageUnitComponent } from './index/search-storage-unit/search-s
 import { OperateSpermComponent } from './index/case/operate-sperm/operate-sperm.component';
 import { LogoutComponent } from './index/logout/logout.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { FertilizationComponent } from './index/case/treatment-summary/fertilization/fertilization.component';
+import { BaseTreatmentInfoComponent } from './index/case/base-treatment-info/base-treatment-info.component';
 
 
 @NgModule({
@@ -52,7 +53,9 @@ import { ReactiveFormsModule } from '@angular/forms';
     OperateSpermComponent,
     ManageMediumComponent,
     UploadReportComponent,
-    LogoutComponent
+    LogoutComponent,
+    FertilizationComponent,
+    BaseTreatmentInfoComponent
   ],
   imports: [
     BrowserModule,

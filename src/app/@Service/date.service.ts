@@ -9,29 +9,24 @@ export class DateService {
   getTodayDateString(today: Date){
     // const today = new Date();
     const year = today.getFullYear();
-    let month = today.getMonth();
-    const date = today.getDate();
-    let newMonth = "";
-    if (month !== 10 && month !== 11 && month !== 12){
-      newMonth = `0${month+1}`;
-    } 
-    else {
-      newMonth = `${month}`;
-    }
-    return `${year}-${newMonth}-${date}`;
+    const month = this.transformToDoubleDigitString(today.getMonth()+1);
+    const date = this.transformToDoubleDigitString(today.getDate());
+    
+    return `${year}-${month}-${date}`;
   }
   
   getTodayTimeString(today: Date){
     const hour = this.transformToDoubleDigitString(today.getHours());
     const minute = this.transformToDoubleDigitString(today.getMinutes());
-    const second = this.transformToDoubleDigitString(today.getSeconds());
-    return `${hour}:${minute}:${second}`;
+    // const second = this.transformToDoubleDigitString(today.getSeconds());
+    return `${hour}:${minute}`;
   }
 
   getTodayDateTimeString(today: Date){
     const date = this.getTodayDateString(today);
     const time = this.getTodayTimeString(today);
-    return `${date} ${time}`;
+    const dateTime = new Date(`${date} ${time}`);
+    return `${date}T${time}`;
   }
 
   transformToDoubleDigitString(num: number){
@@ -44,4 +39,6 @@ export class DateService {
     }
     return newNum;
   }
+
+
 }

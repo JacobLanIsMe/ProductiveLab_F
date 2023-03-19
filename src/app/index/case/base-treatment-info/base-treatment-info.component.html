@@ -1,0 +1,18 @@
+<div class="fs-5 fw-bold baseTreatmentInfoTitle"><fa-icon [icon]="faFileInvoice" class="me-3"></fa-icon>療程資訊</div>
+<hr>
+<div class="row mb-3">
+    <div class="col-3">療程編號: <span>{{baseTreatmentInfo.courseOfTreatmentSqlId}}</span></div>
+    <div class="col-3">主治醫師: <span>{{baseTreatmentInfo.doctor}}</span></div>
+    <div class="col-6">治療計畫: <span>{{baseTreatmentInfo.treatmentName}}</span></div>
+</div>
+<div class="row mb-3">
+    <div class="col-3">客戶病歷號: <span>{{baseTreatmentInfo.customerSqlId}}</span></div>
+    <div class="col-3">姓名: <span>{{baseTreatmentInfo.customerName}}</span></div>
+    <div class="col-6">出生年月日: <span>{{baseTreatmentInfo.birthday | date: "yyyy/MM/dd"}}</span></div>
+</div>
+<div class="row mb-3">
+    <div class="col-3">配偶病歷號: <span>{{baseTreatmentInfo.spouseSqlId}}</span></div>
+    <div class="col-3">配偶姓名: <span>{{baseTreatmentInfo.spouseName}}</span></div>
+    <div class="col-6">備忘錄: <span>{{baseTreatmentInfo.memo}}</span></div>
+</div>
+<hr class="mb-5">

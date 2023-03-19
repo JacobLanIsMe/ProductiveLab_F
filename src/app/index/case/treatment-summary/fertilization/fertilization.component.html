@@ -1,0 +1,15 @@
+<div class="fs-5 fw-bold text-warning-emphasis"><fa-icon [icon]="faBoxPacking" class="me-3"></fa-icon>入住培養箱
+</div>
+<hr>
+
+<div class="fs-5 fw-bold text-warning-emphasis"><fa-icon [icon]="faWater" class="me-3"></fa-icon>培養液
+</div>
+<hr>
+<select class="form-select" formControlName="mediumInUseId">
+    <ng-container *ngIf="inUseMedium">
+        <ng-container *ngIf="inUseMedium.isSuccess">
+            <option *ngFor="let medium of inUseMedium.data" [value]="medium.mediumInUseId">{{medium.name}}</option>
+        </ng-container>
+    </ng-container>
+    <option>開封新的培養液</option>
+</select>

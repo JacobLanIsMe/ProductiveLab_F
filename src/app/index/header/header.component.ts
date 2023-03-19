@@ -21,6 +21,7 @@ export class HeaderComponent implements OnInit, OnDestroy{
     this.functionHeaderService.getCommonFunctions().subscribe(res=>{
       this.commonFunctions = res;
       this.functionHeaderService.commonFunctions = res;
+      this.selectedFunction = res[0];
     })
     this.functionHeaderService.getCaseSpecificFunctions().subscribe(res=>{
       this.functionHeaderService.caseSpecificFunctions = res;
