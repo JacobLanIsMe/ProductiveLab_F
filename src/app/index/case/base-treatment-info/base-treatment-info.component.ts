@@ -15,6 +15,6 @@ export class BaseTreatmentInfoComponent implements OnInit {
       this.baseTreatmentInfo = res;
     })
   }
-  baseTreatmentInfo!: BaseTreatmentInfoDto;
+  baseTreatmentInfo?: BaseTreatmentInfoDto;
   faFileInvoice = faFileInvoice;
 }

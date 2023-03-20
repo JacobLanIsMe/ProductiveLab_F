@@ -24,7 +24,7 @@ export class OvumPickupNoteComponent implements OnInit {
         "endTime": new FormControl(this.dateService.getTodayDateTimeString(new Date()), Validators.required)
       }),
       "ovumPickupNumber": new FormGroup({
-        "totalOvumNumber": new FormControl(0, Validators.required),
+        "totalOvumNumber": new FormControl(0, [Validators.required, Validators.min(0)]),
         "coc_Grade5": new FormControl(0, [Validators.required, Validators.min(0)]),
         "coc_Grade4": new FormControl(0, [Validators.required, Validators.min(0)]),
         "coc_Grade3": new FormControl(0, [Validators.required, Validators.min(0)]),
@@ -33,10 +33,7 @@ export class OvumPickupNoteComponent implements OnInit {
       }),
       "embryologist": new FormControl("", Validators.required),
       "courseOfTreatmentId": new FormControl(this.mainPageService.selectedCourseId, Validators.required),
-    })
-    
-    
-    
+    });
     this.employeeService.getAllEmbryologist().subscribe(res=>{
       this.embryologists = res;
     });

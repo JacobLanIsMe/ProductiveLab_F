@@ -11,23 +11,29 @@ export class FunctionHeaderService {
   constructor(private http: HttpClient) {}
   commonFunctions: FunctionDto[] = [];
   caseSpecificFunctions: FunctionDto[] = [];
+  allFunctions: FunctionDto[] = [];
+  subFunctions: FunctionDto[] = [];
   selectedFunction = new Subject<FunctionDto>();
-  getCommonFunctions(){
-    return this.http.get<FunctionDto[]>("/api/FunctionManager/GetCommonFunctions")
+  selectedFunctionDto: FunctionDto | undefined 
+
+  getAllFunctions(){
+    return this.http.get<FunctionDto[]>("/api/FunctionManager/GetAllFunctions");
   }
-  getCaseSpecificFunctions(){
-    return this.http.get<FunctionDto[]>("/api/FunctionManager/GetCaseSpecificFunctions");
-  }
+
   getCurrentFunction(functionUrl: string){
     this.commonFunctions.forEach(x=>{
       if (x.route == functionUrl){
         this.selectedFunction.next(x);
+        this.selectedFunctionDto = x;
       }
     })
     this.caseSpecificFunctions.forEach(x=>{
       if (x.route == functionUrl){
         this.selectedFunction.next(x);
+        this.selectedFunctionDto = x;
       }
     })
   }
+
+  
 }

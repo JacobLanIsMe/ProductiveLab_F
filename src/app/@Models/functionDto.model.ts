@@ -3,6 +3,7 @@ export class FunctionDto{
         public functionId: number,
         public name: string,
         public route: string,
-        public functionTypeId: number
+        public functionTypeId: number,
+        public subFunctions: FunctionDto[]
     ){}
 }

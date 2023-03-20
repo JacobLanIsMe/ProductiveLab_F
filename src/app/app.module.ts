@@ -25,7 +25,7 @@ import { OvumBankTransferComponent } from './index/ovum-bank-transfer/ovum-bank-
 import { SearchStorageUnitComponent } from './index/search-storage-unit/search-storage-unit.component';
 import { OperateSpermComponent } from './index/case/operate-sperm/operate-sperm.component';
 import { LogoutComponent } from './index/logout/logout.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FertilizationComponent } from './index/case/treatment-summary/fertilization/fertilization.component';
 import { BaseTreatmentInfoComponent } from './index/case/base-treatment-info/base-treatment-info.component';
 
@@ -62,6 +62,7 @@ import { BaseTreatmentInfoComponent } from './index/case/base-treatment-info/bas
     AppRoutingModule,
     HttpClientModule,
     FontAwesomeModule,
+    FormsModule,
     ReactiveFormsModule,
   ],
   providers: [],
