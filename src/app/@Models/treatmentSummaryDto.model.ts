@@ -1,7 +1,7 @@
 export class TreatmentSummaryDto{
     constructor(
         public ovumPickupDetailId: string,
-        public originOfOvum: string,
+        public courseOfTreatmentSqlId: string,
         public ovumFromCourseOfTreatmentSqlId: string,
         public ovumPickupDetailStatus: string,
         public dateOfEmbryo: number,
