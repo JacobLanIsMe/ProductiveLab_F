@@ -1,1 +1,17 @@
-
+.alertContainer{
+    background-color: rgba(0, 0, 0, 0.75);
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    z-index: 20;
+    top:0;
+    left:0;
+}
+.alertBox{
+    background-color: white;
+    padding:20px;
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform: translate(-50%, -50%);
+}

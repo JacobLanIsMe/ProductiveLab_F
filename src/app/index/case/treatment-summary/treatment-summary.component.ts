@@ -1,10 +1,9 @@
 import { Subscription } from 'rxjs';
-import { FunctionHeaderService } from './../../../@Service/function-header.service';
 import { MainPageService } from './../../../@Service/main-page.service';
 import { TreatmentService } from './../../../@Service/treatment.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { TreatmentSummaryDto } from 'src/app/@Models/treatmentSummaryDto.model';
-import { FunctionDto } from 'src/app/@Models/functionDto.model';
+import { faTable } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-treatment-summary',
@@ -12,19 +11,19 @@ import { FunctionDto } from 'src/app/@Models/functionDto.model';
   styleUrls: ['./treatment-summary.component.css']
 })
 export class TreatmentSummaryComponent implements OnInit {
-  constructor(private treatmentService: TreatmentService, private mainPageService: MainPageService, private functionHeaderService: FunctionHeaderService){}
+  constructor(private treatmentService: TreatmentService, private mainPageService: MainPageService){}
   
   
   ngOnInit(): void {
     this.treatmentService.getTreatmentSummary(this.mainPageService.selectedCourseId).subscribe(res=>{
       this.treatmentSummarys = res;
     })
-    this.subfunctions = this.functionHeaderService.selectedFunctionDto?.subFunctions;
   }
+  currentCourseOfTreatmentId: string | undefined;
   functionSubscription: Subscription | undefined ;
   treatmentSummarys: TreatmentSummaryDto[] = [];
-  subfunctions: FunctionDto[] | undefined ;
   isSelectAll: boolean = false;
+  faTable = faTable;
   onSelectAll(event: any){
     if (event.target.checked){
       this.treatmentSummarys.forEach(x=>{

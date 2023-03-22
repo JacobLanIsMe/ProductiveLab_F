@@ -1,0 +1,37 @@
+<div class="d-flex justify-content-between">
+<div class="fs-5 fw-bold" style="color:#FF8F59"><fa-icon [icon]="faMicroscope" class="me-3"></fa-icon>精蟲處理</div>
+<app-subfunction-header></app-subfunction-header>
+</div>
+<hr>
+<ng-container *ngIf="baseOperateSpermInfo">
+    <div class="mb-3">
+        <div class="fs-6 fw-bold text-warning-emphasis">先生資訊: </div>
+        <div class="row">
+            <div class="col-3"><span class="fw-bold">病歷號: </span><span *ngIf="baseOperateSpermInfo.husband.customerSqlId !== 6">{{baseOperateSpermInfo.husband.customerSqlId}}</span></div>
+            <div class="col-5"><span class="fw-bold">姓名: </span><span>{{baseOperateSpermInfo.husband.customerName}}</span></div>
+            <div class="col-4"><span class="fw-bold">出生年月日: </span><span *ngIf="baseOperateSpermInfo.husband.customerSqlId !== 6">{{baseOperateSpermInfo.husband.birthday | date: "yyyy/MM/dd"}}</span></div>
+        </div>
+    </div>
+    <div class="mb-3">
+        <div class="fs-6 fw-bold text-warning-emphasis">精蟲資訊: </div>
+        <div class="row">
+            <div class="col-3"><span class="fw-bold">病歷號: </span><span>{{baseOperateSpermInfo.spermOwner.customerSqlId}}</span></div>
+            <div class="col-5"><span class="fw-bold">姓名: </span><span>{{baseOperateSpermInfo.spermOwner.customerName}}</span></div>
+            <div class="col-4"><span class="fw-bold">出生年月日: </span><span>{{baseOperateSpermInfo.spermOwner.birthday | date: "yyyy/MM/dd"}}</span></div>
+        </div>
+        <div class="row">
+            <div class="col-3"><span class="fw-bold">精蟲來源: </span><span>{{baseOperateSpermInfo.isFresh ? "新鮮精液" : "解凍精蟲"}}</span></div>
+            <div class="col-5"><span class="fw-bold">取經方式: </span><span>{{baseOperateSpermInfo.spermRetrievalMethod}}</span></div>
+        </div>
+        <ng-container *ngIf="baseOperateSpermInfo.spermFreezes.length > 0">
+            <div class="d-flex justify-content-start align-items-center"> 
+                <div class="fw-bold">選擇解凍精蟲: </div>
+                <!-- <div *ngFor="let sperm of baseOperateSpermInfo.spermFreezes"></div> -->
+                <button class="btn btn-success btn-sm ms-3" (click)="onOpenSelectSpermFreeze()">請選擇</button>
+            </div>
+        </ng-container>
+    </div>
+</ng-container>
+<hr class="mb-5">
+<app-select-sperm-freeze *ngIf="isOpenSelectSpermFreeze"></app-select-sperm-freeze>
+<app-score-sperm *ngIf="isOpenSubfunction" [subfunction]="isOpenSubfunction"></app-score-sperm>

@@ -1,3 +1,4 @@
+import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { FormGroup } from '@angular/forms';
@@ -11,7 +12,7 @@ import { TreatmentSummaryDto } from '../@Models/treatmentSummaryDto.model';
 })
 export class TreatmentService {
 
-  constructor(private http:HttpClient) { }
+  constructor(private http:HttpClient, private route: ActivatedRoute) { }
   addOvumPickupNote(form: FormGroup){
     return this.http.post<BaseResponseDto>("/api/Treatment/AddOvumPickupNote", form.value);
   }
@@ -43,5 +44,13 @@ export class TreatmentService {
     else{
       return true;
     }
+  }
+  getCurrentCourseOfTreatmentId(){
+    let id;
+    let idSubscription = this.route.paramMap.subscribe(params=>{
+      id = params.get("id");
+    })
+    idSubscription.unsubscribe();
+    return id;
   }
 }

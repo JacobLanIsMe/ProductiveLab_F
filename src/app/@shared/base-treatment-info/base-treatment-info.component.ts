@@ -1,6 +1,6 @@
 import { MainPageService } from 'src/app/@Service/main-page.service';
-import { TreatmentService } from './../../../@Service/treatment.service';
-import { BaseTreatmentInfoDto } from './../../../@Models/baseTreatmentInfoDto.model';
+import { TreatmentService } from '../../@Service/treatment.service';
+import { BaseTreatmentInfoDto } from '../../@Models/baseTreatmentInfoDto.model';
 import { Component, OnInit } from '@angular/core';
 import { faFileInvoice } from '@fortawesome/free-solid-svg-icons';
 @Component({

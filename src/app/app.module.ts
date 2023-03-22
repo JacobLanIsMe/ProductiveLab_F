@@ -27,7 +27,11 @@ import { OperateSpermComponent } from './index/case/operate-sperm/operate-sperm.
 import { LogoutComponent } from './index/logout/logout.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FertilizationComponent } from './index/case/treatment-summary/fertilization/fertilization.component';
-import { BaseTreatmentInfoComponent } from './index/case/base-treatment-info/base-treatment-info.component';
+import { BaseTreatmentInfoComponent } from './@shared/base-treatment-info/base-treatment-info.component';
+import { BaseOperateSpermInfoComponent } from './index/case/operate-sperm/base-operate-sperm-info/base-operate-sperm-info.component';
+import { SelectSpermFreezeComponent } from './index/case/operate-sperm/select-sperm-freeze/select-sperm-freeze.component';
+import { SubfunctionHeaderComponent } from './@shared/subfunction-header/subfunction-header.component';
+import { ScoreSpermComponent } from './index/case/operate-sperm/score-sperm/score-sperm.component';
 
 
 @NgModule({
@@ -55,7 +59,11 @@ import { BaseTreatmentInfoComponent } from './index/case/base-treatment-info/bas
     UploadReportComponent,
     LogoutComponent,
     FertilizationComponent,
-    BaseTreatmentInfoComponent
+    BaseTreatmentInfoComponent,
+    BaseOperateSpermInfoComponent,
+    SelectSpermFreezeComponent,
+    SubfunctionHeaderComponent,
+    ScoreSpermComponent
   ],
   imports: [
     BrowserModule,

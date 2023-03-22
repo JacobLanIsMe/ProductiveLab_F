@@ -1,0 +1,65 @@
+<div class="alertContainer">
+    <div class="alertBox">
+        <Form [formGroup]="scoreSpermForm" (ngSubmit)="onSubmit(scoreSpermForm)">
+            <div class="fs-5 fw-bold text-warning-emphasis" *ngIf="subfunction"><fa-icon [icon]="faStopwatch" class="me-3"></fa-icon>{{subfunction.name}}</div>
+            <hr>
+            <div class="input-group mb-3" *ngIf="subfunction && subfunction.functionId === 23">
+                <span class="input-group-text">禁慾天數</span>
+                <input type="number" class="form-control" formControlName="abstinence">
+                <span class="input-group-text">天</span>
+            </div>
+            <div class="input-group mb-3">
+                <span class="input-group-text">體積</span>
+                <input type="number" class="form-control" step="0.01" formControlName="volume">
+                <span class="input-group-text">ml</span>
+            </div>
+            <div class="input-group mb-3">
+                <span class="input-group-text">濃度</span>
+                <input type="number" class="form-control" step="0.01" formControlName="concentration">
+                <span class="input-group-text">X10^6/ml</span>
+            </div>
+            <div class="input-group mb-3">
+                <span class="input-group-text">活動力A</span>
+                <input type="number" class="form-control" step="0.01" formControlName="activityA">
+                <span class="input-group-text">%</span>
+            </div>
+            <div class="input-group mb-3">
+                <span class="input-group-text">活動力B</span>
+                <input type="number" class="form-control" step="0.01" formControlName="activityB">
+                <span class="input-group-text">%</span>
+            </div>
+            <div class="input-group mb-3">
+                <span class="input-group-text">活動力C</span>
+                <input type="number" class="form-control" step="0.01" formControlName="activityC">
+                <span class="input-group-text">%</span>
+            </div>
+            <div class="input-group mb-3">
+                <span class="input-group-text">活動力D</span>
+                <input type="number" class="form-control" step="0.01" formControlName="activityD">
+                <span class="input-group-text">%</span>
+            </div>
+            <div class="input-group mb-3" *ngIf="subfunction && subfunction.functionId === 23">
+                <span class="input-group-text">正常型態</span>
+                <input type="number" class="form-control" step="0.01" formControlName="morphology">
+                <span class="input-group-text">%</span>
+            </div>
+            <div class="input-group mb-3">
+                <span class="input-group-text">紀錄時間</span>
+                <input type="datetime-local" class="form-control" formControlName="recordTime">
+            </div>
+            <div class="input-group mb-3">
+                <span class="input-group-text">操作胚胎師</span>
+                <select class="form-select" aria-label="Default select example" formControlName="embryologist">
+                    <option selected>請選擇操作胚胎師</option>
+                    <option *ngFor="let embryologist of embryologists" [value]="embryologist.employeeId">{{embryologist.name}}</option>
+                  </select>
+            </div>
+            <input type="number" class="d-none" formControlName="spermScoreTimePointId">
+            <input type="text" class="d-none" formControlName="courseOfTreatmentId">
+            <div class="d-flex justify-content-end">
+                <button class="btn btn-outline-primary btn-sm" type="button" (click)="onCancel()">取消</button>
+                <button class="btn btn-primary btn-sm ms-3" [disabled]="!scoreSpermForm.valid">確認儲存</button>
+            </div>
+        </Form>
+    </div>
+</div>
