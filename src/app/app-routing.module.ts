@@ -1,10 +1,9 @@
-import { SearchStorageUnitComponent } from './index/search-storage-unit/search-storage-unit.component';
+import { ManageStorageComponent } from './index/manage-storage/manage-storage.component';
 import { OvumBankTransferComponent } from './index/ovum-bank-transfer/ovum-bank-transfer.component';
 import { UploadReportComponent } from './index/case/upload-report/upload-report.component';
 import { ManageMediumComponent } from './index/manage-medium/manage-medium.component';
 import { TransferInFromOtherComponent } from './index/case/transfer-in-from-other/transfer-in-from-other.component';
 import { OperateSpermComponent } from './index/case/operate-sperm/operate-sperm.component';
-import { FreezeSpermComponent } from './index/case/freeze-sperm/freeze-sperm.component';
 import { ObservationNoteComponent } from './index/case/observation-note/observation-note.component';
 import { ThawEmbryoComponent } from './index/case/thaw-embryo/thaw-embryo.component';
 import { ThawOvumComponent } from './index/case/thaw-ovum/thaw-ovum.component';
@@ -24,7 +23,7 @@ const routes: Routes = [
   {path: "index", component: IndexComponent, children:[
     {path: "main", component: MainPageComponent},
     {path: "manageMedium", component: ManageMediumComponent},
-    {path: "searchStorageUnit", component: SearchStorageUnitComponent},
+    {path: "manageStorage", component: ManageStorageComponent},
     {path: "ovumBankTransfer", component: OvumBankTransferComponent},
     {path: "case", component: CaseComponent, children:[
       {path: ":id/treatmentSummary", component: TreatmentSummaryComponent},
@@ -33,7 +32,6 @@ const routes: Routes = [
       {path: ":id/thawOvum", component: ThawOvumComponent},
       {path: ":id/thawEmbryo", component: ThawEmbryoComponent},
       {path: ":id/observationNote", component: ObservationNoteComponent},
-      {path: ":id/freezeSperm", component: FreezeSpermComponent},
       {path: ":id/operateSperm", component: OperateSpermComponent},
       {path: ":id/transferInFromOther", component: TransferInFromOtherComponent},
       {path: ":id/uploadReport", component: UploadReportComponent},

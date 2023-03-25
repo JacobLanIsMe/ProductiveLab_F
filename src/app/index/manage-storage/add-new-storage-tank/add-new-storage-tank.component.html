@@ -1,0 +1,28 @@
+<form [formGroup]="addNewTankForm" (ngSubmit)="onSubmit(addNewTankForm)">
+    <div class="input-group mb-3">
+        <span class="input-group-text">液態氮桶名稱</span>
+        <input type="text" class="form-control" formControlName="tankName">
+    </div>
+    <div class="input-group mb-3">
+        <span class="input-group-text">液態氮桶類型</span>
+        <select class="form-select" formControlName="tankTypeId">
+            <option *ngFor="let tankType of storageTankType" [value]="tankType.storageTankTypeId">{{tankType.name}}</option>
+        </select>
+    </div>
+    <div class="input-group mb-3">
+        <span class="input-group-text">一個液態氮桶有幾條</span>
+        <input type="number" class="form-control" formControlName="stripAmount">
+        <span class="input-group-text">條</span>
+    </div>
+    <div class="input-group mb-3">
+        <span class="input-group-text">一條有幾個Cane或Box</span>
+        <input type="number" class="form-control" formControlName="caneBoxAmount">
+        <span class="input-group-text">個</span>
+    </div>
+    <div class="input-group mb-3">
+        <span class="input-group-text">每個Cane或Box有幾個儲存單位</span>
+        <input type="number" class="form-control" formControlName="unitAmount">
+        <span class="input-group-text">個</span>
+    </div>
+    <button class="btn btn-primary btn-sm">確認送出</button>
+</form>

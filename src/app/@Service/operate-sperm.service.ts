@@ -4,6 +4,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BaseOperateSpermInfoDto } from '../@Models/baseOperateSpermInfoDto.model';
 import { FormGroup } from '@angular/forms';
+import { SpermScoreDto } from '../@Models/spermScoreDto.model';
 
 @Injectable({
   providedIn: 'root'
@@ -20,5 +21,13 @@ export class OperateSpermService {
   }
   addSpermScore(form: FormGroup){
     return this.http.post<BaseResponseDto>("/api/Treatment/AddSpermScore", form.value);
+  }
+  getExistingSpermScore(spermFromCourseOfTreatmentId: string, spermScoreTimePointId: number){
+    return this.http.get<SpermScoreDto>("/api/Treatment/GetExistingSpermScore", {
+      params: new HttpParams().append("spermFromCourseOfTreatmentId", spermFromCourseOfTreatmentId).append("spermScoreTimePointId", spermScoreTimePointId)
+    })
+  }
+  updateExistingSpermScore(form:FormGroup){
+    return this.http.put<BaseResponseDto>("/api/Treatment/UpdateExistingSpermScore", form.value);
   }
 }

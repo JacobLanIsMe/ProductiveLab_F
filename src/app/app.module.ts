@@ -17,12 +17,11 @@ import { OvumPickupNoteComponent } from './index/case/ovum-pickup-note/ovum-pick
 import { ThawOvumComponent } from './index/case/thaw-ovum/thaw-ovum.component';
 import { ThawEmbryoComponent } from './index/case/thaw-embryo/thaw-embryo.component';
 import { ObservationNoteComponent } from './index/case/observation-note/observation-note.component';
-import { FreezeSpermComponent } from './index/case/freeze-sperm/freeze-sperm.component';
+import { FreezeSpermComponent } from './index/case/operate-sperm/freeze-sperm/freeze-sperm.component';
 import { TransferInFromOtherComponent } from './index/case/transfer-in-from-other/transfer-in-from-other.component';
 import { ManageMediumComponent } from './index/manage-medium/manage-medium.component';
 import { UploadReportComponent } from './index/case/upload-report/upload-report.component';
 import { OvumBankTransferComponent } from './index/ovum-bank-transfer/ovum-bank-transfer.component';
-import { SearchStorageUnitComponent } from './index/search-storage-unit/search-storage-unit.component';
 import { OperateSpermComponent } from './index/case/operate-sperm/operate-sperm.component';
 import { LogoutComponent } from './index/logout/logout.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -32,6 +31,9 @@ import { BaseOperateSpermInfoComponent } from './index/case/operate-sperm/base-o
 import { SelectSpermFreezeComponent } from './index/case/operate-sperm/select-sperm-freeze/select-sperm-freeze.component';
 import { SubfunctionHeaderComponent } from './@shared/subfunction-header/subfunction-header.component';
 import { ScoreSpermComponent } from './index/case/operate-sperm/score-sperm/score-sperm.component';
+import { ManageStorageComponent } from './index/manage-storage/manage-storage.component';
+import { AddNewStorageTankComponent } from './index/manage-storage/add-new-storage-tank/add-new-storage-tank.component';
+import { SearchEmptyStorageUnitComponent } from './index/manage-storage/search-empty-storage-unit/search-empty-storage-unit.component';
 
 
 @NgModule({
@@ -53,7 +55,6 @@ import { ScoreSpermComponent } from './index/case/operate-sperm/score-sperm/scor
     FreezeSpermComponent,
     TransferInFromOtherComponent,
     OvumBankTransferComponent,
-    SearchStorageUnitComponent,
     OperateSpermComponent,
     ManageMediumComponent,
     UploadReportComponent,
@@ -63,7 +64,10 @@ import { ScoreSpermComponent } from './index/case/operate-sperm/score-sperm/scor
     BaseOperateSpermInfoComponent,
     SelectSpermFreezeComponent,
     SubfunctionHeaderComponent,
-    ScoreSpermComponent
+    ScoreSpermComponent,
+    ManageStorageComponent,
+    AddNewStorageTankComponent,
+    SearchEmptyStorageUnitComponent
   ],
   imports: [
     BrowserModule,

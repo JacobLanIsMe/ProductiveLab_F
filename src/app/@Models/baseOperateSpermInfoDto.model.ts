@@ -1,5 +1,5 @@
 import { SpermFreezeDto } from './spermFreezeDto.model';
-import { BaseCustomerInfoDto } from "./baseCustomerInfoDto.models";
+import { BaseCustomerInfoDto } from "./baseCustomerInfoDto.model";
 
 export class BaseOperateSpermInfoDto{
     constructor(

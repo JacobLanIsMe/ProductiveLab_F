@@ -34,4 +34,5 @@
 </ng-container>
 <hr class="mb-5">
 <app-select-sperm-freeze *ngIf="isOpenSelectSpermFreeze"></app-select-sperm-freeze>
-<app-score-sperm *ngIf="isOpenSubfunction" [subfunction]="isOpenSubfunction"></app-score-sperm>
+<app-score-sperm *ngIf="isOpenSubfunction && isOpenSubfunction.functionId !== 22" [subfunction]="isOpenSubfunction"></app-score-sperm>
+<app-freeze-sperm *ngIf="isOpenSubfunction && isOpenSubfunction.functionId === 22"></app-freeze-sperm>

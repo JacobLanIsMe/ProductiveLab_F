@@ -49,7 +49,7 @@
             </div>
             <div class="input-group mb-3">
                 <span class="input-group-text">操作胚胎師</span>
-                <select class="form-select" aria-label="Default select example" formControlName="embryologist">
+                <select class="form-select" formControlName="embryologist">
                     <option selected>請選擇操作胚胎師</option>
                     <option *ngFor="let embryologist of embryologists" [value]="embryologist.employeeId">{{embryologist.name}}</option>
                   </select>
@@ -58,7 +58,8 @@
             <input type="text" class="d-none" formControlName="courseOfTreatmentId">
             <div class="d-flex justify-content-end">
                 <button class="btn btn-outline-primary btn-sm" type="button" (click)="onCancel()">取消</button>
-                <button class="btn btn-primary btn-sm ms-3" [disabled]="!scoreSpermForm.valid">確認儲存</button>
+                <button class="btn btn-primary btn-sm ms-3" [disabled]="!scoreSpermForm.valid" *ngIf="!existingSpermScore">確認儲存</button>
+                <button class="btn btn-primary btn-sm ms-3" [disabled]="!scoreSpermForm.valid" *ngIf="existingSpermScore">確認更新</button>
             </div>
         </Form>
     </div>
