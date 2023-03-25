@@ -5,6 +5,7 @@ export class StorageUnitStatusDto{
         public caneIdOrBoxId: number,
         public caneNameOrBoxName: string,
         public caneBoxEmptyUnit: number,
-        public storageUnitInfo: StorageUnitDto[]
+        public storageUnitInfo: StorageUnitDto[],
+        public unitInfoArray: StorageUnitDto[][]
     ){}
 }

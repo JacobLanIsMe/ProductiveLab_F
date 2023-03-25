@@ -1,3 +1,4 @@
+import { StorageUnitDto } from './../../../@Models/storageUnitDto.model';
 import { Component, OnInit } from '@angular/core';
 import { StorageTankStatusDto } from 'src/app/@Models/storageTankStatusDot.model';
 import { StorageUnitStatusDto } from 'src/app/@Models/storageUnitStatusDto.model';
@@ -20,6 +21,8 @@ export class SearchEmptyStorageUnitComponent implements OnInit {
   tankType = "";
   width = 0;
   height = 0;
+  selectedCaneIdOrBoxId = 0;
+  selectedUnitIds: number[] = [];
   showStorageUnitStatus(tankId:number, shelfId:number, tankTypeId: number){
     this.manageStorageService.getStorageUnitStatus(tankId, shelfId).subscribe(res=>{
       this.storageUnitStatuses = res;
@@ -34,6 +37,24 @@ export class SearchEmptyStorageUnitComponent implements OnInit {
         this.width = Math.sqrt(length);
         this.height = this.width;
       }
+      this.storageUnitStatuses.forEach(x=>{
+        x.unitInfoArray = [];
+        for (let i = 0, j = 0; i<this.height;i++, j = j+this.width){
+          x.unitInfoArray[i] = x.storageUnitInfo.slice(j, j+this.width)
+        }
+      })
     })
+  }
+  selectCaneIdOrBoxId(selectedCaneIdOrBoxId: number){
+    this.selectedCaneIdOrBoxId = selectedCaneIdOrBoxId;
+  }
+  add(storageUnitId:number){
+    let index = this.selectedUnitIds.findIndex(x=>x === storageUnitId);
+    if (index === -1){
+      this.selectedUnitIds.push(storageUnitId);
+    }
+    else{
+      this.selectedUnitIds.splice(index, 1);
+    }
   }
 }
