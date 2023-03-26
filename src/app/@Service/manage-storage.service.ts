@@ -1,3 +1,4 @@
+import { Subject } from 'rxjs';
 import { StorageTankStatusDto } from '../@Models/storageTankStatusDot.model';
 import { BaseResponseDto } from './../@Models/baseResponseDto.model';
 import { HttpClient, HttpParams } from '@angular/common/http';
@@ -11,10 +12,12 @@ import { StorageUnitStatusDto } from '../@Models/storageUnitStatusDto.model';
 })
 export class ManageStorageService {
   constructor(private http: HttpClient) { }
+
+  // selectedUnitIds: number[] = [];
+  selectedUnitIds = new Subject<number[]>();
   addNewTank(form: FormGroup){
     return this.http.post<BaseResponseDto>("/api/StorageManager/AddStorageTank", form.value)
   }
-
   getStorageTankType(){
     return this.http.get<StorageTankTypeDto[]>("/api/StorageManager/GetStorageTankType")
   }

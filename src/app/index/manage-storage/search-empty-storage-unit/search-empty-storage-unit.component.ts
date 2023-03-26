@@ -15,15 +15,19 @@ export class SearchEmptyStorageUnitComponent implements OnInit {
     this.manageStorageService.getStorageTankStatus().subscribe(res=>{
       this.storageTankStatuses = res
     })
+    this.manageStorageService.selectedUnitIds.subscribe(res =>{
+      this.selectedUnitIds = res;
+    })
   }
   storageTankStatuses?: StorageTankStatusDto[];
   storageUnitStatuses?: StorageUnitStatusDto[];
   tankType = "";
   width = 0;
   height = 0;
+  
   selectedCaneIdOrBoxId = 0;
   selectedUnitIds: number[] = [];
-  showStorageUnitStatus(tankId:number, shelfId:number, tankTypeId: number){
+  showStorageUnitStatus(tankId:number, tankName: string, shelfId:number, shelfName:string, tankTypeId: number){
     this.manageStorageService.getStorageUnitStatus(tankId, shelfId).subscribe(res=>{
       this.storageUnitStatuses = res;
       let length = res[0].storageUnitInfo.length;
@@ -47,6 +51,19 @@ export class SearchEmptyStorageUnitComponent implements OnInit {
   }
   selectCaneIdOrBoxId(selectedCaneIdOrBoxId: number){
     this.selectedCaneIdOrBoxId = selectedCaneIdOrBoxId;
+    this.storageUnitStatuses?.forEach(x=>{
+      if (x.caneIdOrBoxId == selectedCaneIdOrBoxId){
+        x.unitInfoArray.forEach(y=>{
+          y.forEach(z=>{
+            this.selectedUnitIds.forEach(a=>{
+              if (a === z.storageUnitId){
+                z.isChecked = true;
+              }
+            })
+          })
+        })
+      }
+    })
   }
   add(storageUnitId:number){
     let index = this.selectedUnitIds.findIndex(x=>x === storageUnitId);
@@ -56,5 +73,7 @@ export class SearchEmptyStorageUnitComponent implements OnInit {
     else{
       this.selectedUnitIds.splice(index, 1);
     }
+    this.manageStorageService.selectedUnitIds.next(this.selectedUnitIds);
   }
+
 }
