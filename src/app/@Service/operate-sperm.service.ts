@@ -5,6 +5,7 @@ import { Injectable } from '@angular/core';
 import { BaseOperateSpermInfoDto } from '../@Models/baseOperateSpermInfoDto.model';
 import { FormGroup } from '@angular/forms';
 import { SpermScoreDto } from '../@Models/spermScoreDto.model';
+import { SpermFreezeOperationMethodDto } from '../@Models/spermFreezeOperationMethodDto.model';
 
 @Injectable({
   providedIn: 'root'
@@ -29,5 +30,8 @@ export class OperateSpermService {
   }
   updateExistingSpermScore(form:FormGroup){
     return this.http.put<BaseResponseDto>("/api/Treatment/UpdateExistingSpermScore", form.value);
+  }
+  getSpermFreezeOperationMethod(){
+    return this.http.get<SpermFreezeOperationMethodDto[]>("/api/Treatment/GetSpermFreezeOperationMethod");
   }
 }

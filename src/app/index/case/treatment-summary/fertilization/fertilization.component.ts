@@ -22,7 +22,7 @@ export class FertilizationComponent implements OnInit {
     this.manageIncubatorService.getAllIncubator().subscribe(res=>{
       this.incubators = res;
     });
-    this.manageMediumService.getInUseMedium().subscribe(res=>{
+    this.manageMediumService.getInUseMedium(1).subscribe(res=>{
       this.inUseMedium = res;
     });
   }

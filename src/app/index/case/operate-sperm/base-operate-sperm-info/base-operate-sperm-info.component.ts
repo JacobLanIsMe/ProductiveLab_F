@@ -17,6 +17,7 @@ export class BaseOperateSpermInfoComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.openSelectSpermFreezeSubscription?.unsubscribe();
     this.openScoreSpermSubscription?.unsubscribe();
+    this.openSubfunctionSubscription?.unsubscribe();
   }
   ngOnInit(): void {
     this.operateSpermService.getOriginInfoOfSperm(this.mainPageService.selectedCourseId).subscribe(res=>{
@@ -26,11 +27,12 @@ export class BaseOperateSpermInfoComponent implements OnInit, OnDestroy {
     this.openSelectSpermFreezeSubscription = this.operateSpermService.isOpenSelectSpermFreeze.subscribe(res=>{
       this.isOpenSelectSpermFreeze = res;
     })
-    this.functionHeaderService.isOpenSubfunction.subscribe(subfunction=>{
+    this.openSubfunctionSubscription = this.functionHeaderService.isOpenSubfunction.subscribe(subfunction=>{
       this.isOpenSubfunction = subfunction;
     })
   }
   openSelectSpermFreezeSubscription?: Subscription; 
+  openSubfunctionSubscription?: Subscription;
   isOpenSelectSpermFreeze: boolean = false;
   openScoreSpermSubscription?: Subscription;
   isOpenSubfunction?: FunctionDto | null;

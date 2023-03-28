@@ -1,5 +1,5 @@
 .main-table-frame{
-    height: 80vh;
+    height: 100%;
     overflow: auto;
 }
 thead tr th{

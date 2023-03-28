@@ -1,6 +1,6 @@
 import { MediumDto } from './../@Models/mediumDto.model';
 import { BaseResponseDto } from '../@Models/baseResponseDto.model';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
@@ -13,7 +13,9 @@ export class ManageMediumService {
   addMedium(mediumForm: FormGroup){
     return this.http.post<BaseResponseDto>("/api/MediumManager/AddMedium", mediumForm.value);
   }
-  getInUseMedium(){
-    return this.http.get<MediumDto>("/api/MediumManager/GetInUseMedium");
+  getInUseMedium(mediumType: number){
+    return this.http.get<MediumDto>("/api/MediumManager/GetInUseMedium", {
+      params: new HttpParams().append("mediumType", mediumType)
+    });
   }
 }

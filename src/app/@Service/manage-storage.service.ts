@@ -6,6 +6,7 @@ import { Injectable } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { StorageTankTypeDto } from '../@Models/storageTankTypeDto.model';
 import { StorageUnitStatusDto } from '../@Models/storageUnitStatusDto.model';
+import { StorageLocation } from '../@Models/storageLocation.model';
 
 @Injectable({
   providedIn: 'root'
@@ -13,8 +14,8 @@ import { StorageUnitStatusDto } from '../@Models/storageUnitStatusDto.model';
 export class ManageStorageService {
   constructor(private http: HttpClient) { }
 
-  // selectedUnitIds: number[] = [];
-  selectedUnitIds = new Subject<number[]>();
+  selectedLocations = new Subject<StorageLocation[]>();
+  
   addNewTank(form: FormGroup){
     return this.http.post<BaseResponseDto>("/api/StorageManager/AddStorageTank", form.value)
   }
