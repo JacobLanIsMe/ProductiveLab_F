@@ -31,7 +31,7 @@
         <div class="d-flex justify-content-between" *ngFor="let unitArray of storageUnitStatus.unitInfoArray">
           <div *ngFor="let unit of unitArray">
             <div>
-              <label class="form-check-label" [for]="unit.storageUnitId">{{unit.unitName}}</label>
+              <label class="form-check-label" [class.text-secondary]="unit.isOccupied" [for]="unit.storageUnitId">{{unit.unitName}}</label>
             </div>
             <input class="form-check-input" type="checkbox" [checked]="confirmChecked(unit.storageUnitId)" [disabled]="unit.isOccupied" [id]="unit.storageUnitId" (change)="add($event, unit.storageUnitId, unit.unitName)">
           </div>

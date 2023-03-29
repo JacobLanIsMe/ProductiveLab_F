@@ -1,3 +1,4 @@
+import { CommonService } from './../../../../@Service/common.service';
 import { FunctionHeaderService } from './../../../../@Service/function-header.service';
 import { EmployeeService } from './../../../../@Service/employee.service';
 import { DateService } from './../../../../@Service/date.service';
@@ -19,7 +20,7 @@ import { EmbryologistDto } from 'src/app/@Models/embryologistDto.model';
   styleUrls: ['./freeze-sperm.component.css']
 })
 export class FreezeSpermComponent implements OnInit{
-  constructor(private operateSpermService:OperateSpermService, private manageStorageService:ManageStorageService, private manageMediumService: ManageMediumService, private dateService:DateService, private employeeService: EmployeeService, private functionHeaderService:FunctionHeaderService){}
+  constructor(private operateSpermService:OperateSpermService, private manageStorageService:ManageStorageService, private manageMediumService: ManageMediumService, private dateService:DateService, private employeeService: EmployeeService, private functionHeaderService:FunctionHeaderService, private commonService: CommonService){}
   ngOnInit(): void {
     this.spermFromCourseOfTreatmentId = this.operateSpermService.baseOperateSpermInfo?.spermFromCourseOfTreatmentId;
     this.freezeSpermForm = new FormGroup({
@@ -114,6 +115,8 @@ export class FreezeSpermComponent implements OnInit{
     form.patchValue({
       "spermFreezeOperationMethodId": +form.value.spermFreezeOperationMethodId
     })
-    console.log(form.value);
+    this.operateSpermService.addSpermFreeze(form).subscribe(res=>{
+      this.commonService.judgeTheResponse(res, "冷凍精蟲")
+    })
   }
 }

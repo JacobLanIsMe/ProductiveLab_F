@@ -34,4 +34,7 @@ export class OperateSpermService {
   getSpermFreezeOperationMethod(){
     return this.http.get<SpermFreezeOperationMethodDto[]>("/api/Treatment/GetSpermFreezeOperationMethod");
   }
+  addSpermFreeze(form: FormGroup){
+    return this.http.post<BaseResponseDto>("/api/Treatment/AddSpermFreeze", form.value);
+  }
 }

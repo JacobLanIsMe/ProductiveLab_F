@@ -3,6 +3,5 @@ export class StorageUnitDto{
         public storageUnitId: number,
         public unitName: string,
         public isOccupied: boolean,
-        // public isChecked: boolean,
     ){}
 }
