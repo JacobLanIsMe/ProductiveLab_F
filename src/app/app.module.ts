@@ -34,6 +34,7 @@ import { ScoreSpermComponent } from './index/case/operate-sperm/score-sperm/scor
 import { ManageStorageComponent } from './index/manage-storage/manage-storage.component';
 import { AddNewStorageTankComponent } from './index/manage-storage/add-new-storage-tank/add-new-storage-tank.component';
 import { SearchEmptyStorageUnitComponent } from './index/manage-storage/search-empty-storage-unit/search-empty-storage-unit.component';
+import { AddCourseOfTreatmentComponent } from './index/header/add-course-of-treatment/add-course-of-treatment.component';
 
 
 @NgModule({
@@ -67,7 +68,8 @@ import { SearchEmptyStorageUnitComponent } from './index/manage-storage/search-e
     ScoreSpermComponent,
     ManageStorageComponent,
     AddNewStorageTankComponent,
-    SearchEmptyStorageUnitComponent
+    SearchEmptyStorageUnitComponent,
+    AddCourseOfTreatmentComponent
   ],
   imports: [
     BrowserModule,

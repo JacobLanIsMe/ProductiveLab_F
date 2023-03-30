@@ -6,6 +6,7 @@ import { map } from 'rxjs';
 import { BaseResponseDto } from '../@Models/baseResponseDto.model';
 import { BaseTreatmentInfoDto } from '../@Models/baseTreatmentInfoDto.model';
 import { TreatmentSummaryDto } from '../@Models/treatmentSummaryDto.model';
+import { TreatmentDto } from '../@Models/treatmentDto.model';
 
 @Injectable({
   providedIn: 'root'
@@ -52,5 +53,8 @@ export class TreatmentService {
     })
     idSubscription.unsubscribe();
     return id;
+  }
+  getAllTreatment(){
+    return this.http.get<TreatmentDto[]>("/api/Treatment/GetAllTreatment");
   }
 }

@@ -37,4 +37,7 @@ export class OperateSpermService {
   addSpermFreeze(form: FormGroup){
     return this.http.post<BaseResponseDto>("/api/Treatment/AddSpermFreeze", form.value);
   }
+  selectSpermFreeze(unitIds: number[]){
+    return this.http.put<BaseResponseDto>("/api/Treatment/SelectSpermFreeze", unitIds);
+  }
 }

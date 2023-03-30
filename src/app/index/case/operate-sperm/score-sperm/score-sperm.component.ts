@@ -1,7 +1,5 @@
 import { CommonService } from './../../../../@Service/common.service';
 import { MainPageService } from './../../../../@Service/main-page.service';
-import { MainPageComponent } from './../../../main-page/main-page.component';
-import { BaseResponseDto } from './../../../../@Models/baseResponseDto.model';
 import { EmployeeService } from './../../../../@Service/employee.service';
 import { DateService } from './../../../../@Service/date.service';
 import { OperateSpermService } from './../../../../@Service/operate-sperm.service';
@@ -11,7 +9,6 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { FunctionDto } from 'src/app/@Models/functionDto.model';
 import { faStopwatch } from '@fortawesome/free-solid-svg-icons';
 import { EmbryologistDto } from 'src/app/@Models/embryologistDto.model';
-import Swal from 'sweetalert2';
 import { SpermScoreDto } from 'src/app/@Models/spermScoreDto.model';
 @Component({
   selector: 'app-score-sperm',

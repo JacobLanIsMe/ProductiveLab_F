@@ -13,19 +13,12 @@ export class HeaderComponent implements OnInit, OnDestroy{
   constructor(private router: Router, private functionHeaderService: FunctionHeaderService){}
   ngOnDestroy(): void {
     this.functionSubscription?.unsubscribe();
+    this.openAddCourseOfTreatmentSubscription?.unsubscribe();
   }
   ngOnInit(): void {
     this.functionSubscription = this.functionHeaderService.selectedFunction.subscribe(selectedFunction=>{
       this.selectedFunction = selectedFunction;
     })
-    // this.functionHeaderService.getCommonFunctions().subscribe(res=>{
-    //   this.commonFunctions = res;
-    //   this.functionHeaderService.commonFunctions = res;
-    //   this.selectedFunction = res[0];
-    // })
-    // this.functionHeaderService.getCaseSpecificFunctions().subscribe(res=>{
-    //   this.functionHeaderService.caseSpecificFunctions = res;
-    // })
     this.functionHeaderService.getAllFunctions().subscribe(res=>{
       res.forEach(x=>{
         if (x.functionTypeId === 1){
@@ -37,11 +30,19 @@ export class HeaderComponent implements OnInit, OnDestroy{
       })
       this.commonFunctions = this.functionHeaderService.commonFunctions;
     })
+    this.openAddCourseOfTreatmentSubscription = this.functionHeaderService.isOpenAddCourseOfTreatment.subscribe(res=>{
+      this.isOpenAddCourseOfTreatment = res;
+    })
   }
   functionSubscription: Subscription | undefined;
   selectedFunction?: FunctionDto;
   commonFunctions: FunctionDto[] = [];
+  isOpenAddCourseOfTreatment: boolean = false;
+  openAddCourseOfTreatmentSubscription: Subscription | undefined;
   onBackToMain(){
     this.router.navigate(["/index", "main"]);
+  }
+  openAddCourseOfTreatment(){
+    this.functionHeaderService.isOpenAddCourseOfTreatment.next(true);
   }
 }

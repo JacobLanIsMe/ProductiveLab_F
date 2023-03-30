@@ -17,6 +17,7 @@ export class FunctionHeaderService {
   selectedFunctionDto: FunctionDto | undefined;
   
   isOpenSubfunction = new Subject<FunctionDto|null>();
+  isOpenAddCourseOfTreatment = new Subject<boolean>();
   getAllFunctions(){
     return this.http.get<FunctionDto[]>("/api/FunctionManager/GetAllFunctions");
   }

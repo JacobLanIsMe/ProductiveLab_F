@@ -1,0 +1,34 @@
+<div class="alertContainer">
+    <div class="alertBox">
+        <form [formGroup]="addCourseOfTreatmentForm" (ngSubmit)="onSubmit(addCourseOfTreatmentForm)">
+            <div class="input-group mb-3">
+                <span class="input-group-text">醫生</span>
+                <select class="form-select" formControlName="doctorId">
+                    <option *ngFor="let doctor of doctors" [value]="doctor.employeeId">{{doctor.name}}</option>
+                </select>
+            </div>
+            <div class="input-group mb-3">
+                <span class="input-group-text">客戶 GuidId</span>
+                <input type="text" class="form-control" formControlName="customerId">
+            </div>
+            <div class="input-group mb-3">
+                <span class="input-group-text">療程名稱</span>
+                <select class="form-select" formControlName="treatmentId">
+                    <option *ngFor="let treatment of treatments" [value]="treatment.treatmentId">{{treatment.name}}</option>
+                </select>
+            </div>
+            <div class="input-group mb-3">
+                <span class="input-group-text">手術時間</span>
+                <input type="datetime-local" class="form-control" formControlName="surgicalTime">
+            </div>
+            <div class="input-group mb-3">
+                <span class="input-group-text">備註</span>
+                <input type="text" class="form-control" formControlName="memo">
+            </div>
+            <div class="d-flex justify-content-end">
+            <button type="button" class="btn btn-outline-primary btn-sm" (click)="onCancel()">取消</button>
+            <button class="btn btn-primary btn-sm ms-3" [disabled]="!addCourseOfTreatmentForm.valid">送出</button>
+        </div>
+        </form>
+    </div>
+</div>

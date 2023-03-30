@@ -11,4 +11,8 @@ export class EmployeeService {
   getAllEmbryologist(){
     return this.http.get<EmbryologistDto[]>("/api/EmployeeManager/GetAllEmbryologist");
   }
+
+  getAllDoctor(){
+    return this.http.get<EmbryologistDto[]>("/api/EmployeeManager/GetAllDoctor");
+  }
 }
