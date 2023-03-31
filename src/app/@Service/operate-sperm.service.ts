@@ -24,11 +24,11 @@ export class OperateSpermService {
   addSpermScore(form: FormGroup){
     return this.http.post<BaseResponseDto>("/api/OperateSperm/AddSpermScore", form.value);
   }
-  getExistingSpermScore(spermFromCourseOfTreatmentId: string, spermScoreTimePointId: number){
-    return this.http.get<SpermScoreDto>("/api/OperateSperm/GetExistingSpermScore", {
-      params: new HttpParams().append("spermFromCourseOfTreatmentId", spermFromCourseOfTreatmentId).append("spermScoreTimePointId", spermScoreTimePointId)
-    })
-  }
+  // getExistingSpermScore(spermFromCourseOfTreatmentId: string, spermScoreTimePointId: number){
+  //   return this.http.get<SpermScoreDto>("/api/OperateSperm/GetExistingSpermScore", {
+  //     params: new HttpParams().append("spermFromCourseOfTreatmentId", spermFromCourseOfTreatmentId).append("spermScoreTimePointId", spermScoreTimePointId)
+  //   })
+  // }
   updateExistingSpermScore(form:FormGroup){
     return this.http.put<BaseResponseDto>("/api/OperateSperm/UpdateExistingSpermScore", form.value);
   }
