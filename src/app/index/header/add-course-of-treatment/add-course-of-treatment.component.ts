@@ -1,3 +1,4 @@
+import { CommonService } from './../../../@Service/common.service';
 import { TreatmentService } from './../../../@Service/treatment.service';
 import { TreatmentDto } from './../../../@Models/treatmentDto.model';
 import { DateService } from './../../../@Service/date.service';
@@ -15,7 +16,7 @@ import { EmbryologistDto } from 'src/app/@Models/embryologistDto.model';
   styleUrls: ['./add-course-of-treatment.component.css']
 })
 export class AddCourseOfTreatmentComponent implements OnInit {
-  constructor(private http:HttpClient, private functionHeaderService: FunctionHeaderService, private employeeService:EmployeeService, private dateService:DateService, private treatmentService: TreatmentService){}
+  constructor(private functionHeaderService: FunctionHeaderService, private employeeService:EmployeeService, private dateService:DateService, private treatmentService: TreatmentService, private commonService: CommonService){}
   ngOnInit(): void {
     this.employeeService.getAllDoctor().subscribe(res=>{
       this.doctors = res;
@@ -43,6 +44,9 @@ export class AddCourseOfTreatmentComponent implements OnInit {
     this.functionHeaderService.isOpenAddCourseOfTreatment.next(false);
   }
   onSubmit(form: FormGroup){
-    this.http.post<BaseResponseDto>("", form.value)
+    this.treatmentService.addCourseOfTreatment(form).subscribe(res=>{
+      this.commonService.judgeTheResponse(res, "新增療程");
+    })
+    this.onCancel();
   }
 }

@@ -116,7 +116,8 @@ export class FreezeSpermComponent implements OnInit{
       "spermFreezeOperationMethodId": +form.value.spermFreezeOperationMethodId
     })
     this.operateSpermService.addSpermFreeze(form).subscribe(res=>{
-      this.commonService.judgeTheResponse(res, "冷凍精蟲")
+      this.commonService.judgeTheResponse(res, "冷凍精蟲");
+      this.onCancel();
     })
   }
 }

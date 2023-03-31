@@ -57,4 +57,7 @@ export class TreatmentService {
   getAllTreatment(){
     return this.http.get<TreatmentDto[]>("/api/Treatment/GetAllTreatment");
   }
+  addCourseOfTreatment(form: FormGroup){
+    return this.http.post<BaseResponseDto>("/api/Treatment/AddCourseOfTreatment", form.value);
+  }
 }
