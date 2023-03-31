@@ -25,15 +25,13 @@ export class ScoreSpermComponent implements OnInit {
       case 24:
         this.spermScoreTimePointId = 2;
         break;
-      case 25:
+      case 26:
         this.spermScoreTimePointId = 3;
         break;
-      case 26:
+      case 27:
         this.spermScoreTimePointId = 4;
         break;
     }
-    
-    
     this.scoreSpermForm = new FormGroup({
       "volume": new FormControl(null, Validators.required),
       "concentration": new FormControl(null, Validators.required),
@@ -53,24 +51,23 @@ export class ScoreSpermComponent implements OnInit {
         this.embryologists = embryologists;
       }
     })
-    if (this.spermScoreTimePointId === 1 || this.spermScoreTimePointId === 2){
-      this.operateSpermService.getExistingSpermScore(this.operateSpermService.baseOperateSpermInfo!.spermFromCourseOfTreatmentId, this.spermScoreTimePointId!).subscribe(res=>{
-        if (res){
-          this.existingSpermScore = res;
-          this.scoreSpermForm.patchValue({
-            "volume": res.volume,
-            "concentration": res.concentration,
-            "activityA": res.activityA,
-            "activityB": res.activityB,
-            "activityC": res.activityC,
-            "activityD": res.activityD,
-            "morphology": res.morphology,
-            "abstinence": res.abstinence,
-            "recordTime": res.recordTime
-          });
-        }
-      })
-    }
+    this.operateSpermService.baseOperateSpermInfo?.existingSpermScores.forEach(x=>{
+      if (x.spermScoreTimePointId == this.spermScoreTimePointId && (this.spermScoreTimePointId === 1 || this.spermScoreTimePointId === 2)){
+        this.existingSpermScore = x;
+        this.scoreSpermForm.patchValue({
+          "volume": x.volume,
+          "concentration": x.concentration,
+          "activityA": x.activityA,
+          "activityB": x.activityB,
+          "activityC": x.activityC,
+          "activityD": x.activityD,
+          "morphology": x.morphology,
+          "abstinence": x.abstinence,
+          "recordTime": x.recordTime
+        });
+      }
+    })
+    
     if (this.mainPageService.selectedCourseId.toUpperCase() != this.operateSpermService.baseOperateSpermInfo!.spermFromCourseOfTreatmentId.toUpperCase() && (this.spermScoreTimePointId === 1 || this.spermScoreTimePointId === 2)){
       this.scoreSpermForm.disable();
     }

@@ -1,20 +1,26 @@
 import { BaseOperateSpermInfoDto } from './../../../@Models/baseOperateSpermInfoDto.model';
 import { MainPageService } from 'src/app/@Service/main-page.service';
 import { OperateSpermService } from './../../../@Service/operate-sperm.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { FunctionDto } from 'src/app/@Models/functionDto.model';
+import { FunctionHeaderService } from 'src/app/@Service/function-header.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-operate-sperm',
   templateUrl: './operate-sperm.component.html',
   styleUrls: ['./operate-sperm.component.css']
 })
-export class OperateSpermComponent implements OnInit {
-  constructor(private operateSpermService: OperateSpermService, private mainPageService: MainPageService){}
+export class OperateSpermComponent implements OnInit, OnDestroy {
+  constructor(private operateSpermService: OperateSpermService, private mainPageService: MainPageService, private functionHeaderService: FunctionHeaderService){}
+  ngOnDestroy(): void {
+    this.openSubfunctionSubscription?.unsubscribe();
+  }
   ngOnInit(): void {
-    this.operateSpermService.getOriginInfoOfSperm(this.mainPageService.selectedCourseId).subscribe(res=>{
-      
-      this.operateSpermInfo = res;
+    this.openSubfunctionSubscription = this.functionHeaderService.isOpenSubfunction.subscribe(subfunction=>{
+      this.isOpenSubfunction = subfunction;
     })
   }
-  operateSpermInfo?: BaseOperateSpermInfoDto;
+  openSubfunctionSubscription?: Subscription;
+  isOpenSubfunction?: FunctionDto | null;
 }

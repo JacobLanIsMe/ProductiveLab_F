@@ -1,5 +1,6 @@
 import { SpermFreezeDto } from './spermFreezeDto.model';
 import { BaseCustomerInfoDto } from "./baseCustomerInfoDto.model";
+import { SpermScoreDto } from './spermScoreDto.model';
 
 export class BaseOperateSpermInfoDto{
     constructor(
@@ -7,7 +8,7 @@ export class BaseOperateSpermInfoDto{
         public isFresh: boolean,
         public spermRetrievalMethod: string,
         public spermOwner: BaseCustomerInfoDto,
-        public spermFreezes: SpermFreezeDto[],
-        public spermFromCourseOfTreatmentId: string
+        public spermFromCourseOfTreatmentId: string,
+        public existingSpermScores: SpermScoreDto[]
     ){}
 }

@@ -1,3 +1,7 @@
 <app-base-treatment-info></app-base-treatment-info>
 
 <app-base-operate-sperm-info></app-base-operate-sperm-info>
+
+<app-score-sperm *ngIf="isOpenSubfunction && isOpenSubfunction.functionId !== 22 && isOpenSubfunction.functionId !== 25" [subfunction]="isOpenSubfunction"></app-score-sperm>
+<app-freeze-sperm *ngIf="isOpenSubfunction && isOpenSubfunction.functionId === 22"></app-freeze-sperm>
+<app-select-sperm-freeze *ngIf="isOpenSubfunction && isOpenSubfunction.functionId === 25"></app-select-sperm-freeze>

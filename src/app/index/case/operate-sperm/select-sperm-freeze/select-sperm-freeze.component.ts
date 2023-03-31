@@ -1,8 +1,8 @@
+import { FunctionHeaderService } from './../../../../@Service/function-header.service';
 import { CommonService } from './../../../../@Service/common.service';
 import { SpermFreezeDto } from './../../../../@Models/spermFreezeDto.model';
 import { OperateSpermService } from './../../../../@Service/operate-sperm.service';
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormArray, Validators, FormControl } from '@angular/forms';
 import { faListCheck } from '@fortawesome/free-solid-svg-icons';
 import Swal from 'sweetalert2';
 @Component({
@@ -11,16 +11,15 @@ import Swal from 'sweetalert2';
   styleUrls: ['./select-sperm-freeze.component.css']
 })
 export class SelectSpermFreezeComponent implements OnInit {
-  constructor(private operateSpermService: OperateSpermService, private commonService:CommonService){}
+  constructor(private operateSpermService: OperateSpermService, private functionHeaderService: FunctionHeaderService, private commonService: CommonService){}
   ngOnInit(): void {
-    if (this.operateSpermService.baseOperateSpermInfo){
-      this.spermFreezes = this.operateSpermService.baseOperateSpermInfo.spermFreezes;
+    if (this.operateSpermService.baseOperateSpermInfo?.spermFromCourseOfTreatmentId){
+      this.operateSpermService.getSpermFreeze(this.operateSpermService.baseOperateSpermInfo?.spermFromCourseOfTreatmentId).subscribe(res=>{
+        this.spermFreezes = res;
+      })
     }
-    // this.thawSpermFreezeForm = new FormGroup({
-    //   "spermFreezes": new FormArray([])
-    // })
+    
   }
-  // thawSpermFreezeForm!: FormGroup;
   spermFreezes: SpermFreezeDto[] = [];
   isSelectAll: boolean = false;
   faListCheck = faListCheck;
@@ -47,10 +46,9 @@ export class SelectSpermFreezeComponent implements OnInit {
     }
   }
   onCancel(){
-    this.operateSpermService.isOpenSelectSpermFreeze.next(false);
+    this.functionHeaderService.isOpenSubfunction.next(null);
   }
   onSubmit(){
-    // let spermFreezesFormArray = <FormArray>(this.thawSpermFreezeForm.get("spermFreezes"));
     this.selectedUnitIds.length = 0;
     this.spermFreezes.forEach(x=>{
       if (x.isChecked){
@@ -62,24 +60,10 @@ export class SelectSpermFreezeComponent implements OnInit {
     }
     else{
       this.operateSpermService.selectSpermFreeze(this.selectedUnitIds).subscribe(res=>{
-        if (res.isSuccess){
-          if (this.operateSpermService.baseOperateSpermInfo){
-            this.spermFreezes.forEach(x=>{
-              if (x.isChecked){
-                let index = this.operateSpermService.baseOperateSpermInfo?.spermFreezes.findIndex(y=>y.spermFreezeId === x.spermFreezeId);
-                if (index !== undefined && index >= 0){
-                  this.operateSpermService.baseOperateSpermInfo?.spermFreezes.splice(index, 1);
-                }
-              }
-            })
-          }
-          Swal.fire("解凍精蟲成功");
-          this.onCancel();
-        }
-        else{
-          Swal.fire(`解凍精蟲失敗\n${res.errorMessage}`);
-        }
+        this.commonService.judgeTheResponse(res, "解凍精蟲");
+        this.onCancel();
       })
+
     }
   }
 }
