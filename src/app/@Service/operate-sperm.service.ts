@@ -16,6 +16,7 @@ export class OperateSpermService {
   constructor(private http:HttpClient) { }
   baseOperateSpermInfo?: BaseOperateSpermInfoDto
   isOpenSelectSpermFreeze = new Subject<boolean>();
+  existingSpermScore = new Subject<SpermScoreDto[]>();
   getOriginInfoOfSperm(courseOfTreatmentId: string){
     return this.http.get<BaseOperateSpermInfoDto>("/api/OperateSperm/GetOriginInfoOfSperm", {
       params: new HttpParams().append("courseOfTreatmentId", courseOfTreatmentId)
@@ -24,11 +25,18 @@ export class OperateSpermService {
   addSpermScore(form: FormGroup){
     return this.http.post<BaseResponseDto>("/api/OperateSperm/AddSpermScore", form.value);
   }
-  // getExistingSpermScore(spermFromCourseOfTreatmentId: string, spermScoreTimePointId: number){
-  //   return this.http.get<SpermScoreDto>("/api/OperateSperm/GetExistingSpermScore", {
-  //     params: new HttpParams().append("spermFromCourseOfTreatmentId", spermFromCourseOfTreatmentId).append("spermScoreTimePointId", spermScoreTimePointId)
-  //   })
-  // }
+  
+  getExistingSpermScore(spermFromCourseOfTreatmentId: string){
+    this.http.get<SpermScoreDto[]>("/api/OperateSperm/GetSpermScore", {
+      params: new HttpParams().append("spermFromCourseOfTreatmentId", spermFromCourseOfTreatmentId)
+    }).subscribe(res=>{
+      this.existingSpermScore.next(res);
+      if (this.baseOperateSpermInfo){
+        this.baseOperateSpermInfo.existingSpermScores = res
+      }
+    })
+  }
+
   updateExistingSpermScore(form:FormGroup){
     return this.http.put<BaseResponseDto>("/api/OperateSperm/UpdateExistingSpermScore", form.value);
   }

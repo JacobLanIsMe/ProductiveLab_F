@@ -87,16 +87,20 @@ export class ScoreSpermComponent implements OnInit {
     if (this.existingSpermScore){
       this.operateSpermService.updateExistingSpermScore(scoreSpermForm).subscribe(res=>{
         this.commonService.judgeTheResponse(res, "更新");
+        if (this.operateSpermService.baseOperateSpermInfo){
+          this.operateSpermService.getExistingSpermScore(this.operateSpermService.baseOperateSpermInfo.spermFromCourseOfTreatmentId)
+        }
         this.onCancel();
       })
     }
     else{
       this.operateSpermService.addSpermScore(scoreSpermForm).subscribe(res=>{
         this.commonService.judgeTheResponse(res, "新增");
+        if (this.operateSpermService.baseOperateSpermInfo){
+          this.operateSpermService.getExistingSpermScore(this.operateSpermService.baseOperateSpermInfo.spermFromCourseOfTreatmentId)
+        }
         this.onCancel();
       })
     }
-    
   }
-  
 }

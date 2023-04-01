@@ -52,7 +52,7 @@
                 <select class="form-select" formControlName="embryologist">
                     <option selected>請選擇操作胚胎師</option>
                     <option *ngFor="let embryologist of embryologists" [value]="embryologist.employeeId">{{embryologist.name}}</option>
-                  </select>
+                </select>
             </div>
             <input type="number" class="d-none" formControlName="spermScoreTimePointId">
             <input type="text" class="d-none" formControlName="courseOfTreatmentId">

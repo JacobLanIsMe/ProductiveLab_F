@@ -23,7 +23,7 @@
             <div class="col-3"><span class="fw-bold">精蟲來源: </span><span>{{baseOperateSpermInfo.isFresh ? "新鮮精液" : "解凍精蟲"}}</span></div>
             <div class="col-5"><span class="fw-bold">取精方式: </span><span>{{baseOperateSpermInfo.spermRetrievalMethod}}</span></div>
         </div>
-        <ng-container *ngIf="baseOperateSpermInfo.existingSpermScores.length > 0">
+        <ng-container *ngIf="existingSpermScores">
             <table class="table table-hover mt-3" style="font-size: 14px;">
                 <thead>
                   <tr class="table-warning">
@@ -41,7 +41,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr *ngFor="let score of baseOperateSpermInfo.existingSpermScores">
+                  <tr *ngFor="let score of existingSpermScores">
                     <td>{{score.spermScoreTimePoint}}</td>
                     <td>{{score.abstinence}}</td>
                     <td>{{score.volume}}</td>
