@@ -76,13 +76,7 @@ export class FreezeSpermComponent implements OnInit{
 
   }
   onDeleteMedium(index: number){
-    if ((<FormArray>(this.freezeSpermForm.get("mediumInUseArray"))).controls.length <= 1){
-      return;
-    }
-    else{
-      (<FormArray>(this.freezeSpermForm.get("mediumInUseArray"))).removeAt(index);
-    }
-    
+    this.manageMediumService.deleteMediumFromFormArray(<FormArray>(this.freezeSpermForm.get("mediumInUseArray")), index);
   }
   onAddMedium(){
     const mediumFormControl = new FormControl(null, Validators.required);

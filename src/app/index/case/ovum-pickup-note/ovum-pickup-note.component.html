@@ -58,27 +58,51 @@
             </div>
         </div>
     </div>
-    <div class="row align-items-end">
-        
+    <div class="row align-items-start">
+        <div class="col-4">
+            <div class="d-flex justify-content-between align-items-end">
+                <div class="fs-5 fw-bold text-warning-emphasis"><fa-icon [icon]="faFlask" class="me-3"></fa-icon>選擇培養液
+                </div>
+                <button type="button" class="btn btn-outline-secondary btn-sm" (click)="onAddMedium()">增加培養液</button>
+            </div>
+            <hr>
+
+            <div formArrayName="mediumInUse">
+                <div class="d-flex justify-content-start align-items-center"
+                    *ngFor="let medium of getMediumInUseArray(); let i = index">
+                    <div class="input-group mb-3">
+                        <div class="input-group-text">培養液</div>
+                        <select class="form-select" [formControlName]="i">
+                            <ng-container *ngIf="mediums && mediums.isSuccess">
+                                <option *ngFor="let medium of mediums.data" [value]="medium.mediumInUseId">
+                                    {{medium.name}}/{{medium.lotNumber}}</option>
+                            </ng-container>
+                        </select>
+                    </div>
+                    <button type="button" class="border border-0 bg-transparent" (click)="onDeleteMedium(i)"><fa-icon
+                            [icon]="faXmark" class="text-danger"></fa-icon></button>
+                </div>
+            </div>
+
+
+        </div>
         <div class="col-4">
             <div class="fs-5 fw-bold text-warning-emphasis"><fa-icon [icon]="faPerson" class="me-3"></fa-icon>找卵胚胎師
             </div>
             <hr>
-            <div class="row g-3 align-items-center">
-                <div class="col-4">
-                    <label class="col-form-label">胚胎師</label>
-                </div>
-                <div class="col-8">
+            <div class="row align-items-center">
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="basic-addon1">胚胎師</span>
                     <select class="form-select" formControlName="embryologist">
-                        <option *ngFor="let embryologist of embryologists" [value]="embryologist.employeeId">{{embryologist.name}}</option>
+                        <option *ngFor="let embryologist of embryologists" [value]="embryologist.employeeId">
+                            {{embryologist.name}}</option>
                     </select>
                 </div>
             </div>
         </div>
-        <div class="col-4"></div>
         <div class="col-4">
-            <button type="submit" class="btn btn-primary w-100" [disabled]="!ovumPickupForm.valid || isAlreadyAdded">存檔</button>
+            <button type="submit" class="btn btn-primary w-100"
+                [disabled]="!ovumPickupForm.valid || isAlreadyAdded">存檔</button>
         </div>
     </div>
-    <input class="d-none" type="text" formControlName="courseOfTreatmentId">
 </Form>

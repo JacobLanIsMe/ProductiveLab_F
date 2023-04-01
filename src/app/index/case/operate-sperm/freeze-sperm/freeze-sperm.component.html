@@ -79,11 +79,16 @@
                         <span class="input-group-text">操作時間</span>
                         <input type="datetime-local" class="form-control" formControlName="freezeTime">
                     </div>
-                    <div class="fw-bold" formArrayName="mediumInUseArray">選擇培養液:
+                    <div class="fw-bold" formArrayName="mediumInUseArray">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <div>選擇培養液:</div>
+                            <button type="button" class="btn btn-outline-secondary btn-sm"
+                                (click)="onAddMedium()">新增培養液</button>
+                        </div>
                         <div class="d-flex justify-content-start align-items-center"
                             *ngFor="let medium of getMediumInUseArray(); let i = index">
                             <div class="input-group mb-3">
-                                <span class="input-group-text">培養液</span>
+                                <div class="input-group-text">培養液</div>
                                 <select class="form-select" [formControlName]="i">
                                     <ng-container *ngIf="mediums">
                                         <ng-container *ngIf="mediums.isSuccess">
@@ -97,7 +102,6 @@
                                 (click)="onDeleteMedium(i)"><fa-icon [icon]="faXmark"
                                     class="text-danger"></fa-icon></button>
                         </div>
-                        <button type="button" class="btn btn-secondary btn-sm" (click)="onAddMedium()">新增培養液</button>
                     </div>
                     <div class="d-flex justify-content-end">
                         <button class="btn btn-outline-primary btn-sm" type="button" (click)="onCancel()">取消</button>
