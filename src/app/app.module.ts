@@ -35,6 +35,7 @@ import { ManageStorageComponent } from './index/manage-storage/manage-storage.co
 import { AddNewStorageTankComponent } from './index/manage-storage/add-new-storage-tank/add-new-storage-tank.component';
 import { SearchEmptyStorageUnitComponent } from './index/manage-storage/search-empty-storage-unit/search-empty-storage-unit.component';
 import { AddCourseOfTreatmentComponent } from './index/header/add-course-of-treatment/add-course-of-treatment.component';
+import { BaseObservationNoteComponent } from './index/case/observation-note/base-observation-note/base-observation-note.component';
 
 
 @NgModule({
@@ -69,7 +70,8 @@ import { AddCourseOfTreatmentComponent } from './index/header/add-course-of-trea
     ManageStorageComponent,
     AddNewStorageTankComponent,
     SearchEmptyStorageUnitComponent,
-    AddCourseOfTreatmentComponent
+    AddCourseOfTreatmentComponent,
+    BaseObservationNoteComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,18 @@
+<ng-container *ngIf="observationNote">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th scope="col">卵子編號</th>
+                <th scope="col" *ngFor="let date of observationDate;let i = index">
+                    {{date|date:"MM/dd"}}  (D{{i}})</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let ovum of observationNote">
+                <th scope="row">{{ovum.ovumNumber}}</th>
+                <td *ngFor="let note of ovum.orderedObservationNote" style="cursor:pointer"></td>
+            </tr>
+        </tbody>
+    </table>
+</ng-container>

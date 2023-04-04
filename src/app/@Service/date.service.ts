@@ -40,5 +40,9 @@ export class DateService {
     return newNum;
   }
 
+  addObservationDate(ovumPickupDate: Date, i: number){
+    let date = new Date(ovumPickupDate)
+    return new Date(date.setDate(date.getDate()+i));
+  }
 
 }
