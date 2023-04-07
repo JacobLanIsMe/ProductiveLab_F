@@ -3,6 +3,7 @@ import { Subscription } from 'rxjs';
 import { MainPageService } from './../../@Service/main-page.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MainPageDto } from 'src/app/@Models/mainPageDto.model';
+import { TreatmentService } from 'src/app/@Service/treatment.service';
 
 @Component({
   selector: 'app-main-page',
@@ -11,7 +12,7 @@ import { MainPageDto } from 'src/app/@Models/mainPageDto.model';
 })
 export class MainPageComponent implements OnInit, OnDestroy {
   mainPageInfos: MainPageDto[] = [];
-  constructor(private mainPageService: MainPageService, private functionHeaderService: FunctionHeaderService){}
+  constructor(private mainPageService: MainPageService, private functionHeaderService: FunctionHeaderService, private treatmentService:TreatmentService){}
   ngOnDestroy(): void {
     this.paramsSubscription?.unsubscribe();
   }

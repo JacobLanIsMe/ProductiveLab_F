@@ -13,6 +13,7 @@ export class BaseTreatmentInfoComponent implements OnInit {
   ngOnInit(): void {
     this.treatmentService.getBaseTreatmentInfo(this.mainPageService.selectedCourseId).subscribe(res=>{
       this.baseTreatmentInfo = res;
+      this.treatmentService.baseTreatmentInfo = res;
     })
   }
   baseTreatmentInfo?: BaseTreatmentInfoDto;

@@ -1,0 +1,149 @@
+<div class="alertContainer">
+    <div class="alertBox" style="height:90vh; overflow:auto">
+        <div class="fs-5 fw-bold text-warning-emphasis"><fa-icon [icon]="faList" class="me-3"></fa-icon>觀察記錄</div>
+        <div *ngIf="baseTreatmentInfo && selectedOvumPickup">
+            <span class="fw-bold me-2">療程編號:</span><span
+                class="me-3">{{baseTreatmentInfo.courseOfTreatmentSqlId}}</span>
+            <span class="fw-bold me-2">卵子編號:</span><span class="me-3">{{selectedOvumPickup.ovumNumber}}</span>
+            <span class="fw-bold me-2">Day:</span><span class="me-3">{{selectedDay}}</span>
+        </div>
+        <hr>
+        <form [formGroup]="observationNoteForm" (ngSubmit)="onSubmit(observationNoteForm)">
+            <div class="input-group mb-3">
+                <span class="input-group-text">觀察時間</span>
+                <input type="datetime-local" class="form-control" formControlName="observationTime">
+            </div>
+            <div class="input-group mb-3">
+                <span class="input-group-text">處理者</span>
+                <select class="form-select" formControlName="embryologist">
+                    <option *ngFor="let embryologist of embryologists" [value]="embryologist.employeeId">
+                        {{embryologist.name}}</option>
+                </select>
+            </div>
+            <div class="input-group mb-3">
+                <span class="input-group-text">操作</span>
+                <select class="form-select" formControlName="operationTypeId">
+                    <option *ngFor="let operationType of operationTypes" [value]="operationType.id">
+                        {{operationType.name}}</option>
+                    <option></option>
+                </select>
+            </div>
+            <div class="input-group mb-3">
+                <span class="input-group-text">卵子成熟度</span>
+                <select class="form-select" formControlName="ovumMaturationId">
+                    <option *ngFor="let ovumMaturation of ovumMaturations" [value]="ovumMaturation.id">
+                        {{ovumMaturation.name}}</option>
+                    <option></option>
+                </select>
+            </div>
+            <div class="input-group mb-3">
+                <span class="input-group-text">觀察</span>
+                <select class="form-select" formControlName="observationTypeId">
+                    <option *ngFor="let observationType of observationTypes" [value]="observationType.id">
+                        {{observationType.name}}</option>
+                    <option></option>
+                </select>
+            </div>
+            <div class="input-group mb-3">
+                <span class="input-group-text">卵子異常特徵</span>
+                <select class="form-select" formControlName="ovumAbnormalityId">
+                    <option *ngFor="let ovumAbnormalitie of ovumAbnormalities" [value]="ovumAbnormalitie.id">
+                        {{ovumAbnormalitie.name}}</option>
+                    <option></option>
+                </select>
+            </div>
+            <div class="input-group mb-3">
+                <span class="input-group-text">受精結果</span>
+                <select class="form-select" formControlName="fertilisationResultId">
+                    <option *ngFor="let fertilisationResult of fertilisationResults" [value]="fertilisationResult.id">
+                        {{fertilisationResult.name}}</option>
+                    <option></option>
+                </select>
+            </div>
+            <div class="input-group mb-3">
+                <span class="input-group-text">分裂期胚胎評分(C/G/F)</span>
+                <select class="form-select" formControlName="blastomereScore_C_Id">
+                    <option *ngFor="let blastomereScore_C of blastomereScore?.blastomereScore_C"
+                        [value]="blastomereScore_C.id">{{blastomereScore_C.name}}</option>
+                    <option></option>
+                </select>
+                <select class="form-select" formControlName="blastomereScore_G_Id">
+                    <option *ngFor="let blastomereScore_G of blastomereScore?.blastomereScore_G"
+                        [value]="blastomereScore_G.id">{{blastomereScore_G.name}}</option>
+                    <option></option>
+                </select>
+                <select class="form-select" formControlName="blastomereScore_F_Id">
+                    <option *ngFor="let blastomereScore_F of blastomereScore?.blastomereScore_F"
+                        [value]="blastomereScore_F.id">{{blastomereScore_F.name}}</option>
+                    <option></option>
+                </select>
+            </div>
+            <div class="input-group mb-3">
+                <span class="input-group-text">胚胎狀態</span>
+                <select class="form-select" formControlName="embryoStatusId">
+                    <option *ngFor="let embryoStatus of embryoStatuses" [value]="embryoStatus.id">{{embryoStatus.name}}
+                    </option>
+                    <option></option>
+                </select>
+            </div>
+            <div class="input-group mb-3">
+                <span class="input-group-text">囊胚期胚胎評分(Expansion/ICE/TE)</span>
+                <select class="form-select" formControlName="blastocystScore_Expansion_Id">
+                    <option *ngFor="let expansion of blastocystScore?.blastocystScore_Expansion" [value]="expansion.id">
+                        {{expansion.name}}</option>
+                    <option></option>
+                </select>
+                <select class="form-select" formControlName="blastocystScore_ICE_Id">
+                    <option *ngFor="let ice of blastocystScore?.blastocystScore_ICE" [value]="ice.id">{{ice.name}}
+                    </option>
+                    <option></option>
+                </select>
+                <select class="form-select" formControlName="blastocystScore_TE_Id">
+                    <option *ngFor="let te of blastocystScore?.blastocystScore_TE" [value]="te.id">{{te.name}}</option>
+                    <option></option>
+                </select>
+            </div>
+            <div class="input-group mb-3">
+                <span class="input-group-text">KID Score</span>
+                <input type="text" class="form-control" formControlName="kidScore">
+            </div>
+            <div class="input-group mb-3">
+                <span class="input-group-text">備註</span>
+                <textarea class="form-control" formControlName="memo"></textarea>
+            </div>
+            <div class="input-group mb-3">
+                <span class="input-group-text">PGTA報告</span>
+                <input type="text" class="form-control" placeholder="PGTA編號" formControlName="pgtaNumber">
+                <input type="text" class="form-control" placeholder="PGTA結果" formControlName="pgtaResult">
+                <input type="text" class="form-control" placeholder="PGTM結果" formControlName="pgtmResult">
+            </div>
+            <hr>
+            <div class="input-group mb-3">
+                <input type="file" class="form-control" multiple (change)="fileChange($event)">
+            </div>
+            <ng-container *ngIf="imgUrls.length > 0">
+                <div class="d-flex justify-content-start align-items-center">
+                    <div *ngFor="let imgUrl of imgUrls; let i = index" class="me-1">
+                        <div>
+                            <input class="form-check-input" type="radio" name="mainPhoto"
+                                (change)="onSelectMainPhoto(i)">
+                        </div>
+                        <div style="width:100px;aspect-ratio:1/1;border:1px lightgray solid">
+                            <img [src]="imgUrl" style="width:100%;object-fit:contain;">
+                        </div>
+                    </div>
+                </div>
+            </ng-container>
+            <div class="d-flex justify-content-end">
+                <button type="button" class="btn btn-outline-primary btn-sm" (click)="onCancel()">取消</button>
+                <ng-container *ngIf="!selectedObservationNoteId">
+                    <button class="btn btn-primary btn-sm ms-3" [disabled]="!observationNoteForm.valid">新增觀察紀錄</button>
+                </ng-container>
+                <ng-container *ngIf="selectedObservationNoteId">
+                    <button type="button" class="btn btn-outline-danger btn-sm ms-3" (click)="onDelete(selectedObservationNoteId)">刪除此筆紀錄</button>
+                    <button type="button" class="btn btn-primary btn-sm ms-3" [disabled]="!observationNoteForm.valid" (click)="onUpdate(selectedObservationNoteId)">更新此筆紀錄</button>
+                </ng-container>
+            </div>
+        </form>
+    </div>
+</div>
