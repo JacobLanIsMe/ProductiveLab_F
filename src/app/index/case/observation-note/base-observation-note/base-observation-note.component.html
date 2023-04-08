@@ -10,12 +10,12 @@
         <tbody>
             <tr *ngFor="let ovum of observationNote">
                 <th scope="row">{{ovum.ovumNumber}}</th>
-                <td *ngFor="let notes of ovum.orderedObservationNote; let i = index" style="font-size:0.5em;height:1px" align='center'>
+                <td *ngFor="let notes of ovum.orderedObservationNote; let i = index" style="font-size:0.5em;height:1px;text-align:center;">
                     <ng-container *ngIf="notes.length === 0">
                         <div (click)="onOpenObservationNoteForm(ovum, i)" style="cursor:pointer;width:100%;height:100%;"></div>
                     </ng-container>
                     <ng-container *ngIf="notes.length>0">
-                        <div *ngFor="let note of notes" (click)="onOpenObservationNoteForm(ovum, i, note.observationNoteId)">
+                        <div *ngFor="let note of notes" (click)="onOpenExistingObservationNote(ovum, note.observationNoteId)" style="cursor:pointer">
                             <div>{{note.observationType}}</div>
                             <div>{{note.observationTime| date:"yyyy/MM/dd hh:mm:ss"}}</div>
                             <ng-container *ngIf="note.mainPhotoBase64">
@@ -28,7 +28,6 @@
                         </div>
                         <div (click)="onOpenObservationNoteForm(ovum, i)" style="cursor:pointer;"><fa-icon [icon]="faPlus"></fa-icon></div>
                     </ng-container>
-                    
                 </td>
             </tr>
         </tbody>

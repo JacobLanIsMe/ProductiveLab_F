@@ -7,6 +7,7 @@ import { BlastomereScoreDto } from '../@Models/blastomereScoreDto.model';
 import { BlastocystScoreDto } from '../@Models/blastocystScoreDto.model';
 import { BaseResponseDto } from '../@Models/baseResponseDto.model';
 import { GetObservationNoteDto } from '../@Models/getObservationNoteDto.model';
+import { GetObservationNoteNameDto } from '../@Models/getObservationNoteNameDto';
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +15,7 @@ import { GetObservationNoteDto } from '../@Models/getObservationNoteDto.model';
 export class ObservationNoteService {
   constructor(private http:HttpClient) { }
   isOpenObservationNoteForm = new Subject<boolean>();
+  isOpenExistingObservationNote = new Subject<boolean>();
   observationNote = new Subject<ObservationNoteDto[]>();
   selectedOvumPickup?: ObservationNoteDto = undefined;
   selectedDay?: number;
@@ -53,6 +55,11 @@ export class ObservationNoteService {
   }
   getExistingObservationNote(observationNoteId: string){
     return this.http.get<GetObservationNoteDto>("/api/ObservationNote/GetExistingObservationNote", {
+      params: new HttpParams().append("observationNoteId", observationNoteId)
+    })
+  }
+  getExistingObservationNoteName(observationNoteId: string){
+    return this.http.get<GetObservationNoteNameDto>("/api/ObservationNote/GetExistingObservationNoteName",{
       params: new HttpParams().append("observationNoteId", observationNoteId)
     })
   }

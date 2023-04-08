@@ -1,6 +1,6 @@
 import { ObservationNotePhotoDto } from "./observationNotePhotoDto.model";
 
-export class GetObservationNoteDto{
+export class GetObservationNoteDto {
     constructor(
         public ovumPickupDetailId:string,
         public observationTime:Date,

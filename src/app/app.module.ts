@@ -37,6 +37,7 @@ import { SearchEmptyStorageUnitComponent } from './index/manage-storage/search-e
 import { AddCourseOfTreatmentComponent } from './index/header/add-course-of-treatment/add-course-of-treatment.component';
 import { BaseObservationNoteComponent } from './index/case/observation-note/base-observation-note/base-observation-note.component';
 import { ObservationNoteFormComponent } from './index/case/observation-note/observation-note-form/observation-note-form.component';
+import { ExistingObservationNoteInfoComponent } from './index/case/observation-note/existing-observation-note-info/existing-observation-note-info.component';
 
 
 @NgModule({
@@ -73,7 +74,8 @@ import { ObservationNoteFormComponent } from './index/case/observation-note/obse
     SearchEmptyStorageUnitComponent,
     AddCourseOfTreatmentComponent,
     BaseObservationNoteComponent,
-    ObservationNoteFormComponent
+    ObservationNoteFormComponent,
+    ExistingObservationNoteInfoComponent
   ],
   imports: [
     BrowserModule,

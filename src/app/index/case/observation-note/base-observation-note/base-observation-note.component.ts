@@ -30,15 +30,19 @@ export class BaseObservationNoteComponent implements OnInit, OnDestroy {
   observationNote: ObservationNoteDto[] = [];
   observationDate: Date[] = [];
   faPlus = faPlus;
-  onOpenObservationNoteForm(selectedOvumPickup: ObservationNoteDto, index: number, observationNoteId?:string){
+  onOpenObservationNoteForm(selectedOvumPickup: ObservationNoteDto, index: number){
     this.observationNoteService.selectedOvumPickup = selectedOvumPickup;
     this.observationNoteService.selectedDay = index;
+    this.observationNoteService.isOpenObservationNoteForm.next(true);
+  }
+  onOpenExistingObservationNote(selectedOvumPickup: ObservationNoteDto, observationNoteId:string){
+    this.observationNoteService.selectedOvumPickup = selectedOvumPickup;
     if (observationNoteId!==null){
       this.observationNoteService.selectedObservationNoteId = observationNoteId;
     }
     else{
       this.observationNoteService.selectedObservationNoteId = undefined;
     }
-    this.observationNoteService.isOpenObservationNoteForm.next(true);
+    this.observationNoteService.isOpenExistingObservationNote.next(true);
   }
 }

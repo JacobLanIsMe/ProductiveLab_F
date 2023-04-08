@@ -11,12 +11,18 @@ export class ObservationNoteComponent implements OnInit, OnDestroy {
   constructor(private observationNoteService: ObservationNoteService){}
   ngOnDestroy(): void {
     this.openObservationNoteFormSubscription?.unsubscribe();
+    this.openExistingObservationNoteSubscription?.unsubscribe();
   }
   ngOnInit(): void {
     this.openObservationNoteFormSubscription = this.observationNoteService.isOpenObservationNoteForm.subscribe(res=>{
       this.isOpenObservationNoteForm = res;
     })
+    this.openExistingObservationNoteSubscription = this.observationNoteService.isOpenExistingObservationNote.subscribe(res=>{
+      this.isOpenExistingObservationNote = res;
+    })
   }
   isOpenObservationNoteForm: boolean = false;
   openObservationNoteFormSubscription?:Subscription;
+  isOpenExistingObservationNote: boolean = false;
+  openExistingObservationNoteSubscription?:Subscription;
 }
