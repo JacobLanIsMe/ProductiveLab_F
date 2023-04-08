@@ -63,4 +63,9 @@ export class ObservationNoteService {
       params: new HttpParams().append("observationNoteId", observationNoteId)
     })
   }
+  deleteObservationNote(observationNoteId: string){
+    return this.http.get<BaseResponseDto>("/api/ObservationNote/DeleteObservationNote",{
+      params: new HttpParams().append("observationNoteId", observationNoteId)
+    })
+  }
 }
