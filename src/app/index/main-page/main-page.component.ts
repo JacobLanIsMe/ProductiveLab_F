@@ -3,7 +3,6 @@ import { Subscription } from 'rxjs';
 import { MainPageService } from './../../@Service/main-page.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MainPageDto } from 'src/app/@Models/mainPageDto.model';
-import { TreatmentService } from 'src/app/@Service/treatment.service';
 
 @Component({
   selector: 'app-main-page',
@@ -12,7 +11,7 @@ import { TreatmentService } from 'src/app/@Service/treatment.service';
 })
 export class MainPageComponent implements OnInit, OnDestroy {
   mainPageInfos: MainPageDto[] = [];
-  constructor(private mainPageService: MainPageService, private functionHeaderService: FunctionHeaderService, private treatmentService:TreatmentService){}
+  constructor(private mainPageService: MainPageService, private functionHeaderService: FunctionHeaderService){}
   ngOnDestroy(): void {
     this.paramsSubscription?.unsubscribe();
   }
@@ -23,7 +22,7 @@ export class MainPageComponent implements OnInit, OnDestroy {
   }
   paramsSubscription: Subscription | undefined;
   onSelectCourse(courseId: string){
-    this.mainPageService.selectedCourseId = courseId;
+    localStorage.setItem("selectedCourseId", courseId);
     this.functionHeaderService.selectedFunction.next(this.functionHeaderService.caseSpecificFunctions[0]);
   }
 }

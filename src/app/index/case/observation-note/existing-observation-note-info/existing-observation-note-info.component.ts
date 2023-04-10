@@ -31,6 +31,7 @@ export class ExistingObservationNoteInfoComponent implements OnInit {
   mainPhotoBase64String?: string;
   baseTreatmentInfo?: BaseTreatmentInfoDto = this.treatmentService.baseTreatmentInfo;
   selectedOvumPickup = this.observationNoteService.selectedOvumPickup;
+  selectedDay = this.observationNoteService.selectedDay;
   faList = faList;
   onShowPhoto(photoBase64String:string){
     this.mainPhotoBase64String = photoBase64String;
@@ -42,15 +43,20 @@ export class ExistingObservationNoteInfoComponent implements OnInit {
     if (this.observationNoteService.selectedObservationNoteId){
       this.observationNoteService.deleteObservationNote(this.observationNoteService.selectedObservationNoteId).subscribe(res=>{
         this.commonService.judgeTheResponse(res, "刪除觀察紀錄");
-        this.observationNoteService.getObservationNote(this.mainPageService.selectedCourseId).subscribe(res=>{
-          this.observationNoteService.observationNote.next(res);
-        })
+        const courseOfTreatmentId = this.commonService.getCourseOfTreatmentId();
+        if (courseOfTreatmentId){
+          this.observationNoteService.showUpdatedObservationNote(courseOfTreatmentId)
+        }
         this.onCancel();
       })
     }
-    
   }
   onUpdate(){
-
+    if (this.selectedOvumPickup && this.selectedDay !== undefined && this.observationNoteService.selectedObservationNoteId){
+      this.observationNoteService.openObservationNoteFormOrOpenExistingObservationNote(this.selectedOvumPickup, this.selectedDay, this.observationNoteService.selectedObservationNoteId);
+      this.observationNoteService.isOpenObservationNoteForm.next(true);
+      this.observationNoteService.isOpenExistingObservationNote.next(false);
+    }
+    
   }
 }

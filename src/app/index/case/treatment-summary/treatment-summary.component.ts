@@ -4,6 +4,7 @@ import { TreatmentService } from './../../../@Service/treatment.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { TreatmentSummaryDto } from 'src/app/@Models/treatmentSummaryDto.model';
 import { faTable } from '@fortawesome/free-solid-svg-icons';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-treatment-summary',
@@ -11,12 +12,17 @@ import { faTable } from '@fortawesome/free-solid-svg-icons';
   styleUrls: ['./treatment-summary.component.css']
 })
 export class TreatmentSummaryComponent implements OnInit {
-  constructor(private treatmentService: TreatmentService, private mainPageService: MainPageService){}
+  constructor(private treatmentService: TreatmentService, private mainPageService: MainPageService, private route:ActivatedRoute){}
   
   
   ngOnInit(): void {
-    this.treatmentService.getTreatmentSummary(this.mainPageService.selectedCourseId).subscribe(res=>{
-      this.treatmentSummarys = res;
+    this.route.paramMap.subscribe(params=>{
+      const courseOfTreatmentId = params.get("id");
+      if (courseOfTreatmentId){
+        this.treatmentService.getTreatmentSummary(courseOfTreatmentId).subscribe(res=>{
+          this.treatmentSummarys = res;
+        })
+      }
     })
   }
   currentCourseOfTreatmentId: string | undefined;

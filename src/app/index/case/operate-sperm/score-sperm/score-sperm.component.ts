@@ -63,12 +63,13 @@ export class ScoreSpermComponent implements OnInit {
           "activityD": x.activityD,
           "morphology": x.morphology,
           "abstinence": x.abstinence,
-          "recordTime": x.recordTime
+          "recordTime": x.recordTime,
+          "embryologist": x.embryologist.toUpperCase()
         });
       }
     })
-    
-    if (this.mainPageService.selectedCourseId.toUpperCase() != this.operateSpermService.baseOperateSpermInfo!.spermFromCourseOfTreatmentId.toUpperCase() && (this.spermScoreTimePointId === 1 || this.spermScoreTimePointId === 2)){
+    const courseOfTreatmentId = this.commonService.getCourseOfTreatmentId();
+    if (courseOfTreatmentId && courseOfTreatmentId.toUpperCase() != this.operateSpermService.baseOperateSpermInfo!.spermFromCourseOfTreatmentId.toUpperCase() && (this.spermScoreTimePointId === 1 || this.spermScoreTimePointId === 2)){
       this.scoreSpermForm.disable();
     }
   }

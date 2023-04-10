@@ -105,7 +105,7 @@
             </div>
             <div class="input-group mb-3">
                 <span class="input-group-text">KID Score</span>
-                <input type="text" class="form-control" formControlName="kidScore">
+                <input type="number" step="0.1" class="form-control" formControlName="kidScore">
             </div>
             <div class="input-group mb-3">
                 <span class="input-group-text">備註</span>
@@ -128,8 +128,8 @@
                             <input class="form-check-input" type="radio" name="mainPhoto"
                                 (change)="onSelectMainPhoto(i)">
                         </div>
-                        <div style="width:100px;aspect-ratio:1/1;border:1px lightgray solid">
-                            <img [src]="imgUrl" style="width:100%;object-fit:contain;">
+                        <div style="width:100px;aspect-ratio:1/1;">
+                            <img [src]="imgUrl" style="max-width:100%;max-height:100%;">
                         </div>
                     </div>
                 </div>
@@ -140,7 +140,6 @@
                     <button class="btn btn-primary btn-sm ms-3" [disabled]="!observationNoteForm.valid">新增觀察紀錄</button>
                 </ng-container>
                 <ng-container *ngIf="selectedObservationNoteId">
-                    <button type="button" class="btn btn-outline-danger btn-sm ms-3" (click)="onDelete(selectedObservationNoteId)">刪除此筆紀錄</button>
                     <button type="button" class="btn btn-primary btn-sm ms-3" [disabled]="!observationNoteForm.valid" (click)="onUpdate(selectedObservationNoteId)">更新此筆紀錄</button>
                 </ng-container>
             </div>

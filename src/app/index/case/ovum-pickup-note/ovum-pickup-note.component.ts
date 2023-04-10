@@ -9,6 +9,7 @@ import { MainPageService } from 'src/app/@Service/main-page.service';
 import Swal from 'sweetalert2';
 import { MediumDto } from 'src/app/@Models/mediumDto.model';
 import { ManageMediumService } from 'src/app/@Service/manage-medium.service';
+import { CommonService } from 'src/app/@Service/common.service';
 
 @Component({
   selector: 'app-ovum-pickup-note',
@@ -16,7 +17,7 @@ import { ManageMediumService } from 'src/app/@Service/manage-medium.service';
   styleUrls: ['./ovum-pickup-note.component.css']
 })
 export class OvumPickupNoteComponent implements OnInit {
-  constructor(private dateService: DateService, private treatmentService: TreatmentService, private employeeService: EmployeeService, private mainPageService: MainPageService, private manageMediumService: ManageMediumService){}
+  constructor(private dateService: DateService, private treatmentService: TreatmentService, private employeeService: EmployeeService, private mainPageService: MainPageService, private manageMediumService: ManageMediumService, private commonService:CommonService){}
   ngOnInit(): void {
     this.ovumPickupForm = new FormGroup({
       "operationTime": new FormGroup({
@@ -34,7 +35,7 @@ export class OvumPickupNoteComponent implements OnInit {
       }),
       "mediumInUse": new FormArray([new FormControl(null, Validators.required)]),
       "embryologist": new FormControl("", Validators.required),
-      "courseOfTreatmentId": new FormControl(this.mainPageService.selectedCourseId, Validators.required),
+      "courseOfTreatmentId": new FormControl(this.commonService.getCourseOfTreatmentId(), Validators.required),
     });
     this.employeeService.getAllEmbryologist().subscribe(res=>{
       this.embryologists = res;

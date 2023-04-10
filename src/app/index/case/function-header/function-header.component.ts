@@ -1,7 +1,7 @@
-import { MainPageService } from './../../../@Service/main-page.service';
 import { FunctionDto } from '../../../@Models/functionDto.model';
 import { FunctionHeaderService } from './../../../@Service/function-header.service';
 import { Component, OnInit } from '@angular/core';
+import { CommonService } from 'src/app/@Service/common.service';
 
 @Component({
   selector: 'app-function-header',
@@ -9,12 +9,15 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./function-header.component.css']
 })
 export class FunctionHeaderComponent implements OnInit {
-  constructor(private functionHeaderService: FunctionHeaderService, private mainPageService: MainPageService){}
+  constructor(private functionHeaderService: FunctionHeaderService, private commonService:CommonService){}
   
   ngOnInit(): void {
     this.functions = this.functionHeaderService.caseSpecificFunctions;
-    this.courseId = this.mainPageService.selectedCourseId;
+    const courseOfTreatmentId = this.commonService.getCourseOfTreatmentId();
+    if (courseOfTreatmentId){
+      this.courseId = courseOfTreatmentId;
+    }
   }
   functions: FunctionDto[] = [];
-  courseId: string = "";
+  courseId: string ="";
 }

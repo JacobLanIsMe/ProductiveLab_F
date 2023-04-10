@@ -8,6 +8,7 @@ import { BlastocystScoreDto } from '../@Models/blastocystScoreDto.model';
 import { BaseResponseDto } from '../@Models/baseResponseDto.model';
 import { GetObservationNoteDto } from '../@Models/getObservationNoteDto.model';
 import { GetObservationNoteNameDto } from '../@Models/getObservationNoteNameDto';
+import { FormGroup } from '@angular/forms';
 
 @Injectable({
   providedIn: 'root'
@@ -24,6 +25,11 @@ export class ObservationNoteService {
   getObservationNote(courseOfTreatmentId: string){
     return this.http.get<ObservationNoteDto[]>("/api/ObservationNote/GetObservationNote",{
       params: new HttpParams().append("courseOfTreatmentId", courseOfTreatmentId)
+    })
+  }
+  showUpdatedObservationNote(courseOfTreatmentId:string){
+    this.getObservationNote(courseOfTreatmentId).subscribe(res=>{
+      this.observationNote.next(res);
     })
   }
   getOvumMaturation(){
@@ -67,5 +73,45 @@ export class ObservationNoteService {
     return this.http.get<BaseResponseDto>("/api/ObservationNote/DeleteObservationNote",{
       params: new HttpParams().append("observationNoteId", observationNoteId)
     })
+  }
+  openObservationNoteFormOrOpenExistingObservationNote(selectedOvumPickup: ObservationNoteDto, index: number, observationNoteId?:string){
+    this.selectedOvumPickup = selectedOvumPickup;
+    this.selectedDay = index;
+    if (observationNoteId){
+      this.selectedObservationNoteId = observationNoteId;
+    }
+    else{
+      this.selectedObservationNoteId = undefined;
+    }
+  }
+  updateObservationNote(formData: FormData){
+    return this.http.post<BaseResponseDto>("/api/ObservationNote/UpdateObservationNote", formData);
+  }
+  generateFormData(form:FormGroup){
+    let formData = new FormData();
+    formData.append("ovumPickupDetailId", form.value.ovumPickupDetailId);
+    formData.append("observationTime", form.value.observationTime);
+    formData.append("embryologist", form.value.embryologist);
+    formData.append("ovumMaturationId", form.value.ovumMaturationId);
+    formData.append("observationTypeId", form.value.observationTypeId);
+    formData.append("ovumAbnormalityId", form.value.ovumAbnormalityId);
+    formData.append("fertilisationResultId", form.value.fertilisationResultId);
+    formData.append("blastomereScore_C_Id", form.value.blastomereScore_C_Id);
+    formData.append("blastomereScore_G_Id", form.value.blastomereScore_G_Id);
+    formData.append("blastomereScore_F_Id", form.value.blastomereScore_F_Id);
+    formData.append("embryoStatusId", form.value.embryoStatusId);
+    formData.append("blastocystScore_Expansion_Id", form.value.blastocystScore_Expansion_Id);
+    formData.append("blastocystScore_ICE_Id", form.value.blastocystScore_ICE_Id);
+    formData.append("blastocystScore_TE_Id", form.value.blastocystScore_TE_Id);
+    formData.append("memo", form.value.memo);
+    formData.append("kidScore", form.value.kidScore);
+    formData.append("pgtaNumber", form.value.pgtaNumber);
+    formData.append("pgtaResult", form.value.pgtaResult);
+    formData.append("pgtmResult", form.value.pgtmResult);
+    formData.append("operationTypeId", form.value.operationTypeId);
+    if (this.selectedDay){
+      formData.append("day",this.selectedDay.toString());
+    }
+    return formData;
   }
 }

@@ -74,7 +74,6 @@ export class ObservationNoteFormComponent implements OnInit {
       this.observationNoteService.getExistingObservationNote(this.observationNoteService.selectedObservationNoteId).subscribe(res=>{
         this.observationNoteForm.patchValue({
           "ovumPickupDetailId": res.ovumPickupDetailId,
-          "observationTime": res.observationTime,
           "embryologist":res.embryologist.toUpperCase(),
           "ovumMaturationId": res.ovumMaturationId,
           "observationTypeId": res.observationTypeId,
@@ -93,7 +92,8 @@ export class ObservationNoteFormComponent implements OnInit {
           "pgtaResult": res.pgtaResult,
           "pgtmResult": res.pgtmResult,
           "operationTypeId": res.operationTypeId
-        })
+        });
+        
       })
     }
   }
@@ -133,38 +133,22 @@ export class ObservationNoteFormComponent implements OnInit {
   onCancel(){
     this.observationNoteService.isOpenObservationNoteForm.next(false);
   }
-  onDelete(observationNoteId:string){
-
-  }
   onUpdate(observationNoteId:string){
-    console.log(this.observationNoteForm.value);
+    let formData = this.observationNoteService.generateFormData(this.observationNoteForm)
+    formData.append("observationNoteId", observationNoteId);
+    this.observationNoteService.updateObservationNote(formData).subscribe(res=>{
+      this.commonService.judgeTheResponse(res, "更改觀察紀錄");
+      const courseOfTreatmentId = this.commonService.getCourseOfTreatmentId();
+      if (courseOfTreatmentId){
+        this.observationNoteService.showUpdatedObservationNote(courseOfTreatmentId);
+      }
+      this.onCancel();
+    });
   }
   onSubmit(form: FormGroup) {
-    let formData = new FormData();
-    formData.append("ovumPickupDetailId", form.value.ovumPickupDetailId);
-    formData.append("observationTime", form.value.observationTime);
-    formData.append("embryologist", form.value.embryologist);
-    formData.append("ovumMaturationId", form.value.ovumMaturationId);
-    formData.append("observationTypeId", form.value.observationTypeId);
-    formData.append("ovumAbnormalityId", form.value.ovumAbnormalityId);
-    formData.append("fertilisationResultId", form.value.fertilisationResultId);
-    formData.append("blastomereScore_C_Id", form.value.blastomereScore_C_Id);
-    formData.append("blastomereScore_G_Id", form.value.blastomereScore_G_Id);
-    formData.append("blastomereScore_F_Id", form.value.blastomereScore_F_Id);
-    formData.append("embryoStatusId", form.value.embryoStatusId);
-    formData.append("blastocystScore_Expansion_Id", form.value.blastocystScore_Expansion_Id);
-    formData.append("blastocystScore_ICE_Id", form.value.blastocystScore_ICE_Id);
-    formData.append("blastocystScore_TE_Id", form.value.blastocystScore_TE_Id);
-    formData.append("memo", form.value.memo);
-    formData.append("kidScore", form.value.kidScore);
-    formData.append("pgtaNumber", form.value.pgtaNumber);
-    formData.append("pgtaResult", form.value.pgtaResult);
-    formData.append("pgtmResult", form.value.pgtmResult);
-    formData.append("operationTypeId", form.value.operationTypeId);
+    let formData = this.observationNoteService.generateFormData(form);
+    
     formData.append("mainPhotoIndex", this.selectedMainPhotoIndex.toString());
-    if (this.selectedDay){
-      formData.append("day",this.selectedDay.toString());
-    }
     if (this.observationNotePhotos){
       for (let i = 0; i<this.observationNotePhotos.length; i++){
         formData.append("photos", this.observationNotePhotos[i]);
@@ -172,9 +156,10 @@ export class ObservationNoteFormComponent implements OnInit {
     }
     this.observationNoteService.addObservationNote(formData).subscribe(res=>{
       this.commonService.judgeTheResponse(res,"新增觀察紀錄");
-      this.observationNoteService.getObservationNote(this.mainPageService.selectedCourseId).subscribe(res=>{
-        this.observationNoteService.observationNote.next(res);
-      })
+      const courseOfTreatmentId = this.commonService.getCourseOfTreatmentId();
+      if (courseOfTreatmentId){
+        this.observationNoteService.showUpdatedObservationNote(courseOfTreatmentId);
+      }
       this.onCancel();
     })
   }
