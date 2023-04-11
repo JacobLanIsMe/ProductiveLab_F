@@ -6,13 +6,14 @@ import { EmbryologistDto } from 'src/app/@Models/embryologistDto.model';
 import { DateService } from 'src/app/@Service/date.service';
 import { EmployeeService } from 'src/app/@Service/employee.service';
 import { ObservationNoteService } from 'src/app/@Service/observation-note.service';
-import { faList } from '@fortawesome/free-solid-svg-icons';
+import { faList, faCircleXmark } from '@fortawesome/free-solid-svg-icons';
 import { BaseTreatmentInfoDto } from 'src/app/@Models/baseTreatmentInfoDto.model';
 import { BlastomereScoreDto } from 'src/app/@Models/blastomereScoreDto.model';
 import { BlastocystScoreDto } from 'src/app/@Models/blastocystScoreDto.model';
 import { DomSanitizer } from '@angular/platform-browser';
 import { CommonService } from 'src/app/@Service/common.service';
 import { MainPageService } from 'src/app/@Service/main-page.service';
+import { ObservationNotePhotoDto } from 'src/app/@Models/observationNotePhotoDto.model';
 @Component({
   selector: 'app-observation-note-form',
   templateUrl: './observation-note-form.component.html',
@@ -93,7 +94,7 @@ export class ObservationNoteFormComponent implements OnInit {
           "pgtmResult": res.pgtmResult,
           "operationTypeId": res.operationTypeId
         });
-        
+        this.existingObservationNotePhotos = res.observationNotePhotos;
       })
     }
   }
@@ -108,12 +109,14 @@ export class ObservationNoteFormComponent implements OnInit {
   blastocystScore?: BlastocystScoreDto;
   operationTypes?: CommonDto[];
   faList = faList;
+  faCircleXmark = faCircleXmark;
   baseTreatmentInfo?: BaseTreatmentInfoDto = this.treatmentService.baseTreatmentInfo;
   selectedOvumPickup = this.observationNoteService.selectedOvumPickup;
   selectedDay = this.observationNoteService.selectedDay;
   selectedObservationNoteId = this.observationNoteService.selectedObservationNoteId;
   imgUrls: any[] = [];
   observationNotePhotos:any;
+  existingObservationNotePhotos?: ObservationNotePhotoDto[];
   selectedMainPhotoIndex = 0;
   fileChange(event: any) {
     this.observationNotePhotos = event.target.files;
@@ -127,15 +130,39 @@ export class ObservationNoteFormComponent implements OnInit {
       }
     }
   }
-  onSelectMainPhoto(index:number){
-    this.selectedMainPhotoIndex = index;
+  onSelectMainPhoto(index:number, photoName?:string){
+    if (this.existingObservationNotePhotos && this.existingObservationNotePhotos.length > 0){
+      this.existingObservationNotePhotos.forEach(x=>{
+        if (x.photoName === photoName){
+          x.isMainPhoto = true;
+        }
+        else{
+          x.isMainPhoto = false;
+        }
+      })
+    }
+    if (!photoName){
+      this.selectedMainPhotoIndex = index;
+    }
+    
+  }
+  deletePhoto(photoName:string){
+    if (this.existingObservationNotePhotos && this.existingObservationNotePhotos.length > 0){
+      const deletePhotoIndex = this.existingObservationNotePhotos.findIndex(x=>x.photoName === photoName);
+      if (deletePhotoIndex !== -1){
+        this.existingObservationNotePhotos.splice(deletePhotoIndex, 1);
+      }
+    }
   }
   onCancel(){
     this.observationNoteService.isOpenObservationNoteForm.next(false);
   }
   onUpdate(observationNoteId:string){
-    let formData = this.observationNoteService.generateFormData(this.observationNoteForm)
+    let formData = this.observationNoteService.generateFormData(this.observationNoteForm, this.selectedMainPhotoIndex, this.observationNotePhotos);
     formData.append("observationNoteId", observationNoteId);
+    if (this.existingObservationNotePhotos && this.existingObservationNotePhotos.length > 0){
+      formData.append("existingPhotos", JSON.stringify(this.existingObservationNotePhotos))
+    }
     this.observationNoteService.updateObservationNote(formData).subscribe(res=>{
       this.commonService.judgeTheResponse(res, "更改觀察紀錄");
       const courseOfTreatmentId = this.commonService.getCourseOfTreatmentId();
@@ -146,14 +173,7 @@ export class ObservationNoteFormComponent implements OnInit {
     });
   }
   onSubmit(form: FormGroup) {
-    let formData = this.observationNoteService.generateFormData(form);
-    
-    formData.append("mainPhotoIndex", this.selectedMainPhotoIndex.toString());
-    if (this.observationNotePhotos){
-      for (let i = 0; i<this.observationNotePhotos.length; i++){
-        formData.append("photos", this.observationNotePhotos[i]);
-      }
-    }
+    let formData = this.observationNoteService.generateFormData(form, this.selectedMainPhotoIndex, this.observationNotePhotos);
     this.observationNoteService.addObservationNote(formData).subscribe(res=>{
       this.commonService.judgeTheResponse(res,"新增觀察紀錄");
       const courseOfTreatmentId = this.commonService.getCourseOfTreatmentId();

@@ -87,7 +87,7 @@ export class ObservationNoteService {
   updateObservationNote(formData: FormData){
     return this.http.post<BaseResponseDto>("/api/ObservationNote/UpdateObservationNote", formData);
   }
-  generateFormData(form:FormGroup){
+  generateFormData(form:FormGroup, selectedMainPhotoIndex:number, observationNotePhotos:any){
     let formData = new FormData();
     formData.append("ovumPickupDetailId", form.value.ovumPickupDetailId);
     formData.append("observationTime", form.value.observationTime);
@@ -111,6 +111,12 @@ export class ObservationNoteService {
     formData.append("operationTypeId", form.value.operationTypeId);
     if (this.selectedDay){
       formData.append("day",this.selectedDay.toString());
+    }
+    formData.append("mainPhotoIndex", selectedMainPhotoIndex.toString());
+    if (observationNotePhotos){
+      for (let i = 0; i<observationNotePhotos.length; i++){
+        formData.append("photos", observationNotePhotos[i]);
+      }
     }
     return formData;
   }

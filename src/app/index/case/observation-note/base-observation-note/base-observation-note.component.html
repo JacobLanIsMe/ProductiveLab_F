@@ -1,5 +1,8 @@
-<ng-container *ngIf="observationNote">
-    <table class="table table-bordered">
+<ng-container *ngIf="observationNote && observationNote.length === 0">
+    <div class="text-center">無相關的觀察紀錄</div>
+</ng-container>
+<ng-container *ngIf="observationNote && observationNote.length > 0">
+    <table class="table table-bordered" style="text-align:center;">
         <thead>
             <tr>
                 <th scope="col">卵子編號</th>
@@ -10,7 +13,7 @@
         <tbody>
             <tr *ngFor="let ovum of observationNote">
                 <th scope="row">{{ovum.ovumNumber}}</th>
-                <td *ngFor="let notes of ovum.orderedObservationNote; let i = index" style="font-size:0.5em;height:1px;text-align:center;">
+                <td *ngFor="let notes of ovum.orderedObservationNote; let i = index" style="font-size:0.5em;height:1px;">
                     <ng-container *ngIf="notes.length === 0">
                         <div (click)="onOpenObservationNoteForm(ovum, i)" style="cursor:pointer;width:100%;height:100%;"></div>
                     </ng-container>

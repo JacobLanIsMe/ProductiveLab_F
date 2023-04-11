@@ -21,8 +21,10 @@ export class BaseObservationNoteComponent implements OnInit, OnDestroy {
     if (courseOfTreatmentId){
       this.observationNoteService.getObservationNote(courseOfTreatmentId).subscribe(res=>{
         this.observationNote = res;
-        for (let i = 0; i < 7; i++){
-          this.observationDate.push(this.dateService.addObservationDate(res[0].ovumPickupDate, i));
+        if (res.length > 0){
+          for (let i = 0; i < 7; i++){
+            this.observationDate.push(this.dateService.addObservationDate(res[0].ovumPickupDate, i));
+          }
         }
       })
     }
@@ -32,7 +34,7 @@ export class BaseObservationNoteComponent implements OnInit, OnDestroy {
     })
   }
   observationNoteSubscription?: Subscription;
-  observationNote: ObservationNoteDto[] = [];
+  observationNote?: ObservationNoteDto[];
   observationDate: Date[] = [];
   faPlus = faPlus;
   onOpenObservationNoteForm(selectedOvumPickup: ObservationNoteDto, index: number){

@@ -121,26 +121,47 @@
             <div class="input-group mb-3">
                 <input type="file" class="form-control" multiple (change)="fileChange($event)">
             </div>
-            <ng-container *ngIf="imgUrls.length > 0">
+            <div class="mb-3" *ngIf="imgUrls.length > 0">
+                <div class="fw-bold">新增的照片:</div>
                 <div class="d-flex justify-content-start align-items-center">
                     <div *ngFor="let imgUrl of imgUrls; let i = index" class="me-1">
                         <div>
                             <input class="form-check-input" type="radio" name="mainPhoto"
                                 (change)="onSelectMainPhoto(i)">
                         </div>
-                        <div style="width:100px;aspect-ratio:1/1;">
+                        <div class="d-flex justify-content-center align-items-center" style="width:100px;aspect-ratio:1/1;">
                             <img [src]="imgUrl" style="max-width:100%;max-height:100%;">
                         </div>
                     </div>
                 </div>
-            </ng-container>
+            </div>
+            <div class="mb-3" *ngIf="existingObservationNotePhotos && existingObservationNotePhotos.length>0">
+                <div class="fw-bold">已儲存的照片:</div>
+                <div class="d-flex justify-content-start align-items-center">
+                    <div class="me-3" *ngFor="let photo of existingObservationNotePhotos; let i = index">
+                        <div>
+                            <input class="form-check-input" type="radio" name="mainPhoto" [checked]="photo.isMainPhoto"
+                                (change)="onSelectMainPhoto(i, photo.photoName)">
+                        </div>
+
+                        <div class="d-flex justify-content-center align-items-center position-relative"
+                            style="width:100px; aspect-ratio:1/1;">
+                            <div class="deletePhoto" (click)="deletePhoto(photo.photoName)"><fa-icon [icon]="faCircleXmark"></fa-icon></div>
+                            <img [src]="'data:image/gif;base64,' + photo.imageBase64String" alt=""
+                                style="max-width:100%;max-height:100%;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
             <div class="d-flex justify-content-end">
                 <button type="button" class="btn btn-outline-primary btn-sm" (click)="onCancel()">取消</button>
                 <ng-container *ngIf="!selectedObservationNoteId">
                     <button class="btn btn-primary btn-sm ms-3" [disabled]="!observationNoteForm.valid">新增觀察紀錄</button>
                 </ng-container>
                 <ng-container *ngIf="selectedObservationNoteId">
-                    <button type="button" class="btn btn-primary btn-sm ms-3" [disabled]="!observationNoteForm.valid" (click)="onUpdate(selectedObservationNoteId)">更新此筆紀錄</button>
+                    <button type="button" class="btn btn-primary btn-sm ms-3" [disabled]="!observationNoteForm.valid"
+                        (click)="onUpdate(selectedObservationNoteId)">更新此筆紀錄</button>
                 </ng-container>
             </div>
         </form>
