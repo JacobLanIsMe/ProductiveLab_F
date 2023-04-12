@@ -87,19 +87,19 @@ export class ObservationNoteService {
   updateObservationNote(formData: FormData){
     return this.http.post<BaseResponseDto>("/api/ObservationNote/UpdateObservationNote", formData);
   }
-  generateFormData(form:FormGroup, selectedMainPhotoIndex:number, observationNotePhotos:any){
+  generateFormData(form:FormGroup, selectedMainPhotoIndex:number, observationNotePhotos:any, operationTypeId:number[], ovumAbnormalityId:number[], embryoStatusId:number[]){
     let formData = new FormData();
     formData.append("ovumPickupDetailId", form.value.ovumPickupDetailId);
     formData.append("observationTime", form.value.observationTime);
     formData.append("embryologist", form.value.embryologist);
     formData.append("ovumMaturationId", form.value.ovumMaturationId);
     formData.append("observationTypeId", form.value.observationTypeId);
-    formData.append("ovumAbnormalityId", form.value.ovumAbnormalityId);
+    formData.append("ovumAbnormalityId", JSON.stringify(ovumAbnormalityId));
     formData.append("fertilisationResultId", form.value.fertilisationResultId);
     formData.append("blastomereScore_C_Id", form.value.blastomereScore_C_Id);
     formData.append("blastomereScore_G_Id", form.value.blastomereScore_G_Id);
     formData.append("blastomereScore_F_Id", form.value.blastomereScore_F_Id);
-    formData.append("embryoStatusId", form.value.embryoStatusId);
+    formData.append("embryoStatusId", JSON.stringify(embryoStatusId));
     formData.append("blastocystScore_Expansion_Id", form.value.blastocystScore_Expansion_Id);
     formData.append("blastocystScore_ICE_Id", form.value.blastocystScore_ICE_Id);
     formData.append("blastocystScore_TE_Id", form.value.blastocystScore_TE_Id);
@@ -108,7 +108,8 @@ export class ObservationNoteService {
     formData.append("pgtaNumber", form.value.pgtaNumber);
     formData.append("pgtaResult", form.value.pgtaResult);
     formData.append("pgtmResult", form.value.pgtmResult);
-    formData.append("operationTypeId", form.value.operationTypeId);
+    formData.append("operationTypeId", JSON.stringify(operationTypeId));
+    formData.append("spindleResult", form.value.spindleResult);
     if (this.selectedDay){
       formData.append("day",this.selectedDay.toString());
     }

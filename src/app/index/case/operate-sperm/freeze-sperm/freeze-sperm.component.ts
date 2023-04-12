@@ -12,7 +12,6 @@ import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { faSnowflake, faXmark } from '@fortawesome/free-solid-svg-icons';
 import Swal from 'sweetalert2';
-import { Medium } from 'src/app/@Models/medium.model';
 import { EmbryologistDto } from 'src/app/@Models/embryologistDto.model';
 @Component({
   selector: 'app-freeze-sperm',

@@ -5,6 +5,8 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { TreatmentSummaryDto } from 'src/app/@Models/treatmentSummaryDto.model';
 import { faTable } from '@fortawesome/free-solid-svg-icons';
 import { ActivatedRoute } from '@angular/router';
+import { FunctionHeaderService } from 'src/app/@Service/function-header.service';
+import { FunctionDto } from 'src/app/@Models/functionDto.model';
 
 @Component({
   selector: 'app-treatment-summary',
@@ -12,7 +14,7 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./treatment-summary.component.css']
 })
 export class TreatmentSummaryComponent implements OnInit {
-  constructor(private treatmentService: TreatmentService, private mainPageService: MainPageService, private route:ActivatedRoute){}
+  constructor(private treatmentService: TreatmentService, private route:ActivatedRoute, private functionHeaderService: FunctionHeaderService){}
   
   
   ngOnInit(): void {
@@ -24,12 +26,16 @@ export class TreatmentSummaryComponent implements OnInit {
         })
       }
     })
+    this.functionHeaderService.isOpenSubfunction.subscribe(res=>{
+      this.isOpenSubFunction = res;
+    })
   }
   currentCourseOfTreatmentId: string | undefined;
   functionSubscription: Subscription | undefined ;
   treatmentSummarys: TreatmentSummaryDto[] = [];
   isSelectAll: boolean = false;
   faTable = faTable;
+  isOpenSubFunction: FunctionDto | null = null;
   onSelectAll(event: any){
     if (event.target.checked){
       this.treatmentSummarys.forEach(x=>{

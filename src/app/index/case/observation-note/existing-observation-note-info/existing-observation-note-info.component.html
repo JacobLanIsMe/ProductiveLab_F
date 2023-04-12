@@ -1,5 +1,5 @@
 <div class="alertContainer">
-    <div class="alertBox">
+    <div class="alertBox" style="max-height:90vh;overflow-y: auto;">
         <div class="fs-5 fw-bold text-warning-emphasis"><fa-icon [icon]="faList" class="me-3"></fa-icon>觀察記錄</div>
         <div *ngIf="baseTreatmentInfo && selectedOvumPickup">
             <span class="fw-bold me-2">療程編號:</span><span
@@ -24,15 +24,31 @@
             <div *ngIf="existingObservationNote" class="ms-3" style="width:40vh">
                 <div><span class="fw-bold me-2">觀察時間:</span><span>{{existingObservationNote.observationTime|date:"yyyy/MM/dd hh:mm:ss"}}</span></div>
                 <div><span class="fw-bold me-2">處理者:</span><span>{{existingObservationNote.embryologist}}</span></div>
-                <div><span class="fw-bold me-2">操作:</span><span>{{existingObservationNote.operationTypeName}}</span></div>
+                <div class="d-flex justify-content-start align-items-start">
+                    <div class="fw-bold me-2">操作:</div>
+                    <div>
+                        <div *ngFor="let operation of existingObservationNote.operationTypeName">{{operation}}</div>
+                    </div>
+                </div>
+                <div *ngIf="hasSpindleOperation()"><span class="fw-bold me-2">Spindle Result:</span><span>{{existingObservationNote.spindleResult}}</span></div>
                 <div><span class="fw-bold me-2">卵子成熟度:</span><span>{{existingObservationNote.ovumMaturationName}}</span></div>
                 <div><span class="fw-bold me-2">觀察:</span><span>{{existingObservationNote.observationTypeName}}</span></div>
-                <div><span class="fw-bold me-2">卵子異常特徵:</span><span>{{existingObservationNote.ovumAbnormalityName}}</span></div>
+                <div class="d-flex justify-content-start align-items-start">
+                    <div class="fw-bold me-2">卵子異常特徵:</div>
+                    <div>
+                        <div *ngFor="let abnormality of existingObservationNote.ovumAbnormalityName">{{abnormality}}</div>
+                    </div>
+                </div>
                 <div><span class="fw-bold me-2">受精結果:</span><span>{{existingObservationNote.fertilisationResultName}}</span></div>
                 <div><span class="fw-bold me-2">分裂期胚胎評分-C:</span><span>{{existingObservationNote.blastomereScore_C_Name}}</span></div>
                 <div><span class="fw-bold me-2">分裂期胚胎評分-G:</span><span>{{existingObservationNote.blastomereScore_G_Name}}</span></div>
                 <div><span class="fw-bold me-2">分裂期胚胎評分-F:</span><span>{{existingObservationNote.blastomereScore_F_Name}}</span></div>
-                <div><span class="fw-bold me-2">胚胎狀態:</span><span>{{existingObservationNote.embryoStatusName}}</span></div>
+                <div class="d-flex justify-content-start align-items-start">
+                    <div class="fw-bold me-2">胚胎狀態:</div>
+                    <div>
+                        <div *ngFor="let embryoStatus of existingObservationNote.embryoStatusName">{{embryoStatus}}</div>
+                    </div>
+                </div>
                 <div><span class="fw-bold me-2">囊胚期胚胎評分-Expansion:</span><span>{{existingObservationNote.blastocystScore_Expansion_Name}}</span></div>
                 <div><span class="fw-bold me-2">囊胚期胚胎評分-ICE:</span><span>{{existingObservationNote.blastocystScore_ICE_Name}}</span></div>
                 <div><span class="fw-bold me-2">囊胚期胚胎評分-TE:</span><span>{{existingObservationNote.blastocystScore_TE_Name}}</span></div>

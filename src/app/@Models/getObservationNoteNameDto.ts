@@ -13,16 +13,17 @@ export class GetObservationNoteNameDto{
         public embryologist:string,
         public ovumMaturationName:string,
         public observationTypeName:string,
-        public ovumAbnormalityName:string,
+        public ovumAbnormalityName:string[],
         public fertilisationResultName:string,
         public blastomereScore_C_Name:string,
         public blastomereScore_G_Name:string,
         public blastomereScore_F_Name:string,
-        public embryoStatusName:string,
+        public embryoStatusName:string[],
         public blastocystScore_Expansion_Name:string,
         public blastocystScore_ICE_Name:string,
         public blastocystScore_TE_Name:string,
-        public operationTypeName:string,
+        public operationTypeName:string[],
+        public spindleResult:string,
         public observationNotePhotos:ObservationNotePhotoDto[]
     ){}
 }

@@ -38,6 +38,7 @@ import { AddCourseOfTreatmentComponent } from './index/header/add-course-of-trea
 import { BaseObservationNoteComponent } from './index/case/observation-note/base-observation-note/base-observation-note.component';
 import { ObservationNoteFormComponent } from './index/case/observation-note/observation-note-form/observation-note-form.component';
 import { ExistingObservationNoteInfoComponent } from './index/case/observation-note/existing-observation-note-info/existing-observation-note-info.component';
+import { FreezeOvumComponent } from './index/case/treatment-summary/freeze-ovum/freeze-ovum.component';
 
 
 @NgModule({
@@ -75,7 +76,8 @@ import { ExistingObservationNoteInfoComponent } from './index/case/observation-n
     AddCourseOfTreatmentComponent,
     BaseObservationNoteComponent,
     ObservationNoteFormComponent,
-    ExistingObservationNoteInfoComponent
+    ExistingObservationNoteInfoComponent,
+    FreezeOvumComponent
   ],
   imports: [
     BrowserModule,

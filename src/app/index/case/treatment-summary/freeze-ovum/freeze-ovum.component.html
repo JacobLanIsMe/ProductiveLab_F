@@ -1,0 +1,11 @@
+<div class="alertContainer">
+    <div class="alertBox">
+        <div class="fs-5 fw-bold text-warning-emphasis" *ngIf="subfunction"><fa-icon [icon]="faSnowflake" class="me-3"></fa-icon>{{subfunction.name}}</div>
+        <hr>
+        <form [formGroup]="freezeOvumForm" (ngSubmit)="onSubmit(freezeOvumForm)">
+
+        </form>
+    </div>
+</div>
+
+

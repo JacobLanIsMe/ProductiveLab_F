@@ -22,11 +22,16 @@
             </div>
             <div class="input-group mb-3">
                 <span class="input-group-text">操作</span>
-                <select class="form-select" formControlName="operationTypeId">
-                    <option *ngFor="let operationType of operationTypes" [value]="operationType.id">
-                        {{operationType.name}}</option>
-                    <option></option>
-                </select>
+                <div class="btn-group" role="group">
+                    <ng-container *ngFor="let operationType of operationTypes">
+                        <input type="checkbox" class="btn-check" [id]="'operation'+operationType.id" [checked]="isSelectedOperation(operationType.id)" (change)="onSelectOperationType(operationType.id)" autocomplete="off">
+                        <label class="btn btn-outline-secondary btn-sm" [for]="'operation'+operationType.id">{{operationType.name}}</label>
+                    </ng-container>
+                </div>
+            </div>
+            <div class="input-group mb-3" *ngIf="isSelectSpindle()">
+                <span class="input-group-text" id="basic-addon1">Spindle Result</span>
+                <input type="text" class="form-control" formControlName="spindleResult">
             </div>
             <div class="input-group mb-3">
                 <span class="input-group-text">卵子成熟度</span>
@@ -46,11 +51,12 @@
             </div>
             <div class="input-group mb-3">
                 <span class="input-group-text">卵子異常特徵</span>
-                <select class="form-select" formControlName="ovumAbnormalityId">
-                    <option *ngFor="let ovumAbnormalitie of ovumAbnormalities" [value]="ovumAbnormalitie.id">
-                        {{ovumAbnormalitie.name}}</option>
-                    <option></option>
-                </select>
+                <div class="btn-group" role="group">
+                    <ng-container *ngFor="let ovumAbnormality of ovumAbnormalities">
+                        <input type="checkbox" class="btn-check" [id]="'abnormality'+ovumAbnormality.id" [checked]="isSelectedOvumAbnormality(ovumAbnormality.id)" (change)="onSelectOvumAbnormality(ovumAbnormality.id)" autocomplete="off">
+                        <label class="btn btn-outline-secondary btn-sm" [for]="'abnormality'+ovumAbnormality.id">{{ovumAbnormality.name}}</label>
+                    </ng-container>
+                </div>
             </div>
             <div class="input-group mb-3">
                 <span class="input-group-text">受精結果</span>
@@ -80,11 +86,12 @@
             </div>
             <div class="input-group mb-3">
                 <span class="input-group-text">胚胎狀態</span>
-                <select class="form-select" formControlName="embryoStatusId">
-                    <option *ngFor="let embryoStatus of embryoStatuses" [value]="embryoStatus.id">{{embryoStatus.name}}
-                    </option>
-                    <option></option>
-                </select>
+                <div class="btn-group" role="group">
+                    <ng-container *ngFor="let embryoStatus of embryoStatuses">
+                        <input type="checkbox" class="btn-check" [id]="'embryoStatus'+embryoStatus.id" [checked]="isSelectedEmbryoStatus(embryoStatus.id)" (change)="onSelectEmbryoStatus(embryoStatus.id)" autocomplete="off">
+                        <label class="btn btn-outline-secondary btn-sm" [for]="'embryoStatus'+embryoStatus.id">{{embryoStatus.name}}</label>
+                    </ng-container>
+                </div>
             </div>
             <div class="input-group mb-3">
                 <span class="input-group-text">囊胚期胚胎評分(Expansion/ICE/TE)</span>

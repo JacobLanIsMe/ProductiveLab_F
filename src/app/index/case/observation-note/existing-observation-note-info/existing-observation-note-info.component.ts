@@ -36,6 +36,20 @@ export class ExistingObservationNoteInfoComponent implements OnInit {
   onShowPhoto(photoBase64String:string){
     this.mainPhotoBase64String = photoBase64String;
   }
+  hasSpindleOperation(){
+    if (this.existingObservationNote){
+      const index = this.existingObservationNote.operationTypeName.findIndex(x=>x === "Spindle");
+      if (index !== -1){
+        return true;
+      }
+      else{
+        return false;
+      }
+    }
+    else{
+      return
+    }
+  }
   onCancel(){
     this.observationNoteService.isOpenExistingObservationNote.next(false);
   }

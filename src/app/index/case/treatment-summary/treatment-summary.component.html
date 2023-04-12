@@ -3,7 +3,7 @@
   <div class="fs-5 fw-bold" style="color:#FF8F59"><fa-icon [icon]="faTable" class="me-3"></fa-icon>療程總覽</div>
   <app-subfunction-header></app-subfunction-header>
 </div>
-<table class="table table-hover">
+<table class="table table-hover" style="text-align:center">
   <thead>
     <tr>
       <th scope="col">全選<span class="ms-1"><input type="checkbox" [(ngModel)]="isSelectAll"
@@ -32,3 +32,5 @@
     </tr>
   </tbody>
 </table>
+
+<app-freeze-ovum *ngIf="isOpenSubFunction && isOpenSubFunction.functionId === 15" [subfunction]="isOpenSubFunction"></app-freeze-ovum>

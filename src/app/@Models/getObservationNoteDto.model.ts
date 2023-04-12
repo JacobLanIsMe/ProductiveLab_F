@@ -22,6 +22,7 @@ export class GetObservationNoteDto {
         public pgtaResult: string,
         public pgtmResult: string,
         public operationTypeId: string,
+        public spindleResult:string,
         public day:number,
         public observationNotePhotos: ObservationNotePhotoDto[]
     ){}

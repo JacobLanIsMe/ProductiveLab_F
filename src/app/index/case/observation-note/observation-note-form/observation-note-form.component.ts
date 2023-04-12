@@ -12,15 +12,15 @@ import { BlastomereScoreDto } from 'src/app/@Models/blastomereScoreDto.model';
 import { BlastocystScoreDto } from 'src/app/@Models/blastocystScoreDto.model';
 import { DomSanitizer } from '@angular/platform-browser';
 import { CommonService } from 'src/app/@Service/common.service';
-import { MainPageService } from 'src/app/@Service/main-page.service';
 import { ObservationNotePhotoDto } from 'src/app/@Models/observationNotePhotoDto.model';
+import { OperationTypeEnum } from 'src/app/@Enums/operationTypeEnum.model';
 @Component({
   selector: 'app-observation-note-form',
   templateUrl: './observation-note-form.component.html',
   styleUrls: ['./observation-note-form.component.css']
 })
 export class ObservationNoteFormComponent implements OnInit {
-  constructor(private sanitizer:DomSanitizer, private observationNoteService: ObservationNoteService, private dateService: DateService, private employeeService: EmployeeService, private treatmentService: TreatmentService, private commonService:CommonService, private mainPageService:MainPageService) { }
+  constructor(private sanitizer:DomSanitizer, private observationNoteService: ObservationNoteService, private dateService: DateService, private employeeService: EmployeeService, private treatmentService: TreatmentService, private commonService:CommonService) { }
   ngOnInit(): void {
     this.employeeService.getAllEmbryologist().subscribe(res => {
       this.embryologists = res;
@@ -55,12 +55,10 @@ export class ObservationNoteFormComponent implements OnInit {
       "embryologist": new FormControl(null, Validators.required),
       "ovumMaturationId": new FormControl(null),
       "observationTypeId": new FormControl(null),
-      "ovumAbnormalityId": new FormControl(null),
       "fertilisationResultId": new FormControl(null),
       "blastomereScore_C_Id": new FormControl(null),
       "blastomereScore_G_Id": new FormControl(null),
       "blastomereScore_F_Id": new FormControl(null),
-      "embryoStatusId": new FormControl(null),
       "blastocystScore_Expansion_Id": new FormControl(null),
       "blastocystScore_ICE_Id": new FormControl(null),
       "blastocystScore_TE_Id": new FormControl(null),
@@ -69,7 +67,7 @@ export class ObservationNoteFormComponent implements OnInit {
       "pgtaNumber": new FormControl(null),
       "pgtaResult": new FormControl(null),
       "pgtmResult": new FormControl(null),
-      "operationTypeId": new FormControl(null)
+      "spindleResult": new FormControl(null)
     })
     if (this.observationNoteService.selectedObservationNoteId){
       this.observationNoteService.getExistingObservationNote(this.observationNoteService.selectedObservationNoteId).subscribe(res=>{
@@ -78,12 +76,10 @@ export class ObservationNoteFormComponent implements OnInit {
           "embryologist":res.embryologist.toUpperCase(),
           "ovumMaturationId": res.ovumMaturationId,
           "observationTypeId": res.observationTypeId,
-          "ovumAbnormalityId": res.ovumAbnormalityId,
           "fertilisationResultId": res.fertilisationResultId,
           "blastomereScore_C_Id": res.blastomereScore_C_Id,
           "blastomereScore_G_Id": res.blastomereScore_G_Id,
           "blastomereScore_F_Id": res.blastomereScore_F_Id,
-          "embryoStatusId": res.embryoStatusId,
           "blastocystScore_Expansion_Id": res.blastocystScore_Expansion_Id,
           "blastocystScore_ICE_Id": res.blastocystScore_ICE_Id,
           "blastocystScore_TE_Id": res.blastocystScore_TE_Id,
@@ -92,9 +88,18 @@ export class ObservationNoteFormComponent implements OnInit {
           "pgtaNumber": res.pgtaNumber,
           "pgtaResult": res.pgtaResult,
           "pgtmResult": res.pgtmResult,
-          "operationTypeId": res.operationTypeId
+          "spindleResult": res.spindleResult
         });
         this.existingObservationNotePhotos = res.observationNotePhotos;
+        JSON.parse(res.ovumAbnormalityId).forEach((x: number)=>{
+          this.selectedOvumAbnormalityId.push(x);
+        });
+        JSON.parse(res.embryoStatusId).forEach((x:number)=>{
+          this.selectedEmbryoStatusId.push(x);
+        })
+        JSON.parse(res.operationTypeId).forEach((x:number)=>{
+          this.selectedOperationTypeId.push(x);
+        });
       })
     }
   }
@@ -118,6 +123,9 @@ export class ObservationNoteFormComponent implements OnInit {
   observationNotePhotos:any;
   existingObservationNotePhotos?: ObservationNotePhotoDto[];
   selectedMainPhotoIndex = 0;
+  selectedOperationTypeId:number[] = [];
+  selectedOvumAbnormalityId:number[] = [];
+  selectedEmbryoStatusId:number[]=[];
   fileChange(event: any) {
     this.observationNotePhotos = event.target.files;
     this.imgUrls.length = 0;
@@ -144,7 +152,69 @@ export class ObservationNoteFormComponent implements OnInit {
     if (!photoName){
       this.selectedMainPhotoIndex = index;
     }
-    
+  }
+  onSelectOperationType(id: number){
+    const index =this.selectedOperationTypeId.findIndex(x=>x === id);
+    if (index !== -1){
+      this.selectedOperationTypeId.splice(index, 1);
+    }
+    else{
+      this.selectedOperationTypeId.push(id);
+    }
+  }
+  onSelectOvumAbnormality(id: number){
+    const index = this.selectedOvumAbnormalityId.findIndex(x=>x === id);
+    if (index !== -1){
+      this.selectedOvumAbnormalityId.splice(index, 1);
+    }
+    else{
+      this.selectedOvumAbnormalityId.push(id);
+    }
+  }
+  onSelectEmbryoStatus(id:number){
+    const index = this.selectedEmbryoStatusId.findIndex(x=>x===id);
+    if (index !== -1){
+      this.selectedEmbryoStatusId.splice(index, 1);
+    }
+    else{
+      this.selectedEmbryoStatusId.push(id);
+    }
+  }
+  isSelectedOperation(id:number){
+    const index = this.selectedOperationTypeId.findIndex(x=>x===id);
+    if (index !== -1){
+      return true;
+    }
+    else{
+      return false;
+    }
+  }
+  isSelectedOvumAbnormality(id:number){
+    const index = this.selectedOvumAbnormalityId.findIndex(x=>x===id);
+    if (index !== -1){
+      return true;
+    }
+    else{
+      return false;
+    }
+  }
+  isSelectedEmbryoStatus(id:number){
+    const index = this.selectedEmbryoStatusId.findIndex(x=>x===id);
+    if (index !== -1){
+      return true;
+    }
+    else{
+      return false;
+    }
+  }
+  isSelectSpindle(){
+    const index = this.selectedOperationTypeId.findIndex(x=>x === OperationTypeEnum.Spindle);
+    if (index !== -1){
+      return true;
+    }
+    else{
+      return false;
+    }
   }
   deletePhoto(photoName:string){
     if (this.existingObservationNotePhotos && this.existingObservationNotePhotos.length > 0){
@@ -158,7 +228,7 @@ export class ObservationNoteFormComponent implements OnInit {
     this.observationNoteService.isOpenObservationNoteForm.next(false);
   }
   onUpdate(observationNoteId:string){
-    let formData = this.observationNoteService.generateFormData(this.observationNoteForm, this.selectedMainPhotoIndex, this.observationNotePhotos);
+    let formData = this.observationNoteService.generateFormData(this.observationNoteForm, this.selectedMainPhotoIndex, this.observationNotePhotos, this.selectedOperationTypeId, this.selectedOvumAbnormalityId, this.selectedEmbryoStatusId);
     formData.append("observationNoteId", observationNoteId);
     if (this.existingObservationNotePhotos && this.existingObservationNotePhotos.length > 0){
       formData.append("existingPhotos", JSON.stringify(this.existingObservationNotePhotos))
@@ -172,8 +242,10 @@ export class ObservationNoteFormComponent implements OnInit {
       this.onCancel();
     });
   }
+  
   onSubmit(form: FormGroup) {
-    let formData = this.observationNoteService.generateFormData(form, this.selectedMainPhotoIndex, this.observationNotePhotos);
+    
+    let formData = this.observationNoteService.generateFormData(form, this.selectedMainPhotoIndex, this.observationNotePhotos, this.selectedOperationTypeId, this.selectedOvumAbnormalityId, this.selectedEmbryoStatusId);
     this.observationNoteService.addObservationNote(formData).subscribe(res=>{
       this.commonService.judgeTheResponse(res,"新增觀察紀錄");
       const courseOfTreatmentId = this.commonService.getCourseOfTreatmentId();
