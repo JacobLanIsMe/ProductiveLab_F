@@ -1,5 +1,5 @@
 import { TreatmentService } from './../../../../@Service/treatment.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { CommonDto } from 'src/app/@Models/commonDto.model';
 import { EmbryologistDto } from 'src/app/@Models/embryologistDto.model';
@@ -56,12 +56,12 @@ export class ObservationNoteFormComponent implements OnInit {
       "ovumMaturationId": new FormControl(null),
       "observationTypeId": new FormControl(null),
       "fertilisationResultId": new FormControl(null),
-      "blastomereScore_C_Id": new FormControl(null),
-      "blastomereScore_G_Id": new FormControl(null),
-      "blastomereScore_F_Id": new FormControl(null),
-      "blastocystScore_Expansion_Id": new FormControl(null),
-      "blastocystScore_ICE_Id": new FormControl(null),
-      "blastocystScore_TE_Id": new FormControl(null),
+      "blastomereScore_C_Id": new FormControl("C"),
+      "blastomereScore_G_Id": new FormControl("G"),
+      "blastomereScore_F_Id": new FormControl("F"),
+      "blastocystScore_Expansion_Id": new FormControl("Expansion"),
+      "blastocystScore_ICE_Id": new FormControl("ICE"),
+      "blastocystScore_TE_Id": new FormControl("TE"),
       "memo": new FormControl(null),
       "kidScore":new FormControl(null),
       "pgtaNumber": new FormControl(null),
@@ -103,6 +103,7 @@ export class ObservationNoteFormComponent implements OnInit {
       })
     }
   }
+  @ViewChild("container",{read:ViewContainerRef}) container!: ViewContainerRef;
   observationNoteForm!: FormGroup;
   embryologists?: EmbryologistDto[];
   ovumMaturations?: CommonDto[];
@@ -234,25 +235,22 @@ export class ObservationNoteFormComponent implements OnInit {
       formData.append("existingPhotos", JSON.stringify(this.existingObservationNotePhotos))
     }
     this.observationNoteService.updateObservationNote(formData).subscribe(res=>{
-      this.commonService.judgeTheResponse(res, "更改觀察紀錄");
+      this.commonService.judgeTheResponse(res, this.container, "更改觀察紀錄", res.errorMessage, this.observationNoteForm);
       const courseOfTreatmentId = this.commonService.getCourseOfTreatmentId();
       if (courseOfTreatmentId){
         this.observationNoteService.showUpdatedObservationNote(courseOfTreatmentId);
       }
-      this.onCancel();
     });
   }
   
   onSubmit(form: FormGroup) {
-    
     let formData = this.observationNoteService.generateFormData(form, this.selectedMainPhotoIndex, this.observationNotePhotos, this.selectedOperationTypeId, this.selectedOvumAbnormalityId, this.selectedEmbryoStatusId);
     this.observationNoteService.addObservationNote(formData).subscribe(res=>{
-      this.commonService.judgeTheResponse(res,"新增觀察紀錄");
+      this.commonService.judgeTheResponse(res, this.container,"新增觀察紀錄", res.errorMessage, this.observationNoteForm);
       const courseOfTreatmentId = this.commonService.getCourseOfTreatmentId();
       if (courseOfTreatmentId){
         this.observationNoteService.showUpdatedObservationNote(courseOfTreatmentId);
       }
-      this.onCancel();
     })
   }
 }

@@ -4,6 +4,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { StorageTankStatusDto } from 'src/app/@Models/storageTankStatusDot.model';
 import { ManageStorageService } from 'src/app/@Service/manage-storage.service';
 import { StorageUnitStatusDto } from 'src/app/@Models/storageUnitStatusDto.model';
+import { TankTypeEnum } from 'src/app/@Enums/tankTypeEnum.model';
 
 @Component({
   selector: 'app-search-empty-storage-unit',
@@ -30,15 +31,16 @@ export class SearchEmptyStorageUnitComponent implements OnInit, OnDestroy {
   width = 0;
   height = 0;
   selectedTankName = "";
-  selectedShelfName = "";
-  selectedCaneNameOrBoxName = "";
+  selectedCanistName = "";
+  selectedTankTypeId = 0;
+  selectedStripIdOrBoxId:number = 0;
   selectedLocations: StorageLocation[] = []
-  showStorageUnitStatus(tankId:number, tankName: string, shelfId:number, shelfName:string, tankTypeId: number){
-    this.manageStorageService.getStorageUnitStatus(tankId, shelfId).subscribe(res=>{
+  showStorageUnitStatus(tankId:number, tankName: string, canistId:number, canistName:string, tankTypeId: number){
+    this.manageStorageService.getStorageUnitStatus(tankId, canistId).subscribe(res=>{
       this.storageUnitStatuses = res;
       let length = res[0].storageUnitInfo.length;
-      if (tankTypeId == 1){
-        this.tankType = "Cane";
+      if (tankTypeId == TankTypeEnum.strip){
+        this.tankType = "Strip";
         this.width = length;
         this.height = 1
       }
@@ -55,10 +57,11 @@ export class SearchEmptyStorageUnitComponent implements OnInit, OnDestroy {
       })
     })
     this.selectedTankName = tankName;
-    this.selectedShelfName = shelfName;
+    this.selectedTankTypeId = tankTypeId;
+    this.selectedCanistName = canistName;
   }
-  selectCaneIdOrBoxId(selectedCaneNameOrBoxName: string){
-    this.selectedCaneNameOrBoxName = selectedCaneNameOrBoxName;
+  selectStripIdOrBoxId(selectedStripIdOrBoxId: number){
+    this.selectedStripIdOrBoxId = selectedStripIdOrBoxId;
   }
   confirmChecked(unitId: number){
     let index = this.selectedLocations.findIndex(x=>x.unitId === unitId);
@@ -71,7 +74,7 @@ export class SearchEmptyStorageUnitComponent implements OnInit, OnDestroy {
   }
   add(event:any,storageUnitId:number, unitName: string){
     if (event.target.checked){
-      this.selectedLocations.push(new StorageLocation(this.selectedTankName, this.selectedShelfName, this.selectedCaneNameOrBoxName, storageUnitId, unitName))
+      this.selectedLocations.push(new StorageLocation(this.selectedTankName, this.selectedTankTypeId, this.selectedCanistName, this.selectedStripIdOrBoxId, storageUnitId, unitName))
     }
     else{
       let index = this.selectedLocations.findIndex(x=>x.unitId === storageUnitId);
@@ -84,5 +87,4 @@ export class SearchEmptyStorageUnitComponent implements OnInit, OnDestroy {
     }
     this.manageStorageService.selectedLocations.next(this.selectedLocations);
   }
-
 }

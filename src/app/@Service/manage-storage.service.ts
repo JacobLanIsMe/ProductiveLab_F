@@ -25,9 +25,9 @@ export class ManageStorageService {
   getStorageTankStatus(){
     return this.http.get<StorageTankStatusDto[]>("/api/StorageManager/GetStorageTankStatus")
   }
-  getStorageUnitStatus(tankId: number, shelfId: number){
+  getStorageUnitStatus(tankId: number, canistId: number){
     return this.http.get<StorageUnitStatusDto[]>("/api/StorageManager/GetStorageUnitStatus", {
-      params: new HttpParams().append("tankId", tankId).append("shelfId", shelfId)
+      params: new HttpParams().append("tankId", tankId).append("canistId", canistId)
     })
   }
 }

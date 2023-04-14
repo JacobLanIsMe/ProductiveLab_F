@@ -20,34 +20,7 @@
                     <span class="input-group-text">管</span>
                 </div>
                 <form [formGroup]="freezeSpermForm" (ngSubmit)="onSubmit(freezeSpermForm)">
-
-                    <div>
-                        <div class="fw-bold">儲存目的:</div>
-                        <div *ngIf="selectedLocations">
-                            <table class="table table-striped">
-                                <thead class="table-warning">
-                                    <tr>
-                                        <th scope="col">液態氮桶</th>
-                                        <th scope="col">架</th>
-                                        <th scope="col">Cane or Box</th>
-                                        <th scope="col">位置</th>
-                                        <th scope="col">刪除</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr *ngFor="let location of selectedLocations">
-                                        <td>{{location.tankName}}</td>
-                                        <td>{{location.shelfName}}</td>
-                                        <td>{{location.caneNameOrBoxName}}</td>
-                                        <td>{{location.unitName}}</td>
-                                        <td><button type="button" class="border border-0 bg-transparent"
-                                                (click)="onDeleteLocation(location.unitId)"><fa-icon [icon]="faXmark"
-                                                    class="text-danger"></fa-icon></button></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
+                    <app-show-selected-storage-unit></app-show-selected-storage-unit>
                     <div class="input-group mb-3">
                         <span class="input-group-text">冷凍前處理方式</span>
                         <select class="form-select" formControlName="spermFreezeOperationMethodId">
@@ -112,3 +85,4 @@
         </div>
     </div>
 </div>
+<ng-container #container></ng-container>

@@ -15,6 +15,7 @@ export class TreatmentService {
 
   constructor(private http:HttpClient, private route: ActivatedRoute) { }
   baseTreatmentInfo?: BaseTreatmentInfoDto;
+  selectedOvumPickupDetailId:string[] = [];
   addOvumPickupNote(form: FormGroup){
     return this.http.post<BaseResponseDto>("/api/Treatment/AddOvumPickupNote", form.value);
   }

@@ -121,4 +121,7 @@ export class ObservationNoteService {
     }
     return formData;
   }
+  getFreezeObservationNotes(ovumPickupDetailId:string[]){
+    
+  }
 }

@@ -1,11 +1,62 @@
 <div class="alertContainer">
-    <div class="alertBox">
-        <div class="fs-5 fw-bold text-warning-emphasis" *ngIf="subfunction"><fa-icon [icon]="faSnowflake" class="me-3"></fa-icon>{{subfunction.name}}</div>
-        <hr>
-        <form [formGroup]="freezeOvumForm" (ngSubmit)="onSubmit(freezeOvumForm)">
-
-        </form>
+    <div class="alertBox" style="width:90vw;max-height:90vh;overflow-y:auto;">
+        <div class="d-flex justify-content-around">
+            <div>
+                <app-search-empty-storage-unit></app-search-empty-storage-unit>
+            </div>
+            <div>
+                <div class="fs-5 fw-bold text-warning-emphasis" *ngIf="subfunction"><fa-icon [icon]="faSnowflake"
+                        class="me-3"></fa-icon>{{subfunction.name}}</div>
+                <hr>
+                <form [formGroup]="freezeOvumForm" (ngSubmit)="onSubmit(freezeOvumForm)">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">操作時間</span>
+                        <input type="datetime-local" class="form-control" formControlName="freezeTime">
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">操作胚胎師</span>
+                        <select class="form-select" formControlName="embryologist">
+                            <ng-container *ngIf="embryologists">
+                                <option *ngFor="let embryologist of embryologists" [value]="embryologist.employeeId">
+                                    {{embryologist.name}}</option>
+                            </ng-container>
+                        </select>
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">卵子型態</span>
+                        <span class="input-group-text">A</span>
+                        <input type="number" class="form-control" style="width:7vw" formControlName="ovumMorphology_A">
+                        <span class="input-group-text">B</span>
+                        <input type="number" class="form-control" style="width:7vw" formControlName="ovumMorphology_B">
+                        <span class="input-group-text">C</span>
+                        <input type="number" class="form-control" style="width:7vw" formControlName="ovumMorphology_C">
+                    </div>
+                    <app-show-selected-storage-unit></app-show-selected-storage-unit>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">培養液</span>
+                        <select class="form-select" formControlName="mediumInUseId">
+                            <ng-container *ngIf="mediums">
+                                <ng-container *ngIf="mediums.isSuccess">
+                                    <option *ngFor="let medium of mediums.data" [value]="medium.mediumInUseId">
+                                        {{medium.name}}/{{medium.lotNumber}}</option>
+                                </ng-container>
+                            </ng-container>
+                        </select>
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">其他培養液</span>
+                        <input type="text" class="form-control" style="width:7vw" formControlName="otherMediumName">
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">備註</span>
+                        <textarea class="form-control" formControlName="memo"></textarea>
+                    </div>
+                    <div class="text-end">
+                        <button type="button" class="btn btn-outline-primary btn-sm" (click)="onCancel()">取消</button>
+                        <button class="btn btn-primary btn-sm ms-3">入庫</button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
 </div>
-
-

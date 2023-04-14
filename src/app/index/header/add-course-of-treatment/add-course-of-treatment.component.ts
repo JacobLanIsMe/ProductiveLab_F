@@ -4,10 +4,8 @@ import { TreatmentDto } from './../../../@Models/treatmentDto.model';
 import { DateService } from './../../../@Service/date.service';
 import { EmployeeService } from './../../../@Service/employee.service';
 import { FunctionHeaderService } from './../../../@Service/function-header.service';
-import { BaseResponseDto } from './../../../@Models/baseResponseDto.model';
-import { HttpClient } from '@angular/common/http';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
 import { EmbryologistDto } from 'src/app/@Models/embryologistDto.model';
 
 @Component({
@@ -36,6 +34,7 @@ export class AddCourseOfTreatmentComponent implements OnInit {
     })
 
   }
+  @ViewChild("container", {read:ViewContainerRef}) container!: ViewContainerRef;
   addCourseOfTreatmentForm!: FormGroup;
   doctors?: EmbryologistDto[];
   embryologists?: EmbryologistDto[];
@@ -45,7 +44,7 @@ export class AddCourseOfTreatmentComponent implements OnInit {
   }
   onSubmit(form: FormGroup){
     this.treatmentService.addCourseOfTreatment(form).subscribe(res=>{
-      this.commonService.judgeTheResponse(res, "新增療程");
+      this.commonService.judgeTheResponse(res, this.container, "新增療程", res.errorMessage);
     })
     this.onCancel();
   }

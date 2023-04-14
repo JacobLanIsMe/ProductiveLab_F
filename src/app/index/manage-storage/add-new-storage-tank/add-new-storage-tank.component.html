@@ -10,19 +10,20 @@
         </select>
     </div>
     <div class="input-group mb-3">
-        <span class="input-group-text">一個液態氮桶有幾條</span>
-        <input type="number" class="form-control" formControlName="stripAmount">
-        <span class="input-group-text">條</span>
-    </div>
-    <div class="input-group mb-3">
-        <span class="input-group-text">一條有幾個Cane或Box</span>
-        <input type="number" class="form-control" formControlName="caneBoxAmount">
+        <span class="input-group-text">一個液態氮桶有個Canist</span>
+        <input type="number" class="form-control" formControlName="canistAmount">
         <span class="input-group-text">個</span>
     </div>
     <div class="input-group mb-3">
-        <span class="input-group-text">每個Cane或Box有幾個儲存單位</span>
+        <span class="input-group-text">一個Canist有幾個Strip或Box</span>
+        <input type="number" class="form-control" formControlName="stripBoxAmount">
+        <span class="input-group-text">個</span>
+    </div>
+    <div class="input-group mb-3">
+        <span class="input-group-text">每個Strip或Box有幾個儲存單位</span>
         <input type="number" class="form-control" formControlName="unitAmount">
         <span class="input-group-text">個</span>
     </div>
     <button class="btn btn-primary btn-sm">確認送出</button>
 </form>
+<ng-container #container></ng-container>

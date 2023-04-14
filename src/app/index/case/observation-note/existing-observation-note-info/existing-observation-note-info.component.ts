@@ -1,5 +1,5 @@
 import { ObservationNoteService } from 'src/app/@Service/observation-note.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
 import { BaseTreatmentInfoDto } from 'src/app/@Models/baseTreatmentInfoDto.model';
 import { TreatmentService } from 'src/app/@Service/treatment.service';
 import { faList } from '@fortawesome/free-solid-svg-icons';
@@ -27,6 +27,7 @@ export class ExistingObservationNoteInfoComponent implements OnInit {
       })
     } 
   }
+  @ViewChild("container", {read:ViewContainerRef}) container!:ViewContainerRef;
   existingObservationNote?: GetObservationNoteNameDto;
   mainPhotoBase64String?: string;
   baseTreatmentInfo?: BaseTreatmentInfoDto = this.treatmentService.baseTreatmentInfo;
@@ -56,7 +57,7 @@ export class ExistingObservationNoteInfoComponent implements OnInit {
   onDelete(){
     if (this.observationNoteService.selectedObservationNoteId){
       this.observationNoteService.deleteObservationNote(this.observationNoteService.selectedObservationNoteId).subscribe(res=>{
-        this.commonService.judgeTheResponse(res, "刪除觀察紀錄");
+        this.commonService.judgeTheResponse(res, this.container, "刪除觀察紀錄", res.errorMessage);
         const courseOfTreatmentId = this.commonService.getCourseOfTreatmentId();
         if (courseOfTreatmentId){
           this.observationNoteService.showUpdatedObservationNote(courseOfTreatmentId)

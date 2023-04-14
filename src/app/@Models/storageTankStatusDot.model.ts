@@ -4,8 +4,8 @@ export class StorageTankStatusDto{
     constructor(
         public tankInfo: StorageTankDto,
         public tankId: number,
-        public shelfId: number,
-        public shelfName: string,
+        public canistId: number,
+        public canistName: string,
         public emptyAmount: number,
         public occupiedAmount: number,
         public totalAmount: number

@@ -39,6 +39,8 @@ import { BaseObservationNoteComponent } from './index/case/observation-note/base
 import { ObservationNoteFormComponent } from './index/case/observation-note/observation-note-form/observation-note-form.component';
 import { ExistingObservationNoteInfoComponent } from './index/case/observation-note/existing-observation-note-info/existing-observation-note-info.component';
 import { FreezeOvumComponent } from './index/case/treatment-summary/freeze-ovum/freeze-ovum.component';
+import { ShowSelectedStorageUnitComponent } from './index/manage-storage/show-selected-storage-unit/show-selected-storage-unit.component';
+import { AlertMessageComponent } from './@shared/alert-message/alert-message.component';
 
 
 @NgModule({
@@ -77,7 +79,9 @@ import { FreezeOvumComponent } from './index/case/treatment-summary/freeze-ovum/
     BaseObservationNoteComponent,
     ObservationNoteFormComponent,
     ExistingObservationNoteInfoComponent,
-    FreezeOvumComponent
+    FreezeOvumComponent,
+    ShowSelectedStorageUnitComponent,
+    AlertMessageComponent
   ],
   imports: [
     BrowserModule,

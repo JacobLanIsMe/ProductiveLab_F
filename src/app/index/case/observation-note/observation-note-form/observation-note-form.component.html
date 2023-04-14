@@ -1,5 +1,5 @@
 <div class="alertContainer">
-    <div class="alertBox" style="height:90vh; overflow:auto">
+    <div class="alertBox" style="width:70vw;height:90vh; overflow:auto">
         <div class="fs-5 fw-bold text-warning-emphasis"><fa-icon [icon]="faList" class="me-3"></fa-icon>觀察記錄</div>
         <div *ngIf="baseTreatmentInfo && selectedOvumPickup">
             <span class="fw-bold me-2">療程編號:</span><span
@@ -20,7 +20,7 @@
                         {{embryologist.name}}</option>
                 </select>
             </div>
-            <div class="input-group mb-3">
+            <div class="input-group input-group-sm mb-3">
                 <span class="input-group-text">操作</span>
                 <div class="btn-group" role="group">
                     <ng-container *ngFor="let operationType of operationTypes">
@@ -49,7 +49,7 @@
                     <option></option>
                 </select>
             </div>
-            <div class="input-group mb-3">
+            <div class="input-group input-group-sm mb-3">
                 <span class="input-group-text">卵子異常特徵</span>
                 <div class="btn-group" role="group">
                     <ng-container *ngFor="let ovumAbnormality of ovumAbnormalities">
@@ -67,24 +67,27 @@
                 </select>
             </div>
             <div class="input-group mb-3">
-                <span class="input-group-text">分裂期胚胎評分(C/G/F)</span>
+                <span class="input-group-text">分裂期胚胎評分</span>
                 <select class="form-select" formControlName="blastomereScore_C_Id">
+                    <option>C</option>
                     <option *ngFor="let blastomereScore_C of blastomereScore?.blastomereScore_C"
                         [value]="blastomereScore_C.id">{{blastomereScore_C.name}}</option>
                     <option></option>
                 </select>
                 <select class="form-select" formControlName="blastomereScore_G_Id">
+                    <option>G</option>
                     <option *ngFor="let blastomereScore_G of blastomereScore?.blastomereScore_G"
                         [value]="blastomereScore_G.id">{{blastomereScore_G.name}}</option>
                     <option></option>
                 </select>
                 <select class="form-select" formControlName="blastomereScore_F_Id">
+                    <option>F</option>
                     <option *ngFor="let blastomereScore_F of blastomereScore?.blastomereScore_F"
                         [value]="blastomereScore_F.id">{{blastomereScore_F.name}}</option>
                     <option></option>
                 </select>
             </div>
-            <div class="input-group mb-3">
+            <div class="input-group input-group-sm mb-3">
                 <span class="input-group-text">胚胎狀態</span>
                 <div class="btn-group" role="group">
                     <ng-container *ngFor="let embryoStatus of embryoStatuses">
@@ -94,18 +97,21 @@
                 </div>
             </div>
             <div class="input-group mb-3">
-                <span class="input-group-text">囊胚期胚胎評分(Expansion/ICE/TE)</span>
+                <span class="input-group-text">囊胚期胚胎評分</span>
                 <select class="form-select" formControlName="blastocystScore_Expansion_Id">
+                    <option>Expansion</option>
                     <option *ngFor="let expansion of blastocystScore?.blastocystScore_Expansion" [value]="expansion.id">
                         {{expansion.name}}</option>
                     <option></option>
                 </select>
                 <select class="form-select" formControlName="blastocystScore_ICE_Id">
+                    <option>ICE</option>
                     <option *ngFor="let ice of blastocystScore?.blastocystScore_ICE" [value]="ice.id">{{ice.name}}
                     </option>
                     <option></option>
                 </select>
                 <select class="form-select" formControlName="blastocystScore_TE_Id">
+                    <option>TE</option>
                     <option *ngFor="let te of blastocystScore?.blastocystScore_TE" [value]="te.id">{{te.name}}</option>
                     <option></option>
                 </select>
@@ -174,3 +180,4 @@
         </form>
     </div>
 </div>
+<ng-container #container></ng-container>

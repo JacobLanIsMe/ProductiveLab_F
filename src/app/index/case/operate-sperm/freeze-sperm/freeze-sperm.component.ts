@@ -9,17 +9,22 @@ import { StorageLocation } from './../../../../@Models/storageLocation.model';
 import { ManageStorageService } from 'src/app/@Service/manage-storage.service';
 import { OperateSpermService } from './../../../../@Service/operate-sperm.service';
 import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
 import { faSnowflake, faXmark } from '@fortawesome/free-solid-svg-icons';
 import Swal from 'sweetalert2';
 import { EmbryologistDto } from 'src/app/@Models/embryologistDto.model';
+import { MediumTypeEnum } from 'src/app/@Enums/mediumTypeEnum.model';
+import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-freeze-sperm',
   templateUrl: './freeze-sperm.component.html',
   styleUrls: ['./freeze-sperm.component.css']
 })
-export class FreezeSpermComponent implements OnInit{
+export class FreezeSpermComponent implements OnInit, OnDestroy{
   constructor(private operateSpermService:OperateSpermService, private manageStorageService:ManageStorageService, private manageMediumService: ManageMediumService, private dateService:DateService, private employeeService: EmployeeService, private functionHeaderService:FunctionHeaderService, private commonService: CommonService){}
+  ngOnDestroy(): void {
+    this.locationSubscription?.unsubscribe();
+  }
   ngOnInit(): void {
     this.spermFromCourseOfTreatmentId = this.operateSpermService.baseOperateSpermInfo?.spermFromCourseOfTreatmentId;
     this.freezeSpermForm = new FormGroup({
@@ -31,22 +36,24 @@ export class FreezeSpermComponent implements OnInit{
       "freezeMedium": new FormControl(null, Validators.required),
       "spermFreezeOperationMethodId": new FormControl(null, Validators.required),
     })
-    this.manageStorageService.selectedLocations.subscribe(res=>{
+    this.locationSubscription = this.manageStorageService.selectedLocations.subscribe(res=>{
       this.selectedLocations = res;
     });
     this.operateSpermService.getSpermFreezeOperationMethod().subscribe(res=>{
       this.spermFreezeOperateMethods = res;
     });
-    this.manageMediumService.getInUseMedium(2).subscribe(res=>{
+    this.manageMediumService.getInUseMedium(MediumTypeEnum.spermFreezeMedium).subscribe(res=>{
       this.freezeMediums = res;
     });
-    this.manageMediumService.getInUseMedium(1).subscribe(res=>{
+    this.manageMediumService.getInUseMedium(MediumTypeEnum.medium).subscribe(res=>{
       this.mediums = res;
     });
     this.employeeService.getAllEmbryologist().subscribe(res=>{
       this.embryologists = res;
     })
   }
+  @ViewChild("container", {read:ViewContainerRef}) container!:ViewContainerRef;
+  locationSubscription?: Subscription;
   freezeSpermForm!: FormGroup;
   spermFromCourseOfTreatmentId: string | undefined;
   spermOwner = this.operateSpermService.baseOperateSpermInfo?.spermOwner;
@@ -58,22 +65,7 @@ export class FreezeSpermComponent implements OnInit{
   mediums?: MediumDto;
   embryologists?: EmbryologistDto[];
   vialCount = 0;
-  onDeleteLocation(unitId: number){
-    if (this.selectedLocations){
-      let index = this.selectedLocations.findIndex(x=>x.unitId == unitId);
-      if (index === -1){
-        Swal.fire("選擇錯誤的儲位");
-      }
-      else{
-        this.selectedLocations.splice(index, 1);
-        this.manageStorageService.selectedLocations.next(this.selectedLocations);
-      }
-    }
-    else{
-      return;
-    }
-
-  }
+  
   onDeleteMedium(index: number){
     this.manageMediumService.deleteMediumFromFormArray(<FormArray>(this.freezeSpermForm.get("mediumInUseArray")), index);
   }
@@ -109,7 +101,7 @@ export class FreezeSpermComponent implements OnInit{
       "spermFreezeOperationMethodId": +form.value.spermFreezeOperationMethodId
     })
     this.operateSpermService.addSpermFreeze(form).subscribe(res=>{
-      this.commonService.judgeTheResponse(res, "冷凍精蟲");
+      this.commonService.judgeTheResponse(res, this.container, "冷凍精蟲", res.errorMessage);
       this.onCancel();
     })
   }

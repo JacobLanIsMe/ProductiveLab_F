@@ -2,7 +2,7 @@ import { FunctionHeaderService } from './../../../../@Service/function-header.se
 import { CommonService } from './../../../../@Service/common.service';
 import { SpermFreezeDto } from './../../../../@Models/spermFreezeDto.model';
 import { OperateSpermService } from './../../../../@Service/operate-sperm.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
 import { faListCheck } from '@fortawesome/free-solid-svg-icons';
 import Swal from 'sweetalert2';
 @Component({
@@ -20,6 +20,7 @@ export class SelectSpermFreezeComponent implements OnInit {
     }
     
   }
+  @ViewChild("container", {read:ViewContainerRef}) container!: ViewContainerRef;
   spermFreezes: SpermFreezeDto[] = [];
   isSelectAll: boolean = false;
   faListCheck = faListCheck;
@@ -60,7 +61,7 @@ export class SelectSpermFreezeComponent implements OnInit {
     }
     else{
       this.operateSpermService.selectSpermFreeze(this.selectedUnitIds).subscribe(res=>{
-        this.commonService.judgeTheResponse(res, "解凍精蟲");
+        this.commonService.judgeTheResponse(res, this.container, "解凍精蟲", res.errorMessage);
         this.onCancel();
       })
 

@@ -1,0 +1,25 @@
+<div *ngIf="selectedLocations && selectedLocations.length > 0">
+    <div class="fw-bold">儲存目的:</div>
+    <table class="table table-striped" style="text-align: center;">
+        <thead class="table-warning">
+            <tr>
+                <th scope="col">Tank</th>
+                <th scope="col">Canist</th>
+                <th scope="col">{{selectedLocations[0].tankTypeId === 1 ? "Strip" : "Box"}}</th>
+                <th scope="col">{{selectedLocations[0].tankTypeId === 1 ? "Top#" : "Location"}}</th>
+                <th scope="col">刪除</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let location of selectedLocations">
+                <td>{{location.tankName}}</td>
+                <td>{{location.canistName}}</td>
+                <td>{{location.stripIdOrBoxId}}</td>
+                <td>{{location.unitName}}</td>
+                <td><button type="button" class="border border-0 bg-transparent"
+                        (click)="onDeleteLocation(location.unitId)"><fa-icon [icon]="faXmark"
+                            class="text-danger"></fa-icon></button></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
