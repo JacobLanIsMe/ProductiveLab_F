@@ -27,6 +27,7 @@ export class TreatmentSummaryComponent implements OnInit {
       }
     })
     this.functionHeaderService.isOpenSubfunction.subscribe(res=>{
+      this.treatmentService.selectedOvumPickupDetailId.length = 0;
       let selectedOvumPickupDetailId: string[] = [];
       this.treatmentSummarys.forEach(x=>{
         if (x.isChecked === true){
@@ -35,6 +36,9 @@ export class TreatmentSummaryComponent implements OnInit {
       })
       this.treatmentService.selectedOvumPickupDetailId = selectedOvumPickupDetailId;
       this.isOpenSubFunction = res;
+    })
+    this.treatmentService.treatmentSummary.subscribe(res=>{
+      this.treatmentSummarys = res;
     })
   }
   currentCourseOfTreatmentId: string | undefined;

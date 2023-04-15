@@ -18,13 +18,18 @@ export class SelectSpermFreezeComponent implements OnInit {
         this.spermFreezes = res;
       })
     }
-    
+    if (this.operateSpermService.baseOperateSpermInfo?.spermOwner){
+      this.spermOwnerSqlId = this.operateSpermService.baseOperateSpermInfo.spermOwner.customerSqlId;
+      this.spermOwnerName = this.operateSpermService.baseOperateSpermInfo.spermOwner.customerName;
+    }
   }
   @ViewChild("container", {read:ViewContainerRef}) container!: ViewContainerRef;
   spermFreezes: SpermFreezeDto[] = [];
   isSelectAll: boolean = false;
   faListCheck = faListCheck;
   selectedUnitIds: number[] = [];
+  spermOwnerSqlId: number = 0;
+  spermOwnerName: string = "";
   onSelectAll(event:any){
     if (event.target.checked){
       this.spermFreezes.forEach(x=>{

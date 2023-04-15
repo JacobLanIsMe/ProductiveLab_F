@@ -24,6 +24,7 @@ export class GetObservationNoteNameDto{
         public blastocystScore_TE_Name:string,
         public operationTypeName:string[],
         public spindleResult:string,
-        public observationNotePhotos:ObservationNotePhotoDto[]
+        public observationNotePhotos:ObservationNotePhotoDto[],
+        public ovumNumber:number
     ){}
 }

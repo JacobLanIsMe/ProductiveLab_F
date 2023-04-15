@@ -25,7 +25,7 @@ export class ShowSelectedStorageUnitComponent implements OnInit, OnDestroy {
   
   faXmark = faXmark;
   onDeleteLocation(unitId: number){
-    if (this.selectedLocations){
+    if (this.selectedLocations && this.selectedLocations.length > 0){
       let index = this.selectedLocations.findIndex(x=>x.unitId == unitId);
       if (index === -1){
         Swal.fire("選擇錯誤的儲位");

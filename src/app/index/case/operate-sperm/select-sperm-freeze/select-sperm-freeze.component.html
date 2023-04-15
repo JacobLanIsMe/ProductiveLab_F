@@ -1,6 +1,10 @@
 <div class="alertContainer">
   <div class="alertBox">
     <div class="fs-5 fw-bold text-warning-emphasis mb-3"><fa-icon [icon]="faListCheck" class="me-3"></fa-icon>選擇要解凍的精蟲</div>
+    <div class="d-flex justify-content-start align-items-center">
+      <div class="me-3"><span class="fw-bold me-2">病歷號:</span><span>{{spermOwnerSqlId}}</span></div>
+      <div><span class="fw-bold me-2">姓名:</span><span>{{spermOwnerName}}</span></div>
+    </div>
     <table class="table table-hover" style="text-align:center">
       <thead class="table-warning">
         <tr>
@@ -8,19 +12,21 @@
             <label class="form-check-label" for="selectAll">全選</label><span class="ms-2"><input class="form-check-input"
                 type="checkbox" value="" id="selectAll" [(ngModel)]="isSelectAll" (click)="onSelectAll($event)"></span>
           </th>
-          <th scope="col">液態氮桶</th>
-          <th scope="col">架</th>
-          <th scope="col">Cane/Box</th>
-          <th scope="col">位置</th>
+          <th scope="col">精蟲編號</th>
+          <th scope="col">Tank</th>
+          <th scope="col">Canist</th>
+          <th scope="col">Box</th>
+          <th scope="col">Location</th>
         </tr>
       </thead>
         <tbody>
           <tr *ngFor="let spermFreeze of spermFreezes">
             <td><input class="form-check-input" type="checkbox" value="" [(ngModel)]="spermFreeze.isChecked"
                 (change)="onSelectLocation()"></td>
+            <td>{{spermFreeze.vialNumber}}</td>
             <td>{{spermFreeze.storageTankName}}</td>
-            <td>{{spermFreeze.storageShelfName}}</td>
-            <td>{{spermFreeze.storageCaneBoxName}}</td>
+            <td>{{spermFreeze.storageCanistName}}</td>
+            <td>{{spermFreeze.storageStripBoxId}}</td>
             <td>{{spermFreeze.storageUnitName}}</td>
           </tr>
         </tbody>
