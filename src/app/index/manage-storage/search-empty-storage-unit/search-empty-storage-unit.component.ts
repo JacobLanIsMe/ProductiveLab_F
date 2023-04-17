@@ -4,12 +4,11 @@ import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { StorageTankStatusDto } from 'src/app/@Models/storageTankStatusDot.model';
 import { ManageStorageService } from 'src/app/@Service/manage-storage.service';
 import { TankTypeEnum } from 'src/app/@Enums/tankTypeEnum.model';
-import { OvumFreezeStorageDto } from 'src/app/@Models/ovumFreezeStorageDto.model';
 import { CommonService } from 'src/app/@Service/common.service';
 import { BaseCustomerInfoDto } from 'src/app/@Models/baseCustomerInfoDto.model';
 import { TreatmentService } from 'src/app/@Service/treatment.service';
-import { FunctionHeaderService } from 'src/app/@Service/function-header.service';
 import { FunctionDto } from 'src/app/@Models/functionDto.model';
+import { OvumFreezeStorageDto } from 'src/app/@Models/ovumFreezeStorageDto.model';
 
 @Component({
   selector: 'app-search-empty-storage-unit',
@@ -18,7 +17,7 @@ import { FunctionDto } from 'src/app/@Models/functionDto.model';
 })
 export class SearchEmptyStorageUnitComponent implements OnInit, OnDestroy {
   @Input() subfunction: FunctionDto|null = null;
-  constructor(private manageStorageService: ManageStorageService, private commonService:CommonService, private treatmentService:TreatmentService, private functionHeaderService:FunctionHeaderService){}
+  constructor(private manageStorageService: ManageStorageService, private commonService:CommonService, private treatmentService:TreatmentService){}
   ngOnDestroy(): void {
     this.locationSubscription?.unsubscribe();
   }
