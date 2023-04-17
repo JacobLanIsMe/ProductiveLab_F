@@ -8,5 +8,8 @@ export class MainPageDto{
         public name: string,
         public doctor: string,
         public treatmentName: string,
-        public treatmentStatus: string){}
+        public treatmentStatus: string,
+        public ovumFromCourseOfTreatmentId:string,
+        public spermFromCourseOfTreatmentId:string
+        ){}
 }

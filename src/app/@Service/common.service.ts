@@ -30,7 +30,13 @@ export class CommonService implements OnDestroy {
     }
   }
   getCourseOfTreatmentId(){
-    return localStorage.getItem(LocalStorageKey.selectedCourseId);
+    return localStorage.getItem(LocalStorageKey.courseOfTreatmentId);
+  }
+  getSpermFromCourseOfTreatmentId(){
+    return localStorage.getItem(LocalStorageKey.spermFromCourseOfTreatmentId);
+  }
+  getOvumFromCourseOfTreatmentId(){
+    return localStorage.getItem(LocalStorageKey.ovumFromCourseOfTreatmentId);
   }
   showAlertMessage(container: ViewContainerRef, title:string, description?:string){
     container.clear();

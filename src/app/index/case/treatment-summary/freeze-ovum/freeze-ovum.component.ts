@@ -16,6 +16,7 @@ import { TreatmentService } from 'src/app/@Service/treatment.service';
 import { CommonService } from 'src/app/@Service/common.service';
 import { ObservationNoteService } from 'src/app/@Service/observation-note.service';
 import { GetObservationNoteNameDto } from 'src/app/@Models/getObservationNoteNameDto';
+import { CommonDto } from 'src/app/@Models/commonDto.model';
 @Component({
   selector: 'app-freeze-ovum',
   templateUrl: './freeze-ovum.component.html',
@@ -39,12 +40,12 @@ export class FreezeOvumComponent implements OnInit,OnDestroy {
       "ovumMorphology_A": new FormControl(0,Validators.required),
       "ovumMorphology_B": new FormControl(0, Validators.required),
       "ovumMorphology_C": new FormControl(0, Validators.required),
-      "memo": new FormControl(null)
+      "memo": new FormControl(null),
+      "topColorId": new FormControl(null, Validators.required)
     })
-    this.locationSubscription = this.manageStorageService.selectedLocations.subscribe(res=>{
-      this.selectedLocations = res;
+    this.observationNoteService.getFreezeObservationNotes(this.treatmentService.selectedOvumPickupDetailId).subscribe(res=>{
+      this.selectedObservationNotes = res;
     });
-    
     this.employeeService.getAllEmbryologist().subscribe(res=>{
       this.embryologists = res;
     })
@@ -55,13 +56,17 @@ export class FreezeOvumComponent implements OnInit,OnDestroy {
         this.integrateMedium(this.mediums, this.otherMedium);
       })
     })
-    this.observationNoteService.getFreezeObservationNotes(this.treatmentService.selectedOvumPickupDetailId).subscribe(res=>{
-      this.selectedObservationNotes = res;
+    this.treatmentService.getTopColors().subscribe(res=>{
+      this.topColors = res;
+    })
+    this.locationSubscription = this.manageStorageService.selectedLocations.subscribe(res=>{
+      this.selectedLocations = res;
     });
   }
   todayDate = this.dateService.getTodayDateString(new Date());
   locationSubscription?: Subscription;
   freezeOvumForm!: FormGroup;
+  topColors?: CommonDto[];
   faSnowflake = faSnowflake;
   embryologists?: EmbryologistDto[];
   mediums?:MediumDto;
@@ -115,6 +120,9 @@ export class FreezeOvumComponent implements OnInit,OnDestroy {
     if (!this.addStorageUnitIdToForm()){
       return;
     }
+    this.freezeOvumForm.patchValue({
+      "topColorId": +this.freezeOvumForm.value.topColorId
+    })
     this.treatmentService.addOvumFreeze(form).subscribe(res=>{
       this.commonService.judgeTheResponse(res, this.container, "冷凍入庫", res.errorMessage, form);
       const courseOfTreatmentId = this.commonService.getCourseOfTreatmentId();

@@ -7,6 +7,7 @@ import { faTable } from '@fortawesome/free-solid-svg-icons';
 import { ActivatedRoute } from '@angular/router';
 import { FunctionHeaderService } from 'src/app/@Service/function-header.service';
 import { FunctionDto } from 'src/app/@Models/functionDto.model';
+import { LocalStorageKey } from 'src/app/@Models/localStorageKey.model';
 
 @Component({
   selector: 'app-treatment-summary',
@@ -18,14 +19,12 @@ export class TreatmentSummaryComponent implements OnInit {
   
   
   ngOnInit(): void {
-    this.route.paramMap.subscribe(params=>{
-      const courseOfTreatmentId = params.get("id");
-      if (courseOfTreatmentId){
-        this.treatmentService.getTreatmentSummary(courseOfTreatmentId).subscribe(res=>{
-          this.treatmentSummarys = res;
-        })
-      }
-    })
+    const courseOfTreatmentId = localStorage.getItem(LocalStorageKey.courseOfTreatmentId);
+    if (courseOfTreatmentId){
+      this.treatmentService.getTreatmentSummary(courseOfTreatmentId).subscribe(res=>{
+        this.treatmentSummarys = res;
+      })
+    }
     this.functionHeaderService.isOpenSubfunction.subscribe(res=>{
       this.treatmentService.selectedOvumPickupDetailId.length = 0;
       let selectedOvumPickupDetailId: string[] = [];

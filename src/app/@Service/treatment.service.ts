@@ -8,6 +8,7 @@ import { TreatmentSummaryDto } from '../@Models/treatmentSummaryDto.model';
 import { TreatmentDto } from '../@Models/treatmentDto.model';
 import { Subject, map } from 'rxjs';
 import { BaseCustomerInfoDto } from '../@Models/baseCustomerInfoDto.model';
+import { CommonDto } from '../@Models/commonDto.model';
 
 @Injectable({
   providedIn: 'root'
@@ -75,5 +76,8 @@ export class TreatmentService {
     return this.http.get<BaseCustomerInfoDto>("/api/Treatment/GetOvumOwnerInfo", {
       params: new HttpParams().append("courseOfTreatmentId",courseOfTreatmentId)
     })
+  }
+  getTopColors(){
+    return this.http.get<CommonDto[]>("/api/Treatment/GetTopColors");
   }
 }

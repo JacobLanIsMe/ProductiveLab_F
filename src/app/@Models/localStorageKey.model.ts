@@ -1,3 +1,5 @@
 export class LocalStorageKey{
-    public static selectedCourseId = "selectedCourseId"
+    public static courseOfTreatmentId = "courseOfTreatmentId";
+    public static spermFromCourseOfTreatmentId = "spermFromCourseOfTreatmentId";
+    public static ovumFromCourseOfTreatmentId = "ovumFromCourseOfTreatmentId";
 }

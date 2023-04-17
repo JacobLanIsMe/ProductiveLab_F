@@ -29,13 +29,13 @@
                             <td>{{observationNote.fertilisationResultName}}</td>
                             <td>
                                 <ng-container  *ngIf="observationNote.blastocystScore_Expansion_Name || observationNote.blastocystScore_ICE_Name || observationNote.blastocystScore_TE_Name">
-                                    囊胚期胚胎評分: {{observationNote.blastocystScore_Expansion_Name}}{{observationNote.blastocystScore_ICE_Name}}{{observationNote.blastocystScore_TE_Name}}
+                                    <div>囊胚期胚胎評分: {{observationNote.blastocystScore_Expansion_Name}}{{observationNote.blastocystScore_ICE_Name}}{{observationNote.blastocystScore_TE_Name}}</div>
                                 </ng-container>
                                 <ng-container *ngIf="observationNote.blastomereScore_C_Name || observationNote.blastomereScore_G_Name || observationNote.blastomereScore_F_Name">
-                                    分裂期胚胎評分: {{observationNote.blastomereScore_C_Name}}G{{observationNote.blastomereScore_G_Name}}F{{observationNote.blastomereScore_F_Name}}
+                                    <div>分裂期胚胎評分: {{observationNote.blastomereScore_C_Name}}G{{observationNote.blastomereScore_G_Name}}F{{observationNote.blastomereScore_F_Name}}</div>
                                 </ng-container>
                                 <ng-container *ngIf="observationNote.ovumMaturationName">
-                                    卵子成熟度: {{observationNote.ovumMaturationName}}
+                                    <div>卵子成熟度: {{observationNote.ovumMaturationName}}</div>
                                 </ng-container>
                             </td>
                             <td>{{todayDate}}</td>
@@ -74,6 +74,17 @@
                         <input type="number" class="form-control" style="width:7vw" formControlName="ovumMorphology_C">
                     </div>
                     <app-show-selected-storage-unit></app-show-selected-storage-unit>
+                    <ng-container *ngIf="selectedLocations && selectedLocations.length > 0">
+                        <div class="input-group mb-3">
+                            <span class="input-group-text">Top color</span>
+                            <select class="form-select" formControlName="topColorId">
+                                <ng-container *ngIf="topColors">
+                                    <option *ngFor="let color of topColors" [value]="color.id">
+                                        {{color.name}}</option>
+                                </ng-container>
+                            </select>
+                        </div>
+                    </ng-container>
                     <div class="input-group mb-3">
                         <span class="input-group-text">培養液</span>
                         <select class="form-select" formControlName="mediumInUseId" [(ngModel)]="selectedMedium">

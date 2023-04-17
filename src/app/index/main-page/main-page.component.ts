@@ -3,6 +3,7 @@ import { Subscription } from 'rxjs';
 import { MainPageService } from './../../@Service/main-page.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MainPageDto } from 'src/app/@Models/mainPageDto.model';
+import { LocalStorageKey } from 'src/app/@Models/localStorageKey.model';
 
 @Component({
   selector: 'app-main-page',
@@ -21,8 +22,10 @@ export class MainPageComponent implements OnInit, OnDestroy {
     });
   }
   paramsSubscription: Subscription | undefined;
-  onSelectCourse(courseId: string){
-    localStorage.setItem("selectedCourseId", courseId);
+  onSelectCourse(courseId: string, ovumFromCourseOfTreatmentId:string, spermFromCourseOfTreatmentId:string){
+    localStorage.setItem(LocalStorageKey.courseOfTreatmentId, courseId);
+    localStorage.setItem(LocalStorageKey.ovumFromCourseOfTreatmentId, ovumFromCourseOfTreatmentId);
+    localStorage.setItem(LocalStorageKey.spermFromCourseOfTreatmentId, spermFromCourseOfTreatmentId);
     this.functionHeaderService.selectedFunction.next(this.functionHeaderService.caseSpecificFunctions[0]);
   }
 }
