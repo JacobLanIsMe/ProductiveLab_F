@@ -7,6 +7,7 @@ import { BaseTreatmentInfoDto } from '../@Models/baseTreatmentInfoDto.model';
 import { TreatmentSummaryDto } from '../@Models/treatmentSummaryDto.model';
 import { TreatmentDto } from '../@Models/treatmentDto.model';
 import { Subject, map } from 'rxjs';
+import { BaseCustomerInfoDto } from '../@Models/baseCustomerInfoDto.model';
 
 @Injectable({
   providedIn: 'root'
@@ -69,5 +70,10 @@ export class TreatmentService {
   }
   addOvumFreeze(form:FormGroup){
     return this.http.post<BaseResponseDto>("/api/Treatment/AddOvumFreeze", form.value);
+  }
+  getOvumOwnerInfo(courseOfTreatmentId:string){
+    return this.http.get<BaseCustomerInfoDto>("/api/Treatment/GetOvumOwnerInfo", {
+      params: new HttpParams().append("courseOfTreatmentId",courseOfTreatmentId)
+    })
   }
 }

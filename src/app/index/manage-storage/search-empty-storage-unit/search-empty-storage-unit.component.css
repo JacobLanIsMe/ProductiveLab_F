@@ -1,8 +1,0 @@
-.main-table-frame{
-    height: 100%;
-    overflow: auto;
-}
-thead tr th{
-    position:sticky;
-    top:0;
-}

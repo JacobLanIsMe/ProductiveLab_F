@@ -14,7 +14,6 @@ import { ManageStorageService } from 'src/app/@Service/manage-storage.service';
 import { StorageLocation } from 'src/app/@Models/storageLocation.model';
 import { TreatmentService } from 'src/app/@Service/treatment.service';
 import { CommonService } from 'src/app/@Service/common.service';
-import { formatCurrency } from '@angular/common';
 import { ObservationNoteService } from 'src/app/@Service/observation-note.service';
 import { GetObservationNoteNameDto } from 'src/app/@Models/getObservationNoteNameDto';
 @Component({

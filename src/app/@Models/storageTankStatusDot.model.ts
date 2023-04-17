@@ -1,4 +1,5 @@
 import { StorageTankDto } from "./storageTankDto.model";
+import { StorageUnitStatusDto } from "./storageUnitStatusDto.model";
 
 export class StorageTankStatusDto{
     constructor(
@@ -8,6 +9,7 @@ export class StorageTankStatusDto{
         public canistName: string,
         public emptyAmount: number,
         public occupiedAmount: number,
-        public totalAmount: number
+        public totalAmount: number,
+        public unitInfos: StorageUnitStatusDto[]
     ){}
 }

@@ -7,6 +7,7 @@ import { FormGroup } from '@angular/forms';
 import { StorageTankTypeDto } from '../@Models/storageTankTypeDto.model';
 import { StorageUnitStatusDto } from '../@Models/storageUnitStatusDto.model';
 import { StorageLocation } from '../@Models/storageLocation.model';
+import { OvumFreezeStorageDto } from '../@Models/ovumFreezeStorageDto.model';
 
 @Injectable({
   providedIn: 'root'
@@ -28,6 +29,11 @@ export class ManageStorageService {
   getStorageUnitStatus(tankId: number, canistId: number){
     return this.http.get<StorageUnitStatusDto[]>("/api/StorageManager/GetStorageUnitStatus", {
       params: new HttpParams().append("tankId", tankId).append("canistId", canistId)
+    })
+  }
+  getOvumFreezeStorageInfo(courseOfTreatmentId: string){
+    return this.http.get<OvumFreezeStorageDto[]>("/api/StorageManager/GetOvumFreezeStorageInfo", {
+      params: new HttpParams().append("courseOfTreatmentId", courseOfTreatmentId)
     })
   }
 }

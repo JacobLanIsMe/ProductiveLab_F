@@ -1,41 +1,94 @@
-<div class="d-flex justify-content-start h-100">
-  <div class="main-table-frame">
-    <table class="table table-striped table-hover" style="text-align:center;">
-      <thead>
-        <tr class="table-warning">
-          <th scope="col">Tank</th>
-          <th scope="col">Canist</th>
-          <th scope="col">剩餘數量/總共數量</th>
-          <th scope="col">選擇</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let storageTankStatus of storageTankStatuses">
-          <th>{{storageTankStatus.tankInfo.tankName}}</th>
-          <td>{{storageTankStatus.canistName}}</td>
-          <td>{{storageTankStatus.emptyAmount}}/{{storageTankStatus.totalAmount}}</td>
-          <td><button type="button" class="btn btn-primary btn-sm"
-              (click)="showStorageUnitStatus(storageTankStatus.tankId, storageTankStatus.tankInfo.tankName, storageTankStatus.canistId, storageTankStatus.canistName, storageTankStatus.tankInfo.tankTypeId)">選擇</button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-  <div class="ms-3">
-    <div *ngFor="let storageUnitStatus of storageUnitStatuses">
-      <div (click)="selectStripIdOrBoxId(storageUnitStatus.stripIdOrBoxId)" style="cursor: pointer;">{{tankType}}:
-        {{storageUnitStatus.stripIdOrBoxId}}
-        <span class="ms-2">(剩餘: {{storageUnitStatus.stripBoxEmptyUnit}})</span>
+<div style="height:100%;overflow:auto">
+  <div>
+    <ng-container *ngIf="subfunction && subfunction.functionId === 15 && ovumOwner && ovumFreezeStorages.length > 0">
+      <div class="d-flex justify-content-start align-items-center">
+        <div><span class="fw-bold">病歷號:</span><span class="ms-2">{{ovumOwner.customerSqlId}}</span></div>
+        <div class="ms-3"><span class="fw-bold">姓名:</span><span class="ms-2">{{ovumOwner.customerName}}</span></div>
       </div>
-      <ng-container *ngIf="selectedStripIdOrBoxId === storageUnitStatus.stripIdOrBoxId">
-        <div class="d-flex justify-content-between" *ngFor="let unitArray of storageUnitStatus.unitInfoArray">
-          <div *ngFor="let unit of unitArray">
-            <input type="checkbox" class="btn-check" [id]="unit.storageUnitId" autocomplete="off" [disabled]="unit.isOccupied" (change)="add($event, unit.storageUnitId, unit.unitName)" [checked]="confirmChecked(unit.storageUnitId)">
-            <label class="btn btn-outline-primary" style="width:40px;height:40px;text-align: center;" [for]="unit.storageUnitId">{{unit.unitName}}</label>
-          </div>
-        </div>
-        <hr>
-      </ng-container>
+      <div class="fw-bold">已儲存的卵子儲位</div>
+      <table class="table" style="text-align:center">
+        <thead>
+          <tr class="table-warning">
+            <th scope="col">Tank</th>
+            <th scope="col">Canist</th>
+            <th scope="col">Strip</th>
+            <th scope="col">剩餘數量</th>
+          </tr>
+        </thead>
+        <tbody>
+          <ng-container *ngFor="let storage of ovumFreezeStorages">
+            <tr>
+              <td>{{storage.tankInfo.tankName}}</td>
+              <td>{{storage.canistName}}</td>
+              <td>{{storage.stripBoxId}}</td>
+              <td>{{storage.stripBoxEmptyUnit}}</td>
+            </tr>
+            <ng-container *ngIf="storage.storageUnitInfo && storage.storageUnitInfo.length > 0">
+              <tr>
+                <td colspan="4">
+                  <div class="d-flex justify-content-center">
+                    <div *ngFor="let unit of storage.storageUnitInfo">
+                      <input type="checkbox" class="btn-check" [id]="unit.storageUnitId" autocomplete="off"
+                        [disabled]="unit.isOccupied"
+                        (change)="add($event, storage.tankInfo.tankName, storage.tankInfo.tankTypeId, storage.canistName, storage.stripBoxId, unit.storageUnitId, unit.unitName)"
+                        [checked]="confirmChecked(unit.storageUnitId)">
+                      <label class="btn btn-outline-primary" style="width:40px;height:40px;"
+                        [for]="unit.storageUnitId">{{unit.unitName}}</label>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            </ng-container>
+          </ng-container>
+
+        </tbody>
+      </table>
+    </ng-container>
+    <div>
+      <table class="table table-striped" style="text-align:center;">
+        <thead>
+          <tr class="table-warning">
+            <th scope="col">Tank</th>
+            <th scope="col">Canist</th>
+            <th scope="col">剩餘數量/總共數量</th>
+            <th scope="col">選擇</th>
+          </tr>
+        </thead>
+        <tbody>
+          <ng-container *ngFor="let storageTankStatus of storageTankStatuses">
+            <tr>
+              <th>{{storageTankStatus.tankInfo.tankName}}</th>
+              <td>{{storageTankStatus.canistName}}</td>
+              <td>{{storageTankStatus.emptyAmount}}/{{storageTankStatus.totalAmount}}</td>
+              <td><button type="button" class="btn btn-primary btn-sm"
+                  (click)="showStorageUnitStatus(storageTankStatus.canistId)">選擇</button>
+              </td>
+            </tr>
+            <tr *ngIf="selectedCanistId === storageTankStatus.canistId">
+              <td colspan="4">
+                <ng-container *ngFor="let unitInfo of storageTankStatus.unitInfos">
+                  <div (click)="selectStripIdOrBoxId(unitInfo.stripIdOrBoxId)" style="cursor:pointer">
+                    {{storageTankStatus.tankInfo.tankTypeId === 1 ? "Strip" : "Box"}}: {{unitInfo.stripIdOrBoxId}}
+                    <span class="ms-2">(剩餘: {{unitInfo.stripBoxEmptyUnit}})</span>
+                  </div>
+                  <ng-container *ngIf="selectedStripIdOrBoxId === unitInfo.stripIdOrBoxId">
+                    <div class="d-flex justify-content-center" *ngFor="let unitArray of unitInfo.unitInfoArray">
+                      <div *ngFor="let unit of unitArray">
+                        <input type="checkbox" class="btn-check" [id]="unit.storageUnitId" autocomplete="off"
+                          [disabled]="unit.isOccupied"
+                          (change)="add($event, storageTankStatus.tankInfo.tankName, storageTankStatus.tankInfo.tankTypeId, storageTankStatus.canistName, unitInfo.stripIdOrBoxId, unit.storageUnitId, unit.unitName)"
+                          [checked]="confirmChecked(unit.storageUnitId)">
+                        <label class="btn btn-outline-primary" style="width:40px;height:40px;"
+                          [for]="unit.storageUnitId">{{unit.unitName}}</label>
+                      </div>
+                    </div>
+                  </ng-container>
+                </ng-container>
+              </td>
+            </tr>
+          </ng-container>
+        </tbody>
+      </table>
     </div>
   </div>
 </div>
