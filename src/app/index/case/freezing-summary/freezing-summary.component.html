@@ -37,6 +37,10 @@
                     <th>入庫前觀察圖片</th>
                     <th>囊胚期胚胎評分</th>
                     <th>分裂期胚胎評分</th>
+                    <th>KID Score</th>
+                    <th>PGTA編號</th>
+                    <th>PGTA結果</th>
+                    <th>PGTM結果</th>
                     <th>冷凍液</th>
                     <th>入庫時注意事項</th>
                     <th>備註</th>
@@ -78,6 +82,10 @@
                             {{item.freezeObservationNoteInfo.blastomereScore_C_Name}}G{{item.freezeObservationNoteInfo.blastomereScore_G_Name}}F{{item.freezeObservationNoteInfo.blastomereScore_F_Name}}
                         </ng-container>
                     </td>
+                    <td>{{item.freezeObservationNoteInfo.kidScore}}</td>
+                    <td>{{item.freezeObservationNoteInfo.pgtaNumber}}</td>
+                    <td>{{item.freezeObservationNoteInfo.pgtaResult}}</td>
+                    <td>{{item.freezeObservationNoteInfo.pgtmResult}}</td>
                     <td>{{item.medium}}</td>
                     <td>{{item.freezeTime | date:"HH:mm:ss"}}</td>
                     <td>{{item.freezeObservationNoteInfo.memo}}</td>
