@@ -1,5 +1,5 @@
-import { DateService } from './../../@Service/date.service';
-import { ManageMediumService } from './../../@Service/manage-medium.service';
+import { DateService } from '../../@Service/date.service';
+import { ManageMediumService } from '../../@Service/manage-medium.service';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';

@@ -1,7 +1,7 @@
 import { ManageStorageComponent } from './index/manage-storage/manage-storage.component';
 import { OvumBankTransferComponent } from './index/ovum-bank-transfer/ovum-bank-transfer.component';
 import { UploadReportComponent } from './index/case/upload-report/upload-report.component';
-import { ManageMediumComponent } from './index/manage-medium/manage-medium.component';
+import { ManageMediumComponent } from './@shared/manage-medium/manage-medium.component';
 import { TransferInFromOtherComponent } from './index/case/transfer-in-from-other/transfer-in-from-other.component';
 import { OperateSpermComponent } from './index/case/operate-sperm/operate-sperm.component';
 import { ObservationNoteComponent } from './index/case/observation-note/observation-note.component';
