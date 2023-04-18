@@ -1,5 +1,5 @@
 import { BaseStorage } from "./baseStorage.model";
-import { FreezeObservationNote } from "./freezeObservationNote.model";
+import { GetObservationNoteNameDto } from "./getObservationNoteNameDto";
 
 export class GetOvumFreezeSummaryDto{
     constructor(
@@ -8,8 +8,9 @@ export class GetOvumFreezeSummaryDto{
         public ovumNumber:number,
         public ovumPickupTime:Date,
         public freezeTime:Date,
-        public freezeObservationNoteInfo:FreezeObservationNote,
+        public freezeObservationNoteInfo:GetObservationNoteNameDto,
         public freezeStorageInfo:BaseStorage,
-        public medium:string
+        public medium:string,
+        public isChecked:boolean
     ){}
 }

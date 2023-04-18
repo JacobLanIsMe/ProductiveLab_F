@@ -1,15 +1,17 @@
-<div class="fs-5 fw-bold" style="color:#FF8F59"><fa-icon [icon]="faFileInvoice" class="me-3"></fa-icon>療程資訊</div>
+<app-title [icon]="faFileInvoice" [title]="'療程資訊'"></app-title>
 <hr>
 <ng-container *ngIf="baseTreatmentInfo">
     <div class="row">
-        <div class="col-3"><span class="fw-bold">療程編號: </span><span>{{baseTreatmentInfo.courseOfTreatmentSqlId}}</span></div>
+        <div class="col-3"><span class="fw-bold">療程編號: </span><span>{{baseTreatmentInfo.courseOfTreatmentSqlId}}</span>
+        </div>
         <div class="col-3"><span class="fw-bold">主治醫師: </span><span>{{baseTreatmentInfo.doctor}}</span></div>
         <div class="col-6"><span class="fw-bold">治療計畫: </span><span>{{baseTreatmentInfo.treatmentName}}</span></div>
     </div>
     <div class="row">
         <div class="col-3"><span class="fw-bold">客戶病歷號: </span><span>{{baseTreatmentInfo.customerSqlId}}</span></div>
         <div class="col-3"><span class="fw-bold">姓名: </span><span>{{baseTreatmentInfo.customerName}}</span></div>
-        <div class="col-6"><span class="fw-bold">出生年月日: </span><span>{{baseTreatmentInfo.birthday | date: "yyyy/MM/dd"}}</span></div>
+        <div class="col-6"><span class="fw-bold">出生年月日: </span><span>{{baseTreatmentInfo.birthday | date:
+                "yyyy/MM/dd"}}</span></div>
     </div>
     <div class="row">
         <div class="col-3"><span class="fw-bold">配偶病歷號: </span><span>{{baseTreatmentInfo.spouseSqlId}}</span></div>

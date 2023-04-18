@@ -1,1 +1,88 @@
 <app-base-treatment-info></app-base-treatment-info>
+<div class="d-flex justify-content-between">
+    <div>
+        <app-title [title]="'卵子冷凍總覽'" [icon]="faList"></app-title>
+    </div>
+    <div>
+        <app-subfunction-header></app-subfunction-header>
+    </div>
+</div>
+<hr>
+<div style="width:100%;overflow-x: auto;">
+    <ng-container *ngIf="ovumFreezeSummarys.length > 0">
+        <table class="table" style="text-align: center;">
+            <thead>
+                <tr style="white-space:nowrap;">
+                    <th>
+                        <div class="d-flex justify-content-center align-items-center">
+                            <div class="me-1">全選</div>
+                            <input type="checkbox" (click)="onSelectAllOvum($event)" [(ngModel)]="isAllOvumChecked">
+                        </div>
+                    </th>
+                    <th>身分別</th>
+                    <th>療程編號</th>
+                    <th>卵子編號</th>
+                    <th>取卵日</th>
+                    <th>解凍日</th>
+                    <th>移入日</th>
+                    <th>冷凍日</th>
+                    <th>受精結果</th>
+                    <th>冷凍天數</th>
+                    <th>卵子等級</th>
+                    <th>Top編號</th>
+                    <th>Top顏色</th>
+                    <th>Tank</th>
+                    <th>Canist</th>
+                    <th>Strip</th>
+                    <th>入庫前觀察圖片</th>
+                    <th>囊胚期胚胎評分</th>
+                    <th>分裂期胚胎評分</th>
+                    <th>冷凍液</th>
+                    <th>入庫時注意事項</th>
+                    <th>備註</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr style="white-space:nowrap;" *ngFor="let item of ovumFreezeSummarys">
+                    <td>
+                        <input type="checkbox" (change)="onSelectOneOvum($event, item.freezeStorageInfo.unitInfo.storageUnitId)" [(ngModel)]="item.isChecked" >
+                    </td>
+                    <td>{{item.courseOfTreatmentId === item.ovumFromCourseOfTreatmentId ? "self" : "OD"}}</td>
+                    <td>{{item.ovumFromCourseOfTreatmentId}}</td>
+                    <td>NO.{{item.ovumNumber}}</td>
+                    <td>{{item.ovumPickupTime | date:"yyyy-MM-dd"}}</td>
+                    <td>解凍日</td>
+                    <td>移入日</td>
+                    <td>{{item.freezeTime | date:"yyyy-MM-dd"}}</td>
+                    <td>{{item.freezeObservationNoteInfo.fertilisationResultName}}</td>
+                    <td>Day: {{item.freezeObservationNoteInfo.day}}</td>
+                    <td>卵子等級</td>
+                    <td>{{item.freezeStorageInfo.unitInfo.unitName}}</td>
+                    <td>{{item.freezeStorageInfo.topColorName}}</td>
+                    <td>{{item.freezeStorageInfo.tankInfo.tankName}}</td>
+                    <td>{{item.freezeStorageInfo.canistName}}</td>
+                    <td>{{item.freezeStorageInfo.stripBoxId}}</td>
+                    <td>
+                        <div class="m-auto d-flex justify-content-center align-items-center"
+                            style="width:50px;aspect-ratio:1/1;"
+                            *ngIf="item.freezeObservationNoteInfo.observationNotePhotos.length>0">
+                            <img [src]="'data:image/gif;base64,' + item.freezeObservationNoteInfo.observationNotePhotos[0].imageBase64String"
+                                style="max-width:100%;max-height:100%;">
+                        </div>
+                    </td>
+                    <td>{{item.freezeObservationNoteInfo.blastocystScore_Expansion_Name}}{{item.freezeObservationNoteInfo.blastocystScore_ICE_Name}}{{item.freezeObservationNoteInfo.blastocystScore_TE_Name}}
+                    </td>
+                    <td>
+                        <ng-container
+                            *ngIf="item.freezeObservationNoteInfo.blastomereScore_C_Name || item.freezeObservationNoteInfo.blastomereScore_G_Name || item.freezeObservationNoteInfo.blastomereScore_F_Name">
+                            {{item.freezeObservationNoteInfo.blastomereScore_C_Name}}G{{item.freezeObservationNoteInfo.blastomereScore_G_Name}}F{{item.freezeObservationNoteInfo.blastomereScore_F_Name}}
+                        </ng-container>
+                    </td>
+                    <td>{{item.medium}}</td>
+                    <td>{{item.freezeTime | date:"HH:mm:ss"}}</td>
+                    <td>{{item.freezeObservationNoteInfo.memo}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </ng-container>
+</div>

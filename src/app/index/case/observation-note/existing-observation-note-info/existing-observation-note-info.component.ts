@@ -12,7 +12,7 @@ import { MainPageService } from 'src/app/@Service/main-page.service';
   styleUrls: ['./existing-observation-note-info.component.css']
 })
 export class ExistingObservationNoteInfoComponent implements OnInit {
-  constructor(private observationNoteService:ObservationNoteService, private treatmentService:TreatmentService, private commonService:CommonService,private mainPageService:MainPageService){}
+  constructor(private observationNoteService:ObservationNoteService, private treatmentService:TreatmentService, private commonService:CommonService){}
   ngOnInit(): void {
     if (this.observationNoteService.selectedObservationNoteId){
       this.observationNoteService.getExistingObservationNoteName(this.observationNoteService.selectedObservationNoteId).subscribe(res=>{

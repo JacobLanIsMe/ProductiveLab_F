@@ -1,36 +1,43 @@
 <app-base-treatment-info></app-base-treatment-info>
 <div class="d-flex justify-content-between">
-  <div class="fs-5 fw-bold" style="color:#FF8F59"><fa-icon [icon]="faTable" class="me-3"></fa-icon>療程總覽</div>
-  <app-subfunction-header></app-subfunction-header>
+  <div>
+    <app-title [icon]="faTable" [title]="'療程總覽'"></app-title>
+  </div>
+  <div>
+    <app-subfunction-header></app-subfunction-header>
+  </div>
 </div>
-<table class="table table-hover" style="text-align:center">
-  <thead>
-    <tr>
-      <th scope="col">全選<span class="ms-1"><input type="checkbox" [(ngModel)]="isSelectAll"
-            (click)="onSelectAll($event)"></span></th>
-      <th scope="col">卵子 No.</th>
-      <th scope="col">用途/來源療程編號</th>
-      <th scope="col">狀態</th>
-      <th scope="col">卵胚天數</th>
-      <th scope="col">受精狀態</th>
-      <th scope="col">觀察記錄</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let ovum of treatmentSummarys">
-      <td><input type="checkbox" [(ngModel)]="ovum.isChecked" (change)="onSelectOvum()"></td>
-      <td>{{ovum.ovumNumber}}</td>
-      <td>{{ovum.ovumFromCourseOfTreatmentSqlId === ovum.courseOfTreatmentSqlId ? "自用" :
-        "借用"}}/{{ovum.ovumFromCourseOfTreatmentSqlId}}</td>
-      <td>{{ovum.ovumPickupDetailStatus}}</td>
-      <td>{{ovum.dateOfEmbryo}}</td>
-      <td>
-        <span *ngIf="ovum.fertilizationStatus !== '未受精'">{{ovum.fertilizationStatus}}</span>
-      </td>
-      <td>{{ovum.observationNote}}</td>
+<hr>
+<div style="width:100%;overflow-x:auto;">
+  <table class="table table-hover" style="text-align:center">
+    <thead>
+      <tr>
+        <th scope="col">全選<span class="ms-1"><input type="checkbox" [(ngModel)]="isSelectAll"
+              (click)="onSelectAll($event)"></span></th>
+        <th scope="col">卵子 No.</th>
+        <th scope="col">用途/來源療程編號</th>
+        <th scope="col">狀態</th>
+        <th scope="col">卵胚天數</th>
+        <th scope="col">受精狀態</th>
+        <th scope="col">觀察記錄</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let ovum of treatmentSummarys">
+        <td><input type="checkbox" [(ngModel)]="ovum.isChecked" (change)="onSelectOvum()"></td>
+        <td>{{ovum.ovumNumber}}</td>
+        <td>{{ovum.ovumFromCourseOfTreatmentSqlId === ovum.courseOfTreatmentSqlId ? "自用" :
+          "借用"}}/{{ovum.ovumFromCourseOfTreatmentSqlId}}</td>
+        <td>{{ovum.ovumPickupDetailStatus}}</td>
+        <td>{{ovum.dateOfEmbryo}}</td>
+        <td>
+          <span *ngIf="ovum.fertilizationStatus !== '未受精'">{{ovum.fertilizationStatus}}</span>
+        </td>
+        <td>{{ovum.observationNote}}</td>
 
-    </tr>
-  </tbody>
-</table>
-
-<app-freeze-ovum *ngIf="isOpenSubFunction && isOpenSubFunction.functionId === 15" [subfunction]="isOpenSubFunction"></app-freeze-ovum>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<app-freeze-ovum *ngIf="isOpenSubFunction && isOpenSubFunction.functionId === 15"
+  [subfunction]="isOpenSubFunction"></app-freeze-ovum>
