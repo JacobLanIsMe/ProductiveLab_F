@@ -11,40 +11,46 @@
                 <ng-container *ngIf="selectedObservationNotes && selectedObservationNotes.length>0">
                     <table class="table" style="font-size:0.5em;text-align:center;">
                         <thead>
-                          <tr>
-                            <th scope="col">卵子No.</th>
-                            <th scope="col">天數</th>
-                            <th scope="col">受精結果</th>
-                            <th scope="col">最後觀察狀態/等級</th>
-                            <th scope="col">冷凍日</th>
-                            <th scope="col">PGS編號</th>
-                            <th scope="col">PGS結果</th>
-                            <th scope="col">KID Score</th>
-                          </tr>
+                            <tr>
+                                <th scope="col">卵子No.</th>
+                                <th scope="col">天數</th>
+                                <th scope="col">受精結果</th>
+                                <th scope="col">最後觀察狀態/等級</th>
+                                <th scope="col">冷凍日</th>
+                                <th scope="col">PGS編號</th>
+                                <th scope="col">PGS結果</th>
+                                <th scope="col">KID Score</th>
+                            </tr>
                         </thead>
                         <tbody>
-                          <tr *ngFor="let observationNote of selectedObservationNotes">
-                            <th scope="row">{{observationNote.ovumNumber}}</th>
-                            <td>Day: {{observationNote.day}}</td>
-                            <td>{{observationNote.fertilisationResultName}}</td>
-                            <td>
-                                <ng-container  *ngIf="observationNote.blastocystScore_Expansion_Name || observationNote.blastocystScore_ICE_Name || observationNote.blastocystScore_TE_Name">
-                                    <div>囊胚期胚胎評分: {{observationNote.blastocystScore_Expansion_Name}}{{observationNote.blastocystScore_ICE_Name}}{{observationNote.blastocystScore_TE_Name}}</div>
-                                </ng-container>
-                                <ng-container *ngIf="observationNote.blastomereScore_C_Name || observationNote.blastomereScore_G_Name || observationNote.blastomereScore_F_Name">
-                                    <div>分裂期胚胎評分: {{observationNote.blastomereScore_C_Name}}G{{observationNote.blastomereScore_G_Name}}F{{observationNote.blastomereScore_F_Name}}</div>
-                                </ng-container>
-                                <ng-container *ngIf="observationNote.ovumMaturationName">
-                                    <div>卵子成熟度: {{observationNote.ovumMaturationName}}</div>
-                                </ng-container>
-                            </td>
-                            <td>{{todayDate}}</td>
-                            <td>{{observationNote.pgtaNumber}}</td>
-                            <td>{{observationNote.pgtaResult}}</td>
-                            <td>{{observationNote.kidScore}}</td>
-                          </tr>
+                            <tr *ngFor="let observationNote of selectedObservationNotes">
+                                <th scope="row">{{observationNote.ovumNumber}}</th>
+                                <td>Day: {{observationNote.day}}</td>
+                                <td>{{observationNote.fertilisationResultName}}</td>
+                                <td>
+                                    <ng-container
+                                        *ngIf="observationNote.blastocystScore_Expansion_Name || observationNote.blastocystScore_ICE_Name || observationNote.blastocystScore_TE_Name">
+                                        <div>囊胚期胚胎評分:
+                                            {{observationNote.blastocystScore_Expansion_Name}}{{observationNote.blastocystScore_ICE_Name}}{{observationNote.blastocystScore_TE_Name}}
+                                        </div>
+                                    </ng-container>
+                                    <ng-container
+                                        *ngIf="observationNote.blastomereScore_C_Name || observationNote.blastomereScore_G_Name || observationNote.blastomereScore_F_Name">
+                                        <div>分裂期胚胎評分:
+                                            {{observationNote.blastomereScore_C_Name}}G{{observationNote.blastomereScore_G_Name}}F{{observationNote.blastomereScore_F_Name}}
+                                        </div>
+                                    </ng-container>
+                                    <ng-container *ngIf="observationNote.ovumMaturationName">
+                                        <div>卵子成熟度: {{observationNote.ovumMaturationName}}</div>
+                                    </ng-container>
+                                </td>
+                                <td>{{todayDate}}</td>
+                                <td>{{observationNote.pgtaNumber}}</td>
+                                <td>{{observationNote.pgtaResult}}</td>
+                                <td>{{observationNote.kidScore}}</td>
+                            </tr>
                         </tbody>
-                      </table>
+                    </table>
 
 
 
@@ -85,18 +91,23 @@
                             </select>
                         </div>
                     </ng-container>
-                    <div class="input-group mb-3">
-                        <span class="input-group-text">培養液</span>
-                        <select class="form-select" formControlName="mediumInUseId" [(ngModel)]="selectedMedium">
-                            <ng-container *ngIf="mediums">
-                                <ng-container *ngIf="mediums.isSuccess">
-                                    <option *ngFor="let medium of mediums.data" [value]="medium.mediumInUseId">
-                                        {{medium.name}}/{{medium.lotNumber}}</option>
+                    <div class="mb-3 d-flex justify-content-between align-items-center">
+                        <div class="input-group w-75">
+                            <span class="input-group-text">冷凍液</span>
+                            <select class="form-select" formControlName="mediumInUseId"
+                                (change)="onSelectMedium($event)">
+                                <ng-container *ngIf="mediums.length > 0">
+                                    <option *ngFor="let medium of mediums" [value]="medium.mediumInUseId">
+                                        {{medium.name}}</option>
                                 </ng-container>
-                            </ng-container>
-                        </select>
+                            </select>
+                        </div>
+                        <div>
+                            <button type="button" class="btn btn-outline-secondary btn-sm"
+                                (click)="onOpenMediumForm()">開封培養液</button>
+                        </div>
                     </div>
-                    <div class="input-group mb-3" *ngIf="selectedMedium && otherMedium && otherMedium.data.length > 0 && selectedMedium === otherMedium.data[0].mediumInUseId">
+                    <div class="input-group mb-3" *ngIf="isChooseOtherMedium">
                         <span class="input-group-text">其他培養液</span>
                         <input type="text" class="form-control" style="width:7vw" formControlName="otherMediumName">
                     </div>
@@ -114,3 +125,4 @@
     </div>
 </div>
 <ng-container #container></ng-container>
+<app-open-medium *ngIf="isOpenMediumForm"></app-open-medium>

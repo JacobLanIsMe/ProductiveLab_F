@@ -7,8 +7,8 @@
 <hr>
 <select class="form-select" formControlName="mediumInUseId">
     <ng-container *ngIf="inUseMedium">
-        <ng-container *ngIf="inUseMedium.isSuccess">
-            <option *ngFor="let medium of inUseMedium.data" [value]="medium.mediumInUseId">{{medium.name}}</option>
+        <ng-container *ngIf="inUseMedium.length > 0">
+            <option *ngFor="let medium of inUseMedium" [value]="medium.mediumInUseId">{{medium.name}}</option>
         </ng-container>
     </ng-container>
 </select>

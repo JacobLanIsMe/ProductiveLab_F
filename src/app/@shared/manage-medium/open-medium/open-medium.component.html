@@ -1,0 +1,50 @@
+<div class="alertContainer">
+    <div class="alertBox w-50">
+        <div class="fs-5 fw-bold text-warning-emphasis"><fa-icon [icon]="faSquarePlus" class="me-3"></fa-icon>開封培養液
+        </div>
+        <hr>
+        <form [formGroup]="mediumForm" (ngSubmit)="onSubmit(mediumForm)">
+            <div class="input-group mb-3">
+                <span class="input-group-text">常用培養液</span>
+                <select class="form-select" formControlName="frequentlyUsedMediumId" (change)="onSelectMedium($event)">
+                    <ng-container *ngIf="frequentlyUsedMediums.length > 0">
+                        <option *ngFor="let medium of frequentlyUsedMediums" [value]="medium.id">
+                            {{medium.name}}</option>
+                        <option></option>
+                    </ng-container>
+                </select>
+            </div>
+            <div class="input-group mb-3">
+                <span class="input-group-text">自訂培養液</span>
+                <input type="text" class="form-control" formControlName="customizedMedium" (blur)="onEnterCustomizedMedium($event)">
+            </div>
+            <div class="input-group mb-3">
+                <span class="input-group-text">開封日期</span>
+                <input type="date" class="form-control" formControlName="openDate">
+            </div>
+            <div class="input-group mb-3">
+                <span class="input-group-text">到期日期</span>
+                <input type="date" class="form-control" formControlName="expirationDate">
+            </div>
+            <div class="input-group mb-3">
+                <span class="input-group-text">批號</span>
+                <input type="text" class="form-control" formControlName="lotNumber">
+            </div>
+            <div class="input-group mb-3">
+                <span class="input-group-text">培養液類型</span>
+                <select class="form-select" formControlName="mediumTypeId">
+                    <ng-container *ngIf="mediumTypes.length > 0">
+                        <option *ngFor="let mediumType of mediumTypes" [value]="mediumType.id">
+                            {{mediumType.name}}</option>
+                        <option></option>
+                    </ng-container>
+                </select>
+            </div>
+            <div class="d-flex justify-content-end align-items-center">
+                <button type="button" class="btn btn-outline-primary btn-sm me-3" (click)="onCancel()">取消</button>
+                <button type="submit" class="btn btn-primary btn-sm" [disabled]="!mediumForm.valid">開封培養液</button>
+            </div>
+        </form>
+    </div>
+</div>
+<ng-container #container></ng-container>

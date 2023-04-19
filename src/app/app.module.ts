@@ -42,6 +42,8 @@ import { FreezeOvumComponent } from './index/case/treatment-summary/freeze-ovum/
 import { ShowSelectedStorageUnitComponent } from './index/manage-storage/show-selected-storage-unit/show-selected-storage-unit.component';
 import { AlertMessageComponent } from './@shared/alert-message/alert-message.component';
 import { TitleComponent } from './@shared/title/title.component';
+import { OpenMediumComponent } from './@shared/manage-medium/open-medium/open-medium.component';
+import { ShowMediumInfoComponent } from './@shared/manage-medium/show-medium-info/show-medium-info.component';
 
 
 @NgModule({
@@ -83,7 +85,9 @@ import { TitleComponent } from './@shared/title/title.component';
     FreezeOvumComponent,
     ShowSelectedStorageUnitComponent,
     AlertMessageComponent,
-    TitleComponent
+    TitleComponent,
+    OpenMediumComponent,
+    ShowMediumInfoComponent
   ],
   imports: [
     BrowserModule,

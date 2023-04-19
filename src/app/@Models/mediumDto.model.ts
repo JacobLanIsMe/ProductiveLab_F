@@ -1,9 +1,11 @@
-import { Medium } from './medium.model';
-import { BaseResponseDto } from './baseResponseDto.model';
-export class MediumDto extends BaseResponseDto{
+export class MediumDto{
     constructor(
-        public data: Medium[]
-    ){
-        super(true, "");
-    }
+        public mediumInUseId: string,
+        public name: string,
+        public openDate: Date,
+        public expirationDate: Date,
+        public lotNumber: string,
+        public isDeleted: boolean,
+        public mediumTypeId:number
+    ){}
 }

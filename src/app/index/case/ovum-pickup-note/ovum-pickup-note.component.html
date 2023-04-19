@@ -64,18 +64,18 @@
                 <div class="fs-5 fw-bold text-warning-emphasis"><fa-icon [icon]="faFlask" class="me-3"></fa-icon>選擇培養液
                 </div>
                 <button type="button" class="btn btn-outline-secondary btn-sm" (click)="onAddMedium()">增加培養液</button>
+                <button type="button" class="btn btn-outline-secondary btn-sm" (click)="onOpenMedium()">開封培養液</button>
             </div>
             <hr>
-
             <div formArrayName="mediumInUse">
                 <div class="d-flex justify-content-start align-items-center"
                     *ngFor="let medium of getMediumInUseArray(); let i = index">
                     <div class="input-group mb-3">
                         <div class="input-group-text">培養液</div>
                         <select class="form-select" [formControlName]="i">
-                            <ng-container *ngIf="mediums && mediums.isSuccess">
-                                <option *ngFor="let medium of mediums.data" [value]="medium.mediumInUseId">
-                                    {{medium.name}}/{{medium.lotNumber}}</option>
+                            <ng-container *ngIf="mediums.length > 0">
+                                <option *ngFor="let medium of mediums" [value]="medium.mediumInUseId">
+                                    {{medium.name}}</option>
                             </ng-container>
                         </select>
                     </div>
@@ -83,8 +83,6 @@
                             [icon]="faXmark" class="text-danger"></fa-icon></button>
                 </div>
             </div>
-
-
         </div>
         <div class="col-4">
             <div class="fs-5 fw-bold text-warning-emphasis"><fa-icon [icon]="faPerson" class="me-3"></fa-icon>找卵胚胎師
@@ -106,3 +104,4 @@
         </div>
     </div>
 </Form>
+<app-open-medium *ngIf="isOpenMediumForm"></app-open-medium>

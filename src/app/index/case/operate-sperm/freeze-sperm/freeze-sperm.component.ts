@@ -24,6 +24,8 @@ export class FreezeSpermComponent implements OnInit, OnDestroy{
   constructor(private operateSpermService:OperateSpermService, private manageStorageService:ManageStorageService, private manageMediumService: ManageMediumService, private dateService:DateService, private employeeService: EmployeeService, private functionHeaderService:FunctionHeaderService, private commonService: CommonService){}
   ngOnDestroy(): void {
     this.locationSubscription?.unsubscribe();
+    this.openMediumSubscription?.unsubscribe();
+    this.mediumSubscription?.unsubscribe();
   }
   ngOnInit(): void {
     this.spermFromCourseOfTreatmentId = this.operateSpermService.baseOperateSpermInfo?.spermFromCourseOfTreatmentId;
@@ -42,18 +44,22 @@ export class FreezeSpermComponent implements OnInit, OnDestroy{
     this.operateSpermService.getSpermFreezeOperationMethod().subscribe(res=>{
       this.spermFreezeOperateMethods = res;
     });
-    this.manageMediumService.getInUseMedium(MediumTypeEnum.spermFreezeMedium).subscribe(res=>{
-      this.freezeMediums = res;
-    });
-    this.manageMediumService.getInUseMedium(MediumTypeEnum.medium).subscribe(res=>{
-      this.mediums = res;
-    });
+    this.mediumSubscription = this.manageMediumService.updatedMedium.subscribe(res=>{
+      this.freezeMediums = this.manageMediumService.getSpermFreezeMedium(res);
+      this.mediums = this.manageMediumService.getRegularMedium(res);
+    })
+    this.manageMediumService.getInUseMediums();
     this.employeeService.getAllEmbryologist().subscribe(res=>{
       this.embryologists = res;
     })
+    this.openMediumSubscription = this.manageMediumService.isOpenMediumForm.subscribe(res=>{
+      this.isOpenMediumForm = res;
+    })
   }
   @ViewChild("container", {read:ViewContainerRef}) container!:ViewContainerRef;
+  openMediumSubscription?: Subscription;
   locationSubscription?: Subscription;
+  mediumSubscription?:Subscription;
   freezeSpermForm!: FormGroup;
   spermFromCourseOfTreatmentId: string | undefined;
   spermOwner = this.operateSpermService.baseOperateSpermInfo?.spermOwner;
@@ -61,11 +67,14 @@ export class FreezeSpermComponent implements OnInit, OnDestroy{
   faXmark = faXmark;
   selectedLocations?: StorageLocation[];
   spermFreezeOperateMethods?: SpermFreezeOperationMethodDto[];
-  freezeMediums?: MediumDto;
-  mediums?: MediumDto;
+  freezeMediums: MediumDto[] = [];
+  mediums: MediumDto[] = [];
   embryologists?: EmbryologistDto[];
   vialCount = 0;
-  
+  isOpenMediumForm = false;
+  onOpenMedium(){
+    this.manageMediumService.isOpenMediumForm.next(true);
+  }
   onDeleteMedium(index: number){
     this.manageMediumService.deleteMediumFromFormArray(<FormArray>(this.freezeSpermForm.get("mediumInUseArray")), index);
   }

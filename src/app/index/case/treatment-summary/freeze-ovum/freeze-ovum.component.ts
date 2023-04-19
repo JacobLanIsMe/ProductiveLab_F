@@ -28,6 +28,8 @@ export class FreezeOvumComponent implements OnInit,OnDestroy {
   constructor(private dateService:DateService,private employeeService:EmployeeService, private functionHeaderService:FunctionHeaderService, private manageMediumService:ManageMediumService, private manageStorageService:ManageStorageService, private treatmentService:TreatmentService, private commonService:CommonService, private observationNoteService:ObservationNoteService){}
   ngOnDestroy(): void {
     this.locationSubscription?.unsubscribe();
+    this.mediumSubscription?.unsubscribe();
+    this.openMediumFormSubscription?.unsubscribe();
   }
   ngOnInit(): void {
     this.freezeOvumForm = new FormGroup({
@@ -43,18 +45,15 @@ export class FreezeOvumComponent implements OnInit,OnDestroy {
       "memo": new FormControl(null),
       "topColorId": new FormControl(null, Validators.required)
     })
+    this.mediumSubscription = this.manageMediumService.updatedMedium.subscribe(res=>{
+      this.mediums=this.manageMediumService.getOvumFreezeAndOtherMediun(res);
+    })
+    this.manageMediumService.getInUseMediums();
     this.observationNoteService.getFreezeObservationNotes(this.treatmentService.selectedOvumPickupDetailId).subscribe(res=>{
       this.selectedObservationNotes = res;
     });
     this.employeeService.getAllEmbryologist().subscribe(res=>{
       this.embryologists = res;
-    })
-    this.manageMediumService.getInUseMedium(MediumTypeEnum.ovumFreezeMedium).subscribe(res=>{
-      this.mediums = res;
-      this.manageMediumService.getInUseMedium(MediumTypeEnum.other).subscribe(res=>{
-        this.otherMedium = res;
-        this.integrateMedium(this.mediums, this.otherMedium);
-      })
     })
     this.treatmentService.getTopColors().subscribe(res=>{
       this.topColors = res;
@@ -62,6 +61,9 @@ export class FreezeOvumComponent implements OnInit,OnDestroy {
     this.locationSubscription = this.manageStorageService.selectedLocations.subscribe(res=>{
       this.selectedLocations = res;
     });
+    this.openMediumFormSubscription = this.manageMediumService.isOpenMediumForm.subscribe(res=>{
+      this.isOpenMediumForm = res;
+    })
   }
   todayDate = this.dateService.getTodayDateString(new Date());
   locationSubscription?: Subscription;
@@ -69,20 +71,23 @@ export class FreezeOvumComponent implements OnInit,OnDestroy {
   topColors?: CommonDto[];
   faSnowflake = faSnowflake;
   embryologists?: EmbryologistDto[];
-  mediums?:MediumDto;
-  otherMedium?: MediumDto;
-  selectedMedium?: string;
+  mediumSubscription?:Subscription;
+  mediums:MediumDto[] = [];
+  openMediumFormSubscription?: Subscription;
+  isOpenMediumForm = false;
+  isChooseOtherMedium = false;
   selectedLocations?: StorageLocation[];
   selectedOvumPickupDetailId = this.treatmentService.selectedOvumPickupDetailId;
   selectedObservationNotes?: GetObservationNoteNameDto[];
-  integrateMedium(mediums?: MediumDto, otherMedium?: MediumDto){
-    if (mediums && mediums.data && otherMedium && otherMedium.data){
-      otherMedium.data.forEach(x=>{
-        mediums.data.push(x);
-      })
+  onSelectMedium(event:any){
+    const selectedMedium = this.mediums.filter(x=>x.mediumInUseId === event.target.value);
+    if (selectedMedium.length>0){
+      this.isChooseOtherMedium = selectedMedium[0].mediumTypeId === MediumTypeEnum.other ? true : false; 
     }
   }
-  
+  onOpenMediumForm(){
+    this.manageMediumService.isOpenMediumForm.next(true);
+  }
   addStorageUnitIdToForm(){
     if (this.selectedLocations && this.selectedLocations.length === 1){
       this.freezeOvumForm.patchValue({
