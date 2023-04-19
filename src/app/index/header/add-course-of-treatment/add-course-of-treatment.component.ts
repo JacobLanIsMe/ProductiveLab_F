@@ -34,7 +34,6 @@ export class AddCourseOfTreatmentComponent implements OnInit {
     })
 
   }
-  @ViewChild("container", {read:ViewContainerRef}) container!: ViewContainerRef;
   addCourseOfTreatmentForm!: FormGroup;
   doctors?: EmbryologistDto[];
   embryologists?: EmbryologistDto[];
@@ -44,7 +43,7 @@ export class AddCourseOfTreatmentComponent implements OnInit {
   }
   onSubmit(form: FormGroup){
     this.treatmentService.addCourseOfTreatment(form).subscribe(res=>{
-      this.commonService.judgeTheResponse(res, this.container, "新增療程", res.errorMessage);
+      this.commonService.judgeTheResponse(res, "新增療程", res.errorMessage);
     })
     this.onCancel();
   }

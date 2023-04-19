@@ -15,7 +15,6 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./open-medium.component.css']
 })
 export class OpenMediumComponent implements OnInit, OnDestroy {
-  @ViewChild("container", {read:ViewContainerRef}) container!:ViewContainerRef;
   constructor(private manageMediumService: ManageMediumService, private dateService: DateService, private commonService:CommonService){}
   ngOnDestroy(): void {
     this.frequentlyUsedMediumSubscription?.unsubscribe();
@@ -86,7 +85,7 @@ export class OpenMediumComponent implements OnInit, OnDestroy {
     })
     this.manageMediumService.AddMediumInUse(mediumForm).subscribe(res=>{
       this.manageMediumService.getInUseMediums();
-      this.commonService.judgeTheResponse(res, this.container, "開封培養液", res.errorMessage, mediumForm)
+      this.commonService.judgeTheResponse(res, "開封培養液", res.errorMessage, mediumForm)
     });
   }
 }

@@ -24,7 +24,6 @@ import { CommonDto } from 'src/app/@Models/commonDto.model';
 })
 export class FreezeOvumComponent implements OnInit,OnDestroy {
   @Input() subfunction: FunctionDto|null = null;
-  @ViewChild("container", {read:ViewContainerRef}) container!:ViewContainerRef;
   constructor(private dateService:DateService,private employeeService:EmployeeService, private functionHeaderService:FunctionHeaderService, private manageMediumService:ManageMediumService, private manageStorageService:ManageStorageService, private treatmentService:TreatmentService, private commonService:CommonService, private observationNoteService:ObservationNoteService){}
   ngOnDestroy(): void {
     this.locationSubscription?.unsubscribe();
@@ -96,7 +95,7 @@ export class FreezeOvumComponent implements OnInit,OnDestroy {
       return true;
     }
     else{
-      this.commonService.showAlertMessage(this.container, "", "儲位數量有誤");
+      this.commonService.showAlertMessage("", "儲位數量有誤");
       return false;
     }
   }
@@ -111,7 +110,7 @@ export class FreezeOvumComponent implements OnInit,OnDestroy {
       return true;
     }
     else{
-      this.commonService.showAlertMessage(this.container, "", "卵子數量請介於 1-4");
+      this.commonService.showAlertMessage("", "卵子數量請介於 1-4");
       return false;
     }
   }
@@ -129,7 +128,7 @@ export class FreezeOvumComponent implements OnInit,OnDestroy {
       "topColorId": +this.freezeOvumForm.value.topColorId
     })
     this.treatmentService.addOvumFreeze(form).subscribe(res=>{
-      this.commonService.judgeTheResponse(res, this.container, "冷凍入庫", res.errorMessage, form);
+      this.commonService.judgeTheResponse(res, "冷凍入庫", res.errorMessage, form);
       const courseOfTreatmentId = this.commonService.getCourseOfTreatmentId();
       if (courseOfTreatmentId){
         this.treatmentService.updateTreatmentSummary(courseOfTreatmentId);

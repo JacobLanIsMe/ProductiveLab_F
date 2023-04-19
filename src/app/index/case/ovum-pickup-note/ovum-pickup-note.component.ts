@@ -66,6 +66,14 @@ export class OvumPickupNoteComponent implements OnInit, OnDestroy {
   getMediumInUseArray(){
     return (<FormArray>(this.ovumPickupForm.get("mediumInUse"))).controls;
   }
+  
+  onOpenMediumInfo(event:MouseEvent){
+    const target = event.target as HTMLElement;
+    if (target.tagName === 'OPTION') {
+      const select = target.parentNode as HTMLSelectElement;
+      console.log('Mouse over option: ', select.value);
+    }
+  }
   onAddMedium(){
     (<FormArray>(this.ovumPickupForm.get("mediumInUse"))).push(new FormControl(null, Validators.required));
   }
@@ -77,13 +85,8 @@ export class OvumPickupNoteComponent implements OnInit, OnDestroy {
   }
   onSubmit(form: FormGroup){
     this.treatmentService.addOvumPickupNote(form).subscribe(res=>{
-      if (res.isSuccess){
-        Swal.fire("新增取卵紀錄成功");
-        this.isAlreadyAdded = true;
-      }
-      else{
-        Swal.fire(res.errorMessage);
-      }
+      this.commonService.judgeTheResponse(res,"新增取卵紀錄", res.errorMessage)
     });
   }
+  
 }

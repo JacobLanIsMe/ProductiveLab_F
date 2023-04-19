@@ -1,3 +1,5 @@
+import { ComponentPortal } from '@angular/cdk/portal';
+import { Overlay, OverlayRef } from '@angular/cdk/overlay';
 import { BaseResponseDto } from '../@Models/baseResponseDto.model';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -7,12 +9,13 @@ import { MediumTypeEnum } from '../@Enums/mediumTypeEnum.model';
 import { MediumDto } from '../@Models/mediumDto.model';
 import { CommonDto } from '../@Models/commonDto.model';
 import { FrequentlyUsedMediumDto } from '../@Models/frequentlyUsedMediumDto.model';
+import { ShowMediumInfoComponent } from '../@shared/manage-medium/show-medium-info/show-medium-info.component';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ManageMediumService {
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private overlay:Overlay) { }
   isOpenMediumForm = new Subject<boolean>();
   updatedMedium = new Subject<MediumDto[]>();
   updatedFrequentlyUsedMedium = new Subject<FrequentlyUsedMediumDto[]>()
@@ -54,5 +57,14 @@ export class ManageMediumService {
     else{
       formArray.removeAt(index);
     }
+  }
+  overlayRef?:OverlayRef;
+  openShowMediumInfo(medium:MediumDto){
+    this.overlayRef = this.overlay.create({
+      hasBackdrop:true,
+      positionStrategy:this.overlay.position().global().centerHorizontally().centerVertically()
+    })
+    const componentRef = this.overlayRef.attach(new ComponentPortal(ShowMediumInfoComponent));
+    componentRef.instance.medium = medium;
   }
 }

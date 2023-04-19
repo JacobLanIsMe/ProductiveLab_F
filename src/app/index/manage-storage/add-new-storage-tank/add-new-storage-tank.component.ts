@@ -23,12 +23,11 @@ export class AddNewStorageTankComponent implements OnInit {
       this.storageTankType = res;
     })
   }
-  @ViewChild("container", {read:ViewContainerRef}) container!: ViewContainerRef;
   addNewTankForm!: FormGroup;
   storageTankType?: StorageTankTypeDto[];
   onSubmit(form: FormGroup){
     this.manageStorageService.addNewTank(form).subscribe(res=>{
-      this.commonService.judgeTheResponse(res, this.container, "新增", res.errorMessage);
+      this.commonService.judgeTheResponse(res, "新增", res.errorMessage);
     })
   }
 }

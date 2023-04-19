@@ -23,7 +23,6 @@ export class SelectSpermFreezeComponent implements OnInit {
       this.spermOwnerName = this.operateSpermService.baseOperateSpermInfo.spermOwner.customerName;
     }
   }
-  @ViewChild("container", {read:ViewContainerRef}) container!: ViewContainerRef;
   spermFreezes: SpermFreezeDto[] = [];
   isSelectAll: boolean = false;
   faListCheck = faListCheck;
@@ -66,7 +65,7 @@ export class SelectSpermFreezeComponent implements OnInit {
     }
     else{
       this.operateSpermService.selectSpermFreeze(this.selectedUnitIds).subscribe(res=>{
-        this.commonService.judgeTheResponse(res, this.container, "解凍精蟲", res.errorMessage);
+        this.commonService.judgeTheResponse(res, "解凍精蟲", res.errorMessage);
         this.onCancel();
       })
 

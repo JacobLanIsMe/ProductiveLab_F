@@ -1,5 +1,6 @@
-import { ComponentFactoryResolver, Injectable, OnDestroy, ViewContainerRef } from '@angular/core';
-import Swal from 'sweetalert2';
+import { ComponentPortal } from '@angular/cdk/portal';
+import { Overlay, OverlayRef } from '@angular/cdk/overlay';
+import { Injectable, OnDestroy } from '@angular/core';
 import { BaseResponseDto } from '../@Models/baseResponseDto.model';
 import { LocalStorageKey } from '../@Models/localStorageKey.model';
 import { FormGroup } from '@angular/forms';
@@ -10,24 +11,39 @@ import { Subscription } from 'rxjs';
   providedIn: 'root'
 })
 export class CommonService implements OnDestroy {
-
-  constructor(private componentFactoryResolver:ComponentFactoryResolver) { }
+  constructor(private overlay:Overlay) { }
   ngOnDestroy(): void {
     if (this.alertMessageSubscription){
       this.alertMessageSubscription.unsubscribe();
     }
+    this.showAlertSubscription?.unsubscribe();
   }
   alertMessageSubscription?: Subscription;
-  judgeTheResponse(res: BaseResponseDto, container: ViewContainerRef, title: string, description?: string, disableForm?:FormGroup){
+  judgeTheResponse(res: BaseResponseDto, title: string, description?: string, disableForm?:FormGroup){
     if (res.isSuccess){
-      this.showAlertMessage(container, title + "成功", description);
+      this.showAlertMessage(title + "成功", description);
       if (disableForm){
         disableForm.disable();
       }
     }
     else{
-      this.showAlertMessage(container, title + "失敗", description);
+      this.showAlertMessage(title + "失敗", description);
     }
+  }
+  overlayRef?:OverlayRef;
+  showAlertSubscription?:Subscription;
+  showAlertMessage(title:string, description?:string){
+    this.overlayRef = this.overlay.create({
+      hasBackdrop:true,
+      positionStrategy:this.overlay.position().global().centerVertically().centerHorizontally()
+    })
+    const componentRef = this.overlayRef.attach(new ComponentPortal(AlertMessageComponent));
+    componentRef.instance.title = title;
+    componentRef.instance.description = description;
+    this.showAlertSubscription = componentRef.instance.close.subscribe(()=>{
+      this.overlayRef?.detach();
+      this.showAlertSubscription?.unsubscribe();
+    })
   }
   getCourseOfTreatmentId(){
     return localStorage.getItem(LocalStorageKey.courseOfTreatmentId);
@@ -37,20 +53,5 @@ export class CommonService implements OnDestroy {
   }
   getOvumFromCourseOfTreatmentId(){
     return localStorage.getItem(LocalStorageKey.ovumFromCourseOfTreatmentId);
-  }
-  showAlertMessage(container: ViewContainerRef, title:string, description?:string){
-    container.clear();
-    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(AlertMessageComponent);
-    const containerRef = container.createComponent(componentFactory);
-    containerRef.instance.title = title;
-    if (description){
-      containerRef.instance.description = description;
-    }
-    this.alertMessageSubscription = containerRef.instance.close.subscribe(()=>{
-      containerRef.destroy();
-      if (this.alertMessageSubscription){
-        this.alertMessageSubscription.unsubscribe();
-      }
-    });
   }
 }

@@ -27,7 +27,6 @@ export class ExistingObservationNoteInfoComponent implements OnInit {
       })
     } 
   }
-  @ViewChild("container", {read:ViewContainerRef}) container!:ViewContainerRef;
   existingObservationNote?: GetObservationNoteNameDto;
   mainPhotoBase64String?: string;
   baseTreatmentInfo?: BaseTreatmentInfoDto = this.treatmentService.baseTreatmentInfo;
@@ -57,7 +56,7 @@ export class ExistingObservationNoteInfoComponent implements OnInit {
   onDelete(){
     if (this.observationNoteService.selectedObservationNoteId){
       this.observationNoteService.deleteObservationNote(this.observationNoteService.selectedObservationNoteId).subscribe(res=>{
-        this.commonService.judgeTheResponse(res, this.container, "刪除觀察紀錄", res.errorMessage);
+        this.commonService.judgeTheResponse(res, "刪除觀察紀錄", res.errorMessage);
         const courseOfTreatmentId = this.commonService.getCourseOfTreatmentId();
         if (courseOfTreatmentId){
           this.observationNoteService.showUpdatedObservationNote(courseOfTreatmentId)

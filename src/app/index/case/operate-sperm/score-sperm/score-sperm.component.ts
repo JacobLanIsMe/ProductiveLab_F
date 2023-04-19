@@ -73,7 +73,6 @@ export class ScoreSpermComponent implements OnInit {
       this.scoreSpermForm.disable();
     }
   }
-  @ViewChild("container", {read:ViewContainerRef}) container!: ViewContainerRef;
   @Input() subfunction: FunctionDto | undefined
   scoreSpermForm!: FormGroup;
   spermScoreTimePointId: number | undefined;
@@ -87,7 +86,7 @@ export class ScoreSpermComponent implements OnInit {
   onSubmit(scoreSpermForm: FormGroup){
     if (this.existingSpermScore){
       this.operateSpermService.updateExistingSpermScore(scoreSpermForm).subscribe(res=>{
-        this.commonService.judgeTheResponse(res, this.container, "更新", res.errorMessage);
+        this.commonService.judgeTheResponse(res, "更新", res.errorMessage);
         if (this.operateSpermService.baseOperateSpermInfo){
           this.operateSpermService.getExistingSpermScore(this.operateSpermService.baseOperateSpermInfo.spermFromCourseOfTreatmentId)
         }
@@ -96,7 +95,7 @@ export class ScoreSpermComponent implements OnInit {
     }
     else{
       this.operateSpermService.addSpermScore(scoreSpermForm).subscribe(res=>{
-        this.commonService.judgeTheResponse(res, this.container, "新增", res.errorMessage);
+        this.commonService.judgeTheResponse(res, "新增", res.errorMessage);
         if (this.operateSpermService.baseOperateSpermInfo){
           this.operateSpermService.getExistingSpermScore(this.operateSpermService.baseOperateSpermInfo.spermFromCourseOfTreatmentId)
         }

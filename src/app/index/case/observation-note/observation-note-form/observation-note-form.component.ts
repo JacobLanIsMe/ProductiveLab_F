@@ -103,7 +103,6 @@ export class ObservationNoteFormComponent implements OnInit {
       })
     }
   }
-  @ViewChild("container",{read:ViewContainerRef}) container!: ViewContainerRef;
   observationNoteForm!: FormGroup;
   embryologists?: EmbryologistDto[];
   ovumMaturations?: CommonDto[];
@@ -235,7 +234,7 @@ export class ObservationNoteFormComponent implements OnInit {
       formData.append("existingPhotos", JSON.stringify(this.existingObservationNotePhotos))
     }
     this.observationNoteService.updateObservationNote(formData).subscribe(res=>{
-      this.commonService.judgeTheResponse(res, this.container, "更改觀察紀錄", res.errorMessage, this.observationNoteForm);
+      this.commonService.judgeTheResponse(res, "更改觀察紀錄", res.errorMessage, this.observationNoteForm);
       const courseOfTreatmentId = this.commonService.getCourseOfTreatmentId();
       if (courseOfTreatmentId){
         this.observationNoteService.showUpdatedObservationNote(courseOfTreatmentId);
@@ -246,7 +245,7 @@ export class ObservationNoteFormComponent implements OnInit {
   onSubmit(form: FormGroup) {
     let formData = this.observationNoteService.generateFormData(form, this.selectedMainPhotoIndex, this.observationNotePhotos, this.selectedOperationTypeId, this.selectedOvumAbnormalityId, this.selectedEmbryoStatusId);
     this.observationNoteService.addObservationNote(formData).subscribe(res=>{
-      this.commonService.judgeTheResponse(res, this.container,"新增觀察紀錄", res.errorMessage, this.observationNoteForm);
+      this.commonService.judgeTheResponse(res,"新增觀察紀錄", res.errorMessage, this.observationNoteForm);
       const courseOfTreatmentId = this.commonService.getCourseOfTreatmentId();
       if (courseOfTreatmentId){
         this.observationNoteService.showUpdatedObservationNote(courseOfTreatmentId);

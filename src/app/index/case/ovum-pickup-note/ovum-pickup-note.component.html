@@ -72,7 +72,7 @@
                     *ngFor="let medium of getMediumInUseArray(); let i = index">
                     <div class="input-group mb-3">
                         <div class="input-group-text">培養液</div>
-                        <select class="form-select" [formControlName]="i">
+                        <select class="form-select" [formControlName]="i" (mouseover)="onOpenMediumInfo($event)">
                             <ng-container *ngIf="mediums.length > 0">
                                 <option *ngFor="let medium of mediums" [value]="medium.mediumInUseId">
                                     {{medium.name}}</option>

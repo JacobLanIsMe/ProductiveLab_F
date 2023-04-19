@@ -1,10 +1,8 @@
-<div class="messageContainer">
-    <div class="messageBox">
-        <h6 class="fw-bold ps-3" *ngIf="title !== ''">{{title}}</h6>
-        <hr *ngIf="title!==''" style="color:gray">
-        <h6 style="text-align: center;">{{description}}</h6>
-        <div class="pe-3" style="text-align: end;">
-            <button class="btn btn-primary btn-sm" (click)="onClose()">確定</button>
-        </div>
+<div class="messageBox">
+    <h6 class="fw-bold ps-3" *ngIf="title !== ''">{{title}}</h6>
+    <hr *ngIf="title!==''" style="color:gray">
+    <h6 style="text-align: center;">{{description}}</h6>
+    <div class="pe-3" style="text-align: end;">
+        <button class="btn btn-primary btn-sm" (click)="onClose()">確定</button>
     </div>
 </div>
