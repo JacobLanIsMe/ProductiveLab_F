@@ -5,8 +5,6 @@ import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { faClock, faList, faPerson, faFlask, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { EmbryologistDto } from 'src/app/@Models/embryologistDto.model';
-import { MainPageService } from 'src/app/@Service/main-page.service';
-import Swal from 'sweetalert2';
 import { MediumDto } from 'src/app/@Models/mediumDto.model';
 import { ManageMediumService } from 'src/app/@Service/manage-medium.service';
 import { CommonService } from 'src/app/@Service/common.service';
@@ -18,7 +16,7 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./ovum-pickup-note.component.css']
 })
 export class OvumPickupNoteComponent implements OnInit, OnDestroy {
-  constructor(private dateService: DateService, private treatmentService: TreatmentService, private employeeService: EmployeeService, private mainPageService: MainPageService, private manageMediumService: ManageMediumService, private commonService:CommonService){}
+  constructor(private dateService: DateService, private treatmentService: TreatmentService, private employeeService: EmployeeService, private manageMediumService: ManageMediumService, private commonService:CommonService){}
   ngOnDestroy(): void {
     this.mediumSubscription?.unsubscribe();
   }
@@ -51,6 +49,15 @@ export class OvumPickupNoteComponent implements OnInit, OnDestroy {
     this.manageMediumService.isOpenMediumForm.subscribe(res=>{
       this.isOpenMediumForm = res;
     })
+    this.manageMediumService.selectedMediums.subscribe(res=>{
+      
+      let formArray =<FormArray>(this.ovumPickupForm.get("mediumInUse"));
+      formArray.clear();
+      res.forEach((item)=>{
+        formArray.push(new FormControl(item.name))
+      })
+      console.log(formArray.at(0).value) 
+    })      
   }
   mediumSubscription?:Subscription;
   ovumPickupForm!: FormGroup;
@@ -67,12 +74,9 @@ export class OvumPickupNoteComponent implements OnInit, OnDestroy {
     return (<FormArray>(this.ovumPickupForm.get("mediumInUse"))).controls;
   }
   
-  onOpenMediumInfo(event:MouseEvent){
-    const target = event.target as HTMLElement;
-    if (target.tagName === 'OPTION') {
-      const select = target.parentNode as HTMLSelectElement;
-      console.log('Mouse over option: ', select.value);
-    }
+  onOpenMediumInfo(mediums:MediumDto[], event:MouseEvent, index?:number){
+    this.manageMediumService.openShowMediumInfo(mediums, event, index);
+
   }
   onAddMedium(){
     (<FormArray>(this.ovumPickupForm.get("mediumInUse"))).push(new FormControl(null, Validators.required));

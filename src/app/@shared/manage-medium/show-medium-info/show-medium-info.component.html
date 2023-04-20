@@ -1,4 +1,10 @@
-<p>show-medium-info works!</p>
-<ng-container *ngIf="medium">
-    <div>培養液名稱:<span>{{medium.name}}</span></div>
-</ng-container>
+<div class="infoBox">
+    <ng-container *ngIf="mediums.length>0">
+        <div class="mediumLayout" *ngFor="let medium of mediums" (click)="onSelectMedium(medium)">
+            <div><span class="fw-bold">培養液名稱:</span><span class="ms-2">{{medium.name}}</span></div>
+            <div><span class="fw-bold">批號:</span><span class="ms-2">{{medium.lotNumber}}</span></div>
+            <div><span class="fw-bold">到期日:</span><span class="ms-2">{{medium.expirationDate|date:"yyyy-MM-dd"}}</span>
+            </div>
+        </div>
+    </ng-container>
+</div>

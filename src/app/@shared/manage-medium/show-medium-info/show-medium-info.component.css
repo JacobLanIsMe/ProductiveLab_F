@@ -1,0 +1,19 @@
+.infoBox{
+    background-color: white;
+    padding: 20px 0;
+    max-height: 40vh;
+    max-width:100%;
+    font-size: 0.8em;
+    overflow-y: auto;
+    border: 0.5px gray solid;
+    box-shadow: 0 0 5px lightgray;
+}
+.mediumLayout{
+    margin:0 auto;
+    padding:0 10px;
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+.mediumLayout:hover{
+    background-color: lightgray;
+}

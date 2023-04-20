@@ -2,9 +2,9 @@ import { ComponentPortal } from '@angular/cdk/portal';
 import { Overlay, OverlayRef } from '@angular/cdk/overlay';
 import { BaseResponseDto } from '../@Models/baseResponseDto.model';
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import { FormArray, FormGroup } from '@angular/forms';
-import { Subject } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
 import { MediumTypeEnum } from '../@Enums/mediumTypeEnum.model';
 import { MediumDto } from '../@Models/mediumDto.model';
 import { CommonDto } from '../@Models/commonDto.model';
@@ -14,8 +14,13 @@ import { ShowMediumInfoComponent } from '../@shared/manage-medium/show-medium-in
 @Injectable({
   providedIn: 'root'
 })
-export class ManageMediumService {
+export class ManageMediumService implements OnDestroy {
   constructor(private http: HttpClient, private overlay:Overlay) { }
+  ngOnDestroy(): void {
+    this.showMediumInfoSubscription?.unsubscribe();
+  }
+  selectedMediums = new Subject<MediumDto[]>();
+  selectedMediumArrar: MediumDto[] = [];
   isOpenMediumForm = new Subject<boolean>();
   updatedMedium = new Subject<MediumDto[]>();
   updatedFrequentlyUsedMedium = new Subject<FrequentlyUsedMediumDto[]>()
@@ -59,12 +64,28 @@ export class ManageMediumService {
     }
   }
   overlayRef?:OverlayRef;
-  openShowMediumInfo(medium:MediumDto){
+  showMediumInfoSubscription?:Subscription;
+  openShowMediumInfo(mediums:MediumDto[], event:MouseEvent, index?:number){
     this.overlayRef = this.overlay.create({
       hasBackdrop:true,
-      positionStrategy:this.overlay.position().global().centerHorizontally().centerVertically()
+      backdropClass:'cdk-overlay-transparent-backdrop',
+      positionStrategy:this.overlay.position().flexibleConnectedTo({x:event.clientX, y:event.clientY}).withPositions([
+        {originX:'start', originY:'top',overlayX:'center',overlayY:'bottom'}
+      ])
     })
     const componentRef = this.overlayRef.attach(new ComponentPortal(ShowMediumInfoComponent));
-    componentRef.instance.medium = medium;
+    componentRef.instance.mediums = mediums;
+    if (index){
+      componentRef.instance.index = index;
+    }
+    this.overlayRef.backdropClick().subscribe(()=>{
+      this.overlayRef?.detach();
+    });
+    
+    this.showMediumInfoSubscription = componentRef.instance.close?.subscribe(()=>{
+      this.overlayRef?.detach();
+      this.showMediumInfoSubscription?.unsubscribe();
+      
+    })
   }
 }

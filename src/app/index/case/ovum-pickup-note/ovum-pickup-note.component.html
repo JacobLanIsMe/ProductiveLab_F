@@ -69,20 +69,15 @@
             <hr>
             <div formArrayName="mediumInUse">
                 <div class="d-flex justify-content-start align-items-center"
-                    *ngFor="let medium of getMediumInUseArray(); let i = index">
+                    *ngFor="let arr of getMediumInUseArray(); let i = index">
                     <div class="input-group mb-3">
-                        <div class="input-group-text">培養液</div>
-                        <select class="form-select" [formControlName]="i" (mouseover)="onOpenMediumInfo($event)">
-                            <ng-container *ngIf="mediums.length > 0">
-                                <option *ngFor="let medium of mediums" [value]="medium.mediumInUseId">
-                                    {{medium.name}}</option>
-                            </ng-container>
-                        </select>
+                        <span class="input-group-text">培養液</span>
+                        <input type="text" class="form-control" [formControlName]="i" style="cursor:pointer" (click)="onOpenMediumInfo(mediums,$event,i)">
                     </div>
-                    <button type="button" class="border border-0 bg-transparent" (click)="onDeleteMedium(i)"><fa-icon
-                            [icon]="faXmark" class="text-danger"></fa-icon></button>
+                    <button type="button" class="border border-0 bg-transparent" (click)="onDeleteMedium(i)"><fa-icon [icon]="faXmark" class="text-danger"></fa-icon></button>
                 </div>
             </div>
+            
         </div>
         <div class="col-4">
             <div class="fs-5 fw-bold text-warning-emphasis"><fa-icon [icon]="faPerson" class="me-3"></fa-icon>找卵胚胎師

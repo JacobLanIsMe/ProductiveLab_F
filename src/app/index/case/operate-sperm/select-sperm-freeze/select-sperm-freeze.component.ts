@@ -4,7 +4,6 @@ import { SpermFreezeDto } from './../../../../@Models/spermFreezeDto.model';
 import { OperateSpermService } from './../../../../@Service/operate-sperm.service';
 import { Component, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
 import { faListCheck } from '@fortawesome/free-solid-svg-icons';
-import Swal from 'sweetalert2';
 @Component({
   selector: 'app-select-sperm-freeze',
   templateUrl: './select-sperm-freeze.component.html',
@@ -61,7 +60,8 @@ export class SelectSpermFreezeComponent implements OnInit {
       }
     })
     if (this.selectedUnitIds.length <= 0){
-      Swal.fire("請選擇要解凍的精蟲");
+      // Swal.fire("請選擇要解凍的精蟲");
+      this.commonService.showAlertMessage("","請選擇要解凍的精蟲");
     }
     else{
       this.operateSpermService.selectSpermFreeze(this.selectedUnitIds).subscribe(res=>{
