@@ -3,7 +3,7 @@ import { Overlay, OverlayRef } from '@angular/cdk/overlay';
 import { BaseResponseDto } from '../@Models/baseResponseDto.model';
 import { HttpClient } from '@angular/common/http';
 import { Injectable, OnDestroy } from '@angular/core';
-import { FormArray, FormGroup } from '@angular/forms';
+import { Form, FormArray, FormControl, FormGroup } from '@angular/forms';
 import { Subject, Subscription } from 'rxjs';
 import { MediumTypeEnum } from '../@Enums/mediumTypeEnum.model';
 import { MediumDto } from '../@Models/mediumDto.model';
@@ -65,7 +65,7 @@ export class ManageMediumService implements OnDestroy {
   }
   overlayRef?:OverlayRef;
   showMediumInfoSubscription?:Subscription;
-  openShowMediumInfo(mediums:MediumDto[], event:MouseEvent, index?:number){
+  openShowMediumInfo(mediums:MediumDto[], event:MouseEvent, index?:number, formArray?:FormArray, formControl?:FormControl){
     this.overlayRef = this.overlay.create({
       hasBackdrop:true,
       backdropClass:'cdk-overlay-transparent-backdrop',
@@ -75,14 +75,18 @@ export class ManageMediumService implements OnDestroy {
     })
     const componentRef = this.overlayRef.attach(new ComponentPortal(ShowMediumInfoComponent));
     componentRef.instance.mediums = mediums;
-    if (index){
-      componentRef.instance.index = index;
-    }
     this.overlayRef.backdropClick().subscribe(()=>{
       this.overlayRef?.detach();
     });
     
-    this.showMediumInfoSubscription = componentRef.instance.close?.subscribe(()=>{
+    this.showMediumInfoSubscription = componentRef.instance.close?.subscribe(res=>{
+      if (index){
+        this.selectedMediumArrar[index] = res;
+      }
+      else{
+        this.selectedMediumArrar[0] = res;
+      }
+      this.selectedMediums.next(this.selectedMediumArrar);
       this.overlayRef?.detach();
       this.showMediumInfoSubscription?.unsubscribe();
       

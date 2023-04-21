@@ -19,6 +19,7 @@ export class OvumPickupNoteComponent implements OnInit, OnDestroy {
   constructor(private dateService: DateService, private treatmentService: TreatmentService, private employeeService: EmployeeService, private manageMediumService: ManageMediumService, private commonService:CommonService){}
   ngOnDestroy(): void {
     this.mediumSubscription?.unsubscribe();
+    this.selectedMediumSubscription?.unsubscribe();
   }
   ngOnInit(): void {
     this.ovumPickupForm = new FormGroup({
@@ -39,6 +40,7 @@ export class OvumPickupNoteComponent implements OnInit, OnDestroy {
       "embryologist": new FormControl("", Validators.required),
       "courseOfTreatmentId": new FormControl(this.commonService.getCourseOfTreatmentId(), Validators.required),
     });
+    this.formArray = <FormArray>(this.ovumPickupForm.get("mediumInUse"));
     this.employeeService.getAllEmbryologist().subscribe(res=>{
       this.embryologists = res;
     });
@@ -49,17 +51,20 @@ export class OvumPickupNoteComponent implements OnInit, OnDestroy {
     this.manageMediumService.isOpenMediumForm.subscribe(res=>{
       this.isOpenMediumForm = res;
     })
-    this.manageMediumService.selectedMediums.subscribe(res=>{
-      
+    this.selectedMediumSubscription = this.manageMediumService.selectedMediums.subscribe(res=>{
       let formArray =<FormArray>(this.ovumPickupForm.get("mediumInUse"));
       formArray.clear();
       res.forEach((item)=>{
         formArray.push(new FormControl(item.name))
       })
-      console.log(formArray.at(0).value) 
+      if (formArray.controls.length <1){
+        formArray.push(new FormControl(null, Validators.required))
+      }
     })      
+    
   }
   mediumSubscription?:Subscription;
+  selectedMediumSubscription?:Subscription;
   ovumPickupForm!: FormGroup;
   embryologists?: EmbryologistDto[];
   isAlreadyAdded = false;
@@ -70,24 +75,41 @@ export class OvumPickupNoteComponent implements OnInit, OnDestroy {
   faXmark = faXmark;
   mediums: MediumDto[] = [];
   isOpenMediumForm = false;
+  formArray?:FormArray
   getMediumInUseArray(){
-    return (<FormArray>(this.ovumPickupForm.get("mediumInUse"))).controls;
+    if (this.formArray){
+      return this.formArray.controls;
+    }
+    else{
+      return null
+    }
   }
   
-  onOpenMediumInfo(mediums:MediumDto[], event:MouseEvent, index?:number){
-    this.manageMediumService.openShowMediumInfo(mediums, event, index);
-
+  onOpenMediumInfo(mediums:MediumDto[], event:MouseEvent, index:number){
+    this.manageMediumService.openShowMediumInfo(mediums, event, index, this.formArray);
   }
   onAddMedium(){
-    (<FormArray>(this.ovumPickupForm.get("mediumInUse"))).push(new FormControl(null, Validators.required));
+    if (this.formArray){
+      if (this.formArray.controls.length >= 3 || this.formArray.controls.length > this.manageMediumService.selectedMediumArrar.length){
+        return
+      }
+      this.formArray.push(new FormControl(null, Validators.required));
+    }
   }
   onOpenMedium(){
     this.manageMediumService.isOpenMediumForm.next(true);
   }
   onDeleteMedium(index:number){
-    this.manageMediumService.deleteMediumFromFormArray(<FormArray>(this.ovumPickupForm.get("mediumInUse")), index);
+    this.manageMediumService.selectedMediumArrar.splice(index,1);
+    this.manageMediumService.selectedMediums.next(this.manageMediumService.selectedMediumArrar);
   }
   onSubmit(form: FormGroup){
+    if (this.formArray){
+      this.formArray.clear();
+      this.manageMediumService.selectedMediumArrar.forEach(x=>{
+        this.formArray?.push(new FormControl(x.mediumInUseId))
+      })
+    }
     this.treatmentService.addOvumPickupNote(form).subscribe(res=>{
       this.commonService.judgeTheResponse(res,"新增取卵紀錄", res.errorMessage)
     });
