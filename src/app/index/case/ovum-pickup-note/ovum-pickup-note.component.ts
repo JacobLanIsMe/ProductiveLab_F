@@ -61,7 +61,6 @@ export class OvumPickupNoteComponent implements OnInit, OnDestroy {
         formArray.push(new FormControl(null, Validators.required))
       }
     })      
-    
   }
   mediumSubscription?:Subscription;
   selectedMediumSubscription?:Subscription;
@@ -84,7 +83,6 @@ export class OvumPickupNoteComponent implements OnInit, OnDestroy {
       return null
     }
   }
-  
   onOpenMediumInfo(mediums:MediumDto[], event:MouseEvent, index:number){
     this.manageMediumService.openShowMediumInfo(mediums, event, index, this.formArray);
   }
@@ -111,7 +109,13 @@ export class OvumPickupNoteComponent implements OnInit, OnDestroy {
       })
     }
     this.treatmentService.addOvumPickupNote(form).subscribe(res=>{
-      this.commonService.judgeTheResponse(res,"新增取卵紀錄", res.errorMessage)
+      if (this.formArray){
+        this.formArray.clear();
+        this.manageMediumService.selectedMediumArrar.forEach(x=>{
+          this.formArray?.push(new FormControl(x.name))
+        })
+      }
+      this.commonService.judgeTheResponse(res,"新增取卵紀錄", res.errorMessage,form)
     });
   }
   
