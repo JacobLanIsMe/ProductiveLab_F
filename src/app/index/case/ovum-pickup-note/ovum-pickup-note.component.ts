@@ -20,6 +20,7 @@ export class OvumPickupNoteComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.mediumSubscription?.unsubscribe();
     this.selectedMediumSubscription?.unsubscribe();
+    this.manageMediumService.selectedMediumArray = [];
   }
   ngOnInit(): void {
     this.ovumPickupForm = new FormGroup({
@@ -36,7 +37,7 @@ export class OvumPickupNoteComponent implements OnInit, OnDestroy {
         "coc_Grade2": new FormControl(0, [Validators.required, Validators.min(0)]),
         "coc_Grade1": new FormControl(0, [Validators.required, Validators.min(0)]),
       }),
-      "mediumInUse": new FormArray([new FormControl(null, Validators.required)]),
+      "mediumInUse": new FormArray([new FormControl(null)]),
       "embryologist": new FormControl("", Validators.required),
       "courseOfTreatmentId": new FormControl(this.commonService.getCourseOfTreatmentId(), Validators.required),
     });
@@ -53,13 +54,7 @@ export class OvumPickupNoteComponent implements OnInit, OnDestroy {
     })
     this.selectedMediumSubscription = this.manageMediumService.selectedMediums.subscribe(res=>{
       let formArray =<FormArray>(this.ovumPickupForm.get("mediumInUse"));
-      formArray.clear();
-      res.forEach((item)=>{
-        formArray.push(new FormControl(item.name))
-      })
-      if (formArray.controls.length <1){
-        formArray.push(new FormControl(null, Validators.required))
-      }
+      this.manageMediumService.setupMediumFormArray(res, formArray);
     })      
   }
   mediumSubscription?:Subscription;
@@ -83,38 +78,24 @@ export class OvumPickupNoteComponent implements OnInit, OnDestroy {
       return null
     }
   }
-  onOpenMediumInfo(mediums:MediumDto[], event:MouseEvent, index:number){
-    this.manageMediumService.openShowMediumInfo(mediums, event, index, this.formArray);
-  }
+  
   onAddMedium(){
     if (this.formArray){
-      if (this.formArray.controls.length >= 3 || this.formArray.controls.length > this.manageMediumService.selectedMediumArrar.length){
-        return
-      }
-      this.formArray.push(new FormControl(null, Validators.required));
+      this.manageMediumService.addMediumFormControl(this.formArray)
     }
   }
   onOpenMedium(){
     this.manageMediumService.isOpenMediumForm.next(true);
   }
   onDeleteMedium(index:number){
-    this.manageMediumService.selectedMediumArrar.splice(index,1);
-    this.manageMediumService.selectedMediums.next(this.manageMediumService.selectedMediumArrar);
+    this.manageMediumService.deleteMediumFormControl(index);
   }
   onSubmit(form: FormGroup){
-    if (this.formArray){
-      this.formArray.clear();
-      this.manageMediumService.selectedMediumArrar.forEach(x=>{
-        this.formArray?.push(new FormControl(x.mediumInUseId))
-      })
+    if ((this.formArray && this.formArray.controls.length <= 0) || this.manageMediumService.selectedMediumArray.length <= 0){
+      this.commonService.showAlertMessage("", "請選擇培養液");
+      return
     }
     this.treatmentService.addOvumPickupNote(form).subscribe(res=>{
-      if (this.formArray){
-        this.formArray.clear();
-        this.manageMediumService.selectedMediumArrar.forEach(x=>{
-          this.formArray?.push(new FormControl(x.name))
-        })
-      }
       this.commonService.judgeTheResponse(res,"新增取卵紀錄", res.errorMessage,form)
     });
   }

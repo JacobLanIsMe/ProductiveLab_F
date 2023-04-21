@@ -3,7 +3,7 @@ import { Overlay, OverlayRef } from '@angular/cdk/overlay';
 import { BaseResponseDto } from '../@Models/baseResponseDto.model';
 import { HttpClient } from '@angular/common/http';
 import { Injectable, OnDestroy } from '@angular/core';
-import { Form, FormArray, FormControl, FormGroup } from '@angular/forms';
+import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subject, Subscription } from 'rxjs';
 import { MediumTypeEnum } from '../@Enums/mediumTypeEnum.model';
 import { MediumDto } from '../@Models/mediumDto.model';
@@ -20,7 +20,7 @@ export class ManageMediumService implements OnDestroy {
     this.showMediumInfoSubscription?.unsubscribe();
   }
   selectedMediums = new Subject<MediumDto[]>();
-  selectedMediumArrar: MediumDto[] = [];
+  selectedMediumArray: MediumDto[] = [];
   isOpenMediumForm = new Subject<boolean>();
   updatedMedium = new Subject<MediumDto[]>();
   updatedFrequentlyUsedMedium = new Subject<FrequentlyUsedMediumDto[]>()
@@ -55,6 +55,9 @@ export class ManageMediumService implements OnDestroy {
   getOvumFreezeAndOtherMediun(mediums:MediumDto[]){
     return mediums.filter(x=>x.mediumTypeId === MediumTypeEnum.ovumFreezeMedium || x.mediumTypeId === MediumTypeEnum.other);
   }
+  getSpermFreezeAndOtherMedium(mediums:MediumDto[]){
+    return mediums.filter(x=>x.mediumTypeId === MediumTypeEnum.spermFreezeMedium || x.mediumTypeId === MediumTypeEnum.other)
+  }
   deleteMediumFromFormArray(formArray: FormArray, index: number){
     if (formArray.controls.length<=1){
       return;
@@ -63,9 +66,30 @@ export class ManageMediumService implements OnDestroy {
       formArray.removeAt(index);
     }
   }
+  setupMediumFormArray(mediums:MediumDto[], formArray:FormArray){
+    formArray.clear();
+    if (mediums.length <= 0){
+      formArray.push(new FormControl(null))
+    }
+    else{
+      mediums.forEach(x=>{
+        formArray.push(new FormControl(x.mediumInUseId));
+      })
+    }
+  }
+  addMediumFormControl(formArray:FormArray){
+    if (formArray.controls.length < 3 && formArray.controls.length <= this.selectedMediumArray.length){
+      formArray.push(new FormControl(null));
+    }
+    
+  }
+  deleteMediumFormControl(index:number){
+    this.selectedMediumArray.splice(index, 1);
+    this.selectedMediums.next(this.selectedMediumArray);
+  }
   overlayRef?:OverlayRef;
   showMediumInfoSubscription?:Subscription;
-  openShowMediumInfo(mediums:MediumDto[], event:MouseEvent, index?:number, formArray?:FormArray, formControl?:FormControl){
+  openShowMediumInfo(mediums:MediumDto[], event:MouseEvent, index:number){
     this.overlayRef = this.overlay.create({
       hasBackdrop:true,
       backdropClass:'cdk-overlay-transparent-backdrop',
@@ -80,13 +104,8 @@ export class ManageMediumService implements OnDestroy {
     });
     
     this.showMediumInfoSubscription = componentRef.instance.close?.subscribe(res=>{
-      if (index){
-        this.selectedMediumArrar[index] = res;
-      }
-      else{
-        this.selectedMediumArrar[0] = res;
-      }
-      this.selectedMediums.next(this.selectedMediumArrar);
+      this.selectedMediumArray[index] = res;
+      this.selectedMediums.next(this.selectedMediumArray);
       this.overlayRef?.detach();
       this.showMediumInfoSubscription?.unsubscribe();
       

@@ -30,7 +30,8 @@
                     </div>
                     <div class="input-group mb-3">
                         <span class="input-group-text">冷凍液</span>
-                        <select class="form-select" formControlName="freezeMedium">
+                        <select class="form-select" formControlName="freezeMedium"
+                            (change)="onSelectFreezeMedium($event)">
                             <ng-container *ngIf="freezeMediums">
                                 <ng-container *ngIf="freezeMediums.length > 0">
                                     <option *ngFor="let freezeMedium of freezeMediums"
@@ -38,6 +39,10 @@
                                 </ng-container>
                             </ng-container>
                         </select>
+                    </div>
+                    <div class="input-group mb-3" *ngIf="isSelectOtherMedium">
+                        <span class="input-group-text">其他冷凍液</span>
+                        <input type="text" class="form-control" formControlName="otherFreezeMediumName">
                     </div>
                     <div class="input-group mb-3">
                         <span class="input-group-text">操作胚胎師</span>
@@ -55,28 +60,20 @@
                     <div class="fw-bold mb-3" formArrayName="mediumInUseArray">
                         <div class="d-flex justify-content-between align-items-center mb-2">
                             <div>選擇培養液:</div>
-                            <button type="button" class="btn btn-outline-secondary btn-sm"
-                                (click)="onOpenMedium()">開封培養液</button>
+                            <div>
+                                <button type="button" class="btn btn-outline-secondary btn-sm"
+                                    (click)="onAddMediumFormControl()">新增培養液</button>
+                                <button type="button" class="btn btn-outline-secondary btn-sm ms-2"
+                                    (click)="onOpenMedium()">開封培養液</button>
+                            </div>
                         </div>
                         <div class="d-flex justify-content-start align-items-center"
                             *ngFor="let medium of getMediumInUseArray(); let i = index">
-                            <div class="input-group mb-3">
-                                <div class="input-group-text">培養液</div>
-                                <select class="form-select" [formControlName]="i">
-                                    <ng-container *ngIf="mediums">
-                                        <ng-container *ngIf="mediums.length > 0">
-                                            <option *ngFor="let medium of mediums" [value]="medium.mediumInUseId">
-                                                {{medium.name}}/{{medium.lotNumber}}</option>
-                                        </ng-container>
-                                    </ng-container>
-                                </select>
-                            </div>
+                            <app-medium-input [mediums]="mediums" [index]="i"></app-medium-input>
                             <button type="button" class="border border-0 bg-transparent"
-                                (click)="onDeleteMedium(i)"><fa-icon [icon]="faXmark"
+                                (click)="onDeleteMediumFormControl(i)"><fa-icon [icon]="faXmark"
                                     class="text-danger"></fa-icon></button>
                         </div>
-                        <button type="button" class="btn btn-outline-secondary btn-sm w-100"
-                        (click)="onAddMedium()">新增培養液</button>
                     </div>
                     <div class="d-flex justify-content-end">
                         <button class="btn btn-outline-primary btn-sm" type="button" (click)="onCancel()">取消</button>

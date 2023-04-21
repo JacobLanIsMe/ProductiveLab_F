@@ -1,4 +1,7 @@
 <div class="infoBox">
+    <ng-container *ngIf="mediums.length === 0">
+        <div class="text-center">無可用的培養液</div>
+    </ng-container>
     <ng-container *ngIf="mediums.length>0">
         <div class="mediumLayout" *ngFor="let medium of mediums" (click)="onSelectMedium(medium)">
             <div><span class="fw-bold">培養液名稱:</span><span class="ms-2">{{medium.name}}</span></div>

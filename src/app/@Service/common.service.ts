@@ -1,6 +1,6 @@
 import { ComponentPortal } from '@angular/cdk/portal';
 import { Overlay, OverlayRef } from '@angular/cdk/overlay';
-import { Injectable, OnDestroy } from '@angular/core';
+import { Injectable, OnDestroy, ViewContainerRef } from '@angular/core';
 import { BaseResponseDto } from '../@Models/baseResponseDto.model';
 import { LocalStorageKey } from '../@Models/localStorageKey.model';
 import { FormGroup } from '@angular/forms';
@@ -40,6 +40,7 @@ export class CommonService implements OnDestroy {
     const componentRef = this.overlayRef.attach(new ComponentPortal(AlertMessageComponent));
     componentRef.instance.title = title;
     componentRef.instance.description = description;
+    
     this.showAlertSubscription = componentRef.instance.close.subscribe(()=>{
       this.overlayRef?.detach();
       this.showAlertSubscription?.unsubscribe();

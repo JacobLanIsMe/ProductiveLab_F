@@ -70,10 +70,7 @@
             <div formArrayName="mediumInUse">
                 <div class="d-flex justify-content-start align-items-center"
                     *ngFor="let arr of getMediumInUseArray(); let i = index">
-                    <div class="input-group mb-3">
-                        <span class="input-group-text">培養液</span>
-                        <input type="text" class="form-control" [formControlName]="i" style="cursor:pointer" (click)="onOpenMediumInfo(mediums,$event,i)">
-                    </div>
+                    <app-medium-input [mediums]="mediums" [index]="i"></app-medium-input>
                     <button type="button" class="border border-0 bg-transparent" (click)="onDeleteMedium(i)"><fa-icon [icon]="faXmark" class="text-danger"></fa-icon></button>
                 </div>
             </div>

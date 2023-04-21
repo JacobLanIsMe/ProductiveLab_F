@@ -1,6 +1,5 @@
 import { MediumDto } from 'src/app/@Models/mediumDto.model';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { ManageMediumService } from 'src/app/@Service/manage-medium.service';
 
 @Component({
   selector: 'app-show-medium-info',

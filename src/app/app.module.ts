@@ -44,6 +44,7 @@ import { AlertMessageComponent } from './@shared/alert-message/alert-message.com
 import { TitleComponent } from './@shared/title/title.component';
 import { OpenMediumComponent } from './@shared/manage-medium/open-medium/open-medium.component';
 import { ShowMediumInfoComponent } from './@shared/manage-medium/show-medium-info/show-medium-info.component';
+import { MediumInputComponent } from './@shared/manage-medium/medium-input/medium-input.component';
 
 
 @NgModule({
@@ -87,7 +88,8 @@ import { ShowMediumInfoComponent } from './@shared/manage-medium/show-medium-inf
     AlertMessageComponent,
     TitleComponent,
     OpenMediumComponent,
-    ShowMediumInfoComponent
+    ShowMediumInfoComponent,
+    MediumInputComponent
   ],
   imports: [
     BrowserModule,
