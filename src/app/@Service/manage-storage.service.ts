@@ -15,8 +15,9 @@ import { OvumFreezeStorageDto } from '../@Models/ovumFreezeStorageDto.model';
 export class ManageStorageService {
   constructor(private http: HttpClient) { }
 
-  selectedLocations = new Subject<StorageLocation[]>();
-  
+  // selectedLocations = new Subject<StorageLocation[]>();
+  selectedLocationArray:StorageLocation[] = [];
+
   addNewTank(form: FormGroup){
     return this.http.post<BaseResponseDto>("/api/StorageManager/AddStorageTank", form.value)
   }

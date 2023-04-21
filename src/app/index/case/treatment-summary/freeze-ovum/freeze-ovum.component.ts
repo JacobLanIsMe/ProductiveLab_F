@@ -26,7 +26,6 @@ export class FreezeOvumComponent implements OnInit,OnDestroy {
   @Input() subfunction: FunctionDto|null = null;
   constructor(private dateService:DateService,private employeeService:EmployeeService, private functionHeaderService:FunctionHeaderService, private manageMediumService:ManageMediumService, private manageStorageService:ManageStorageService, private treatmentService:TreatmentService, private commonService:CommonService, private observationNoteService:ObservationNoteService){}
   ngOnDestroy(): void {
-    this.locationSubscription?.unsubscribe();
     this.mediumSubscription?.unsubscribe();
     this.openMediumFormSubscription?.unsubscribe();
   }
@@ -57,15 +56,11 @@ export class FreezeOvumComponent implements OnInit,OnDestroy {
     this.treatmentService.getTopColors().subscribe(res=>{
       this.topColors = res;
     })
-    this.locationSubscription = this.manageStorageService.selectedLocations.subscribe(res=>{
-      this.selectedLocations = res;
-    });
     this.openMediumFormSubscription = this.manageMediumService.isOpenMediumForm.subscribe(res=>{
       this.isOpenMediumForm = res;
     })
   }
   todayDate = this.dateService.getTodayDateString(new Date());
-  locationSubscription?: Subscription;
   freezeOvumForm!: FormGroup;
   topColors?: CommonDto[];
   faSnowflake = faSnowflake;
@@ -75,7 +70,7 @@ export class FreezeOvumComponent implements OnInit,OnDestroy {
   openMediumFormSubscription?: Subscription;
   isOpenMediumForm = false;
   isChooseOtherMedium = false;
-  selectedLocations?: StorageLocation[];
+  selectedLocations: StorageLocation[] = this.manageStorageService.selectedLocationArray;
   selectedOvumPickupDetailId = this.treatmentService.selectedOvumPickupDetailId;
   selectedObservationNotes?: GetObservationNoteNameDto[];
   onSelectMedium(event:any){
@@ -88,9 +83,9 @@ export class FreezeOvumComponent implements OnInit,OnDestroy {
     this.manageMediumService.isOpenMediumForm.next(true);
   }
   addStorageUnitIdToForm(){
-    if (this.selectedLocations && this.selectedLocations.length === 1){
+    if (this.manageStorageService.selectedLocationArray.length === 1){
       this.freezeOvumForm.patchValue({
-        "storageUnitId": this.selectedLocations[0].unitId
+        "storageUnitId": this.manageStorageService.selectedLocationArray[0].unitId
       })
       return true;
     }

@@ -9,9 +9,8 @@ import { StorageLocation } from './../../../../@Models/storageLocation.model';
 import { ManageStorageService } from 'src/app/@Service/manage-storage.service';
 import { OperateSpermService } from './../../../../@Service/operate-sperm.service';
 import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
-import { Component, OnDestroy, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { faSnowflake, faXmark } from '@fortawesome/free-solid-svg-icons';
-import Swal from 'sweetalert2';
 import { EmbryologistDto } from 'src/app/@Models/embryologistDto.model';
 import { MediumTypeEnum } from 'src/app/@Enums/mediumTypeEnum.model';
 import { Subscription } from 'rxjs';
@@ -23,7 +22,6 @@ import { Subscription } from 'rxjs';
 export class FreezeSpermComponent implements OnInit, OnDestroy{
   constructor(private operateSpermService:OperateSpermService, private manageStorageService:ManageStorageService, private manageMediumService: ManageMediumService, private dateService:DateService, private employeeService: EmployeeService, private functionHeaderService:FunctionHeaderService, private commonService: CommonService){}
   ngOnDestroy(): void {
-    this.locationSubscription?.unsubscribe();
     this.openMediumSubscription?.unsubscribe();
     this.mediumSubscription?.unsubscribe();
     this.selectedMediumSubscription?.unsubscribe();
@@ -41,9 +39,6 @@ export class FreezeSpermComponent implements OnInit, OnDestroy{
       "spermFreezeOperationMethodId": new FormControl(null, Validators.required),
       "otherFreezeMediumName":new FormControl(null)
     })
-    this.locationSubscription = this.manageStorageService.selectedLocations.subscribe(res=>{
-      this.selectedLocations = res;
-    });
     this.operateSpermService.getSpermFreezeOperationMethod().subscribe(res=>{
       this.spermFreezeOperateMethods = res;
     });
@@ -63,7 +58,6 @@ export class FreezeSpermComponent implements OnInit, OnDestroy{
     })
   }
   openMediumSubscription?: Subscription;
-  locationSubscription?: Subscription;
   mediumSubscription?:Subscription;
   selectedMediumSubscription?:Subscription;
   freezeSpermForm!: FormGroup;
@@ -71,7 +65,6 @@ export class FreezeSpermComponent implements OnInit, OnDestroy{
   spermOwner = this.operateSpermService.baseOperateSpermInfo?.spermOwner;
   faSnowflake = faSnowflake;
   faXmark = faXmark;
-  selectedLocations?: StorageLocation[];
   spermFreezeOperateMethods?: SpermFreezeOperationMethodDto[];
   freezeMediums: MediumDto[] = [];
   mediums: MediumDto[] = [];
@@ -89,7 +82,7 @@ export class FreezeSpermComponent implements OnInit, OnDestroy{
     this.manageMediumService.addMediumFormControl(<FormArray>(this.freezeSpermForm.get("mediumInUseArray")))
   }
   onAddLocations(){
-    this.selectedLocations?.forEach(x=>{
+    this.manageStorageService.selectedLocationArray.forEach(x=>{
       const locationFormControl = new FormControl(x.unitId, Validators.required);
       (<FormArray>(this.freezeSpermForm.get("storageUnitId"))).push(locationFormControl);
     })
@@ -105,7 +98,7 @@ export class FreezeSpermComponent implements OnInit, OnDestroy{
     this.functionHeaderService.isOpenSubfunction.next(null);
   }
   onSubmit(form: FormGroup){
-    if (!this.selectedLocations || this.vialCount !== this.selectedLocations.length){
+    if (this.vialCount !== this.manageStorageService.selectedLocationArray.length){
       this.commonService.showAlertMessage("", "冷凍管數不一致");
       return;
     }

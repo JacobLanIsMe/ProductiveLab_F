@@ -31,20 +31,20 @@ import { BaseOperateSpermInfoComponent } from './index/case/operate-sperm/base-o
 import { SelectSpermFreezeComponent } from './index/case/operate-sperm/select-sperm-freeze/select-sperm-freeze.component';
 import { SubfunctionHeaderComponent } from './@shared/subfunction-header/subfunction-header.component';
 import { ScoreSpermComponent } from './index/case/operate-sperm/score-sperm/score-sperm.component';
-import { ManageStorageComponent } from './index/manage-storage/manage-storage.component';
-import { AddNewStorageTankComponent } from './index/manage-storage/add-new-storage-tank/add-new-storage-tank.component';
-import { SearchEmptyStorageUnitComponent } from './index/manage-storage/search-empty-storage-unit/search-empty-storage-unit.component';
 import { AddCourseOfTreatmentComponent } from './index/header/add-course-of-treatment/add-course-of-treatment.component';
 import { BaseObservationNoteComponent } from './index/case/observation-note/base-observation-note/base-observation-note.component';
 import { ObservationNoteFormComponent } from './index/case/observation-note/observation-note-form/observation-note-form.component';
 import { ExistingObservationNoteInfoComponent } from './index/case/observation-note/existing-observation-note-info/existing-observation-note-info.component';
 import { FreezeOvumComponent } from './index/case/treatment-summary/freeze-ovum/freeze-ovum.component';
-import { ShowSelectedStorageUnitComponent } from './index/manage-storage/show-selected-storage-unit/show-selected-storage-unit.component';
 import { AlertMessageComponent } from './@shared/alert-message/alert-message.component';
 import { TitleComponent } from './@shared/title/title.component';
 import { OpenMediumComponent } from './@shared/manage-medium/open-medium/open-medium.component';
 import { ShowMediumInfoComponent } from './@shared/manage-medium/show-medium-info/show-medium-info.component';
 import { MediumInputComponent } from './@shared/manage-medium/medium-input/medium-input.component';
+import { ShowSelectedStorageUnitComponent } from './@shared/manage-storage/show-selected-storage-unit/show-selected-storage-unit.component';
+import { ManageStorageComponent } from './@shared/manage-storage/manage-storage.component';
+import { AddNewStorageTankComponent } from './@shared/manage-storage/add-new-storage-tank/add-new-storage-tank.component';
+import { SearchEmptyStorageUnitComponent } from './@shared/manage-storage/search-empty-storage-unit/search-empty-storage-unit.component';
 
 
 @NgModule({

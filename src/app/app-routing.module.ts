@@ -1,4 +1,3 @@
-import { ManageStorageComponent } from './index/manage-storage/manage-storage.component';
 import { OvumBankTransferComponent } from './index/ovum-bank-transfer/ovum-bank-transfer.component';
 import { UploadReportComponent } from './index/case/upload-report/upload-report.component';
 import { ManageMediumComponent } from './@shared/manage-medium/manage-medium.component';
@@ -17,6 +16,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './login/login.component';
 import { CaseComponent } from './index/case/case.component';
+import { ManageStorageComponent } from './@shared/manage-storage/manage-storage.component';
 
 const routes: Routes = [
   {path: "login", component:LoginComponent},
