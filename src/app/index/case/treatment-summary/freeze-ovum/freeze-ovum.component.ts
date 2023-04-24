@@ -28,6 +28,7 @@ export class FreezeOvumComponent implements OnInit,OnDestroy {
   ngOnDestroy(): void {
     this.mediumSubscription?.unsubscribe();
     this.openMediumFormSubscription?.unsubscribe();
+    this.locationSubscription?.unsubscribe();
   }
   ngOnInit(): void {
     this.freezeOvumForm = new FormGroup({
@@ -59,7 +60,11 @@ export class FreezeOvumComponent implements OnInit,OnDestroy {
     this.openMediumFormSubscription = this.manageMediumService.isOpenMediumForm.subscribe(res=>{
       this.isOpenMediumForm = res;
     })
+    this.locationSubscription = this.manageStorageService.selectedLocations.subscribe(res=>{
+      this.selectedLocations = res;
+    })
   }
+  locationSubscription?: Subscription;
   todayDate = this.dateService.getTodayDateString(new Date());
   freezeOvumForm!: FormGroup;
   topColors?: CommonDto[];
@@ -70,7 +75,7 @@ export class FreezeOvumComponent implements OnInit,OnDestroy {
   openMediumFormSubscription?: Subscription;
   isOpenMediumForm = false;
   isChooseOtherMedium = false;
-  selectedLocations: StorageLocation[] = this.manageStorageService.selectedLocationArray;
+  selectedLocations: StorageLocation[] = [];
   selectedOvumPickupDetailId = this.treatmentService.selectedOvumPickupDetailId;
   selectedObservationNotes?: GetObservationNoteNameDto[];
   onSelectMedium(event:any){
@@ -83,9 +88,9 @@ export class FreezeOvumComponent implements OnInit,OnDestroy {
     this.manageMediumService.isOpenMediumForm.next(true);
   }
   addStorageUnitIdToForm(){
-    if (this.manageStorageService.selectedLocationArray.length === 1){
+    if (this.selectedLocations.length === 1){
       this.freezeOvumForm.patchValue({
-        "storageUnitId": this.manageStorageService.selectedLocationArray[0].unitId
+        "storageUnitId": this.selectedLocations[0].unitId
       })
       return true;
     }

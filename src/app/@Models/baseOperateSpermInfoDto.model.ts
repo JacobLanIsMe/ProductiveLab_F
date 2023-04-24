@@ -3,11 +3,8 @@ import { SpermScoreDto } from "./spermScoreDto.model";
 
 export class BaseOperateSpermInfoDto{
     constructor(
-        public husband: BaseCustomerInfoDto,
-        public isFresh: boolean,
+        public spermSituationName: string,
         public spermRetrievalMethod: string,
-        public spermOwner: BaseCustomerInfoDto,
-        public spermFromCourseOfTreatmentId: string,
-        public existingSpermScores: SpermScoreDto[] 
+        public spermOwner: BaseCustomerInfoDto
     ){}
 }

@@ -1,15 +1,15 @@
 <app-base-treatment-info></app-base-treatment-info>
-<div class="d-flex justify-content-between">
-    <div>
-        <app-title [title]="'卵子冷凍總覽'" [icon]="faList"></app-title>
+<ng-container *ngIf="ovumFreezeSummarys.length > 0">
+    <div class="d-flex justify-content-between">
+        <div>
+            <app-title [title]="'卵子冷凍總覽'" [icon]="faList"></app-title>
+        </div>
+        <div>
+            <app-subfunction-header></app-subfunction-header>
+        </div>
     </div>
-    <div>
-        <app-subfunction-header></app-subfunction-header>
-    </div>
-</div>
-<hr>
-<div style="width:100%;overflow-x: auto;">
-    <ng-container *ngIf="ovumFreezeSummarys.length > 0">
+    <hr>
+    <div style="width:100%;overflow-x: auto;">
         <table class="table" style="text-align: center;">
             <thead>
                 <tr style="white-space:nowrap;">
@@ -19,8 +19,9 @@
                             <input type="checkbox" (click)="onSelectAllOvum($event)" [(ngModel)]="isAllOvumChecked">
                         </div>
                     </th>
-                    <th>身分別</th>
                     <th>療程編號</th>
+                    <th>身分別</th>
+                    <th>卵子來源療程編號</th>
                     <th>卵子編號</th>
                     <th>取卵日</th>
                     <th>解凍日</th>
@@ -49,10 +50,13 @@
             <tbody>
                 <tr style="white-space:nowrap;" *ngFor="let item of ovumFreezeSummarys">
                     <td>
-                        <input type="checkbox" (change)="onSelectOneOvum($event, item.freezeStorageInfo.unitInfo.storageUnitId)" [(ngModel)]="item.isChecked" >
+                        <input type="checkbox"
+                            (change)="onSelectOneOvum($event, item.freezeStorageInfo.unitInfo.storageUnitId)"
+                            [(ngModel)]="item.isChecked">
                     </td>
+                    <td>{{item.courseOfTreatmentSqlId}}</td>
                     <td>{{item.courseOfTreatmentId === item.ovumFromCourseOfTreatmentId ? "self" : "OD"}}</td>
-                    <td>{{item.ovumFromCourseOfTreatmentId}}</td>
+                    <td>{{item.ovumFromCourseOfTreatmentSqlId}}</td>
                     <td>NO.{{item.ovumNumber}}</td>
                     <td>{{item.ovumPickupTime | date:"yyyy-MM-dd"}}</td>
                     <td>解凍日</td>
@@ -92,5 +96,15 @@
                 </tr>
             </tbody>
         </table>
-    </ng-container>
+    </div>
+</ng-container>
+
+<div class="d-flex justify-content-between">
+    <div>
+        <app-title [title]="'精子冷凍總覽'" [icon]="faList"></app-title>
+    </div>
+    <div>
+        <!-- <app-subfunction-header></app-subfunction-header> -->
+    </div>
 </div>
+<hr>

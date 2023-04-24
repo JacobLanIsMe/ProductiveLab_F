@@ -2,7 +2,7 @@ import { FunctionHeaderService } from './../../../../@Service/function-header.se
 import { CommonService } from './../../../../@Service/common.service';
 import { SpermFreezeDto } from './../../../../@Models/spermFreezeDto.model';
 import { OperateSpermService } from './../../../../@Service/operate-sperm.service';
-import { Component, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { faListCheck } from '@fortawesome/free-solid-svg-icons';
 @Component({
   selector: 'app-select-sperm-freeze',
@@ -12,22 +12,19 @@ import { faListCheck } from '@fortawesome/free-solid-svg-icons';
 export class SelectSpermFreezeComponent implements OnInit {
   constructor(private operateSpermService: OperateSpermService, private functionHeaderService: FunctionHeaderService, private commonService: CommonService){}
   ngOnInit(): void {
-    if (this.operateSpermService.baseOperateSpermInfo?.spermFromCourseOfTreatmentId){
-      this.operateSpermService.getSpermFreeze(this.operateSpermService.baseOperateSpermInfo?.spermFromCourseOfTreatmentId).subscribe(res=>{
+    const spermFromCourseOfTreatmentId = this.commonService.getSpermFromCourseOfTreatmentId();
+    if (spermFromCourseOfTreatmentId){
+      this.operateSpermService.getSpermFreeze(spermFromCourseOfTreatmentId).subscribe(res=>{
         this.spermFreezes = res;
       })
-    }
-    if (this.operateSpermService.baseOperateSpermInfo?.spermOwner){
-      this.spermOwnerSqlId = this.operateSpermService.baseOperateSpermInfo.spermOwner.customerSqlId;
-      this.spermOwnerName = this.operateSpermService.baseOperateSpermInfo.spermOwner.customerName;
     }
   }
   spermFreezes: SpermFreezeDto[] = [];
   isSelectAll: boolean = false;
   faListCheck = faListCheck;
   selectedUnitIds: number[] = [];
-  spermOwnerSqlId: number = 0;
-  spermOwnerName: string = "";
+  spermOwnerSqlId?: number = this.operateSpermService.baseOperateSpermInfo?.spermOwner.customerSqlId;
+  spermOwnerName?: string = this.operateSpermService.baseOperateSpermInfo?.spermOwner.customerName;
   onSelectAll(event:any){
     if (event.target.checked){
       this.spermFreezes.forEach(x=>{
@@ -60,7 +57,6 @@ export class SelectSpermFreezeComponent implements OnInit {
       }
     })
     if (this.selectedUnitIds.length <= 0){
-      // Swal.fire("請選擇要解凍的精蟲");
       this.commonService.showAlertMessage("","請選擇要解凍的精蟲");
     }
     else{

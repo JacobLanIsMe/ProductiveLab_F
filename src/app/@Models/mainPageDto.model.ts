@@ -1,3 +1,5 @@
+import { TreatmentDto } from "./treatmentDto.model";
+
 export class MainPageDto{
     constructor(
         public courseOfTreatmentSqlId: number,
@@ -7,7 +9,7 @@ export class MainPageDto{
         public medicalRecordNumber: number,
         public name: string,
         public doctor: string,
-        public treatmentName: string,
+        public treatment: TreatmentDto,
         public treatmentStatus: string,
         public ovumFromCourseOfTreatmentId:string,
         public spermFromCourseOfTreatmentId:string

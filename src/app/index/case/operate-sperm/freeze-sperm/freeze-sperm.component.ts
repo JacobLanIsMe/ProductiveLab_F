@@ -4,8 +4,6 @@ import { EmployeeService } from './../../../../@Service/employee.service';
 import { DateService } from './../../../../@Service/date.service';
 import { MediumDto } from './../../../../@Models/mediumDto.model';
 import { ManageMediumService } from 'src/app/@Service/manage-medium.service';
-import { SpermFreezeOperationMethodDto } from './../../../../@Models/spermFreezeOperationMethodDto.model';
-import { StorageLocation } from './../../../../@Models/storageLocation.model';
 import { ManageStorageService } from 'src/app/@Service/manage-storage.service';
 import { OperateSpermService } from './../../../../@Service/operate-sperm.service';
 import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
@@ -14,6 +12,8 @@ import { faSnowflake, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { EmbryologistDto } from 'src/app/@Models/embryologistDto.model';
 import { MediumTypeEnum } from 'src/app/@Enums/mediumTypeEnum.model';
 import { Subscription } from 'rxjs';
+import { CommonDto } from 'src/app/@Models/commonDto.model';
+import { StorageLocation } from 'src/app/@Models/storageLocation.model';
 @Component({
   selector: 'app-freeze-sperm',
   templateUrl: './freeze-sperm.component.html',
@@ -25,12 +25,13 @@ export class FreezeSpermComponent implements OnInit, OnDestroy{
     this.openMediumSubscription?.unsubscribe();
     this.mediumSubscription?.unsubscribe();
     this.selectedMediumSubscription?.unsubscribe();
+    this.locationSubscription?.unsubscribe();
     this.manageMediumService.selectedMediumArray = []
   }
   ngOnInit(): void {
-    this.spermFromCourseOfTreatmentId = this.operateSpermService.baseOperateSpermInfo?.spermFromCourseOfTreatmentId;
+    const courseOfTreatmentId = this.commonService.getCourseOfTreatmentId();
     this.freezeSpermForm = new FormGroup({
-      "courseOfTreatmentId": new FormControl(this.spermFromCourseOfTreatmentId, Validators.required),
+      "courseOfTreatmentId": new FormControl(courseOfTreatmentId, Validators.required),
       "mediumInUseArray": new FormArray([new FormControl(null)]),
       "storageUnitId": new FormArray([]),
       "embryologist": new FormControl(null, Validators.required),
@@ -56,22 +57,27 @@ export class FreezeSpermComponent implements OnInit, OnDestroy{
     this.selectedMediumSubscription = this.manageMediumService.selectedMediums.subscribe(res=>{
       this.manageMediumService.setupMediumFormArray(res, <FormArray>(this.freezeSpermForm.get("mediumInUseArray")))
     })
+    this.locationSubscription = this.manageStorageService.selectedLocations.subscribe(res=>{
+      this.selectedLocations = res;
+    })
   }
   openMediumSubscription?: Subscription;
   mediumSubscription?:Subscription;
   selectedMediumSubscription?:Subscription;
+  locationSubscription?:Subscription;
   freezeSpermForm!: FormGroup;
   spermFromCourseOfTreatmentId: string | undefined;
   spermOwner = this.operateSpermService.baseOperateSpermInfo?.spermOwner;
   faSnowflake = faSnowflake;
   faXmark = faXmark;
-  spermFreezeOperateMethods?: SpermFreezeOperationMethodDto[];
+  spermFreezeOperateMethods: CommonDto[] = [];
   freezeMediums: MediumDto[] = [];
   mediums: MediumDto[] = [];
   embryologists?: EmbryologistDto[];
   isSelectOtherMedium = false;
   vialCount = 0;
   isOpenMediumForm = false;
+  selectedLocations: StorageLocation[] = [];
   onOpenMedium(){
     this.manageMediumService.isOpenMediumForm.next(true);
   }
@@ -82,7 +88,7 @@ export class FreezeSpermComponent implements OnInit, OnDestroy{
     this.manageMediumService.addMediumFormControl(<FormArray>(this.freezeSpermForm.get("mediumInUseArray")))
   }
   onAddLocations(){
-    this.manageStorageService.selectedLocationArray.forEach(x=>{
+    this.selectedLocations.forEach(x=>{
       const locationFormControl = new FormControl(x.unitId, Validators.required);
       (<FormArray>(this.freezeSpermForm.get("storageUnitId"))).push(locationFormControl);
     })
@@ -98,7 +104,7 @@ export class FreezeSpermComponent implements OnInit, OnDestroy{
     this.functionHeaderService.isOpenSubfunction.next(null);
   }
   onSubmit(form: FormGroup){
-    if (this.vialCount !== this.manageStorageService.selectedLocationArray.length){
+    if (this.vialCount !== this.selectedLocations.length){
       this.commonService.showAlertMessage("", "冷凍管數不一致");
       return;
     }

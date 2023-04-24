@@ -1,10 +1,12 @@
 .main-table-frame{
     height: 80vh;
+    width:100%;
     overflow: auto;
 }
 
 table{
     font-size: 14px;
+    white-space: nowrap;
 }
 
 thead tr th{

@@ -25,7 +25,7 @@
                         <span class="input-group-text">冷凍前處理方式</span>
                         <select class="form-select" formControlName="spermFreezeOperationMethodId">
                             <option *ngFor="let method of spermFreezeOperateMethods"
-                                [value]="method.spermFreezeOperateMethodSqlId">{{method.name}}</option>
+                                [value]="method.id">{{method.name}}</option>
                         </select>
                     </div>
                     <div class="input-group mb-3">

@@ -10,22 +10,32 @@ import { ManageStorageService } from 'src/app/@Service/manage-storage.service';
   templateUrl: './show-selected-storage-unit.component.html',
   styleUrls: ['./show-selected-storage-unit.component.css']
 })
-export class ShowSelectedStorageUnitComponent {
+export class ShowSelectedStorageUnitComponent implements OnInit, OnDestroy {
   constructor(private manageStorageService:ManageStorageService, private commonService:CommonService){}
-  selectedLocations:StorageLocation[] = this.manageStorageService.selectedLocationArray;
+  ngOnDestroy(): void {
+    this.locationSubscription?.unsubscribe();
+  }
+  ngOnInit(): void {
+    this.locationSubscription = this.manageStorageService.selectedLocations.subscribe(res=>{
+      this.selectedLocations = res
+    })
+  }
+  locationSubscription?: Subscription;
+  selectedLocations:StorageLocation[] = [];
   faXmark = faXmark;
   onDeleteLocation(unitId: number){
-    if (this.manageStorageService.selectedLocationArray.length > 0){
-      let index = this.manageStorageService.selectedLocationArray.findIndex(x=>x.unitId == unitId);
+    if (this.selectedLocations.length > 0){
+      let index = this.selectedLocations.findIndex(x=>x.unitId == unitId);
       if (index === -1){
         this.commonService.showAlertMessage("", "選擇錯誤的欄位");
       }
       else{
-        this.manageStorageService.selectedLocationArray.splice(index, 1);
+        this.selectedLocations.splice(index, 1);
       }
     }
     else{
       return;
     }
+    this.manageStorageService.selectedLocations.next(this.selectedLocations);
   }
 }

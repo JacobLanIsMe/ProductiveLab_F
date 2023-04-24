@@ -1,22 +1,20 @@
 import { CommonService } from './../../../../@Service/common.service';
-import { MainPageService } from './../../../../@Service/main-page.service';
 import { EmployeeService } from './../../../../@Service/employee.service';
 import { DateService } from './../../../../@Service/date.service';
 import { OperateSpermService } from './../../../../@Service/operate-sperm.service';
 import { FunctionHeaderService } from './../../../../@Service/function-header.service';
-import { Component, Input, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { FunctionDto } from 'src/app/@Models/functionDto.model';
 import { faStopwatch } from '@fortawesome/free-solid-svg-icons';
 import { EmbryologistDto } from 'src/app/@Models/embryologistDto.model';
-import { SpermScoreDto } from 'src/app/@Models/spermScoreDto.model';
 @Component({
   selector: 'app-score-sperm',
   templateUrl: './score-sperm.component.html',
   styleUrls: ['./score-sperm.component.css']
 })
 export class ScoreSpermComponent implements OnInit {
-  constructor(private functionHeaderService: FunctionHeaderService, private operateSpermService: OperateSpermService, private dateService: DateService, private employeeService: EmployeeService, private mainPageService: MainPageService, private commonService: CommonService){}
+  constructor(private functionHeaderService: FunctionHeaderService, private operateSpermService: OperateSpermService, private dateService: DateService, private employeeService: EmployeeService, private commonService: CommonService){}
   ngOnInit(): void {
     switch (this.subfunction?.functionId){
       case 23:
@@ -32,6 +30,8 @@ export class ScoreSpermComponent implements OnInit {
         this.spermScoreTimePointId = 4;
         break;
     }
+    this.courseOfTreatmentId = this.commonService.getCourseOfTreatmentId();
+    this.spermFromCourseOfTreatmentId = this.commonService.getSpermFromCourseOfTreatmentId();
     this.scoreSpermForm = new FormGroup({
       "volume": new FormControl(null, Validators.required),
       "concentration": new FormControl(null, Validators.required),
@@ -44,16 +44,17 @@ export class ScoreSpermComponent implements OnInit {
       "spermScoreTimePointId": new FormControl(this.spermScoreTimePointId, Validators.required),
       "recordTime": new FormControl(this.dateService.getTodayDateTimeString(new Date()), Validators.required),
       "embryologist": new FormControl(null, Validators.required),
-      "courseOfTreatmentId": new FormControl(this.operateSpermService.baseOperateSpermInfo?.spermFromCourseOfTreatmentId, Validators.required)
+      "courseOfTreatmentId": new FormControl(this.courseOfTreatmentId, Validators.required)
     });
     this.employeeService.getAllEmbryologist().subscribe(embryologists=>{
       if (embryologists){
         this.embryologists = embryologists;
       }
     })
-    this.operateSpermService.baseOperateSpermInfo?.existingSpermScores.forEach(x=>{
+    const existingSpermScores = this.operateSpermService.previousSpermScoreArray.concat(this.operateSpermService.currentSpermScoreArray);
+    existingSpermScores.forEach(x=>{
       if (x.spermScoreTimePointId == this.spermScoreTimePointId && (this.spermScoreTimePointId === 1 || this.spermScoreTimePointId === 2)){
-        this.existingSpermScore = x;
+        this.hasExistingSpermScore = true;
         this.scoreSpermForm.patchValue({
           "volume": x.volume,
           "concentration": x.concentration,
@@ -68,8 +69,8 @@ export class ScoreSpermComponent implements OnInit {
         });
       }
     })
-    const courseOfTreatmentId = this.commonService.getCourseOfTreatmentId();
-    if (courseOfTreatmentId && courseOfTreatmentId.toUpperCase() != this.operateSpermService.baseOperateSpermInfo!.spermFromCourseOfTreatmentId.toUpperCase() && (this.spermScoreTimePointId === 1 || this.spermScoreTimePointId === 2)){
+    
+    if (this.courseOfTreatmentId && this.spermFromCourseOfTreatmentId && this.courseOfTreatmentId.toUpperCase() != this.spermFromCourseOfTreatmentId.toUpperCase() && (this.spermScoreTimePointId === 1 || this.spermScoreTimePointId === 2)){
       this.scoreSpermForm.disable();
     }
   }
@@ -77,18 +78,20 @@ export class ScoreSpermComponent implements OnInit {
   scoreSpermForm!: FormGroup;
   spermScoreTimePointId: number | undefined;
   embryologists?: EmbryologistDto[];
-  existingSpermScore?: SpermScoreDto;
+  hasExistingSpermScore: boolean = false;
   faStopwatch = faStopwatch;
+  courseOfTreatmentId?: string | null;
+  spermFromCourseOfTreatmentId?: string | null;
 
   onCancel(){
     this.functionHeaderService.isOpenSubfunction.next(null);
   }
   onSubmit(scoreSpermForm: FormGroup){
-    if (this.existingSpermScore){
+    if (this.hasExistingSpermScore){
       this.operateSpermService.updateExistingSpermScore(scoreSpermForm).subscribe(res=>{
         this.commonService.judgeTheResponse(res, "更新", res.errorMessage);
-        if (this.operateSpermService.baseOperateSpermInfo){
-          this.operateSpermService.getExistingSpermScore(this.operateSpermService.baseOperateSpermInfo.spermFromCourseOfTreatmentId)
+        if (this.courseOfTreatmentId){
+          this.operateSpermService.getCurrentSpermScores(this.courseOfTreatmentId)
         }
         this.onCancel();
       })
@@ -96,8 +99,8 @@ export class ScoreSpermComponent implements OnInit {
     else{
       this.operateSpermService.addSpermScore(scoreSpermForm).subscribe(res=>{
         this.commonService.judgeTheResponse(res, "新增", res.errorMessage);
-        if (this.operateSpermService.baseOperateSpermInfo){
-          this.operateSpermService.getExistingSpermScore(this.operateSpermService.baseOperateSpermInfo.spermFromCourseOfTreatmentId)
+        if (this.courseOfTreatmentId){
+          this.operateSpermService.getCurrentSpermScores(this.courseOfTreatmentId)
         }
         this.onCancel();
       })

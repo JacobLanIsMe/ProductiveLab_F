@@ -3,7 +3,9 @@ import { GetObservationNoteNameDto } from "./getObservationNoteNameDto";
 
 export class GetOvumFreezeSummaryDto{
     constructor(
+        public courseOfTreatmentSqlId:number,
         public courseOfTreatmentId:string,
+        public ovumFromCourseOfTreatmentSqlId:number,
         public ovumFromCourseOfTreatmentId:string,
         public ovumNumber:number,
         public ovumPickupTime:Date,

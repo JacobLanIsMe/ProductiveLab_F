@@ -1,3 +1,4 @@
+import { CommonService } from './common.service';
 import { SpermFreezeDto } from './../@Models/spermFreezeDto.model';
 import { BaseResponseDto } from './../@Models/baseResponseDto.model';
 import { Subject } from 'rxjs';
@@ -6,7 +7,7 @@ import { Injectable } from '@angular/core';
 import { BaseOperateSpermInfoDto } from '../@Models/baseOperateSpermInfoDto.model';
 import { FormGroup } from '@angular/forms';
 import { SpermScoreDto } from '../@Models/spermScoreDto.model';
-import { SpermFreezeOperationMethodDto } from '../@Models/spermFreezeOperationMethodDto.model';
+import { CommonDto } from '../@Models/commonDto.model';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +17,9 @@ export class OperateSpermService {
   constructor(private http:HttpClient) { }
   baseOperateSpermInfo?: BaseOperateSpermInfoDto
   isOpenSelectSpermFreeze = new Subject<boolean>();
-  existingSpermScore = new Subject<SpermScoreDto[]>();
+  currentSpermScores = new Subject<SpermScoreDto[]>();
+  currentSpermScoreArray: SpermScoreDto[] = [];
+  previousSpermScoreArray: SpermScoreDto[] = [];
   getOriginInfoOfSperm(courseOfTreatmentId: string){
     return this.http.get<BaseOperateSpermInfoDto>("/api/OperateSperm/GetOriginInfoOfSperm", {
       params: new HttpParams().append("courseOfTreatmentId", courseOfTreatmentId)
@@ -26,22 +29,22 @@ export class OperateSpermService {
     return this.http.post<BaseResponseDto>("/api/OperateSperm/AddSpermScore", form.value);
   }
   
-  getExistingSpermScore(spermFromCourseOfTreatmentId: string){
-    this.http.get<SpermScoreDto[]>("/api/OperateSperm/GetSpermScore", {
-      params: new HttpParams().append("spermFromCourseOfTreatmentId", spermFromCourseOfTreatmentId)
-    }).subscribe(res=>{
-      this.existingSpermScore.next(res);
-      if (this.baseOperateSpermInfo){
-        this.baseOperateSpermInfo.existingSpermScores = res
-      }
+  getSpermScores(courseOfTreatmentId: string){
+    return this.http.get<SpermScoreDto[]>("/api/OperateSperm/GetSpermScore", {
+      params: new HttpParams().append("courseOfTreatmentId", courseOfTreatmentId)
     })
   }
-
+  getCurrentSpermScores(courseOfTreatmentId: string){
+    this.getSpermScores(courseOfTreatmentId).subscribe(res=>{
+      this.currentSpermScoreArray = res;
+      this.currentSpermScores.next(res);
+    })
+  }
   updateExistingSpermScore(form:FormGroup){
     return this.http.put<BaseResponseDto>("/api/OperateSperm/UpdateExistingSpermScore", form.value);
   }
   getSpermFreezeOperationMethod(){
-    return this.http.get<SpermFreezeOperationMethodDto[]>("/api/OperateSperm/GetSpermFreezeOperationMethod");
+    return this.http.get<CommonDto[]>("/api/OperateSperm/GetSpermFreezeOperationMethod");
   }
   addSpermFreeze(form: FormGroup){
     return this.http.post<BaseResponseDto>("/api/OperateSperm/AddSpermFreeze", form.value);

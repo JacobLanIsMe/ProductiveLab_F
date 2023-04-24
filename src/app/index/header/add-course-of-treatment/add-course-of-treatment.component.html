@@ -14,7 +14,17 @@
             <div class="input-group mb-3">
                 <span class="input-group-text">療程名稱</span>
                 <select class="form-select" formControlName="treatmentId">
-                    <option *ngFor="let treatment of treatments" [value]="treatment.treatmentId">{{treatment.name}}</option>
+                    <option *ngFor="let treatment of treatments" [value]="treatment.treatmentId">
+                        {{treatment.ovumSituationName}}-
+                        {{treatment.ovumSourceName}}-
+                        {{treatment.ovumOperationName}}-
+                        {{treatment.spermSituationName}}-
+                        {{treatment.spermSourceName}}-
+                        {{treatment.spermOperationName}}-
+                        {{treatment.spermRetrievalMethodName}}-
+                        {{treatment.embryoSituationName}}-
+                        {{treatment.embryoOperationName}}
+                    </option>
                 </select>
             </div>
             <div class="input-group mb-3">

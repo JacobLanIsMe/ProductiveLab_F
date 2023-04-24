@@ -9,15 +9,19 @@ import { BaseCustomerInfoDto } from 'src/app/@Models/baseCustomerInfoDto.model';
 import { TreatmentService } from 'src/app/@Service/treatment.service';
 import { FunctionDto } from 'src/app/@Models/functionDto.model';
 import { OvumFreezeStorageDto } from 'src/app/@Models/ovumFreezeStorageDto.model';
+import { StorageUnitDto } from 'src/app/@Models/storageUnitDto.model';
 
 @Component({
   selector: 'app-search-empty-storage-unit',
   templateUrl: './search-empty-storage-unit.component.html',
   styleUrls: ['./search-empty-storage-unit.component.css']
 })
-export class SearchEmptyStorageUnitComponent implements OnInit {
+export class SearchEmptyStorageUnitComponent implements OnInit, OnDestroy {
   @Input() subfunction: FunctionDto|null = null;
   constructor(private manageStorageService: ManageStorageService, private commonService:CommonService, private treatmentService:TreatmentService){}
+  ngOnDestroy(): void {
+    this.locationSubscription?.unsubscribe();
+  }
   ngOnInit(): void {
     this.manageStorageService.getStorageTankStatus().subscribe(res=>{
       this.storageTankStatuses = res;
@@ -41,6 +45,9 @@ export class SearchEmptyStorageUnitComponent implements OnInit {
         })
       })
     })
+    this.locationSubscription = this.manageStorageService.selectedLocations.subscribe(res=>{
+      this.selectedLocations = res
+    })
     const courseOfTreatmentId = this.commonService.getCourseOfTreatmentId();
     if (courseOfTreatmentId){
       this.manageStorageService.getOvumFreezeStorageInfo(courseOfTreatmentId).subscribe(res=>{
@@ -50,11 +57,12 @@ export class SearchEmptyStorageUnitComponent implements OnInit {
         this.ovumOwner = res;
       })
     }
-
   }
+  locationSubscription?:Subscription;
   storageTankStatuses?: StorageTankStatusDto[];
   selectedCanistId = 0;
   selectedStripIdOrBoxId:number = 0;
+  selectedLocations: StorageLocation[] = []
   ovumFreezeStorages: OvumFreezeStorageDto[] = [];
   ovumOwner?: BaseCustomerInfoDto;
   showStorageUnitStatus(canistId:number){
@@ -64,7 +72,7 @@ export class SearchEmptyStorageUnitComponent implements OnInit {
     this.selectedStripIdOrBoxId = selectedStripIdOrBoxId;
   }
   confirmChecked(unitId: number){
-    let index = this.manageStorageService.selectedLocationArray.findIndex(x=>x.unitId === unitId);
+    let index = this.selectedLocations.findIndex(x=>x.unitId === unitId);
     if (index === -1){
       return false;
     }
@@ -74,16 +82,18 @@ export class SearchEmptyStorageUnitComponent implements OnInit {
   }
   add(event:any, tankName:string, tankTypeId:number, canistName:string, stripBoxId:number,storageUnitId:number, unitName: string){
     if (event.target.checked){
-      this.manageStorageService.selectedLocationArray.push(new StorageLocation(tankName, tankTypeId, canistName, stripBoxId, storageUnitId, unitName));
+      this.selectedLocations.push(new StorageLocation(tankName, tankTypeId, canistName, stripBoxId, storageUnitId, unitName));
     }
     else{
-      let index =this.manageStorageService.selectedLocationArray.findIndex(x=>x.unitId === storageUnitId);
+      let index =this.selectedLocations.findIndex(x=>x.unitId === storageUnitId);
       if (index === -1){
         return;
       }
       else{
-        this.manageStorageService.selectedLocationArray.splice(index, 1);
+        this.selectedLocations.splice(index, 1);
       }
     }
+    this.manageStorageService.selectedLocations.next(this.selectedLocations);
+    
   }
 }

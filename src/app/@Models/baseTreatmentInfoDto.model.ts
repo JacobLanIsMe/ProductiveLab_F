@@ -1,3 +1,5 @@
+import { TreatmentDto } from "./treatmentDto.model";
+
 export class BaseTreatmentInfoDto{
     constructor(
         public courseOfTreatmentSqlId: number,
@@ -7,7 +9,7 @@ export class BaseTreatmentInfoDto{
         public spouseSqlId: number|null,
         public spouseName: string,
         public doctor: string,
-        public treatmentName: string,
+        public treatment: TreatmentDto,
         public memo:string
     ){}
 }

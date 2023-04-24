@@ -2,14 +2,22 @@
     <table class="table table-light table-hover">
         <thead class="table-warning">
             <tr>
-                <th scope="col">療程編號</th>
-                <th scope="col">療程天數</th>
-                <th scope="col">手術日期</th>
-                <th scope="col">病歷號</th>
-                <th scope="col">姓名</th>
-                <th scope="col">主治醫師</th>
-                <th scope="col">術式療程</th>
-                <th scope="col">狀態</th>
+                <th>療程編號</th>
+                <th>療程天數</th>
+                <th>手術日期</th>
+                <th>病歷號</th>
+                <th>姓名</th>
+                <th>主治醫師</th>
+                <th>卵子狀態</th>
+                <th>卵子身分別</th>
+                <th>卵子操作</th>
+                <th>精子狀態</th>
+                <th>精子身分別</th>
+                <th>精子操作</th>
+                <th>精子取得方式</th>
+                <th>胚胎狀態</th>
+                <th>胚胎操作</th>
+                <th>療程狀態</th>
             </tr>
         </thead>
         <tbody>
@@ -20,7 +28,15 @@
                 <td>{{item.medicalRecordNumber}}</td>
                 <td>{{item.name}}</td>
                 <td>{{item.doctor}}</td>
-                <td>{{item.treatmentName}}</td>
+                <td>{{item.treatment.ovumSituationName}}</td>
+                <td>{{item.treatment.ovumSourceName}}</td>
+                <td>{{item.treatment.ovumOperationName}}</td>
+                <td>{{item.treatment.spermSituationName}}</td>
+                <td>{{item.treatment.spermSourceName}}</td>
+                <td>{{item.treatment.spermOperationName}}</td>
+                <td>{{item.treatment.spermRetrievalMethodName}}</td>
+                <td>{{item.treatment.embryoSituationName}}</td>
+                <td>{{item.treatment.embryoOperationName}}</td>
                 <td>{{item.treatmentStatus}}</td>
             </tr>
         </tbody>

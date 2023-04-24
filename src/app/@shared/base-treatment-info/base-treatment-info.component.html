@@ -5,7 +5,23 @@
         <div class="col-3"><span class="fw-bold">療程編號: </span><span>{{baseTreatmentInfo.courseOfTreatmentSqlId}}</span>
         </div>
         <div class="col-3"><span class="fw-bold">主治醫師: </span><span>{{baseTreatmentInfo.doctor}}</span></div>
-        <div class="col-6"><span class="fw-bold">治療計畫: </span><span>{{baseTreatmentInfo.treatmentName}}</span></div>
+        <div class="col-6"><span class="fw-bold">治療計畫: </span>
+            <span *ngIf="baseTreatmentInfo.treatment.ovumSourceName">
+                {{baseTreatmentInfo.treatment.ovumSituationName}}卵子-
+                {{baseTreatmentInfo.treatment.ovumSourceName}}-
+                {{baseTreatmentInfo.treatment.ovumOperationName}}
+            </span>
+            <span *ngIf="baseTreatmentInfo.treatment.spermSourceName">
+                {{baseTreatmentInfo.treatment.spermSituationName}}精子-
+                {{baseTreatmentInfo.treatment.spermSourceName}}-
+                {{baseTreatmentInfo.treatment.spermOperationName}}
+                <span *ngIf="baseTreatmentInfo.treatment.spermRetrievalMethodName">-{{baseTreatmentInfo.treatment.spermRetrievalMethodName}}</span>
+            </span>
+            <span *ngIf="baseTreatmentInfo.treatment.embryoSituationName">
+                {{baseTreatmentInfo.treatment.embryoSituationName}}-
+                {{baseTreatmentInfo.treatment.embryoOperationName}}
+            </span>
+        </div>
     </div>
     <div class="row">
         <div class="col-3"><span class="fw-bold">客戶病歷號: </span><span>{{baseTreatmentInfo.customerSqlId}}</span></div>

@@ -2,7 +2,7 @@ import { Subject } from 'rxjs';
 import { StorageTankStatusDto } from '../@Models/storageTankStatusDot.model';
 import { BaseResponseDto } from './../@Models/baseResponseDto.model';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { StorageTankTypeDto } from '../@Models/storageTankTypeDto.model';
 import { StorageUnitStatusDto } from '../@Models/storageUnitStatusDto.model';
@@ -15,9 +15,8 @@ import { OvumFreezeStorageDto } from '../@Models/ovumFreezeStorageDto.model';
 export class ManageStorageService {
   constructor(private http: HttpClient) { }
 
-  // selectedLocations = new Subject<StorageLocation[]>();
-  selectedLocationArray:StorageLocation[] = [];
-
+  selectedLocations = new Subject<StorageLocation[]>();
+  // selectedLocationArray: StorageLocation[] = []
   addNewTank(form: FormGroup){
     return this.http.post<BaseResponseDto>("/api/StorageManager/AddStorageTank", form.value)
   }
