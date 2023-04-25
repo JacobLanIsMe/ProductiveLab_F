@@ -15,7 +15,7 @@ import { StorageLocation } from 'src/app/@Models/storageLocation.model';
 import { TreatmentService } from 'src/app/@Service/treatment.service';
 import { CommonService } from 'src/app/@Service/common.service';
 import { ObservationNoteService } from 'src/app/@Service/observation-note.service';
-import { GetObservationNoteNameDto } from 'src/app/@Models/getObservationNoteNameDto';
+import { GetObservationNoteNameDto } from 'src/app/@Models/getObservationNoteNameDto.model';
 import { CommonDto } from 'src/app/@Models/commonDto.model';
 @Component({
   selector: 'app-freeze-ovum',

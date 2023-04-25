@@ -73,7 +73,7 @@ export class FreezeSpermComponent implements OnInit, OnDestroy{
   spermFreezeOperateMethods: CommonDto[] = [];
   freezeMediums: MediumDto[] = [];
   mediums: MediumDto[] = [];
-  embryologists?: EmbryologistDto[];
+  embryologists: EmbryologistDto[] = [];
   isSelectOtherMedium = false;
   vialCount = 0;
   isOpenMediumForm = false;

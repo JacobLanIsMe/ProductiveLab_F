@@ -3,7 +3,7 @@ import { Component, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
 import { BaseTreatmentInfoDto } from 'src/app/@Models/baseTreatmentInfoDto.model';
 import { TreatmentService } from 'src/app/@Service/treatment.service';
 import { faList } from '@fortawesome/free-solid-svg-icons';
-import { GetObservationNoteNameDto } from 'src/app/@Models/getObservationNoteNameDto';
+import { GetObservationNoteNameDto } from 'src/app/@Models/getObservationNoteNameDto.model';
 import { CommonService } from 'src/app/@Service/common.service';
 import { MainPageService } from 'src/app/@Service/main-page.service';
 @Component({

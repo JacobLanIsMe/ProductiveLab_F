@@ -28,7 +28,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FertilizationComponent } from './index/case/treatment-summary/fertilization/fertilization.component';
 import { BaseTreatmentInfoComponent } from './@shared/base-treatment-info/base-treatment-info.component';
 import { BaseOperateSpermInfoComponent } from './index/case/operate-sperm/base-operate-sperm-info/base-operate-sperm-info.component';
-import { SelectSpermFreezeComponent } from './index/case/operate-sperm/select-sperm-freeze/select-sperm-freeze.component';
 import { SubfunctionHeaderComponent } from './@shared/subfunction-header/subfunction-header.component';
 import { ScoreSpermComponent } from './index/case/operate-sperm/score-sperm/score-sperm.component';
 import { AddCourseOfTreatmentComponent } from './index/header/add-course-of-treatment/add-course-of-treatment.component';
@@ -45,6 +44,9 @@ import { ShowSelectedStorageUnitComponent } from './@shared/manage-storage/show-
 import { ManageStorageComponent } from './@shared/manage-storage/manage-storage.component';
 import { AddNewStorageTankComponent } from './@shared/manage-storage/add-new-storage-tank/add-new-storage-tank.component';
 import { SearchEmptyStorageUnitComponent } from './@shared/manage-storage/search-empty-storage-unit/search-empty-storage-unit.component';
+import { OvumFreezeSummaryComponent } from './index/case/freezing-summary/ovum-freeze-summary/ovum-freeze-summary.component';
+import { SpermFreezeSummaryComponent } from './index/case/freezing-summary/sperm-freeze-summary/sperm-freeze-summary.component';
+import { ThawSpermComponent } from './index/case/operate-sperm/thaw-sperm/thaw-sperm.component';
 
 
 @NgModule({
@@ -73,7 +75,6 @@ import { SearchEmptyStorageUnitComponent } from './@shared/manage-storage/search
     FertilizationComponent,
     BaseTreatmentInfoComponent,
     BaseOperateSpermInfoComponent,
-    SelectSpermFreezeComponent,
     SubfunctionHeaderComponent,
     ScoreSpermComponent,
     ManageStorageComponent,
@@ -89,7 +90,10 @@ import { SearchEmptyStorageUnitComponent } from './@shared/manage-storage/search
     TitleComponent,
     OpenMediumComponent,
     ShowMediumInfoComponent,
-    MediumInputComponent
+    MediumInputComponent,
+    OvumFreezeSummaryComponent,
+    SpermFreezeSummaryComponent,
+    ThawSpermComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,44 @@
+<div>
+    <app-title [title]="'精子冷凍總覽'" [icon]="faList"></app-title>
+</div>
+<hr>
+<ng-container *ngIf="spermFreezeSummary.length">
+    <div style="width:100%;overflow-x:auto;">
+        <table class="table table-hover" style="text-align: center;white-space:nowrap;">
+            <thead>
+                <tr>
+                    <th>精子來源療程編號</th>
+                    <th>身分別</th>
+                    <th>檢體來源</th>
+                    <th>取精日</th>
+                    <th>移入日</th>
+                    <th>冷凍日</th>
+                    <th>凍管編號</th>
+                    <th>Tank</th>
+                    <th>Canist</th>
+                    <th>Box</th>
+                    <th>Location</th>
+                    <th>冷凍液</th>
+                    <th>入庫時注意事項</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of spermFreezeSummary">
+                    <td>{{item.courseOfTreatmentSqlId}}</td>
+                    <td>{{item.spermSourceName}}</td>
+                    <td>{{item.spermSituation}}精蟲</td>
+                    <td>{{item.surgicalTime | date:"yyyy-MM-dd"}}</td>
+                    <td>移入日</td>
+                    <td>{{item.freezeTime | date:"yyyy-MM-dd"}}</td>
+                    <td>No.{{item.vialNumber}}</td>
+                    <td>{{item.tankName}}</td>
+                    <td>{{item.canistName}}</td>
+                    <td>{{item.boxId}}</td>
+                    <td>{{item.unitName}}</td>
+                    <td>{{item.freezeMediumName}}</td>
+                    <td>{{item.freezeTime | date:"hh:mm:ss"}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</ng-container>

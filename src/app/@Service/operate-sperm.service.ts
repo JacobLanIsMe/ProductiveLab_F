@@ -58,4 +58,7 @@ export class OperateSpermService {
       params: new HttpParams().append("spermFromCourseOfTreatmentId", spermFromCourseOfTreatmentId)
     });
   }
+  getSpermThawMethods(){
+    return this.http.get<CommonDto[]>("/api/OperateSperm/GetSpermThawMethods");
+  }
 }

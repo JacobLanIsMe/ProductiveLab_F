@@ -7,7 +7,7 @@ import { BlastomereScoreDto } from '../@Models/blastomereScoreDto.model';
 import { BlastocystScoreDto } from '../@Models/blastocystScoreDto.model';
 import { BaseResponseDto } from '../@Models/baseResponseDto.model';
 import { GetObservationNoteDto } from '../@Models/getObservationNoteDto.model';
-import { GetObservationNoteNameDto } from '../@Models/getObservationNoteNameDto';
+import { GetObservationNoteNameDto } from '../@Models/getObservationNoteNameDto.model';
 import { FormGroup } from '@angular/forms';
 
 @Injectable({

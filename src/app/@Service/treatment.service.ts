@@ -55,14 +55,7 @@ export class TreatmentService {
       return true;
     }
   }
-  getCurrentCourseOfTreatmentId(){
-    let id;
-    let idSubscription = this.route.paramMap.subscribe(params=>{
-      id = params.get("id");
-    })
-    idSubscription.unsubscribe();
-    return id;
-  }
+  
   getAllTreatment(){
     return this.http.get<TreatmentDto[]>("/api/Treatment/GetAllTreatment");
   }

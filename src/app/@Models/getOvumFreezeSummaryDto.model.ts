@@ -1,5 +1,5 @@
 import { BaseStorage } from "./baseStorage.model";
-import { GetObservationNoteNameDto } from "./getObservationNoteNameDto";
+import { GetObservationNoteNameDto } from "./getObservationNoteNameDto.model";
 
 export class GetOvumFreezeSummaryDto{
     constructor(

@@ -81,7 +81,6 @@ export class ManageMediumService implements OnDestroy {
     if (formArray.controls.length < 3 && formArray.controls.length <= this.selectedMediumArray.length){
       formArray.push(new FormControl(null));
     }
-    
   }
   deleteMediumFormControl(index:number){
     this.selectedMediumArray.splice(index, 1);

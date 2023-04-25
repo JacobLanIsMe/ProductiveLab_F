@@ -1,4 +1,3 @@
-import { SelectSpermFreezeComponent } from './../../../index/case/operate-sperm/select-sperm-freeze/select-sperm-freeze.component';
 import { Component, OnDestroy, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { DateService } from 'src/app/@Service/date.service';
