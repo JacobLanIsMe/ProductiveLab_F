@@ -22,7 +22,6 @@ export class MediumInputComponent implements OnInit {
       return "";
     }
   }
-  
   onOpenMediumInfo(mediums:MediumDto[], event:MouseEvent){
     this.manageMediumService.openShowMediumInfo(mediums, event, this.index);
   }
