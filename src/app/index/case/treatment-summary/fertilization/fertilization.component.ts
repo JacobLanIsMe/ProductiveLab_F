@@ -1,13 +1,11 @@
 import { ManageIncubatorService } from './../../../../@Service/manage-incubator.service';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ManageMediumService } from 'src/app/@Service/manage-medium.service';
-import { Incubator } from 'src/app/@Models/incubator.model';
 import { faBoxesPacking, faWater } from '@fortawesome/free-solid-svg-icons';
 import { MediumDto } from 'src/app/@Models/mediumDto.model';
 import { IncubatorDto } from 'src/app/@Models/incubatorDto.model';
 import { Subscription } from 'rxjs';
-import { MediumTypeEnum } from 'src/app/@Enums/mediumTypeEnum.model';
 
 @Component({
   selector: 'app-fertilization',
@@ -24,10 +22,10 @@ export class FertilizationComponent implements OnInit, OnDestroy {
       "mediumInUseId": new FormControl(null, Validators.required),
       "incubatorId": new FormControl(null, Validators.required)
     })
-    this.mediumSubscription = this.manageMediumService.updatedMedium.subscribe(res=>{
+    this.mediumSubscription = this.manageMediumService.updatedInUseMedium.subscribe(res=>{
       this.inUseMedium = this.manageMediumService.getRegularMedium(res);
     })
-    this.manageMediumService.getInUseMediums();
+    this.manageMediumService.getUpdatedInUseMediums();
     this.manageIncubatorService.getAllIncubator().subscribe(res=>{
       this.incubators = res;
     });

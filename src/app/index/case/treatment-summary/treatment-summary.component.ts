@@ -1,10 +1,8 @@
 import { Subscription } from 'rxjs';
-import { MainPageService } from './../../../@Service/main-page.service';
 import { TreatmentService } from './../../../@Service/treatment.service';
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { TreatmentSummaryDto } from 'src/app/@Models/treatmentSummaryDto.model';
 import { faTable } from '@fortawesome/free-solid-svg-icons';
-import { ActivatedRoute } from '@angular/router';
 import { FunctionHeaderService } from 'src/app/@Service/function-header.service';
 import { FunctionDto } from 'src/app/@Models/functionDto.model';
 import { LocalStorageKey } from 'src/app/@Models/localStorageKey.model';
@@ -15,7 +13,7 @@ import { LocalStorageKey } from 'src/app/@Models/localStorageKey.model';
   styleUrls: ['./treatment-summary.component.css']
 })
 export class TreatmentSummaryComponent implements OnInit {
-  constructor(private treatmentService: TreatmentService, private route:ActivatedRoute, private functionHeaderService: FunctionHeaderService){}
+  constructor(private treatmentService: TreatmentService, private functionHeaderService: FunctionHeaderService){}
   
   
   ngOnInit(): void {

@@ -1,5 +1,5 @@
 <div class="alertContainer">
-    <div class="alertBox">
+    <div class="alertBox" style="max-height:90vh;overflow-y: auto;">
         <div class="fs-5 fw-bold text-warning-emphasis mb-3"><fa-icon [icon]="faListCheck" class="me-3"></fa-icon>解凍精蟲
         </div>
         <div class="d-flex justify-content-start align-items-center mb-2">
@@ -17,11 +17,12 @@
                                 [(ngModel)]="isSelectAll" [ngModelOptions]="{standalone: true}"
                                 (click)="onSelectAll($event)"></span>
                     </th>
-                    <th scope="col">精蟲編號</th>
-                    <th scope="col">Tank</th>
-                    <th scope="col">Canist</th>
-                    <th scope="col">Box</th>
-                    <th scope="col">Location</th>
+                    <th>精蟲編號</th>
+                    <th>Tank</th>
+                    <th>Canist</th>
+                    <th>Box</th>
+                    <th>Location</th>
+                    <th>冷凍日期</th>
                 </tr>
             </thead>
             <tbody>
@@ -33,6 +34,7 @@
                     <td>{{spermFreeze.storageCanistName}}</td>
                     <td>{{spermFreeze.storageStripBoxId}}</td>
                     <td>{{spermFreeze.storageUnitName}}</td>
+                    <td>{{spermFreeze.freezeTime | date:"yyyy-MM-dd"}}</td>
                 </tr>
             </tbody>
         </table>
@@ -73,12 +75,7 @@
                     </ng-container>
                 </select>
             </div>
-            <div>
-                <div *ngFor="let medium of getMediumFormArrayControl(); let i = index">
-                    <app-medium-input></app-medium-input>
-                </div>
-                <button type="button" >開封培養液</button>
-            </div>
+            <app-multiple-medium-input [mediums]="mediums"></app-multiple-medium-input>
             <div class="d-flex justify-content-end">
                 <button type="button" class="btn btn-outline-primary btn-sm" (click)="onCancel()">取消</button>
                 <button class="btn btn-primary btn-sm ms-3" [disabled]="!thawSpermForm.valid">確定</button>

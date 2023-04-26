@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { SpermFreezeDto } from 'src/app/@Models/spermFreezeDto.model';
 import { CommonService } from 'src/app/@Service/common.service';
 import { FunctionHeaderService } from 'src/app/@Service/function-header.service';
@@ -11,22 +11,29 @@ import { EmployeeService } from 'src/app/@Service/employee.service';
 import { CommonDto } from 'src/app/@Models/commonDto.model';
 import { SpermThawMethodEnum } from 'src/app/@Enums/spermThawMethodEnum.model';
 import { ManageMediumService } from 'src/app/@Service/manage-medium.service';
+import { MediumDto } from 'src/app/@Models/mediumDto.model';
+import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-thaw-sperm',
   templateUrl: './thaw-sperm.component.html',
   styleUrls: ['./thaw-sperm.component.css']
 })
-export class ThawSpermComponent implements OnInit {
+export class ThawSpermComponent implements OnInit, OnDestroy {
   constructor(private operateSpermService: OperateSpermService, private functionHeaderService: FunctionHeaderService, private commonService: CommonService, private dateService: DateService, private employeeService: EmployeeService, private manageMediumService:ManageMediumService) { }
+  ngOnDestroy(): void {
+    this.updatedMediumSubscription?.unsubscribe();
+    this.manageMediumService.selectedMediumArray.length = 0;
+  }
   ngOnInit(): void {
     this.thawSpermForm = new FormGroup({
+      "courseOfTreatmentId": new FormControl(this.commonService.getCourseOfTreatmentId(), Validators.required),
       "thawTime": new FormControl(this.dateService.getTodayDateTimeString(new Date()), Validators.required),
       "embryologist": new FormControl(null, Validators.required),
       "spermThawMethodId": new FormControl(null, Validators.required),
-      "storageUnitId": new FormArray([]),
+      "spermFreezeIds": new FormArray([]),
       "recheckEmbryologist": new FormControl(null, Validators.required),
       "otherSpermThawMethod": new FormControl(null),
-      "mediumInUseIds": new FormArray([new FormControl(null)])
+      "mediumInUseIds": new FormArray([])
     })
     const spermFromCourseOfTreatmentId = this.commonService.getSpermFromCourseOfTreatmentId();
     if (spermFromCourseOfTreatmentId) {
@@ -40,22 +47,27 @@ export class ThawSpermComponent implements OnInit {
     this.operateSpermService.getSpermThawMethods().subscribe(res => {
       this.spermThawMethods = res;
     })
+    this.updatedMediumSubscription = this.manageMediumService.updatedInUseMedium.subscribe(res=>{
+      this.mediums = this.manageMediumService.getRegularMedium(res)
+    })
+    this.manageMediumService.getUpdatedInUseMediums();
+    this.manageMediumService.selectedMediums.subscribe(res=>{
+      this.manageMediumService.setupMediumFormArray(res, <FormArray>(this.thawSpermForm.get("mediumInUseIds")))
+    })
   }
+  updatedMediumSubscription?:Subscription;
   thawSpermForm!: FormGroup;
   embryologists: EmbryologistDto[] = [];
   spermThawMethods: CommonDto[] = [];
   spermFreezes: SpermFreezeDto[] = [];
+  mediums: MediumDto[] = [];
   isSelectAll: boolean = false;
   isOtherSpermThawMethod: boolean = false;
   faListCheck = faListCheck;
-  selectedUnitIds: number[] = [];
   spermOwnerSqlId?: number = this.operateSpermService.baseOperateSpermInfo?.spermOwner.customerSqlId;
   spermOwnerName?: string = this.operateSpermService.baseOperateSpermInfo?.spermOwner.customerName;
   selectSpermThawMethod(event: any) {
     this.isOtherSpermThawMethod = +event.target.value === SpermThawMethodEnum.other ? true : false
-  }
-  getMediumFormArrayControl(){
-    return (<FormArray>(this.thawSpermForm.get("mediumInUseIds"))).controls;
   }
   onSelectAll(event: any) {
     this.spermFreezes.forEach(x => {
@@ -70,21 +82,20 @@ export class ThawSpermComponent implements OnInit {
     this.functionHeaderService.isOpenSubfunction.next(null);
   }
   onSubmit(form: FormGroup) {
-    this.selectedUnitIds.length = 0;
+    const spermFreezeIdFormArray = <FormArray>(this.thawSpermForm.get("spermFreezeIds"));
+    spermFreezeIdFormArray.clear();
     this.spermFreezes.forEach(x => {
       if (x.isChecked) {
-        this.selectedUnitIds.push(x.storageUnitId);
+        spermFreezeIdFormArray.push(new FormControl(x.spermFreezeId))
       }
     })
-    if (this.selectedUnitIds.length <= 0) {
+    if (spermFreezeIdFormArray.controls.length <= 0){
       this.commonService.showAlertMessage("", "請選擇要解凍的精蟲");
+      return;
     }
-    else {
-      this.operateSpermService.selectSpermFreeze(this.selectedUnitIds).subscribe(res => {
-        this.commonService.judgeTheResponse(res, "解凍精蟲", res.errorMessage);
-        this.onCancel();
-      })
-
-    }
+    console.log(form.value);
+    this.operateSpermService.addSpermThaw(form).subscribe(res=>{
+      this.commonService.judgeTheResponse(res, "解凍精子", res.errorMessage, form);
+    })
   }
 }

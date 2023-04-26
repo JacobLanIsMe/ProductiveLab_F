@@ -23,7 +23,7 @@ export class ManageMediumService implements OnDestroy {
   selectedMediumArray: MediumDto[] = [];
   selectedMedium = new Subject<MediumDto>();
   isOpenMediumForm = new Subject<boolean>();
-  updatedMedium = new Subject<MediumDto[]>();
+  updatedInUseMedium = new Subject<MediumDto[]>();
   updatedFrequentlyUsedMedium = new Subject<FrequentlyUsedMediumDto[]>()
   AddMediumInUse(mediumForm: FormGroup) {
     return this.http.post<BaseResponseDto>("/api/MediumManager/AddMediumInUse", mediumForm.value);
@@ -36,9 +36,9 @@ export class ManageMediumService implements OnDestroy {
       this.updatedFrequentlyUsedMedium.next(res);
     })
   }
-  getInUseMediums() {
+  getUpdatedInUseMediums() {
     this.http.get<MediumDto[]>("/api/MediumManager/GetInUseMediums").subscribe(res => {
-      this.updatedMedium.next(res);
+      this.updatedInUseMedium.next(res);
     })
   }
   getRegularMedium(mediums: MediumDto[]) {

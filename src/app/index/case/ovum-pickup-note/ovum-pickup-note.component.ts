@@ -45,10 +45,10 @@ export class OvumPickupNoteComponent implements OnInit, OnDestroy {
     this.employeeService.getAllEmbryologist().subscribe(res=>{
       this.embryologists = res;
     });
-    this.mediumSubscription = this.manageMediumService.updatedMedium.subscribe(res=>{
+    this.mediumSubscription = this.manageMediumService.updatedInUseMedium.subscribe(res=>{
       this.mediums = this.manageMediumService.getRegularMedium(res);
     })
-    this.manageMediumService.getInUseMediums();
+    this.manageMediumService.getUpdatedInUseMediums();
     this.selectedMediumSubscription = this.manageMediumService.selectedMediums.subscribe(res=>{
       let formArray =<FormArray>(this.ovumPickupForm.get("mediumInUse"));
       this.manageMediumService.setupMediumFormArray(res, formArray);

@@ -10,7 +10,9 @@
     </div>
     <div class="d-flex justify-content-between align-items-center"
         *ngFor="let grade of [].constructor(count); let i = index">
-        <app-medium-input [mediums]="mediums" [index]="i" [isMultiple]="true"></app-medium-input>
+        <div style="width:90%">
+            <app-medium-input [mediums]="mediums" [index]="i" [isMultiple]="true"></app-medium-input>
+        </div>
         <button type="button" class="border border-0 bg-transparent"
             (click)="onDeleteMediumFormControl(i)"><fa-icon [icon]="faXmark"
                 class="text-danger"></fa-icon></button>

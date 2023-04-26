@@ -44,10 +44,10 @@ export class FreezeOvumComponent implements OnInit,OnDestroy {
       "memo": new FormControl(null),
       "topColorId": new FormControl(null, Validators.required)
     })
-    this.mediumSubscription = this.manageMediumService.updatedMedium.subscribe(res=>{
+    this.mediumSubscription = this.manageMediumService.updatedInUseMedium.subscribe(res=>{
       this.mediums=this.manageMediumService.getOvumFreezeAndOtherMediun(res);
     })
-    this.manageMediumService.getInUseMediums();
+    this.manageMediumService.getUpdatedInUseMediums();
     this.observationNoteService.getFreezeObservationNotes(this.treatmentService.selectedOvumPickupDetailId).subscribe(res=>{
       this.selectedObservationNotes = res;
     });

@@ -49,10 +49,6 @@ export class OperateSpermService {
   addSpermFreeze(form: FormGroup){
     return this.http.post<BaseResponseDto>("/api/OperateSperm/AddSpermFreeze", form.value);
   }
-  selectSpermFreeze(unitIds: number[]){
-    return this.http.put<BaseResponseDto>("/api/OperateSperm/SelectSpermFreeze", unitIds);
-  }
-
   getSpermFreeze(spermFromCourseOfTreatmentId: string){
     return this.http.get<SpermFreezeDto[]>("/api/OperateSperm/GetSpermFreeze",{
       params: new HttpParams().append("spermFromCourseOfTreatmentId", spermFromCourseOfTreatmentId)
@@ -60,5 +56,8 @@ export class OperateSpermService {
   }
   getSpermThawMethods(){
     return this.http.get<CommonDto[]>("/api/OperateSperm/GetSpermThawMethods");
+  }
+  addSpermThaw(form:FormGroup){
+    return this.http.post<BaseResponseDto>("/api/OperateSperm/AddSpermThaw", form.value)
   }
 }

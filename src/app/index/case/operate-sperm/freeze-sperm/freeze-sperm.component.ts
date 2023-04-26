@@ -28,7 +28,6 @@ export class FreezeSpermComponent implements OnInit, OnDestroy{
     this.manageMediumService.selectedMediumArray = []
   }
   ngOnInit(): void {
-    // console.log(this.manageMediumService.selectedMediumArray)
     const courseOfTreatmentId = this.commonService.getCourseOfTreatmentId();
     this.freezeSpermForm = new FormGroup({
       "courseOfTreatmentId": new FormControl(courseOfTreatmentId, Validators.required),
@@ -43,11 +42,11 @@ export class FreezeSpermComponent implements OnInit, OnDestroy{
     this.operateSpermService.getSpermFreezeOperationMethod().subscribe(res=>{
       this.spermFreezeOperateMethods = res;
     });
-    this.mediumSubscription = this.manageMediumService.updatedMedium.subscribe(res=>{
+    this.mediumSubscription = this.manageMediumService.updatedInUseMedium.subscribe(res=>{
       this.freezeMediums = this.manageMediumService.getSpermFreezeAndOtherMedium(res);
       this.mediums = this.manageMediumService.getRegularMedium(res);
     })
-    this.manageMediumService.getInUseMediums();
+    this.manageMediumService.getUpdatedInUseMediums();
     this.employeeService.getAllEmbryologist().subscribe(res=>{
       this.embryologists = res;
     })

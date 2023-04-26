@@ -7,6 +7,7 @@ export class SpermFreezeDto{
         public storageCanistName: string,
         public storageTankName: string,
         public storageUnitId: number,
+        public freezeTime: Date,
         public isChecked: boolean
     ){}
 }

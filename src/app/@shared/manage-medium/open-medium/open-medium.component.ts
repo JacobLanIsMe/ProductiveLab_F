@@ -83,7 +83,7 @@ export class OpenMediumComponent implements OnInit, OnDestroy {
       "mediumTypeId": +mediumForm.value.mediumTypeId
     })
     this.manageMediumService.AddMediumInUse(mediumForm).subscribe(res=>{
-      this.manageMediumService.getInUseMediums();
+      this.manageMediumService.getUpdatedInUseMediums();
       this.commonService.judgeTheResponse(res, "開封培養液", res.errorMessage, mediumForm)
     });
   }
