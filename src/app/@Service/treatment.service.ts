@@ -1,4 +1,3 @@
-import { ActivatedRoute } from '@angular/router';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { FormGroup } from '@angular/forms';
@@ -14,9 +13,9 @@ import { CommonDto } from '../@Models/commonDto.model';
   providedIn: 'root'
 })
 export class TreatmentService {
-  constructor(private http:HttpClient, private route: ActivatedRoute) { }
+  constructor(private http:HttpClient) { }
   baseTreatmentInfo?: BaseTreatmentInfoDto;
-  selectedOvumPickupDetailId:string[] = [];
+  selectedOvumPickupDetailIds:string[] = [];
   treatmentSummary = new Subject<TreatmentSummaryDto[]>();
   addOvumPickupNote(form: FormGroup){
     return this.http.post<BaseResponseDto>("/api/Treatment/AddOvumPickupNote", form.value);

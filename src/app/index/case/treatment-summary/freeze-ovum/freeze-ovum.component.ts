@@ -48,7 +48,7 @@ export class FreezeOvumComponent implements OnInit,OnDestroy {
       this.mediums=this.manageMediumService.getOvumFreezeAndOtherMediun(res);
     })
     this.manageMediumService.getUpdatedInUseMediums();
-    this.observationNoteService.getFreezeObservationNotes(this.treatmentService.selectedOvumPickupDetailId).subscribe(res=>{
+    this.observationNoteService.getFreezeObservationNotes(this.treatmentService.selectedOvumPickupDetailIds).subscribe(res=>{
       this.selectedObservationNotes = res;
     });
     this.employeeService.getAllEmbryologist().subscribe(res=>{
@@ -76,7 +76,6 @@ export class FreezeOvumComponent implements OnInit,OnDestroy {
   isOpenMediumForm = false;
   isChooseOtherMedium = false;
   selectedLocations: StorageLocation[] = [];
-  selectedOvumPickupDetailId = this.treatmentService.selectedOvumPickupDetailId;
   selectedObservationNotes?: GetObservationNoteNameDto[];
   onSelectMedium(event:any){
     const selectedMedium = this.mediums.filter(x=>x.mediumInUseId === event.target.value);
@@ -100,10 +99,10 @@ export class FreezeOvumComponent implements OnInit,OnDestroy {
     }
   }
   addOvumPickupDetailId(){
-    if (this.selectedOvumPickupDetailId.length > 0 && this.selectedOvumPickupDetailId.length <= 4){
+    if (this.treatmentService.selectedOvumPickupDetailIds.length > 0 && this.treatmentService.selectedOvumPickupDetailIds.length <= 4){
       const formArray = <FormArray>(this.freezeOvumForm.get("ovumPickupDetailId"));
       formArray.clear();
-      this.treatmentService.selectedOvumPickupDetailId.forEach(x=>{
+      this.treatmentService.selectedOvumPickupDetailIds.forEach(x=>{
         const formControl = new FormControl(x, Validators.required);
         formArray.push(formControl);
       }) 

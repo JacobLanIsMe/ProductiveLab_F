@@ -24,14 +24,14 @@ export class TreatmentSummaryComponent implements OnInit {
       })
     }
     this.functionHeaderService.isOpenSubfunction.subscribe(res=>{
-      this.treatmentService.selectedOvumPickupDetailId.length = 0;
-      let selectedOvumPickupDetailId: string[] = [];
+      this.treatmentService.selectedOvumPickupDetailIds.length = 0;
+      let selectedOvumPickupDetailIds: string[] = [];
       this.treatmentSummarys.forEach(x=>{
         if (x.isChecked === true){
-          selectedOvumPickupDetailId.push(x.ovumPickupDetailId);
+          selectedOvumPickupDetailIds.push(x.ovumPickupDetailId);
         }
       })
-      this.treatmentService.selectedOvumPickupDetailId = selectedOvumPickupDetailId;
+      this.treatmentService.selectedOvumPickupDetailIds = selectedOvumPickupDetailIds;
       this.isOpenSubFunction = res;
     })
     this.treatmentService.treatmentSummary.subscribe(res=>{

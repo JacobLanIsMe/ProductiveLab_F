@@ -25,7 +25,6 @@ import { OvumBankTransferComponent } from './index/ovum-bank-transfer/ovum-bank-
 import { OperateSpermComponent } from './index/case/operate-sperm/operate-sperm.component';
 import { LogoutComponent } from './index/logout/logout.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { FertilizationComponent } from './index/case/treatment-summary/fertilization/fertilization.component';
 import { BaseTreatmentInfoComponent } from './@shared/base-treatment-info/base-treatment-info.component';
 import { BaseOperateSpermInfoComponent } from './index/case/operate-sperm/base-operate-sperm-info/base-operate-sperm-info.component';
 import { SubfunctionHeaderComponent } from './@shared/subfunction-header/subfunction-header.component';
@@ -48,6 +47,8 @@ import { OvumFreezeSummaryComponent } from './index/case/freezing-summary/ovum-f
 import { SpermFreezeSummaryComponent } from './index/case/freezing-summary/sperm-freeze-summary/sperm-freeze-summary.component';
 import { ThawSpermComponent } from './index/case/operate-sperm/thaw-sperm/thaw-sperm.component';
 import { MultipleMediumInputComponent } from './@shared/manage-medium/multiple-medium-input/multiple-medium-input.component';
+import { FormTitleComponent } from './@shared/form-title/form-title.component';
+import { FertilisationComponent } from './index/case/treatment-summary/fertilisation/fertilisation.component';
 
 
 @NgModule({
@@ -73,7 +74,6 @@ import { MultipleMediumInputComponent } from './@shared/manage-medium/multiple-m
     ManageMediumComponent,
     UploadReportComponent,
     LogoutComponent,
-    FertilizationComponent,
     BaseTreatmentInfoComponent,
     BaseOperateSpermInfoComponent,
     SubfunctionHeaderComponent,
@@ -95,7 +95,9 @@ import { MultipleMediumInputComponent } from './@shared/manage-medium/multiple-m
     OvumFreezeSummaryComponent,
     SpermFreezeSummaryComponent,
     ThawSpermComponent,
-    MultipleMediumInputComponent
+    MultipleMediumInputComponent,
+    FormTitleComponent,
+    FertilisationComponent
   ],
   imports: [
     BrowserModule,
