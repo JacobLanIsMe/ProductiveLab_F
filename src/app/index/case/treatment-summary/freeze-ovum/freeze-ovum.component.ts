@@ -69,7 +69,7 @@ export class FreezeOvumComponent implements OnInit,OnDestroy {
   freezeOvumForm!: FormGroup;
   topColors?: CommonDto[];
   faSnowflake = faSnowflake;
-  embryologists?: EmbryologistDto[];
+  embryologists: EmbryologistDto[] = [];
   mediumSubscription?:Subscription;
   mediums:MediumDto[] = [];
   openMediumFormSubscription?: Subscription;

@@ -72,4 +72,10 @@ export class TreatmentService {
   getTopColors(){
     return this.http.get<CommonDto[]>("/api/Treatment/GetTopColors");
   }
+  getFertilisationMethods(){
+    return this.http.get<CommonDto[]>("/api/Treatment/GetFertilisationMethods");
+  }
+  getIncubators(){
+    return this.http.get<CommonDto[]>("/api/Treatment/GetIncubators");
+  }
 }

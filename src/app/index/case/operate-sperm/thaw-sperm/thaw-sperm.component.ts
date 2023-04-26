@@ -22,6 +22,7 @@ export class ThawSpermComponent implements OnInit, OnDestroy {
   constructor(private operateSpermService: OperateSpermService, private functionHeaderService: FunctionHeaderService, private commonService: CommonService, private dateService: DateService, private employeeService: EmployeeService, private manageMediumService:ManageMediumService) { }
   ngOnDestroy(): void {
     this.updatedMediumSubscription?.unsubscribe();
+    this.selectedMediumSubscription?.unsubscribe();
     this.manageMediumService.selectedMediumArray.length = 0;
   }
   ngOnInit(): void {
@@ -51,11 +52,12 @@ export class ThawSpermComponent implements OnInit, OnDestroy {
       this.mediums = this.manageMediumService.getRegularMedium(res)
     })
     this.manageMediumService.getUpdatedInUseMediums();
-    this.manageMediumService.selectedMediums.subscribe(res=>{
+    this.selectedMediumSubscription = this.manageMediumService.selectedMediums.subscribe(res=>{
       this.manageMediumService.setupMediumFormArray(res, <FormArray>(this.thawSpermForm.get("mediumInUseIds")))
     })
   }
   updatedMediumSubscription?:Subscription;
+  selectedMediumSubscription?:Subscription;
   thawSpermForm!: FormGroup;
   embryologists: EmbryologistDto[] = [];
   spermThawMethods: CommonDto[] = [];

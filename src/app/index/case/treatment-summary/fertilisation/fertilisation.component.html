@@ -1,10 +1,38 @@
 <div class="alertContainer">
     <div class="alertBox">
         <app-form-title [subfunction]="subfunction" [icon]="faHeart"></app-form-title>
-        <div class="input-group mb-3">
-            <span class="input-group-text">受精時間</span>
-            <input type="datetime-local" class="form-control" formControlName="fertilisationTime">
-        </div>
-        
+        <form [formGroup]="fertilisationForm" (ngSubmit)="onSubmit(fertilisationForm)">
+            <div class="input-group mb-3">
+                <span class="input-group-text">受精時間</span>
+                <input type="datetime-local" class="form-control" formControlName="fertilisationTime">
+            </div>
+            <div class="input-group mb-3">
+                <span class="input-group-text">受精方式</span>
+                <select class="form-select" formControlName="fertilisationMethodId">
+                    <ng-container *ngIf="fertilisationMethods.length">
+                        <option *ngFor="let method of fertilisationMethods" [value]="method.id">
+                            {{method.name}}</option>
+                    </ng-container>
+                </select>
+            </div>
+            <div class="input-group mb-3">
+                <span class="input-group-text">培養箱</span>
+                <select class="form-select" formControlName="incubatorId" (change)="onSelectIncubator($event)">
+                    <ng-container *ngIf="incubators.length">
+                        <option *ngFor="let incubator of incubators" [value]="incubator.id">
+                            {{incubator.name}}</option>
+                    </ng-container>
+                </select>
+            </div>
+            <div class="input-group mb-3" *ngIf="isOtherIncubator">
+                <span class="input-group-text">其他培養箱</span>
+                <input type="text" class="form-control" formControlName="otherIncubator">
+            </div>
+            <app-multiple-medium-input [mediums]="mediums"></app-multiple-medium-input>
+            <div class="d-flex justify-content-end align-items-center">
+                <button type="button" class="btn btn-outline-primary btn-sm" (click)="onCancel()">取消</button>
+                <button class="btn btn-primary btn-sm ms-3">確認受精</button>
+            </div>
+        </form>
     </div>
 </div>
