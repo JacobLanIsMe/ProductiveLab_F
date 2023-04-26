@@ -1,4 +1,4 @@
 <div class="input-group mb-3">
-    <span class="input-group-text">培養液</span>
-    <input type="text" class="form-control" style="cursor:pointer" [value]="getSelectedMedium()" (click)="onOpenMediumInfo(mediums,$event)">
+    <span class="input-group-text">{{name}}</span>
+    <input #origin type="text" class="form-control" style="cursor:pointer" [value]="selectedMedium" (click)="onOpenMediumInfo()">
 </div>

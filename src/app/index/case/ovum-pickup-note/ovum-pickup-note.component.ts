@@ -3,7 +3,7 @@ import { EmployeeService } from './../../../@Service/employee.service';
 import { DateService } from './../../../@Service/date.service';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { faClock, faList, faPerson, faFlask, faXmark } from '@fortawesome/free-solid-svg-icons';
+import { faClock, faList, faPerson } from '@fortawesome/free-solid-svg-icons';
 import { EmbryologistDto } from 'src/app/@Models/embryologistDto.model';
 import { MediumDto } from 'src/app/@Models/mediumDto.model';
 import { ManageMediumService } from 'src/app/@Service/manage-medium.service';
@@ -37,7 +37,7 @@ export class OvumPickupNoteComponent implements OnInit, OnDestroy {
         "coc_Grade2": new FormControl(0, [Validators.required, Validators.min(0)]),
         "coc_Grade1": new FormControl(0, [Validators.required, Validators.min(0)]),
       }),
-      "mediumInUse": new FormArray([new FormControl(null)]),
+      "mediumInUse": new FormArray([]),
       "embryologist": new FormControl("", Validators.required),
       "courseOfTreatmentId": new FormControl(this.commonService.getCourseOfTreatmentId(), Validators.required),
     });
@@ -49,9 +49,6 @@ export class OvumPickupNoteComponent implements OnInit, OnDestroy {
       this.mediums = this.manageMediumService.getRegularMedium(res);
     })
     this.manageMediumService.getInUseMediums();
-    this.manageMediumService.isOpenMediumForm.subscribe(res=>{
-      this.isOpenMediumForm = res;
-    })
     this.selectedMediumSubscription = this.manageMediumService.selectedMediums.subscribe(res=>{
       let formArray =<FormArray>(this.ovumPickupForm.get("mediumInUse"));
       this.manageMediumService.setupMediumFormArray(res, formArray);
@@ -65,31 +62,11 @@ export class OvumPickupNoteComponent implements OnInit, OnDestroy {
   faClock = faClock;
   faList = faList;
   faPerson = faPerson;
-  faFlask = faFlask;
-  faXmark = faXmark;
   mediums: MediumDto[] = [];
   isOpenMediumForm = false;
   formArray?:FormArray
-  getMediumInUseArray(){
-    if (this.formArray){
-      return this.formArray.controls;
-    }
-    else{
-      return null
-    }
-  }
+ 
   
-  onAddMedium(){
-    if (this.formArray){
-      this.manageMediumService.addMediumFormControl(this.formArray)
-    }
-  }
-  onOpenMedium(){
-    this.manageMediumService.isOpenMediumForm.next(true);
-  }
-  onDeleteMedium(index:number){
-    this.manageMediumService.deleteMediumFormControl(index);
-  }
   onSubmit(form: FormGroup){
     if ((this.formArray && this.formArray.controls.length <= 0) || this.manageMediumService.selectedMediumArray.length <= 0){
       this.commonService.showAlertMessage("", "請選擇培養液");

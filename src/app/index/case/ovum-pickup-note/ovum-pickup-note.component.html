@@ -60,21 +60,7 @@
     </div>
     <div class="row align-items-start">
         <div class="col-4">
-            <div class="d-flex justify-content-between align-items-end">
-                <div class="fs-5 fw-bold text-warning-emphasis"><fa-icon [icon]="faFlask" class="me-3"></fa-icon>選擇培養液
-                </div>
-                <button type="button" class="btn btn-outline-secondary btn-sm" (click)="onAddMedium()">增加培養液</button>
-                <button type="button" class="btn btn-outline-secondary btn-sm" (click)="onOpenMedium()">開封培養液</button>
-            </div>
-            <hr>
-            <div formArrayName="mediumInUse">
-                <div class="d-flex justify-content-start align-items-center"
-                    *ngFor="let arr of getMediumInUseArray(); let i = index">
-                    <app-medium-input [mediums]="mediums" [index]="i"></app-medium-input>
-                    <button type="button" class="border border-0 bg-transparent" (click)="onDeleteMedium(i)"><fa-icon [icon]="faXmark" class="text-danger"></fa-icon></button>
-                </div>
-            </div>
-            
+            <app-multiple-medium-input [mediums]="mediums"></app-multiple-medium-input>
         </div>
         <div class="col-4">
             <div class="fs-5 fw-bold text-warning-emphasis"><fa-icon [icon]="faPerson" class="me-3"></fa-icon>找卵胚胎師

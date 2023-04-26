@@ -28,18 +28,7 @@
                                 [value]="method.id">{{method.name}}</option>
                         </select>
                     </div>
-                    <div class="input-group mb-3">
-                        <span class="input-group-text">冷凍液</span>
-                        <select class="form-select" formControlName="freezeMedium"
-                            (change)="onSelectFreezeMedium($event)">
-                            <ng-container *ngIf="freezeMediums">
-                                <ng-container *ngIf="freezeMediums.length > 0">
-                                    <option *ngFor="let freezeMedium of freezeMediums"
-                                        [value]="freezeMedium.mediumInUseId">{{freezeMedium.name}}</option>
-                                </ng-container>
-                            </ng-container>
-                        </select>
-                    </div>
+                    <app-medium-input [name]="'冷凍液'" [mediums]="freezeMediums" [isMultiple]="false"></app-medium-input>
                     <div class="input-group mb-3" *ngIf="isSelectOtherMedium">
                         <span class="input-group-text">其他冷凍液</span>
                         <input type="text" class="form-control" formControlName="otherFreezeMediumName">
@@ -57,24 +46,7 @@
                         <span class="input-group-text">操作時間</span>
                         <input type="datetime-local" class="form-control" formControlName="freezeTime">
                     </div>
-                    <div class="fw-bold mb-3" formArrayName="mediumInUseArray">
-                        <div class="d-flex justify-content-between align-items-center mb-2">
-                            <div>選擇培養液:</div>
-                            <div>
-                                <button type="button" class="btn btn-outline-secondary btn-sm"
-                                    (click)="onAddMediumFormControl()">新增培養液</button>
-                                <button type="button" class="btn btn-outline-secondary btn-sm ms-2"
-                                    (click)="onOpenMedium()">開封培養液</button>
-                            </div>
-                        </div>
-                        <div class="d-flex justify-content-start align-items-center"
-                            *ngFor="let medium of getMediumInUseArray(); let i = index">
-                            <app-medium-input [mediums]="mediums" [index]="i"></app-medium-input>
-                            <button type="button" class="border border-0 bg-transparent"
-                                (click)="onDeleteMediumFormControl(i)"><fa-icon [icon]="faXmark"
-                                    class="text-danger"></fa-icon></button>
-                        </div>
-                    </div>
+                    <app-multiple-medium-input [mediums]="mediums"></app-multiple-medium-input>
                     <div class="d-flex justify-content-end">
                         <button class="btn btn-outline-primary btn-sm" type="button" (click)="onCancel()">取消</button>
                         <button class="btn btn-primary btn-sm ms-3" [disabled]="!freezeSpermForm.valid">送出</button>

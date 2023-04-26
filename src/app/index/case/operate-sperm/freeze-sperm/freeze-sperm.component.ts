@@ -22,13 +22,13 @@ import { StorageLocation } from 'src/app/@Models/storageLocation.model';
 export class FreezeSpermComponent implements OnInit, OnDestroy{
   constructor(private operateSpermService:OperateSpermService, private manageStorageService:ManageStorageService, private manageMediumService: ManageMediumService, private dateService:DateService, private employeeService: EmployeeService, private functionHeaderService:FunctionHeaderService, private commonService: CommonService){}
   ngOnDestroy(): void {
-    this.openMediumSubscription?.unsubscribe();
     this.mediumSubscription?.unsubscribe();
     this.selectedMediumSubscription?.unsubscribe();
     this.locationSubscription?.unsubscribe();
     this.manageMediumService.selectedMediumArray = []
   }
   ngOnInit(): void {
+    // console.log(this.manageMediumService.selectedMediumArray)
     const courseOfTreatmentId = this.commonService.getCourseOfTreatmentId();
     this.freezeSpermForm = new FormGroup({
       "courseOfTreatmentId": new FormControl(courseOfTreatmentId, Validators.required),
@@ -51,17 +51,19 @@ export class FreezeSpermComponent implements OnInit, OnDestroy{
     this.employeeService.getAllEmbryologist().subscribe(res=>{
       this.embryologists = res;
     })
-    this.openMediumSubscription = this.manageMediumService.isOpenMediumForm.subscribe(res=>{
-      this.isOpenMediumForm = res;
-    })
     this.selectedMediumSubscription = this.manageMediumService.selectedMediums.subscribe(res=>{
       this.manageMediumService.setupMediumFormArray(res, <FormArray>(this.freezeSpermForm.get("mediumInUseArray")))
     })
     this.locationSubscription = this.manageStorageService.selectedLocations.subscribe(res=>{
       this.selectedLocations = res;
     })
+    this.manageMediumService.selectedMedium.subscribe(res=>{
+      this.freezeSpermForm.patchValue({
+        "freezeMedium": res.mediumInUseId
+      })
+      this.isSelectOtherMedium = res.mediumTypeId === MediumTypeEnum.other ? true : false;
+    })
   }
-  openMediumSubscription?: Subscription;
   mediumSubscription?:Subscription;
   selectedMediumSubscription?:Subscription;
   locationSubscription?:Subscription;
@@ -78,28 +80,15 @@ export class FreezeSpermComponent implements OnInit, OnDestroy{
   vialCount = 0;
   isOpenMediumForm = false;
   selectedLocations: StorageLocation[] = [];
-  onOpenMedium(){
-    this.manageMediumService.isOpenMediumForm.next(true);
-  }
-  onDeleteMediumFormControl(index: number){
-    this.manageMediumService.deleteMediumFormControl(index);
-  }
-  onAddMediumFormControl(){
-    this.manageMediumService.addMediumFormControl(<FormArray>(this.freezeSpermForm.get("mediumInUseArray")))
-  }
+  
   onAddLocations(){
+    (<FormArray>(this.freezeSpermForm.get("storageUnitId"))).clear();
     this.selectedLocations.forEach(x=>{
       const locationFormControl = new FormControl(x.unitId, Validators.required);
       (<FormArray>(this.freezeSpermForm.get("storageUnitId"))).push(locationFormControl);
     })
   }
-  getMediumInUseArray(){
-    return (<FormArray>(this.freezeSpermForm.get("mediumInUseArray"))).controls;
-  }
-  onSelectFreezeMedium(event:any){
-    const index = this.freezeMediums.findIndex(x=>x.mediumInUseId === event.target.value);
-    this.isSelectOtherMedium = this.freezeMediums[index].mediumTypeId === MediumTypeEnum.other ? true : false;
-  }
+  
   onCancel(){
     this.functionHeaderService.isOpenSubfunction.next(null);
   }
@@ -118,6 +107,7 @@ export class FreezeSpermComponent implements OnInit, OnDestroy{
     form.patchValue({
       "spermFreezeOperationMethodId": +form.value.spermFreezeOperationMethodId
     })
+    // console.log(this.selectedLocations)
     this.operateSpermService.addSpermFreeze(form).subscribe(res=>{
       this.commonService.judgeTheResponse(res, "冷凍精蟲", res.errorMessage, form);
     })

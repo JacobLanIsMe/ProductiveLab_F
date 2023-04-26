@@ -47,6 +47,7 @@ import { SearchEmptyStorageUnitComponent } from './@shared/manage-storage/search
 import { OvumFreezeSummaryComponent } from './index/case/freezing-summary/ovum-freeze-summary/ovum-freeze-summary.component';
 import { SpermFreezeSummaryComponent } from './index/case/freezing-summary/sperm-freeze-summary/sperm-freeze-summary.component';
 import { ThawSpermComponent } from './index/case/operate-sperm/thaw-sperm/thaw-sperm.component';
+import { MultipleMediumInputComponent } from './@shared/manage-medium/multiple-medium-input/multiple-medium-input.component';
 
 
 @NgModule({
@@ -93,7 +94,8 @@ import { ThawSpermComponent } from './index/case/operate-sperm/thaw-sperm/thaw-s
     MediumInputComponent,
     OvumFreezeSummaryComponent,
     SpermFreezeSummaryComponent,
-    ThawSpermComponent
+    ThawSpermComponent,
+    MultipleMediumInputComponent
   ],
   imports: [
     BrowserModule,
