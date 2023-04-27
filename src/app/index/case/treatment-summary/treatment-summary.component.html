@@ -26,12 +26,11 @@
       <tr *ngFor="let ovum of treatmentSummarys">
         <td><input type="checkbox" [(ngModel)]="ovum.isChecked" (change)="onSelectOvum()"></td>
         <td>{{ovum.ovumNumber}}</td>
-        <td>{{ovum.ovumFromCourseOfTreatmentSqlId === ovum.courseOfTreatmentSqlId ? "自用" :
-          "借用"}}/{{ovum.ovumFromCourseOfTreatmentSqlId}}</td>
+        <td>{{ovum.ovumSource}}/{{ovum.ovumFromCourseOfTreatmentSqlId}}</td>
         <td>{{ovum.ovumPickupDetailStatus}}</td>
         <td>{{ovum.dateOfEmbryo}}</td>
         <td>
-          <span *ngIf="ovum.fertilizationStatus !== '未受精'">{{ovum.fertilizationStatus}}</span>
+          <span *ngIf="ovum.hasFertilization">已受精</span>
         </td>
         <td>{{ovum.observationNote}}</td>
 

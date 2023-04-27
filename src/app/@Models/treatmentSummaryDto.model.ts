@@ -6,8 +6,9 @@ export class TreatmentSummaryDto{
         public ovumPickupDetailStatus: string,
         public dateOfEmbryo: number,
         public ovumNumber: number,
-        public fertilizationStatus: string,
+        public hasFertilization: boolean,
         public observationNote: string,
+        public ovumSource: string,
         public isChecked: boolean
     ){}
 }

@@ -1,10 +1,97 @@
 <div class="alertContainer">
-    <div class="alertBox">
+    <div class="alertBox" style="overflow-y: auto;">
         <app-form-title [subfunction]="subfunction" [icon]="faHeart"></app-form-title>
+        <ng-container *ngIf="selectedOvumPickupDetails.length">
+            <div class="fw-bold">卵子資訊</div>
+            <table class="table table-hover">
+                <thead>
+                  <tr class="table-warning">
+                    <th>卵子編號</th>
+                    <th>療程編號</th>
+                    <th>卵子來源療程編號</th>
+                    <th>天數</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of selectedOvumPickupDetails">
+                    <th>{{item.ovumNumber}}</th>
+                    <td>{{item.courseOfTreatmentSqlId}}</td>
+                    <td>{{item.ovumFromCourseOfTreatmentSqlId}}</td>
+                    <td>{{item.dateOfEmbryo}}</td>
+                  </tr>
+                </tbody>
+            </table>
+        </ng-container>
+        <ng-container *ngIf="originOfSpermInfo">
+            <div class="fw-bold">精子來源資訊</div>
+            <table class="table table-hover">
+                <thead>
+                  <tr class="table-warning">
+                    <th>病歷號</th>
+                    <th>姓名</th>
+                    <th>生日</th>
+                    <th>精蟲狀態</th>
+                    <th>取經方式</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th>{{originOfSpermInfo.spermOwner.customerSqlId}}</th>
+                    <td>{{originOfSpermInfo.spermOwner.customerName}}</td>
+                    <td>{{originOfSpermInfo.spermOwner.birthday | date:"yyyy-MM-dd"}}</td>
+                    <td>{{originOfSpermInfo.spermSituationName}}</td>
+                    <td>{{originOfSpermInfo.spermRetrievalMethodName}}</td>
+                  </tr>
+                </tbody>
+            </table>
+        </ng-container>
+        <ng-container *ngIf="spermScores.length">
+            <table class="table table-hover mt-3" style="font-size:14px;">
+                <thead>
+                  <tr class="table-warning">
+                    <th scope="col">時間點</th>
+                    <th scope="col">禁慾天數</th>
+                    <th scope="col">體積</th>
+                    <th scope="col">濃度 (X10^6)</th>
+                    <th scope="col">活動力A</th>
+                    <th scope="col">活動力B</th>
+                    <th scope="col">活動力C</th>
+                    <th scope="col">活動力D</th>
+                    <th scope="col">型態</th>
+                    <th scope="col">處理者</th>
+                    <th scope="col">紀錄時間</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let score of spermScores">
+                    <td>{{score.spermScoreTimePoint}}</td>
+                    <td>{{score.abstinence}}</td>
+                    <td>{{score.volume}}</td>
+                    <td>{{score.concentration}}</td>
+                    <td>{{score.activityA}}</td>
+                    <td>{{score.activityB}}</td>
+                    <td>{{score.activityC}}</td>
+                    <td>{{score.activityD}}</td>
+                    <td>{{score.morphology}}</td>
+                    <td>{{score.embryologistName}}</td>
+                    <td>{{score.recordTime | date:"yyyy-MM-dd hh:mm:ss"}}</td>
+                  </tr>
+                </tbody>
+              </table>
+        </ng-container>
         <form [formGroup]="fertilisationForm" (ngSubmit)="onSubmit(fertilisationForm)">
             <div class="input-group mb-3">
                 <span class="input-group-text">受精時間</span>
                 <input type="datetime-local" class="form-control" formControlName="fertilisationTime">
+            </div>
+            <div class="input-group mb-3">
+                <span class="input-group-text">操作胚胎師</span>
+                <select class="form-select" formControlName="embryologist">
+                    <ng-container *ngIf="embryologists.length">
+                        <option *ngFor="let embryologist of embryologists" [value]="embryologist.employeeId">
+                            {{embryologist.name}}</option>
+                    </ng-container>
+                </select>
             </div>
             <div class="input-group mb-3">
                 <span class="input-group-text">受精方式</span>
@@ -31,7 +118,7 @@
             <app-multiple-medium-input [mediums]="mediums"></app-multiple-medium-input>
             <div class="d-flex justify-content-end align-items-center">
                 <button type="button" class="btn btn-outline-primary btn-sm" (click)="onCancel()">取消</button>
-                <button class="btn btn-primary btn-sm ms-3">確認受精</button>
+                <button class="btn btn-primary btn-sm ms-3" [disabled]="!fertilisationForm.valid">確認受精</button>
             </div>
         </form>
     </div>

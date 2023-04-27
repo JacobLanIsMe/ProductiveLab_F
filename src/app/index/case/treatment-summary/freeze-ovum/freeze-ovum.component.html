@@ -1,15 +1,15 @@
 <div class="alertContainer">
     <div class="alertBox" style="width:90vw;height:90vh;">
         <div class="d-flex justify-content-around h-100">
-            <div>
+            <div style="height:100%; overflow-y:auto;">
                 <app-search-empty-storage-unit [subfunction]="subfunction"></app-search-empty-storage-unit>
             </div>
             <div style="height:100%;overflow:auto;">
                 <div class="fs-5 fw-bold text-warning-emphasis" *ngIf="subfunction"><fa-icon [icon]="faSnowflake"
                         class="me-3"></fa-icon>{{subfunction.name}}</div>
                 <hr>
-                <ng-container *ngIf="selectedObservationNotes && selectedObservationNotes.length>0">
-                    <table class="table" style="font-size:0.5em;text-align:center;">
+                <ng-container *ngIf="selectedObservationNotes.length">
+                    <table class="table" style="font-size:0.5em;">
                         <thead>
                             <tr>
                                 <th scope="col">卵子No.</th>

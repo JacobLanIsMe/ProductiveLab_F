@@ -14,8 +14,6 @@ import { LocalStorageKey } from 'src/app/@Models/localStorageKey.model';
 })
 export class TreatmentSummaryComponent implements OnInit {
   constructor(private treatmentService: TreatmentService, private functionHeaderService: FunctionHeaderService){}
-  
-  
   ngOnInit(): void {
     const courseOfTreatmentId = localStorage.getItem(LocalStorageKey.courseOfTreatmentId);
     if (courseOfTreatmentId){
@@ -24,14 +22,7 @@ export class TreatmentSummaryComponent implements OnInit {
       })
     }
     this.functionHeaderService.isOpenSubfunction.subscribe(res=>{
-      this.treatmentService.selectedOvumPickupDetailIds.length = 0;
-      let selectedOvumPickupDetailIds: string[] = [];
-      this.treatmentSummarys.forEach(x=>{
-        if (x.isChecked === true){
-          selectedOvumPickupDetailIds.push(x.ovumPickupDetailId);
-        }
-      })
-      this.treatmentService.selectedOvumPickupDetailIds = selectedOvumPickupDetailIds;
+      this.treatmentService.selectedOvumPickupDetails = this.treatmentSummarys.filter(x=>x.isChecked);
       this.isOpenSubFunction = res;
     })
     this.treatmentService.treatmentSummary.subscribe(res=>{

@@ -29,6 +29,7 @@ export class FreezeOvumComponent implements OnInit,OnDestroy {
     this.mediumSubscription?.unsubscribe();
     this.openMediumFormSubscription?.unsubscribe();
     this.locationSubscription?.unsubscribe();
+    this.treatmentService.selectedOvumPickupDetails.length = 0;
   }
   ngOnInit(): void {
     this.freezeOvumForm = new FormGroup({
@@ -48,7 +49,8 @@ export class FreezeOvumComponent implements OnInit,OnDestroy {
       this.mediums=this.manageMediumService.getOvumFreezeAndOtherMediun(res);
     })
     this.manageMediumService.getUpdatedInUseMediums();
-    this.observationNoteService.getFreezeObservationNotes(this.treatmentService.selectedOvumPickupDetailIds).subscribe(res=>{
+    const selectedOvumPickupDetailIds = this.treatmentService.selectedOvumPickupDetails.map(x=>x.ovumPickupDetailId)
+    this.observationNoteService.getFreezeObservationNotes(selectedOvumPickupDetailIds).subscribe(res=>{
       this.selectedObservationNotes = res;
     });
     this.employeeService.getAllEmbryologist().subscribe(res=>{
@@ -76,7 +78,7 @@ export class FreezeOvumComponent implements OnInit,OnDestroy {
   isOpenMediumForm = false;
   isChooseOtherMedium = false;
   selectedLocations: StorageLocation[] = [];
-  selectedObservationNotes?: GetObservationNoteNameDto[];
+  selectedObservationNotes: GetObservationNoteNameDto[] = [];
   onSelectMedium(event:any){
     const selectedMedium = this.mediums.filter(x=>x.mediumInUseId === event.target.value);
     if (selectedMedium.length>0){
@@ -99,11 +101,11 @@ export class FreezeOvumComponent implements OnInit,OnDestroy {
     }
   }
   addOvumPickupDetailId(){
-    if (this.treatmentService.selectedOvumPickupDetailIds.length > 0 && this.treatmentService.selectedOvumPickupDetailIds.length <= 4){
+    if (this.treatmentService.selectedOvumPickupDetails.length > 0 && this.treatmentService.selectedOvumPickupDetails.length <= 4){
       const formArray = <FormArray>(this.freezeOvumForm.get("ovumPickupDetailId"));
       formArray.clear();
-      this.treatmentService.selectedOvumPickupDetailIds.forEach(x=>{
-        const formControl = new FormControl(x, Validators.required);
+      this.treatmentService.selectedOvumPickupDetails.forEach(x=>{
+        const formControl = new FormControl(x.ovumPickupDetailId, Validators.required);
         formArray.push(formControl);
       }) 
       return true;

@@ -95,7 +95,6 @@ export class ThawSpermComponent implements OnInit, OnDestroy {
       this.commonService.showAlertMessage("", "請選擇要解凍的精蟲");
       return;
     }
-    console.log(form.value);
     this.operateSpermService.addSpermThaw(form).subscribe(res=>{
       this.commonService.judgeTheResponse(res, "解凍精子", res.errorMessage, form);
     })
