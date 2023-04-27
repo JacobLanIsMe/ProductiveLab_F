@@ -4,14 +4,14 @@
     left:-150px;
     top:100px;
     z-index:1;
-    transition: left 1s
+    transition: left .5s
 }
 .functionHeaderFrame:hover{
     position:fixed;
     background-color: white;
     left:0px;
     top:100px;
-    transition: left 1s
+    transition: left .8s
 }
 .functionHeaderDiv{
     border-right:1px solid lightgray;
@@ -20,6 +20,7 @@
     border-radius: 10px;
     width:150px;
     padding: 10px;
+    box-shadow: 0 0 10px lightgray;
 }
 .showFunctionHeaderDiv{
     margin-left:5px;

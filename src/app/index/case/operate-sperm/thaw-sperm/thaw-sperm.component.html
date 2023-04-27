@@ -1,7 +1,6 @@
 <div class="alertContainer">
     <div class="alertBox" style="max-height:90vh;overflow-y: auto;">
-        <div class="fs-5 fw-bold text-warning-emphasis mb-3"><fa-icon [icon]="faListCheck" class="me-3"></fa-icon>解凍精蟲
-        </div>
+        <app-form-title *ngIf="subfunction" [subfunction]="subfunction" [icon]="faListCheck">{{subfunction.name}}</app-form-title>
         <div class="d-flex justify-content-start align-items-center mb-2">
             <div class="me-3 fw-bold">精蟲來源</div>
             <div class="me-3"><span class="fw-bold me-2">病歷號:</span><span>{{spermOwnerSqlId}}</span></div>
@@ -40,7 +39,7 @@
         </table>
         <form [formGroup]="thawSpermForm" (ngSubmit)="onSubmit(thawSpermForm)">
             <div class="input-group mb-3">
-                <span class="input-group-text">操作時間</span>
+                <span class="input-group-text">解凍時間</span>
                 <input type="datetime-local" class="form-control" formControlName="thawTime">
             </div>
             <div class="input-group mb-3">

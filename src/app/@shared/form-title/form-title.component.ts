@@ -8,6 +8,7 @@ import { FunctionDto } from 'src/app/@Models/functionDto.model';
   styleUrls: ['./form-title.component.css']
 })
 export class FormTitleComponent {
-  @Input() subfunction: FunctionDto|null = null;
+  @Input() subfunction: FunctionDto | null = null;
   @Input() icon: IconProp | null = null;
+  @Input() formTitle?: string;
 }

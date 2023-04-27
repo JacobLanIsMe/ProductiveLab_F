@@ -4,4 +4,4 @@
 
 <app-score-sperm *ngIf="isOpenSubfunction && isOpenSubfunction.functionId !== 22 && isOpenSubfunction.functionId !== 25" [subfunction]="isOpenSubfunction"></app-score-sperm>
 <app-freeze-sperm *ngIf="isOpenSubfunction && isOpenSubfunction.functionId === 22"></app-freeze-sperm>
-<app-thaw-sperm *ngIf="isOpenSubfunction && isOpenSubfunction.functionId === 25"></app-thaw-sperm>
+<app-thaw-sperm *ngIf="isOpenSubfunction && isOpenSubfunction.functionId === 25" [subfunction]="isOpenSubfunction"></app-thaw-sperm>

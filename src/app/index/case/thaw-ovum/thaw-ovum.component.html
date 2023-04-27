@@ -1,1 +1,6 @@
 <app-base-treatment-info></app-base-treatment-info>
+
+<app-title [icon]="faListCheck" [title]="'解凍卵子'"></app-title>
+<hr>
+
+<app-thaw-ovum-embryo-form [functionName]="'解凍卵子'" *ngIf="isOpenThawOvumForm"></app-thaw-ovum-embryo-form>

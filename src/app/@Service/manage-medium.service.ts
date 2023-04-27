@@ -65,6 +65,9 @@ export class ManageMediumService implements OnDestroy {
       formArray.push(new FormControl(x.mediumInUseId));
     })
   }
+  setupMediumFormControl(medium: MediumDto, formControl:FormControl){
+    formControl.patchValue(medium.mediumInUseId);
+  }
   overlayRef?: OverlayRef;
   showMediumInfoSubscription?: Subscription;
   openShowMediumInfo(origin: ElementRef, mediums: MediumDto[], index: number, isMultiple: boolean) {

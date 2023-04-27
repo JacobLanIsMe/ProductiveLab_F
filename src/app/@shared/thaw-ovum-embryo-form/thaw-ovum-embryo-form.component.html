@@ -1,0 +1,35 @@
+<div class="alertContainer">
+    <div class="alertBox">
+        <app-form-title [icon]="faListCheck" [formTitle]="functionName"></app-form-title>
+        <form [formGroup]="thawOvumForm" (ngSubmit)="onSubmit(thawOvumForm)">
+            <div class="input-group mb-3">
+                <span class="input-group-text">解凍時間</span>
+                <input type="datetime-local" class="form-control" formControlName="thawTime">
+            </div>
+            <div class="input-group mb-3">
+                <span class="input-group-text">解凍者</span>
+                <select class="form-select" formControlName="embryologist">
+                    <ng-container *ngIf="embryologists.length">
+                        <option *ngFor="let embryologist of embryologists" [value]="embryologist.employeeId">
+                            {{embryologist.name}}</option>
+                    </ng-container>
+                </select>
+            </div>
+            <app-medium-input [mediums]="thawMediums" [isMultiple]="false" [name]="'解凍液'"></app-medium-input>
+            <div class="input-group mb-3">
+                <span class="input-group-text">覆核者</span>
+                <select class="form-select" formControlName="recheckEmbryologist">
+                    <ng-container *ngIf="embryologists.length">
+                        <option *ngFor="let embryologist of embryologists" [value]="embryologist.employeeId">
+                            {{embryologist.name}}</option>
+                    </ng-container>
+                </select>
+            </div>
+            <app-multiple-medium-input [mediums]="mediums"></app-multiple-medium-input>
+            <div class="d-flex justify-content-end align-items-center">
+                <button type="button" class="btn btn-outline-primary btn-sm">取消</button>
+                <button class="btn btn-primary btn-sm ms-3">確認解凍</button>
+            </div>
+        </form>
+    </div>
+</div>

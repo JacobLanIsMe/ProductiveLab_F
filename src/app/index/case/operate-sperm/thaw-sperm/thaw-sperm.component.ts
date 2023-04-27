@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { SpermFreezeDto } from 'src/app/@Models/spermFreezeDto.model';
 import { CommonService } from 'src/app/@Service/common.service';
 import { FunctionHeaderService } from 'src/app/@Service/function-header.service';
@@ -13,6 +13,7 @@ import { SpermThawMethodEnum } from 'src/app/@Enums/spermThawMethodEnum.model';
 import { ManageMediumService } from 'src/app/@Service/manage-medium.service';
 import { MediumDto } from 'src/app/@Models/mediumDto.model';
 import { Subscription } from 'rxjs';
+import { FunctionDto } from 'src/app/@Models/functionDto.model';
 @Component({
   selector: 'app-thaw-sperm',
   templateUrl: './thaw-sperm.component.html',
@@ -56,6 +57,7 @@ export class ThawSpermComponent implements OnInit, OnDestroy {
       this.manageMediumService.setupMediumFormArray(res, <FormArray>(this.thawSpermForm.get("mediumInUseIds")))
     })
   }
+  @Input() subfunction: FunctionDto|null = null;
   updatedMediumSubscription?:Subscription;
   selectedMediumSubscription?:Subscription;
   thawSpermForm!: FormGroup;
