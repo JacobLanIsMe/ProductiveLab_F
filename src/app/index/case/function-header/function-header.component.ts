@@ -20,4 +20,10 @@ export class FunctionHeaderComponent implements OnInit {
   }
   functions: FunctionDto[] = [];
   courseId: string ="";
+  onMouseEnter(event:any){
+    event.target.classList.add('mouseEnter');
+  }
+  onMouseLeave(event:any){
+    event.target.classList.remove('mouseEnter');
+  }
 }

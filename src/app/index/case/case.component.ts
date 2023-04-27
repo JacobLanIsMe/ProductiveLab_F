@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { faCaretLeft, faCaretRight } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-case',
@@ -6,5 +7,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./case.component.css']
 })
 export class CaseComponent {
-
+  faCaretLeft = faCaretLeft;
+  faCaretRight = faCaretRight;
 }

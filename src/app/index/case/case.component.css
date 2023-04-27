@@ -1,4 +1,28 @@
-.case-frame{
-    width:95vw;
-    margin: 0 auto;
+.functionHeaderFrame{
+    position:fixed;
+    background-color: white;
+    left:-150px;
+    top:100px;
+    z-index:1;
+    transition: left 1s
+}
+.functionHeaderFrame:hover{
+    position:fixed;
+    background-color: white;
+    left:0px;
+    top:100px;
+    transition: left 1s
+}
+.functionHeaderDiv{
+    border-right:1px solid lightgray;
+    border-top:1px solid lightgray;
+    border-bottom:1px solid lightgray;
+    border-radius: 10px;
+    width:150px;
+    padding: 10px;
+}
+.showFunctionHeaderDiv{
+    margin-left:5px;
+    height:50px;
+    border: 1px black solid;
 }

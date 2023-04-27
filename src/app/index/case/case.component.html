@@ -1,8 +1,10 @@
-<div class="d-flex justify-content-between align-items-start">
-    <div style="width:10%;padding-right:20px;position:sticky;top:100px">
-        <app-function-header></app-function-header>
+
+    <div class="functionHeaderFrame d-flex justify-content-start align-items-center">
+        <div class="functionHeaderDiv">
+            <app-function-header></app-function-header>
+        </div>
+        <div class="showFunctionHeaderDiv"></div>
     </div>
-    <div style="width:90%;">
+    <div>
         <router-outlet></router-outlet>
     </div>
-</div>
