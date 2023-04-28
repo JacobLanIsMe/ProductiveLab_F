@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { GetOvumFreezeSummaryDto } from 'src/app/@Models/getOvumFreezeSummaryDto.model';
+import { FreezeSummaryService } from 'src/app/@Service/freeze-summary.service';
 
 @Component({
   selector: 'app-ovum-bank-transfer',
@@ -6,8 +8,22 @@ import { Component } from '@angular/core';
   styleUrls: ['./ovum-bank-transfer.component.css']
 })
 export class OvumBankTransferComponent {
+  constructor(private freezeSummaryService:FreezeSummaryService){}
   keyword?: string;
-  onSubmit(submitKeyword:any){
-    console.log(submitKeyword)
+  donorOvumFreezes: GetOvumFreezeSummaryDto[] = [];
+  searchResult?: string;
+  onSearch(){
+    this.freezeSummaryService.getDonorOvumFreezes(Number(this.keyword)).subscribe(res=>{
+      if (res.length){
+        this.searchResult = undefined;
+        this.donorOvumFreezes = res;
+      }
+      else{
+        this.searchResult = "查無此病歷號的冷凍卵子";
+      }
+    })
+  }
+  onSelectedDonorOvumFreezes(event:GetOvumFreezeSummaryDto[]){
+    this.freezeSummaryService.selectedDonorOvumFreezeArray = event
   }
 }

@@ -50,6 +50,7 @@ import { MultipleMediumInputComponent } from './@shared/manage-medium/multiple-m
 import { FormTitleComponent } from './@shared/form-title/form-title.component';
 import { FertilisationComponent } from './index/case/treatment-summary/fertilisation/fertilisation.component';
 import { ThawOvumEmbryoFormComponent } from './@shared/thaw-ovum-embryo-form/thaw-ovum-embryo-form.component';
+import { OvumFreezeTableComponent } from './@shared/ovum-freeze-table/ovum-freeze-table.component';
 
 
 @NgModule({
@@ -99,7 +100,8 @@ import { ThawOvumEmbryoFormComponent } from './@shared/thaw-ovum-embryo-form/tha
     MultipleMediumInputComponent,
     FormTitleComponent,
     FertilisationComponent,
-    ThawOvumEmbryoFormComponent
+    ThawOvumEmbryoFormComponent,
+    OvumFreezeTableComponent
   ],
   imports: [
     BrowserModule,

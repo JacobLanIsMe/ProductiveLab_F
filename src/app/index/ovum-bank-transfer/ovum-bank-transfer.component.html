@@ -1,11 +1,11 @@
-<form #searchForm="ngForm" (ngSubmit)="onSubmit(searchForm.value)" class="mb-3">
-    <div class="w-25 d-flex justify-content-between align-items-center">
-        <div class="input-group w-75">
-            <span class="input-group-text">病歷號</span>
-            <input type="text" class="form-control" [(ngModel)]="keyword" name="keyword">
-        </div>
-        <div class="">
-            <button class="btn btn-primary btn-sm">搜尋</button>
-        </div>
+<div class="w-25 d-flex justify-content-between align-items-center mb-3">
+    <div class="input-group w-75">
+        <span class="input-group-text">病歷號</span>
+        <input type="text" class="form-control" [(ngModel)]="keyword">
     </div>
-</form>
+    <div class="">
+        <button type="button" class="btn btn-primary btn-sm" (click)="onSearch()">搜尋</button>
+    </div>
+</div>
+<div class="mb-3">{{searchResult}}</div>
+<app-ovum-freeze-table [ovumFreezes]="donorOvumFreezes" (selectedOvumFreezes)="onSelectedDonorOvumFreezes($event)"></app-ovum-freeze-table>

@@ -1,0 +1,60 @@
+<table class="table" *ngIf="ovumFreezes.length">
+    <thead>
+        <tr>
+            <th>
+                <div class="d-flex justify-content-center align-items-center">
+                    <div class="me-1">全選</div>
+                    <input type="checkbox" (click)="onSelectAllOvum($event)" [(ngModel)]="isAllOvumChecked">
+                </div>
+            </th>
+            <th>療程編號</th>
+            <th>卵子編號</th>
+            <th>取卵日</th>
+            <th>冷凍日期</th>
+            <th>冷凍天數</th>
+            <th>卵子等級</th>
+            <th>卵子異常</th>
+            <th>照片</th>
+            <th>冷凍液</th>
+            <th>Tank</th>
+            <th>Canist</th>
+            <th>Stript</th>
+            <th>Top編號</th>
+            <th>Top顏色</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let item of ovumFreezes">
+            <td>
+                <input type="checkbox"
+                    (change)="onSelectOneOvum($event, item.freezeStorageInfo.unitInfo.storageUnitId)"
+                    [(ngModel)]="item.isChecked">
+            </td>
+            <th>{{item.courseOfTreatmentSqlId}}</th>
+            <td>No.{{item.ovumNumber}}</td>
+            <td>{{item.ovumPickupTime | date:"yyyy-MM-dd" }}</td>
+            <td>{{item.freezeTime | date:"yyyy-MM-dd"}}</td>
+            <td>Day:{{item.freezeObservationNoteInfo.day}}</td>
+            <td>{{item.freezeObservationNoteInfo.ovumMaturationName}}</td>
+            <td>
+                <div *ngFor="let abnormality of item.freezeObservationNoteInfo.ovumAbnormalityName">
+                    {{abnormality}}
+                </div>
+            </td>
+            <th>
+                <div class="m-auto d-flex justify-content-center align-items-center"
+                    style="width:50px;aspect-ratio:1/1;"
+                    *ngIf="item.freezeObservationNoteInfo.observationNotePhotos.length>0">
+                    <img [src]="'data:image/gif;base64,' + item.freezeObservationNoteInfo.observationNotePhotos[0].imageBase64String"
+                        style="max-width:100%;max-height:100%;">
+                </div>
+            </th>
+            <td>{{item.medium}}</td>
+            <td>{{item.freezeStorageInfo.tankInfo.tankName}}</td>
+            <td>{{item.freezeStorageInfo.canistName}}</td>
+            <td>{{item.freezeStorageInfo.stripBoxId}}</td>
+            <td>{{item.freezeStorageInfo.unitInfo.unitName}}</td>
+            <td>{{item.freezeStorageInfo.topColorName}}</td>
+        </tr>
+    </tbody>
+</table>
