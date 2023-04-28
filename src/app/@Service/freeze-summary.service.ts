@@ -23,4 +23,16 @@ export class FreezeSummaryService {
       params: new HttpParams().append("courseOfTreatmentId", courseOfTreatmentId)
     })
   }
+  getRecipientOvumFreezes(courseOfTreatmentId:string){
+    return this.http.get<GetOvumFreezeSummaryDto[]>("/api/FreezeSummary/GetRecipientOvumFreezes", {
+      params: new HttpParams().append("courseOfTreatmentId", courseOfTreatmentId)
+    })
+  }
+  checkOvumsOnSameTop(event:any, storageUnitId:number,freezeSummaryArray:GetOvumFreezeSummaryDto[]){
+    freezeSummaryArray.forEach(x=>{
+      if (x.freezeStorageInfo.unitInfo.storageUnitId === storageUnitId){
+        x.isChecked = event.target.checked
+      }
+    })
+  }
 }

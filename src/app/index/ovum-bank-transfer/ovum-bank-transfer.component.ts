@@ -6,5 +6,8 @@ import { Component } from '@angular/core';
   styleUrls: ['./ovum-bank-transfer.component.css']
 })
 export class OvumBankTransferComponent {
-
+  keyword?: string;
+  onSubmit(submitKeyword:any){
+    console.log(submitKeyword)
+  }
 }

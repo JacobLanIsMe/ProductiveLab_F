@@ -30,18 +30,9 @@ export class OvumFreezeSummaryComponent implements OnInit {
       x.isChecked = event.target.checked;
     })
   }
-  onSelectOneOvum(event:any, unitId:number){
-    this.ovumFreezeSummary.forEach(x=>{
-      if (x.freezeStorageInfo.unitInfo.storageUnitId === unitId){
-        x.isChecked = event.target.checked;
-      }
-    })
-    const index = this.ovumFreezeSummary.findIndex(x=>x.isChecked === false);
-    if (index !== -1){
-      this.isAllOvumChecked = false;
-    }
-    else{
-      this.isAllOvumChecked = true;
-    }
+  onSelectOneOvum(event:any, storageUnitId:number){
+    this.freezeSummaryService.checkOvumsOnSameTop(event, storageUnitId, this.ovumFreezeSummary)
+    const index = this.ovumFreezeSummary.findIndex(x=>x.isChecked === false);  
+    this.isAllOvumChecked = index === -1 ? true : false;
   }
 }

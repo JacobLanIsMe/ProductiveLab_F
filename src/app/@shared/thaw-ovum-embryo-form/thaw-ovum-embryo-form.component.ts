@@ -6,6 +6,7 @@ import { EmbryologistDto } from 'src/app/@Models/embryologistDto.model';
 import { MediumDto } from 'src/app/@Models/mediumDto.model';
 import { DateService } from 'src/app/@Service/date.service';
 import { EmployeeService } from 'src/app/@Service/employee.service';
+import { FunctionHeaderService } from 'src/app/@Service/function-header.service';
 import { ManageMediumService } from 'src/app/@Service/manage-medium.service';
 @Component({
   selector: 'app-thaw-ovum-embryo-form',
@@ -13,7 +14,7 @@ import { ManageMediumService } from 'src/app/@Service/manage-medium.service';
   styleUrls: ['./thaw-ovum-embryo-form.component.css']
 })
 export class ThawOvumEmbryoFormComponent implements OnInit, OnDestroy {
-  constructor(private dateService:DateService, private employeeService:EmployeeService, private manageMediumService:ManageMediumService){}
+  constructor(private dateService:DateService, private employeeService:EmployeeService, private manageMediumService:ManageMediumService, private functionHeaderService:FunctionHeaderService){}
   ngOnDestroy(): void {
     this.thawMediumSubscription?.unsubscribe();
     this.updatedInUseMediumSubscription?.unsubscribe();
@@ -53,6 +54,9 @@ export class ThawOvumEmbryoFormComponent implements OnInit, OnDestroy {
   embryologists: EmbryologistDto[] = [];
   thawMediums: MediumDto[] = [];
   mediums:MediumDto[] = [];
+  onCancel(){
+    this.functionHeaderService.isOpenSubfunction.next(null);
+  }
   onSubmit(form:FormGroup){
     console.log(form.value);
   }
