@@ -11,8 +11,6 @@ export class FreezeSummaryService {
 
   constructor(private http:HttpClient) { }
   ovumFreezeSummary = new Subject<GetOvumFreezeSummaryDto[]>();
-  // selectedRecipientOvumFreezes = new Subject<GetOvumFreezeSummaryDto[]>();
-  // selectedDonorOvumFreezes = new Subject<GetOvumFreezeSummaryDto[]>();
   selectedRecipientOvumFreezeArray: GetOvumFreezeSummaryDto[] = [];
   selectedDonorOvumFreezeArray: GetOvumFreezeSummaryDto[] = [];
   getOvumFreezeSummary(courseOfTreatmentId:string){

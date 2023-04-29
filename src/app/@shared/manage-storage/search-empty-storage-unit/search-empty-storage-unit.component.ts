@@ -9,7 +9,6 @@ import { BaseCustomerInfoDto } from 'src/app/@Models/baseCustomerInfoDto.model';
 import { TreatmentService } from 'src/app/@Service/treatment.service';
 import { FunctionDto } from 'src/app/@Models/functionDto.model';
 import { OvumFreezeStorageDto } from 'src/app/@Models/ovumFreezeStorageDto.model';
-import { StorageUnitDto } from 'src/app/@Models/storageUnitDto.model';
 
 @Component({
   selector: 'app-search-empty-storage-unit',

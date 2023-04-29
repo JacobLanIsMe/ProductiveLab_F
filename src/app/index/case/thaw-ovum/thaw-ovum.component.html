@@ -1,16 +1,20 @@
 <app-base-treatment-info></app-base-treatment-info>
 <div class="d-flex justify-content-between align-items-center">
     <app-title [icon]="faListCheck" [title]="'解凍卵子-選擇自己的冷凍卵子'"></app-title>
-    <app-subfunction-header></app-subfunction-header>
+    <app-subfunction-header [subfunctions]="thawOvumSubfunctions"></app-subfunction-header>
 </div>
 <hr>
 <div style="width:100%;overflow-x:auto;">
     <app-ovum-freeze-table [ovumFreezes]="recipientOvumFreezes" (selectedOvumFreezes)="onSelectedRecipientOvumFreezes($event)"></app-ovum-freeze-table>
     
 </div>
-<app-title [icon]="faListCheck" [title]="'解凍卵子-從精卵庫選擇'"></app-title>
+<div class="d-flex justify-content-between align-items-center">
+    <app-title [icon]="faListCheck" [title]="'解凍卵子-從精卵庫選擇'"></app-title>
+    <app-subfunction-header [subfunctions]="ovumTransferSubfunctions"></app-subfunction-header>
+</div>
+
 <hr>
 <app-ovum-bank-transfer></app-ovum-bank-transfer>
 
 
-<app-thaw-ovum-embryo-form [functionName]="'解凍卵子'" *ngIf="openSubfunction"></app-thaw-ovum-embryo-form>
+<app-thaw-ovum-embryo-form [functionName]="'解凍卵子'" *ngIf="openSubfunction && openSubfunction.functionId === 31"></app-thaw-ovum-embryo-form>

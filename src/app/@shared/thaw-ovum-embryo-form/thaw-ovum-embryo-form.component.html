@@ -1,6 +1,26 @@
 <div class="alertContainer">
     <div class="alertBox">
         <app-form-title [icon]="faListCheck" [formTitle]="functionName"></app-form-title>
+        <table class="table table-hover" *ngIf="selectedRecipientOvumFreezes.length">
+            <thead>
+                <tr class="table-warning">
+                    <th>療程編號</th>
+                    <th>卵子編號</th>
+                    <th>Strip</th>
+                    <th>Top編號</th>
+                    <th>Top顏色</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of selectedRecipientOvumFreezes">
+                    <th>{{item.courseOfTreatmentSqlId}}</th>
+                    <td>{{item.ovumNumber}}</td>
+                    <td>{{item.freezeStorageInfo.stripBoxId}}</td>
+                    <td>{{item.freezeStorageInfo.unitInfo.storageUnitId}}</td>
+                    <td>{{item.freezeStorageInfo.topColorName}}</td>
+                </tr>
+            </tbody>
+        </table>
         <form [formGroup]="thawOvumForm" (ngSubmit)="onSubmit(thawOvumForm)">
             <div class="input-group mb-3">
                 <span class="input-group-text">解凍時間</span>

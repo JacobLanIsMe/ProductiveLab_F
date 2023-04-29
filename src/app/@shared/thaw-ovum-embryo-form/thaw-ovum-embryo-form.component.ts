@@ -3,9 +3,12 @@ import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { faListCheck } from '@fortawesome/free-solid-svg-icons';
 import { Subscription } from 'rxjs';
 import { EmbryologistDto } from 'src/app/@Models/embryologistDto.model';
+import { GetOvumFreezeSummaryDto } from 'src/app/@Models/getOvumFreezeSummaryDto.model';
 import { MediumDto } from 'src/app/@Models/mediumDto.model';
+import { CommonService } from 'src/app/@Service/common.service';
 import { DateService } from 'src/app/@Service/date.service';
 import { EmployeeService } from 'src/app/@Service/employee.service';
+import { FreezeSummaryService } from 'src/app/@Service/freeze-summary.service';
 import { FunctionHeaderService } from 'src/app/@Service/function-header.service';
 import { ManageMediumService } from 'src/app/@Service/manage-medium.service';
 @Component({
@@ -14,7 +17,7 @@ import { ManageMediumService } from 'src/app/@Service/manage-medium.service';
   styleUrls: ['./thaw-ovum-embryo-form.component.css']
 })
 export class ThawOvumEmbryoFormComponent implements OnInit, OnDestroy {
-  constructor(private dateService:DateService, private employeeService:EmployeeService, private manageMediumService:ManageMediumService, private functionHeaderService:FunctionHeaderService){}
+  constructor(private dateService:DateService, private employeeService:EmployeeService, private manageMediumService:ManageMediumService, private functionHeaderService:FunctionHeaderService, private freezeSummaryService:FreezeSummaryService, private commonService:CommonService){}
   ngOnDestroy(): void {
     this.thawMediumSubscription?.unsubscribe();
     this.updatedInUseMediumSubscription?.unsubscribe();
@@ -25,9 +28,11 @@ export class ThawOvumEmbryoFormComponent implements OnInit, OnDestroy {
     this.thawOvumForm = new FormGroup({
       "thawTime": new FormControl(this.dateService.getTodayDateTimeString(new Date()), Validators.required),
       "embryologist": new FormControl(null, Validators.required),
-      "thawMedium": new FormControl(null, Validators.required),
+      "thawMediumInUseId": new FormControl(null, Validators.required),
       "recheckEmbryologist": new FormControl(null, Validators.required),
-      "mediumInUseIds": new FormArray([])
+      "mediumInUseIds": new FormArray([]),
+      "freezeOvumPickupDetailIds":new FormArray([]),
+      "courseOfTreatmentId":new FormControl(this.commonService.getCourseOfTreatmentId(), Validators.required)
     })
     this.employeeService.getAllEmbryologist().subscribe(res=>{
       this.embryologists = res;
@@ -38,7 +43,7 @@ export class ThawOvumEmbryoFormComponent implements OnInit, OnDestroy {
     })
     this.manageMediumService.getUpdatedInUseMediums();
     this.thawMediumSubscription = this.manageMediumService.selectedMedium.subscribe(res=>{
-      this.manageMediumService.setupMediumFormControl(res, <FormControl>(this.thawOvumForm.get("thawMedium")))
+      this.manageMediumService.setupMediumFormControl(res, <FormControl>(this.thawOvumForm.get("thawMediumInUseId")))
     })
     this.mediumSubscription = this.manageMediumService.selectedMediums.subscribe(res=>{
       this.manageMediumService.setupMediumFormArray(res, <FormArray>(this.thawOvumForm.get("mediumInUseIds")))
@@ -49,7 +54,7 @@ export class ThawOvumEmbryoFormComponent implements OnInit, OnDestroy {
   updatedInUseMediumSubscription?:Subscription;
   mediumSubscription?:Subscription;
   thawOvumForm!: FormGroup;
-  
+  selectedRecipientOvumFreezes: GetOvumFreezeSummaryDto[] = this.freezeSummaryService.selectedRecipientOvumFreezeArray;
   faListCheck = faListCheck;
   embryologists: EmbryologistDto[] = [];
   thawMediums: MediumDto[] = [];
@@ -58,6 +63,9 @@ export class ThawOvumEmbryoFormComponent implements OnInit, OnDestroy {
     this.functionHeaderService.isOpenSubfunction.next(null);
   }
   onSubmit(form:FormGroup){
+    this.freezeSummaryService.selectedRecipientOvumFreezeArray.forEach(x=>{
+      (<FormArray>(this.thawOvumForm.get("freezeOvumPickupDetailIds"))).push(new FormControl(x.freezeObservationNoteInfo.ovumPickupDetailId))
+    })
     console.log(form.value);
   }
 }

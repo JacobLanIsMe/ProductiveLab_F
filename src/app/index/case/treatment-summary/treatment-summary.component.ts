@@ -6,6 +6,7 @@ import { faTable } from '@fortawesome/free-solid-svg-icons';
 import { FunctionHeaderService } from 'src/app/@Service/function-header.service';
 import { FunctionDto } from 'src/app/@Models/functionDto.model';
 import { LocalStorageKey } from 'src/app/@Models/localStorageKey.model';
+import { FunctionEnum } from 'src/app/@Enums/functionEnum.model';
 
 @Component({
   selector: 'app-treatment-summary',
@@ -21,6 +22,9 @@ export class TreatmentSummaryComponent implements OnInit {
         this.treatmentSummarys = res;
       })
     }
+    this.functionHeaderService.getSubfunctions(FunctionEnum.treatmentSummary).subscribe(res=>{
+      this.subfunctions = res;
+    })
     this.functionHeaderService.isOpenSubfunction.subscribe(res=>{
       this.treatmentService.selectedOvumPickupDetails = this.treatmentSummarys.filter(x=>x.isChecked);
       this.isOpenSubFunction = res;
@@ -35,6 +39,7 @@ export class TreatmentSummaryComponent implements OnInit {
   isSelectAll: boolean = false;
   faTable = faTable;
   isOpenSubFunction: FunctionDto | null = null;
+  subfunctions:FunctionDto[]=[];
   onSelectAll(event: any){
     if (event.target.checked){
       this.treatmentSummarys.forEach(x=>{

@@ -1,7 +1,7 @@
-import { SubfunctionHeaderComponent } from './../../../@shared/subfunction-header/subfunction-header.component';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { faListCheck } from '@fortawesome/free-solid-svg-icons';
 import { Subscription } from 'rxjs';
+import { FunctionEnum } from 'src/app/@Enums/functionEnum.model';
 import { FunctionDto } from 'src/app/@Models/functionDto.model';
 import { GetOvumFreezeSummaryDto } from 'src/app/@Models/getOvumFreezeSummaryDto.model';
 import { CommonService } from 'src/app/@Service/common.service';
@@ -27,13 +27,15 @@ export class ThawOvumComponent implements OnInit, OnDestroy {
         this.recipientOvumFreezes = res;
       })
     }
+    this.functionHeaderService.getSubfunctions(FunctionEnum.thawOvum).subscribe(res=>{
+      this.thawOvumSubfunctions = res;
+    })
+    this.functionHeaderService.getSubfunctions(FunctionEnum.ovumBankTransfer).subscribe(res=>{
+      this.ovumTransferSubfunctions = res;
+    })
     this.openSubfunctionSubscription = this.functionHeaderService.isOpenSubfunction.subscribe(res=>{
-      if (this.freezeSummaryService.selectedRecipientOvumFreezeArray.length <= 0 && this.freezeSummaryService.selectedDonorOvumFreezeArray.length <= 0){
-        this.commonService.showAlertMessage("","請選擇欲解凍的卵子");
-        return
-      }
-      if (this.freezeSummaryService.selectedRecipientOvumFreezeArray.length && this.freezeSummaryService.selectedDonorOvumFreezeArray.length){
-        this.commonService.showAlertMessage("","同時選到自己的卵子及精卵庫的卵子")
+      if (res?.functionId === 31 && this.freezeSummaryService.selectedRecipientOvumFreezeArray.length <= 0){
+        this.commonService.showAlertMessage("", "請選擇欲解凍的卵子");
         return
       }
       this.openSubfunction = res;
@@ -47,7 +49,8 @@ export class ThawOvumComponent implements OnInit, OnDestroy {
   faListCheck = faListCheck;
   openSubfunction: FunctionDto | null = null;
   recipientOvumFreezes: GetOvumFreezeSummaryDto[] = []
-  
+  thawOvumSubfunctions: FunctionDto[] = [];
+  ovumTransferSubfunctions: FunctionDto[] = [];
   onSelectedRecipientOvumFreezes(event:GetOvumFreezeSummaryDto[]){
     this.freezeSummaryService.selectedRecipientOvumFreezeArray = event
   }

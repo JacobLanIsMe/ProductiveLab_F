@@ -16,6 +16,7 @@
     left:50%;
     transform: translate(-50%, -50%);
     max-height: 90vh;
+    overflow: auto;
 }
 ::-webkit-scrollbar {
     display: none;

@@ -2,7 +2,7 @@
     <div class="d-flex justify-content-between align-item-center nav-div">
         <div class="text-warning-emphasis">
             胚胎實驗室管理系統
-            <span *ngIf="selectedFunction">
+            <!-- <span *ngIf="selectedFunction">
                 <span *ngIf="selectedFunction.functionTypeId === 1" 
                     [class.boldFont]="selectedFunction.functionTypeId === 1"> >
                     {{selectedFunction.name}}</span>
@@ -10,9 +10,9 @@
                     style="cursor:pointer" (click)="onBackToMain()"> >
                     個案總表</span>
                 <span *ngIf="selectedFunction.functionTypeId !== 1" [class.boldFont]="selectedFunction.functionTypeId !== 1"> > {{selectedFunction.name}}</span>
-            </span>
+            </span> -->
         </div>
-    
+      
         <img src="https://huayuivf.com/wp-content/uploads/2021/12/image-1.svg" alt="" class="brand-div">
         <div>
             <div class="btn-group">

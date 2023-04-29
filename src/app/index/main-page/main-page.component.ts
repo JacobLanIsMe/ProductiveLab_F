@@ -26,6 +26,6 @@ export class MainPageComponent implements OnInit, OnDestroy {
     localStorage.setItem(LocalStorageKey.courseOfTreatmentId, courseId);
     localStorage.setItem(LocalStorageKey.ovumFromCourseOfTreatmentId, ovumFromCourseOfTreatmentId);
     localStorage.setItem(LocalStorageKey.spermFromCourseOfTreatmentId, spermFromCourseOfTreatmentId);
-    this.functionHeaderService.selectedFunction.next(this.functionHeaderService.caseSpecificFunctions[0]);
+    // this.functionHeaderService.selectedFunction.next(this.functionHeaderService.caseSpecificFunctions[0]);
   }
 }

@@ -1,6 +1,6 @@
 <div class="d-flex justify-content-between">
 <app-title [icon]="faMicroscope" [title]="'精蟲處理'"></app-title>
-<app-subfunction-header></app-subfunction-header>
+<app-subfunction-header [subfunctions]="subfunctions"></app-subfunction-header>
 </div>
 <hr>
 <ng-container *ngIf="baseOperateSpermInfo">
