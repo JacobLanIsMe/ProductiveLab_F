@@ -13,7 +13,7 @@ export class OvumBankTransferComponent {
   donorOvumFreezes: GetOvumFreezeSummaryDto[] = [];
   searchResult?: string;
   onSearch(){
-    this.freezeSummaryService.getDonorOvumFreezes(Number(this.keyword)).subscribe(res=>{
+    this.freezeSummaryService.donorOvumFreezes.subscribe(res=>{
       if (res.length){
         this.searchResult = undefined;
         this.donorOvumFreezes = res;
@@ -22,6 +22,8 @@ export class OvumBankTransferComponent {
         this.searchResult = "查無此病歷號的冷凍卵子";
       }
     })
+    this.freezeSummaryService.getDonorOvumFreezes(Number(this.keyword))
+  
   }
   onSelectedDonorOvumFreezes(event:GetOvumFreezeSummaryDto[]){
     this.freezeSummaryService.selectedDonorOvumFreezeArray = event

@@ -5,8 +5,7 @@
                 <app-search-empty-storage-unit [subfunction]="subfunction"></app-search-empty-storage-unit>
             </div>
             <div style="height:100%;overflow:auto;">
-                <div class="fs-5 fw-bold text-warning-emphasis" *ngIf="subfunction"><fa-icon [icon]="faSnowflake"
-                        class="me-3"></fa-icon>{{subfunction.name}}</div>
+                <app-form-title *ngIf="subfunction" [formTitle]="subfunction.name" [icon]="faSnowflake"></app-form-title>
                 <hr>
                 <ng-container *ngIf="selectedObservationNotes.length">
                     <table class="table" style="font-size:0.5em;">

@@ -11,13 +11,14 @@ import { EmployeeService } from 'src/app/@Service/employee.service';
 import { FreezeSummaryService } from 'src/app/@Service/freeze-summary.service';
 import { FunctionHeaderService } from 'src/app/@Service/function-header.service';
 import { ManageMediumService } from 'src/app/@Service/manage-medium.service';
+import { TreatmentService } from 'src/app/@Service/treatment.service';
 @Component({
   selector: 'app-thaw-ovum-embryo-form',
   templateUrl: './thaw-ovum-embryo-form.component.html',
   styleUrls: ['./thaw-ovum-embryo-form.component.css']
 })
 export class ThawOvumEmbryoFormComponent implements OnInit, OnDestroy {
-  constructor(private dateService:DateService, private employeeService:EmployeeService, private manageMediumService:ManageMediumService, private functionHeaderService:FunctionHeaderService, private freezeSummaryService:FreezeSummaryService, private commonService:CommonService){}
+  constructor(private dateService:DateService, private employeeService:EmployeeService, private manageMediumService:ManageMediumService, private functionHeaderService:FunctionHeaderService, private freezeSummaryService:FreezeSummaryService, private commonService:CommonService, private treatmentService:TreatmentService){}
   ngOnDestroy(): void {
     this.thawMediumSubscription?.unsubscribe();
     this.updatedInUseMediumSubscription?.unsubscribe();
@@ -31,7 +32,7 @@ export class ThawOvumEmbryoFormComponent implements OnInit, OnDestroy {
       "thawMediumInUseId": new FormControl(null, Validators.required),
       "recheckEmbryologist": new FormControl(null, Validators.required),
       "mediumInUseIds": new FormArray([]),
-      "freezeOvumPickupDetailIds":new FormArray([]),
+      "freezeOvumDetailIds":new FormArray([]),
       "courseOfTreatmentId":new FormControl(this.commonService.getCourseOfTreatmentId(), Validators.required)
     })
     this.employeeService.getAllEmbryologist().subscribe(res=>{
@@ -64,8 +65,15 @@ export class ThawOvumEmbryoFormComponent implements OnInit, OnDestroy {
   }
   onSubmit(form:FormGroup){
     this.freezeSummaryService.selectedRecipientOvumFreezeArray.forEach(x=>{
-      (<FormArray>(this.thawOvumForm.get("freezeOvumPickupDetailIds"))).push(new FormControl(x.freezeObservationNoteInfo.ovumPickupDetailId))
+      (<FormArray>(this.thawOvumForm.get("freezeOvumDetailIds"))).push(new FormControl(x.freezeObservationNoteInfo.ovumDetailId))
     })
-    console.log(form.value);
+    this.treatmentService.addOvumThaw(form).subscribe(res=>{
+      this.commonService.judgeTheResponse(res, "解凍卵子", res.errorMessage, form)
+      const courseOfTreatmentId = this.commonService.getCourseOfTreatmentId();
+      if (courseOfTreatmentId){
+        this.freezeSummaryService.getRecipientOvumFreezes(courseOfTreatmentId);
+      }
+      
+    })
   }
 }

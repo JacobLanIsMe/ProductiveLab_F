@@ -1,6 +1,6 @@
 <div class="fw-bold mb-3">
     <div class="d-flex justify-content-between align-items-center mb-2">
-        <div>選擇培養液:</div>
+        <app-form-title [formTitle]="'選擇培養液'" [icon]="faFlask"></app-form-title>
         <div>
             <button type="button" class="btn btn-outline-secondary btn-sm"
                 (click)="onAddMedium()">新增培養液</button>
@@ -8,6 +8,7 @@
                 (click)="onOpenMedium()">開封培養液</button>
         </div>
     </div>
+    <hr>
     <div class="d-flex justify-content-between align-items-center"
         *ngFor="let grade of [].constructor(count); let i = index">
         <div style="width:90%">

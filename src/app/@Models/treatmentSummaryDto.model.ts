@@ -1,9 +1,9 @@
 export class TreatmentSummaryDto{
     constructor(
-        public ovumPickupDetailId: string,
+        public ovumDetailId: string,
         public courseOfTreatmentSqlId: string,
         public ovumFromCourseOfTreatmentSqlId: string,
-        public ovumPickupDetailStatus: string,
+        public ovumDetailStatus: string,
         public dateOfEmbryo: number,
         public ovumNumber: number,
         public hasFertilization: boolean,

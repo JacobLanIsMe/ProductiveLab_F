@@ -4,6 +4,8 @@
         <table class="table table-hover" *ngIf="selectedRecipientOvumFreezes.length">
             <thead>
                 <tr class="table-warning">
+                    <th>卵子來源病歷號</th>
+                    <th>卵子來源姓名</th>
                     <th>療程編號</th>
                     <th>卵子編號</th>
                     <th>Strip</th>
@@ -13,7 +15,9 @@
             </thead>
             <tbody>
                 <tr *ngFor="let item of selectedRecipientOvumFreezes">
-                    <th>{{item.courseOfTreatmentSqlId}}</th>
+                    <td>{{item.ovumOwner.customerSqlId}}</td>
+                    <td>{{item.ovumOwner.customerName}}</td>
+                    <td>{{item.courseOfTreatmentSqlId}}</td>
                     <td>{{item.ovumNumber}}</td>
                     <td>{{item.freezeStorageInfo.stripBoxId}}</td>
                     <td>{{item.freezeStorageInfo.unitInfo.storageUnitId}}</td>

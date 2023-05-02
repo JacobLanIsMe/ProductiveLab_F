@@ -50,7 +50,7 @@ export class ObservationNoteFormComponent implements OnInit {
       this.operationTypes = res;
     })
     this.observationNoteForm = new FormGroup({
-      "ovumPickupDetailId": new FormControl(this.observationNoteService.selectedOvumPickup?.ovumPickupDetailId, Validators.required),
+      "ovumDetailId": new FormControl(this.observationNoteService.selectedOvumPickup?.ovumDetailId, Validators.required),
       "observationTime": new FormControl(this.dateService.getTodayDateTimeString(new Date()), Validators.required),
       "embryologist": new FormControl(null, Validators.required),
       "ovumMaturationId": new FormControl(null),
@@ -72,7 +72,7 @@ export class ObservationNoteFormComponent implements OnInit {
     if (this.observationNoteService.selectedObservationNoteId){
       this.observationNoteService.getExistingObservationNote(this.observationNoteService.selectedObservationNoteId).subscribe(res=>{
         this.observationNoteForm.patchValue({
-          "ovumPickupDetailId": res.ovumPickupDetailId,
+          "ovumDetailId": res.ovumDetailId,
           "embryologist":res.embryologist.toUpperCase(),
           "ovumMaturationId": res.ovumMaturationId,
           "observationTypeId": res.observationTypeId,

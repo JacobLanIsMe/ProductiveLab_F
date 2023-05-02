@@ -7,6 +7,7 @@ import { FunctionHeaderService } from './../../../@Service/function-header.servi
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Component, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
 import { EmbryologistDto } from 'src/app/@Models/embryologistDto.model';
+import { BaseCustomerInfoDto } from 'src/app/@Models/baseCustomerInfoDto.model';
 
 @Component({
   selector: 'app-add-course-of-treatment',
@@ -25,6 +26,9 @@ export class AddCourseOfTreatmentComponent implements OnInit {
     this.treatmentService.getAllTreatment().subscribe(res=>{
       this.treatments = res;
     })
+    this.treatmentService.getAllCustomer().subscribe(res=>{
+      this.customers = res;
+    })
     this.addCourseOfTreatmentForm = new FormGroup({
       "doctorId": new FormControl(null, Validators.required),
       "customerId": new FormControl(null, Validators.required),
@@ -35,9 +39,10 @@ export class AddCourseOfTreatmentComponent implements OnInit {
 
   }
   addCourseOfTreatmentForm!: FormGroup;
-  doctors?: EmbryologistDto[];
-  embryologists?: EmbryologistDto[];
-  treatments?: TreatmentDto[];
+  doctors: EmbryologistDto[] = [];
+  embryologists: EmbryologistDto[] = [];
+  treatments: TreatmentDto[] = [];
+  customers: BaseCustomerInfoDto[] = [];
   onCancel(){
     this.functionHeaderService.isOpenAddCourseOfTreatment.next(false);
   }

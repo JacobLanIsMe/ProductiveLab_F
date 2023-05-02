@@ -5,8 +5,7 @@
                 <app-search-empty-storage-unit></app-search-empty-storage-unit>
             </div>
             <div style="height:100%; overflow:auto">
-                <div class="fs-5 fw-bold text-warning-emphasis"><fa-icon [icon]="faSnowflake"
-                        class="me-3"></fa-icon>冷凍精蟲</div>
+                <app-form-title [formTitle]="'冷凍精蟲'" [icon]="faSnowflake"></app-form-title>
                 <hr>
                 <div *ngIf="spermOwner" class="mb-3">
                     <span class="fw-bold me-1">精蟲來自病歷號:</span>

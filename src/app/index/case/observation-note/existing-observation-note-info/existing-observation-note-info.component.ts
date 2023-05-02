@@ -1,11 +1,10 @@
 import { ObservationNoteService } from 'src/app/@Service/observation-note.service';
-import { Component, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { BaseTreatmentInfoDto } from 'src/app/@Models/baseTreatmentInfoDto.model';
 import { TreatmentService } from 'src/app/@Service/treatment.service';
 import { faList } from '@fortawesome/free-solid-svg-icons';
 import { GetObservationNoteNameDto } from 'src/app/@Models/getObservationNoteNameDto.model';
 import { CommonService } from 'src/app/@Service/common.service';
-import { MainPageService } from 'src/app/@Service/main-page.service';
 @Component({
   selector: 'app-existing-observation-note-info',
   templateUrl: './existing-observation-note-info.component.html',

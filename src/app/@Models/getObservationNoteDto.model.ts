@@ -2,7 +2,7 @@ import { ObservationNotePhotoDto } from "./observationNotePhotoDto.model";
 
 export class GetObservationNoteDto {
     constructor(
-        public ovumPickupDetailId:string,
+        public ovumDetailId:string,
         public observationTime:Date,
         public embryologist: string,
         public ovumMaturationId: string,

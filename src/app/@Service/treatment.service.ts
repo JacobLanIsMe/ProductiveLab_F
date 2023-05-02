@@ -15,7 +15,7 @@ import { CommonDto } from '../@Models/commonDto.model';
 export class TreatmentService {
   constructor(private http:HttpClient) { }
   baseTreatmentInfo?: BaseTreatmentInfoDto;
-  selectedOvumPickupDetails:TreatmentSummaryDto[] = [];
+  selectedOvumDetails:TreatmentSummaryDto[] = [];
   treatmentSummary = new Subject<TreatmentSummaryDto[]>();
   addOvumPickupNote(form: FormGroup){
     return this.http.post<BaseResponseDto>("/api/Treatment/AddOvumPickupNote", form.value);
@@ -58,6 +58,9 @@ export class TreatmentService {
   getAllTreatment(){
     return this.http.get<TreatmentDto[]>("/api/Treatment/GetAllTreatment");
   }
+  getAllCustomer(){
+    return this.http.get<BaseCustomerInfoDto[]>("/api/Treatment/GetAllCustomer");
+  }
   addCourseOfTreatment(form: FormGroup){
     return this.http.post<BaseResponseDto>("/api/Treatment/AddCourseOfTreatment", form.value);
   }
@@ -80,5 +83,8 @@ export class TreatmentService {
   }
   addFertilisation(form:FormGroup){
     return this.http.post<BaseResponseDto>("/api/Treatment/AddFertilisation", form.value);
+  }
+  addOvumThaw(form:FormGroup){
+    return this.http.post<BaseResponseDto>("/api/Treatment/AddOvumThaw", form.value);
   }
 }

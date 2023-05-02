@@ -1,3 +1,4 @@
+import { BaseCustomerInfoDto } from "./baseCustomerInfoDto.model";
 import { BaseStorage } from "./baseStorage.model";
 import { GetObservationNoteNameDto } from "./getObservationNoteNameDto.model";
 
@@ -7,9 +8,11 @@ export class GetOvumFreezeSummaryDto{
         public courseOfTreatmentId:string,
         public ovumFromCourseOfTreatmentSqlId:number,
         public ovumFromCourseOfTreatmentId:string,
+        public ovumOwner: BaseCustomerInfoDto,
         public ovumNumber:number,
         public ovumPickupTime:Date,
         public freezeTime:Date,
+        public thawTime:Date,
         public freezeObservationNoteInfo:GetObservationNoteNameDto,
         public freezeStorageInfo:BaseStorage,
         public medium:string,

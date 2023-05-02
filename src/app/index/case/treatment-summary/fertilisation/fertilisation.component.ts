@@ -28,7 +28,7 @@ export class FertilisationComponent implements OnInit, OnDestroy {
     this.updatedMediumSubscription?.unsubscribe();
     this.selectedMediumSubscription?.unsubscribe();
     this.manageMediumService.selectedMediumArray.length = 0;
-    this.treatmentService.selectedOvumPickupDetails.length = 0;
+    this.treatmentService.selectedOvumDetails.length = 0;
   }
   ngOnInit(): void {
     this.fertilisationForm = new FormGroup({
@@ -38,7 +38,7 @@ export class FertilisationComponent implements OnInit, OnDestroy {
       "otherIncubator": new FormControl(null),
       "mediumInUseIds": new FormArray([]),
       "embryologist": new FormControl(null, Validators.required),
-      "ovumPickupDetailIds": new FormArray([])
+      "ovumDetailIds": new FormArray([])
     })
     this.treatmentService.getFertilisationMethods().subscribe(res=>{
       this.fertilisationMethods = res;
@@ -78,7 +78,7 @@ export class FertilisationComponent implements OnInit, OnDestroy {
   incubators: CommonDto[] = [];
   mediums: MediumDto[] = [];
   embryologists: EmbryologistDto[] = [];
-  selectedOvumPickupDetails:TreatmentSummaryDto[] = this.treatmentService.selectedOvumPickupDetails;
+  selectedOvumDetails:TreatmentSummaryDto[] = this.treatmentService.selectedOvumDetails;
   originOfSpermInfo?: BaseOperateSpermInfoDto;
   spermScores: SpermScoreDto[] = [];
   onSelectIncubator(event:any){
@@ -96,15 +96,15 @@ export class FertilisationComponent implements OnInit, OnDestroy {
       this.commonService.showAlertMessage("", "精子尚未評分");
       return;
     }
-    if (this.treatmentService.selectedOvumPickupDetails.length <= 0){
+    if (this.treatmentService.selectedOvumDetails.length <= 0){
       this.commonService.showAlertMessage("", "請選擇要受精的卵子");
       return;
     }
     else{
-      const ovumPickupDetailIdFormArray = <FormArray>(this.fertilisationForm.get("ovumPickupDetailIds"));
+      const ovumPickupDetailIdFormArray = <FormArray>(this.fertilisationForm.get("ovumDetailIds"));
       ovumPickupDetailIdFormArray.clear();
-      this.treatmentService.selectedOvumPickupDetails.forEach(x=>{
-        ovumPickupDetailIdFormArray.push(new FormControl(x.ovumPickupDetailId));
+      this.treatmentService.selectedOvumDetails.forEach(x=>{
+        ovumPickupDetailIdFormArray.push(new FormControl(x.ovumDetailId));
       })
     }
     this.treatmentService.addFertilisation(form).subscribe(res=>{

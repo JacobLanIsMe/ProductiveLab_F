@@ -8,4 +8,6 @@
     </div>
 </div>
 <div class="mb-3">{{searchResult}}</div>
+<div style="width:100%;overflow:auto;">
 <app-ovum-freeze-table [ovumFreezes]="donorOvumFreezes" (selectedOvumFreezes)="onSelectedDonorOvumFreezes($event)"></app-ovum-freeze-table>
+</div>

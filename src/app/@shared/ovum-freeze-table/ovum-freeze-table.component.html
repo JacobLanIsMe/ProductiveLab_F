@@ -7,6 +7,8 @@
                     <input type="checkbox" (click)="onSelectAllOvum($event)" [(ngModel)]="isAllOvumChecked">
                 </div>
             </th>
+            <th>卵子來源病歷號</th>
+            <th>卵子來源姓名</th>
             <th>療程編號</th>
             <th>卵子編號</th>
             <th>取卵日</th>
@@ -28,9 +30,11 @@
             <td>
                 <input type="checkbox"
                     (change)="onSelectOneOvum($event, item.freezeStorageInfo.unitInfo.storageUnitId)"
-                    [(ngModel)]="item.isChecked">
+                    [(ngModel)]="item.isChecked" [disabled]="item.thawTime != null">
             </td>
-            <th>{{item.courseOfTreatmentSqlId}}</th>
+            <td>{{item.ovumOwner.customerSqlId}}</td>
+            <td>{{item.ovumOwner.customerName}}</td>
+            <td>{{item.courseOfTreatmentSqlId}}</td>
             <td>No.{{item.ovumNumber}}</td>
             <td>{{item.ovumPickupTime | date:"yyyy-MM-dd" }}</td>
             <td>{{item.freezeTime | date:"yyyy-MM-dd"}}</td>

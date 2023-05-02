@@ -26,7 +26,7 @@ export class TreatmentSummaryComponent implements OnInit {
       this.subfunctions = res;
     })
     this.functionHeaderService.isOpenSubfunction.subscribe(res=>{
-      this.treatmentService.selectedOvumPickupDetails = this.treatmentSummarys.filter(x=>x.isChecked);
+      this.treatmentService.selectedOvumDetails = this.treatmentSummarys.filter(x=>x.isChecked);
       this.isOpenSubFunction = res;
     })
     this.treatmentService.treatmentSummary.subscribe(res=>{

@@ -121,7 +121,7 @@ export class ObservationNoteService {
     }
     return formData;
   }
-  getFreezeObservationNotes(ovumPickupDetailId:string[]){
-    return this.http.post<GetObservationNoteNameDto[]>("/api/ObservationNote/GetFreezeObservationNotes", ovumPickupDetailId);
+  getFreezeObservationNotes(ovumDetailIds:string[]){
+    return this.http.post<GetObservationNoteNameDto[]>("/api/ObservationNote/GetFreezeObservationNotes", ovumDetailIds);
   }
 }

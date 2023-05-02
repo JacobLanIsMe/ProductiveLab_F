@@ -8,8 +8,10 @@
                 </select>
             </div>
             <div class="input-group mb-3">
-                <span class="input-group-text">客戶 GuidId</span>
-                <input type="text" class="form-control" formControlName="customerId">
+                <span class="input-group-text">客戶</span>
+                <select class="form-select" formControlName="customerId">
+                    <option *ngFor="let customer of customers" [value]="customer.customerId">{{customer.customerName}}</option>
+                </select>
             </div>
             <div class="input-group mb-3">
                 <span class="input-group-text">療程名稱</span>

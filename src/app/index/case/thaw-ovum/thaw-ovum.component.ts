@@ -18,14 +18,16 @@ export class ThawOvumComponent implements OnInit, OnDestroy {
     this.openSubfunctionSubscription?.unsubscribe();
     this.selectedRecipientOvumFreezesSubscription?.unsubscribe();
     this.selectedDonorOvumFreezesSubscription?.unsubscribe();
+    this.recipientOvumFreezesSubscription?.unsubscribe();
     this.freezeSummaryService.selectedRecipientOvumFreezeArray.length = 0;
     this.freezeSummaryService.selectedDonorOvumFreezeArray.length = 0;
   }
   ngOnInit(): void {
+    this.recipientOvumFreezesSubscription = this.freezeSummaryService.recipientOvumFreezes.subscribe(res=>{
+      this.recipientOvumFreezes = res;
+    })
     if (this.courseOfTreatmentId){
-      this.freezeSummaryService.getRecipientOvumFreezes(this.courseOfTreatmentId).subscribe(res=>{
-        this.recipientOvumFreezes = res;
-      })
+      this.freezeSummaryService.getRecipientOvumFreezes(this.courseOfTreatmentId);
     }
     this.functionHeaderService.getSubfunctions(FunctionEnum.thawOvum).subscribe(res=>{
       this.thawOvumSubfunctions = res;
@@ -45,6 +47,7 @@ export class ThawOvumComponent implements OnInit, OnDestroy {
   openSubfunctionSubscription?:Subscription;
   selectedRecipientOvumFreezesSubscription?:Subscription;
   selectedDonorOvumFreezesSubscription?:Subscription;
+  recipientOvumFreezesSubscription?:Subscription;
   courseOfTreatmentId = this.commonService.getCourseOfTreatmentId();
   faListCheck = faListCheck;
   openSubfunction: FunctionDto | null = null;

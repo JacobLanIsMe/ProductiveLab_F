@@ -11,8 +11,11 @@ export class FreezeSummaryService {
 
   constructor(private http:HttpClient) { }
   ovumFreezeSummary = new Subject<GetOvumFreezeSummaryDto[]>();
+  recipientOvumFreezes = new Subject<GetOvumFreezeSummaryDto[]>();
+  donorOvumFreezes = new Subject<GetOvumFreezeSummaryDto[]>();
   selectedRecipientOvumFreezeArray: GetOvumFreezeSummaryDto[] = [];
   selectedDonorOvumFreezeArray: GetOvumFreezeSummaryDto[] = [];
+
   getOvumFreezeSummary(courseOfTreatmentId:string){
     this.http.get<GetOvumFreezeSummaryDto[]>("/api/FreezeSummary/GetOvumFreezeSummary", {
       params: new HttpParams().append("courseOfTreatmentId", courseOfTreatmentId)
@@ -26,8 +29,17 @@ export class FreezeSummaryService {
     })
   }
   getRecipientOvumFreezes(courseOfTreatmentId:string){
-    return this.http.get<GetOvumFreezeSummaryDto[]>("/api/FreezeSummary/GetRecipientOvumFreezes", {
+    this.http.get<GetOvumFreezeSummaryDto[]>("/api/FreezeSummary/GetRecipientOvumFreezes", {
       params: new HttpParams().append("courseOfTreatmentId", courseOfTreatmentId)
+    }).subscribe(res => {
+      this.recipientOvumFreezes.next(res);
+    })
+  }
+  getDonorOvumFreezes(keyword:number){
+    this.http.get<GetOvumFreezeSummaryDto[]>("/api/FreezeSummary/GetDonorOvumFreezes", {
+      params: new HttpParams().append("customerSqlId", keyword)
+    }).subscribe(res=>{
+      this.donorOvumFreezes.next(res);
     })
   }
   checkOvumsOnSameTop(event:any, storageUnitId:number,freezeSummaryArray:GetOvumFreezeSummaryDto[]){
@@ -37,9 +49,5 @@ export class FreezeSummaryService {
       }
     })
   }
-  getDonorOvumFreezes(keyword:number){
-    return this.http.get<GetOvumFreezeSummaryDto[]>("/api/FreezeSummary/GetDonorOvumFreezes", {
-      params: new HttpParams().append("customerSqlId", keyword)
-    })
-  }
+  
 }

@@ -1,7 +1,8 @@
 <div class="alertContainer">
     <div class="alertBox">
         <app-form-title [subfunction]="subfunction" [icon]="faHeart"></app-form-title>
-        <ng-container *ngIf="selectedOvumPickupDetails.length">
+        <hr>
+        <ng-container *ngIf="selectedOvumDetails.length">
             <div class="fw-bold">卵子資訊</div>
             <table class="table table-hover">
                 <thead>
@@ -13,7 +14,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr *ngFor="let item of selectedOvumPickupDetails">
+                  <tr *ngFor="let item of selectedOvumDetails">
                     <th>{{item.ovumNumber}}</th>
                     <td>{{item.courseOfTreatmentSqlId}}</td>
                     <td>{{item.ovumFromCourseOfTreatmentSqlId}}</td>

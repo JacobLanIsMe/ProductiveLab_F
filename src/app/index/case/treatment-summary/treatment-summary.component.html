@@ -27,7 +27,7 @@
         <td><input type="checkbox" [(ngModel)]="ovum.isChecked" (change)="onSelectOvum()"></td>
         <td>{{ovum.ovumNumber}}</td>
         <td>{{ovum.ovumSource}}/{{ovum.ovumFromCourseOfTreatmentSqlId}}</td>
-        <td>{{ovum.ovumPickupDetailStatus}}</td>
+        <td>{{ovum.ovumDetailStatus}}</td>
         <td>{{ovum.dateOfEmbryo}}</td>
         <td>
           <span *ngIf="ovum.hasFertilization">已受精</span>
