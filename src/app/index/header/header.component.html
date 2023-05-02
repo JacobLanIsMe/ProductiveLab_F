@@ -25,6 +25,7 @@
                         <a class="dropdown-item lh-base function" [routerLink]="['/index', function.route]">{{function.name}}</a>
                     </li>
                     <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item lh-base function" (click)="openAddCustomer()">新增客戶資訊</a></li>
                     <li><a class="dropdown-item lh-base function" (click)="openAddCourseOfTreatment()">新增療程</a></li>
                     <li><a class="dropdown-item lh-base function">登出</a></li>
                 </ul>
@@ -33,3 +34,4 @@
     </div>
 </div>
 <app-add-course-of-treatment *ngIf="isOpenAddCourseOfTreatment"></app-add-course-of-treatment>
+<app-add-customer *ngIf="isOpenAddCustomer"></app-add-customer>

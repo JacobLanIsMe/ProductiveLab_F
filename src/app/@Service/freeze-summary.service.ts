@@ -13,6 +13,7 @@ export class FreezeSummaryService {
   ovumFreezeSummary = new Subject<GetOvumFreezeSummaryDto[]>();
   recipientOvumFreezes = new Subject<GetOvumFreezeSummaryDto[]>();
   donorOvumFreezes = new Subject<GetOvumFreezeSummaryDto[]>();
+  embryoFreezes = new Subject<GetOvumFreezeSummaryDto[]>();
   selectedRecipientOvumFreezeArray: GetOvumFreezeSummaryDto[] = [];
   selectedDonorOvumFreezeArray: GetOvumFreezeSummaryDto[] = [];
 
@@ -49,5 +50,11 @@ export class FreezeSummaryService {
       }
     })
   }
-  
+  getEmbryoFreezes(courseOfTreatmentId:string){
+    this.http.get<GetOvumFreezeSummaryDto[]>("/api/FreezeSummary/GetEmbryoFreezes", {
+      params:new HttpParams().append("courseOfTreatmentId", courseOfTreatmentId)
+    }).subscribe(res=>{
+      this.embryoFreezes.next(res);
+    })
+  }
 }

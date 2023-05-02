@@ -66,7 +66,18 @@ export class OvumPickupNoteComponent implements OnInit, OnDestroy {
   isOpenMediumForm = false;
   formArray?:FormArray
  
-  
+  onSumOvum(event:any){
+    this.ovumPickupForm.patchValue({
+      "ovumPickupNumber":{
+        "totalOvumNumber": this.ovumPickupForm.value.ovumPickupNumber.coc_Grade5 + 
+                            this.ovumPickupForm.value.ovumPickupNumber.coc_Grade4 + 
+                            this.ovumPickupForm.value.ovumPickupNumber.coc_Grade3 + 
+                            this.ovumPickupForm.value.ovumPickupNumber.coc_Grade2 + 
+                            this.ovumPickupForm.value.ovumPickupNumber.coc_Grade1
+      }
+      
+    })
+  }
   onSubmit(form: FormGroup){
     if ((this.formArray && this.formArray.controls.length <= 0) || this.manageMediumService.selectedMediumArray.length <= 0){
       this.commonService.showAlertMessage("", "請選擇培養液");

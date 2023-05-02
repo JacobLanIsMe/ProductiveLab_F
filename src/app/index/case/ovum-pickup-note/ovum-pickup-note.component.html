@@ -28,30 +28,30 @@
                     <div class="col-6">
                         <div class="mb-3">
                             <label for="coc_Grade5" class="form-label">+++++</label>
-                            <input type="number" class="form-control" id="coc_Grade5" formControlName="coc_Grade5">
+                            <input type="number" class="form-control" id="coc_Grade5" min="0" formControlName="coc_Grade5" (change)="onSumOvum($event)">
                         </div>
                         <div class="mb-3">
                             <label for="coc_Grade4" class="form-label">++++</label>
-                            <input type="number" class="form-control" id="coc_Grade4" formControlName="coc_Grade4">
+                            <input type="number" class="form-control" id="coc_Grade4" min="0" formControlName="coc_Grade4" (change)="onSumOvum($event)">
                         </div>
                         <div class="mb-3">
                             <label for="coc_Grade3" class="form-label">+++</label>
-                            <input type="number" class="form-control" id="coc_Grade3" formControlName="coc_Grade3">
+                            <input type="number" class="form-control" id="coc_Grade3" min="0" formControlName="coc_Grade3" (change)="onSumOvum($event)">
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="mb-3">
                             <label for="coc_Grade2" class="form-label">++</label>
-                            <input type="number" class="form-control" id="coc_Grade2" formControlName="coc_Grade2">
+                            <input type="number" class="form-control" id="coc_Grade2" min="0" formControlName="coc_Grade2" (change)="onSumOvum($event)">
                         </div>
                         <div class="mb-3">
                             <label for="coc_Grade1" class="form-label">+</label>
-                            <input type="number" class="form-control" id="coc_Grade1" formControlName="coc_Grade1">
+                            <input type="number" class="form-control" id="coc_Grade1" min="0" formControlName="coc_Grade1" (change)="onSumOvum($event)">
                         </div>
                         <div class="mb-3">
                             <label for="totalOvumNumber" class="form-label">總取卵數</label>
-                            <input type="number" class="form-control" id="totalOvumNumber"
-                                formControlName="totalOvumNumber" [disabled]="true">
+                            <input type="number" class="form-control" id="totalOvumNumber" min="0"
+                                formControlName="totalOvumNumber" readonly>
                         </div>
                     </div>
                 </div>

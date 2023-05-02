@@ -89,7 +89,7 @@ export class ObservationNoteService {
   }
   generateFormData(form:FormGroup, selectedMainPhotoIndex:number, observationNotePhotos:any, operationTypeId:number[], ovumAbnormalityId:number[], embryoStatusId:number[]){
     let formData = new FormData();
-    formData.append("ovumPickupDetailId", form.value.ovumPickupDetailId);
+    formData.append("ovumDetailId", form.value.ovumDetailId);
     formData.append("observationTime", form.value.observationTime);
     formData.append("embryologist", form.value.embryologist);
     formData.append("ovumMaturationId", form.value.ovumMaturationId);

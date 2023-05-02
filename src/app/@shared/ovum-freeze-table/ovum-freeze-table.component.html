@@ -32,8 +32,8 @@
                     (change)="onSelectOneOvum($event, item.freezeStorageInfo.unitInfo.storageUnitId)"
                     [(ngModel)]="item.isChecked" [disabled]="item.thawTime != null">
             </td>
-            <td>{{item.ovumOwner.customerSqlId}}</td>
-            <td>{{item.ovumOwner.customerName}}</td>
+            <td>{{item.ovumSourceOwner.customerSqlId}}</td>
+            <td>{{item.ovumSourceOwner.customerName}}</td>
             <td>{{item.courseOfTreatmentSqlId}}</td>
             <td>No.{{item.ovumNumber}}</td>
             <td>{{item.ovumPickupTime | date:"yyyy-MM-dd" }}</td>

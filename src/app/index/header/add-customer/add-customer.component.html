@@ -1,0 +1,43 @@
+<div class="alertContainer">
+    <div class="alertBox">
+        <app-form-title [formTitle]="'新增客戶資訊'"></app-form-title>
+        <hr>
+        <form [formGroup]="addCustomerForm" (ngSubmit)="onSubmit(addCustomerForm)">
+            <div class="input-group mb-3">
+                <span class="input-group-text">姓名</span>
+                <input type="text" class="form-control" formControlName="name">
+            </div>
+            <div class="input-group mb-3">
+                <label class="input-group-text" for="inputGroupSelect01">性別</label>
+                <select class="form-select" id="inputGroupSelect01" formControlName="genderId">
+                    <option *ngFor="let gender of genders" [value]="gender.id">{{gender.name}}</option>
+                </select>
+            </div>
+            <div class="input-group mb-3">
+                <span class="input-group-text">生日</span>
+                <input type="date" class="form-control" formControlName="birthday">
+            </div>
+            <div (click)="onAddSpouse()" class="mb-3" style="cursor:pointer;color:blue;font-size:0.6em;text-align:end;">新增配偶</div>
+            <ng-container *ngIf="hasSpouse">
+                <div class="input-group mb-3">
+                    <span class="input-group-text">配偶姓名</span>
+                    <input type="text" class="form-control" formControlName="spouseName">
+                </div>
+                <div class="input-group mb-3">
+                    <label class="input-group-text" for="inputGroupSelect01">配偶性別</label>
+                    <select class="form-select" id="inputGroupSelect01" formControlName="spouseGenderId">
+                        <option *ngFor="let gender of genders" [value]="gender.id">{{gender.name}}</option>
+                    </select>
+                </div>
+                <div class="input-group mb-3">
+                    <span class="input-group-text">配偶生日</span>
+                    <input type="date" class="form-control" formControlName="spouseBirthday">
+                </div>
+            </ng-container>
+            <div class="d-flex justify-content-end align-items-center">
+                <button type="button" class="btn btn-outline-primary btn-sm" (click)="onCancel()">取消</button>
+                <button class="btn btn-primary btn-sm ms-3" [disabled]="!addCustomerForm.valid">確認新增</button>
+            </div>
+        </form>
+    </div>
+</div>

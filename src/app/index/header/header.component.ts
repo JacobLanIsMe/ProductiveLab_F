@@ -2,6 +2,7 @@ import { FunctionDto } from '../../@Models/functionDto.model';
 import { FunctionHeaderService } from './../../@Service/function-header.service';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
+import { faL } from '@fortawesome/free-solid-svg-icons';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -33,16 +34,23 @@ export class HeaderComponent implements OnInit, OnDestroy{
     this.openAddCourseOfTreatmentSubscription = this.functionHeaderService.isOpenAddCourseOfTreatment.subscribe(res=>{
       this.isOpenAddCourseOfTreatment = res;
     })
+    this.functionHeaderService.isOpenAddCustomer.subscribe(res=>{
+      this.isOpenAddCustomer = res
+    })
   }
   // functionSubscription: Subscription | undefined;
   // selectedFunction?: FunctionDto;
   commonFunctions: FunctionDto[] = [];
   isOpenAddCourseOfTreatment: boolean = false;
   openAddCourseOfTreatmentSubscription: Subscription | undefined;
+  isOpenAddCustomer: boolean=false;
   onBackToMain(){
     this.router.navigate(["/index", "main"]);
   }
   openAddCourseOfTreatment(){
     this.functionHeaderService.isOpenAddCourseOfTreatment.next(true);
+  }
+  openAddCustomer(){
+    this.functionHeaderService.isOpenAddCustomer.next(true);
   }
 }

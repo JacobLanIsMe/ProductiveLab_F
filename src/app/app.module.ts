@@ -51,6 +51,7 @@ import { FormTitleComponent } from './@shared/form-title/form-title.component';
 import { FertilisationComponent } from './index/case/treatment-summary/fertilisation/fertilisation.component';
 import { ThawOvumEmbryoFormComponent } from './@shared/thaw-ovum-embryo-form/thaw-ovum-embryo-form.component';
 import { OvumFreezeTableComponent } from './@shared/ovum-freeze-table/ovum-freeze-table.component';
+import { AddCustomerComponent } from './index/header/add-customer/add-customer.component';
 
 
 @NgModule({
@@ -101,7 +102,8 @@ import { OvumFreezeTableComponent } from './@shared/ovum-freeze-table/ovum-freez
     FormTitleComponent,
     FertilisationComponent,
     ThawOvumEmbryoFormComponent,
-    OvumFreezeTableComponent
+    OvumFreezeTableComponent,
+    AddCustomerComponent
   ],
   imports: [
     BrowserModule,
