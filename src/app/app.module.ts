@@ -52,6 +52,7 @@ import { FertilisationComponent } from './index/case/treatment-summary/fertilisa
 import { ThawOvumEmbryoFormComponent } from './@shared/thaw-ovum-embryo-form/thaw-ovum-embryo-form.component';
 import { OvumFreezeTableComponent } from './@shared/ovum-freeze-table/ovum-freeze-table.component';
 import { AddCustomerComponent } from './index/header/add-customer/add-customer.component';
+import { LoadingSpinnerComponent } from './@shared/loading-spinner/loading-spinner.component';
 
 
 @NgModule({
@@ -103,7 +104,8 @@ import { AddCustomerComponent } from './index/header/add-customer/add-customer.c
     FertilisationComponent,
     ThawOvumEmbryoFormComponent,
     OvumFreezeTableComponent,
-    AddCustomerComponent
+    AddCustomerComponent,
+    LoadingSpinnerComponent
   ],
   imports: [
     BrowserModule,

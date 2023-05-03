@@ -73,7 +73,6 @@ export class ThawOvumEmbryoFormComponent implements OnInit, OnDestroy {
       if (courseOfTreatmentId){
         this.freezeSummaryService.getRecipientOvumFreezes(courseOfTreatmentId);
       }
-      
     })
   }
 }

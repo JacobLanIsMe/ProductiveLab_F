@@ -4,16 +4,10 @@
     <app-subfunction-header [subfunctions]="thawOvumSubfunctions"></app-subfunction-header>
 </div>
 <hr>
+<app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
 <div style="width:100%;overflow-x:auto;">
     <app-ovum-freeze-table [ovumFreezes]="recipientOvumFreezes" (selectedOvumFreezes)="onSelectedRecipientOvumFreezes($event)"></app-ovum-freeze-table>
-    
 </div>
-<div class="d-flex justify-content-between align-items-center">
-    <app-title [icon]="faListCheck" [title]="'解凍卵子-從精卵庫選擇'"></app-title>
-    <app-subfunction-header [subfunctions]="ovumTransferSubfunctions"></app-subfunction-header>
-</div>
-
-<hr>
 <app-ovum-bank-transfer></app-ovum-bank-transfer>
 
 

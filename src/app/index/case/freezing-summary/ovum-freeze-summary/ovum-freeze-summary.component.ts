@@ -12,6 +12,7 @@ export class OvumFreezeSummaryComponent implements OnInit {
   constructor(private freezeSummaryService:FreezeSummaryService, private commonService:CommonService){}
   ngOnInit(): void {
     this.freezeSummaryService.ovumFreezeSummary.subscribe(res=>{
+      this.isLoading = false;
       this.ovumFreezeSummary = res;
       this.ovumFreezeSummary.forEach(x=>{
         x.isChecked = false;
@@ -25,6 +26,7 @@ export class OvumFreezeSummaryComponent implements OnInit {
   ovumFreezeSummary:GetOvumFreezeSummaryDto[] = []
   isAllOvumChecked:boolean = false;
   faList = faList;
+  isLoading = true;
   onSelectAllOvum(event:any){
     this.ovumFreezeSummary.forEach(x=>{
       x.isChecked = event.target.checked;

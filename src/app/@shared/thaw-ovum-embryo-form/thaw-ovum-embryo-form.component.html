@@ -9,8 +9,10 @@
                     <th>卵子來源姓名</th>
                     <th>療程編號</th>
                     <th>卵子編號</th>
-                    <th>Strip</th>
-                    <th>Top編號</th>
+                    <th>Tank</th>
+                    <th>Canist</th>
+                    <th>Strip編號</th>
+                    <th>Top</th>
                     <th>Top顏色</th>
                 </tr>
             </thead>
@@ -20,8 +22,10 @@
                     <td>{{item.ovumSourceOwner.customerName}}</td>
                     <td>{{item.courseOfTreatmentSqlId}}</td>
                     <td>{{item.ovumNumber}}</td>
+                    <td>{{item.freezeStorageInfo.tankInfo.tankName}}</td>
+                    <td>{{item.freezeStorageInfo.canistName}}</td>
                     <td>{{item.freezeStorageInfo.stripBoxId}}</td>
-                    <td>{{item.freezeStorageInfo.unitInfo.storageUnitId}}</td>
+                    <td>{{item.freezeStorageInfo.unitInfo.unitName}}</td>
                     <td>{{item.freezeStorageInfo.topColorName}}</td>
                 </tr>
             </tbody>

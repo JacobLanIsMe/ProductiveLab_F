@@ -7,7 +7,7 @@
             <div style="height:100%;overflow:auto;">
                 <app-form-title *ngIf="subfunction" [formTitle]="subfunction.name" [icon]="faSnowflake"></app-form-title>
                 <hr>
-                <ng-container *ngIf="selectedObservationNotes.length">
+                <div *ngIf="selectedObservationNotes.length" style="width:100%;overflow:auto">
                     <table class="table" style="font-size:0.5em;">
                         <thead>
                             <tr>
@@ -50,7 +50,7 @@
                             </tr>
                         </tbody>
                     </table>
-                </ng-container>
+                </div>
                 <form [formGroup]="freezeOvumForm" (ngSubmit)="onSubmit(freezeOvumForm)">
                     <div class="input-group mb-3">
                         <span class="input-group-text">操作時間</span>

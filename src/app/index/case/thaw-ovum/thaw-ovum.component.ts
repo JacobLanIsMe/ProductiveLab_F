@@ -24,6 +24,7 @@ export class ThawOvumComponent implements OnInit, OnDestroy {
   }
   ngOnInit(): void {
     this.recipientOvumFreezesSubscription = this.freezeSummaryService.recipientOvumFreezes.subscribe(res=>{
+      this.isLoading = false;
       this.recipientOvumFreezes = res;
     })
     if (this.courseOfTreatmentId){
@@ -31,9 +32,6 @@ export class ThawOvumComponent implements OnInit, OnDestroy {
     }
     this.functionHeaderService.getSubfunctions(FunctionEnum.thawOvum).subscribe(res=>{
       this.thawOvumSubfunctions = res;
-    })
-    this.functionHeaderService.getSubfunctions(FunctionEnum.ovumBankTransfer).subscribe(res=>{
-      this.ovumTransferSubfunctions = res;
     })
     this.openSubfunctionSubscription = this.functionHeaderService.isOpenSubfunction.subscribe(res=>{
       if (res?.functionId === 31 && this.freezeSummaryService.selectedRecipientOvumFreezeArray.length <= 0){
@@ -53,7 +51,7 @@ export class ThawOvumComponent implements OnInit, OnDestroy {
   openSubfunction: FunctionDto | null = null;
   recipientOvumFreezes: GetOvumFreezeSummaryDto[] = []
   thawOvumSubfunctions: FunctionDto[] = [];
-  ovumTransferSubfunctions: FunctionDto[] = [];
+  isLoading = true;
   onSelectedRecipientOvumFreezes(event:GetOvumFreezeSummaryDto[]){
     this.freezeSummaryService.selectedRecipientOvumFreezeArray = event
   }

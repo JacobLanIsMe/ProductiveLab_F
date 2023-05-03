@@ -1,7 +1,7 @@
-<ng-container *ngIf="observationNote && observationNote.length === 0">
-    <div class="text-center">無相關的觀察紀錄</div>
-</ng-container>
-<ng-container *ngIf="observationNote && observationNote.length > 0">
+<app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
+<app-title [title]="'觀察記錄'" [icon]="faNoteSticky"></app-title>
+<hr>
+<ng-container *ngIf="observationNote.length">
     <table class="table table-bordered" style="text-align:center;">
         <thead>
             <tr>

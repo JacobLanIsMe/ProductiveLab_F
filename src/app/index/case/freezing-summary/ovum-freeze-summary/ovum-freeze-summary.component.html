@@ -1,3 +1,4 @@
+<app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
 <ng-container *ngIf="ovumFreezeSummary.length > 0">
     <div class="d-flex justify-content-between">
         <div>
@@ -21,7 +22,7 @@
                     <th>療程編號</th>
                     <th>身分別</th>
                     <th>卵子來源療程編號</th>
-                    <th>卵子編號</th>
+                    <th>卵子編號NO</th>
                     <th>取卵日</th>
                     <th>解凍日</th>
                     <th>移入日</th>
@@ -54,11 +55,11 @@
                             [(ngModel)]="item.isChecked">
                     </td>
                     <td>{{item.courseOfTreatmentSqlId}}</td>
-                    <td>{{item.courseOfTreatmentId === item.ovumFromCourseOfTreatmentId ? "self" : "OD"}}</td>
+                    <td>{{item.ovumSource}}</td>
                     <td>{{item.ovumFromCourseOfTreatmentSqlId}}</td>
-                    <td>NO.{{item.ovumNumber}}</td>
+                    <td>{{item.ovumNumber}}</td>
                     <td>{{item.ovumPickupTime | date:"yyyy-MM-dd"}}</td>
-                    <td>解凍日</td>
+                    <td>{{item.thawTime}}</td>
                     <td>移入日</td>
                     <td>{{item.freezeTime | date:"yyyy-MM-dd"}}</td>
                     <td>{{item.freezeObservationNoteInfo.fertilisationResultName}}</td>

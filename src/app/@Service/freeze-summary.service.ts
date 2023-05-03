@@ -57,4 +57,8 @@ export class FreezeSummaryService {
       this.embryoFreezes.next(res);
     })
   }
+
+  getUnFreezingObservationNoteOvumDetails(ovumDetailIds: string[]){
+    return this.http.post<string[]>("/api/FreezeSummary/GetUnFreezingObservationNoteOvumDetails", ovumDetailIds);
+  }
 }

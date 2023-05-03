@@ -8,6 +8,7 @@ export class GetOvumFreezeSummaryDto{
         public courseOfTreatmentId:string,
         public ovumFromCourseOfTreatmentSqlId:number,
         public ovumFromCourseOfTreatmentId:string,
+        public ovumSource:string,
         public ovumSourceOwner: BaseCustomerInfoDto,
         public ovumNumber:number,
         public ovumPickupTime:Date,

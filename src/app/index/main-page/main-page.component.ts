@@ -11,21 +11,22 @@ import { LocalStorageKey } from 'src/app/@Models/localStorageKey.model';
   styleUrls: ['./main-page.component.css']
 })
 export class MainPageComponent implements OnInit, OnDestroy {
-  mainPageInfos: MainPageDto[] = [];
   constructor(private mainPageService: MainPageService, private functionHeaderService: FunctionHeaderService){}
   ngOnDestroy(): void {
     this.paramsSubscription?.unsubscribe();
   }
   ngOnInit(): void {
     this.mainPageService.GetLabMainPageInfo().subscribe(response=>{
+      this.isLoading = false;
       this.mainPageInfos = response;
     });
   }
   paramsSubscription: Subscription | undefined;
+  mainPageInfos: MainPageDto[] = [];
+  isLoading = true;
   onSelectCourse(courseId: string, ovumFromCourseOfTreatmentId:string, spermFromCourseOfTreatmentId:string){
     localStorage.setItem(LocalStorageKey.courseOfTreatmentId, courseId);
     localStorage.setItem(LocalStorageKey.ovumFromCourseOfTreatmentId, ovumFromCourseOfTreatmentId);
     localStorage.setItem(LocalStorageKey.spermFromCourseOfTreatmentId, spermFromCourseOfTreatmentId);
-    // this.functionHeaderService.selectedFunction.next(this.functionHeaderService.caseSpecificFunctions[0]);
   }
 }
