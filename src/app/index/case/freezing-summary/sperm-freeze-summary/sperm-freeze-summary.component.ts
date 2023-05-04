@@ -14,10 +14,16 @@ export class SpermFreezeSummaryComponent implements OnInit {
     const courseOfTreatmentId = this.commonService.getCourseOfTreatmentId();
     if (courseOfTreatmentId){
       this.freezeSummaryService.getSpermFreezeSummary(courseOfTreatmentId).subscribe(res=>{
+        this.isLoading = false;
         this.spermFreezeSummary = res;
+        if (res.length <= 0){
+          this.spermFreezeResult = "無相關資料"
+        }
       })
     }
   }
   spermFreezeSummary: GetSpermFreezeSummaryDto[] = [];
   faList = faList;
+  isLoading = true;
+  spermFreezeResult="";
 }

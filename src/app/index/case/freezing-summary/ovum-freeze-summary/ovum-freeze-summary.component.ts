@@ -13,10 +13,15 @@ export class OvumFreezeSummaryComponent implements OnInit {
   ngOnInit(): void {
     this.freezeSummaryService.ovumFreezeSummary.subscribe(res=>{
       this.isLoading = false;
-      this.ovumFreezeSummary = res;
-      this.ovumFreezeSummary.forEach(x=>{
-        x.isChecked = false;
-      })
+      if (res.length <= 0){
+        this.ovumFreezeResult = "查無相關資料"
+      }
+      else{
+        this.ovumFreezeSummary = res;
+        this.ovumFreezeSummary.forEach(x=>{
+          x.isChecked = false;
+        })
+      }
     })
     const courseOfTreatmentId = this.commonService.getCourseOfTreatmentId()
     if (courseOfTreatmentId){
@@ -27,6 +32,7 @@ export class OvumFreezeSummaryComponent implements OnInit {
   isAllOvumChecked:boolean = false;
   faList = faList;
   isLoading = true;
+  ovumFreezeResult = "";
   onSelectAllOvum(event:any){
     this.ovumFreezeSummary.forEach(x=>{
       x.isChecked = event.target.checked;

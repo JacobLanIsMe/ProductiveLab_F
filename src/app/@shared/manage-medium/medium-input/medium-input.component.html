@@ -1,4 +1,9 @@
-<div class="input-group mb-3">
-    <span class="input-group-text">{{name}}</span>
-    <input #origin type="text" class="form-control" style="cursor:pointer" [value]="selectedMedium" (click)="onOpenMediumInfo()">
+<div class="mb-3 d-flex justify-content-between align-items-center">
+    <div class="input-group">
+        <span class="input-group-text">{{name}}</span>
+        <input #origin type="text" class="form-control" style="cursor:pointer" [value]="selectedMedium"
+            (click)="onOpenMediumInfo()">
+    </div>
+    <button type="button" class="btn btn-outline-secondary btn-sm ms-2" style="width:115px" (click)="onOpenMedium()"
+        *ngIf="!isMultiple">開封培養液</button>
 </div>

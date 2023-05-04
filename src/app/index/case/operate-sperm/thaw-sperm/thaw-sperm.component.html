@@ -1,43 +1,46 @@
 <div class="alertContainer">
     <div class="alertBox">
-        <app-form-title *ngIf="subfunction" [subfunction]="subfunction" [icon]="faListCheck">{{subfunction.name}}</app-form-title>
+        <app-form-title *ngIf="subfunction" [subfunction]="subfunction"
+            [icon]="faListCheck">{{subfunction.name}}</app-form-title>
         <hr>
         <div class="d-flex justify-content-start align-items-center mb-2">
             <div class="me-3 fw-bold">精蟲來源</div>
             <div class="me-3"><span class="fw-bold me-2">病歷號:</span><span>{{spermOwnerSqlId}}</span></div>
             <div><span class="fw-bold me-2">姓名:</span><span>{{spermOwnerName}}</span></div>
         </div>
-        <div class="me-3 fw-bold mb-2">請選擇要解凍的精蟲凍管</div>
-        <table class="table table-hover" style="text-align:center;white-space:nowrap;">
-            <thead class="table-warning">
-                <tr>
-                    <th scope="col">
-                        <label class="form-check-label" for="selectAll">全選</label><span class="ms-2"><input
-                                class="form-check-input" type="checkbox" value="" id="selectAll"
-                                [(ngModel)]="isSelectAll" [ngModelOptions]="{standalone: true}"
-                                (click)="onSelectAll($event)"></span>
-                    </th>
-                    <th>精蟲編號</th>
-                    <th>Tank</th>
-                    <th>Canist</th>
-                    <th>Box</th>
-                    <th>Location</th>
-                    <th>冷凍日期</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let spermFreeze of spermFreezes">
-                    <td><input class="form-check-input" type="checkbox" value="" [(ngModel)]="spermFreeze.isChecked"
-                            [ngModelOptions]="{standalone: true}" (change)="onSelectLocation()"></td>
-                    <td>{{spermFreeze.vialNumber}}</td>
-                    <td>{{spermFreeze.storageTankName}}</td>
-                    <td>{{spermFreeze.storageCanistName}}</td>
-                    <td>{{spermFreeze.storageStripBoxId}}</td>
-                    <td>{{spermFreeze.storageUnitName}}</td>
-                    <td>{{spermFreeze.freezeTime | date:"yyyy-MM-dd"}}</td>
-                </tr>
-            </tbody>
-        </table>
+            <div class="mb-2 fw-bold">請選擇要解凍的精蟲凍管:<span class="ms-2 text-danger" style="font-size:small" *ngIf="spermFreezes.length<=0">{{hasSpermFreezes}}</span></div>
+            <div *ngIf="spermFreezes.length">
+            <table class="table table-hover" style="text-align:center;white-space:nowrap;">
+                <thead class="table-warning">
+                    <tr>
+                        <th scope="col">
+                            <label class="form-check-label" for="selectAll">全選</label><span class="ms-2"><input
+                                    class="form-check-input" type="checkbox" value="" id="selectAll"
+                                    [(ngModel)]="isSelectAll" [ngModelOptions]="{standalone: true}"
+                                    (click)="onSelectAll($event)"></span>
+                        </th>
+                        <th>精蟲編號</th>
+                        <th>Tank</th>
+                        <th>Canist</th>
+                        <th>Box</th>
+                        <th>Location</th>
+                        <th>冷凍日期</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let spermFreeze of spermFreezes">
+                        <td><input class="form-check-input" type="checkbox" value="" [(ngModel)]="spermFreeze.isChecked"
+                                [ngModelOptions]="{standalone: true}" (change)="onSelectLocation()"></td>
+                        <td>{{spermFreeze.vialNumber}}</td>
+                        <td>{{spermFreeze.storageTankName}}</td>
+                        <td>{{spermFreeze.storageCanistName}}</td>
+                        <td>{{spermFreeze.storageStripBoxId}}</td>
+                        <td>{{spermFreeze.storageUnitName}}</td>
+                        <td>{{spermFreeze.freezeTime | date:"yyyy-MM-dd"}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
         <form [formGroup]="thawSpermForm" (ngSubmit)="onSubmit(thawSpermForm)">
             <div class="input-group mb-3">
                 <span class="input-group-text">解凍時間</span>

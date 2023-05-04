@@ -42,4 +42,7 @@ export class MediumInputComponent implements OnInit, OnDestroy {
   onOpenMediumInfo(){
     this.manageMediumService.openShowMediumInfo(this.origin, this.mediums, this.index, this.isMultiple);
   }
+  onOpenMedium(){
+    this.manageMediumService.isOpenMediumForm.next(true);
+  }
 }

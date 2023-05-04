@@ -53,7 +53,7 @@ export class ScoreSpermComponent implements OnInit {
     })
     const existingSpermScores = this.operateSpermService.previousSpermScoreArray.concat(this.operateSpermService.currentSpermScoreArray);
     existingSpermScores.forEach(x=>{
-      if (x.spermScoreTimePointId == this.spermScoreTimePointId && (this.spermScoreTimePointId === 1 || this.spermScoreTimePointId === 2)){
+      if (x.spermScoreTimePointId == this.spermScoreTimePointId){
         this.hasExistingSpermScore = true;
         this.scoreSpermForm.patchValue({
           "volume": x.volume,
@@ -89,20 +89,18 @@ export class ScoreSpermComponent implements OnInit {
   onSubmit(scoreSpermForm: FormGroup){
     if (this.hasExistingSpermScore){
       this.operateSpermService.updateExistingSpermScore(scoreSpermForm).subscribe(res=>{
-        this.commonService.judgeTheResponse(res, "更新", res.errorMessage);
+        this.commonService.judgeTheResponse(res, "更新", res.errorMessage, scoreSpermForm);
         if (this.courseOfTreatmentId){
           this.operateSpermService.getCurrentSpermScores(this.courseOfTreatmentId)
         }
-        this.onCancel();
       })
     }
     else{
       this.operateSpermService.addSpermScore(scoreSpermForm).subscribe(res=>{
-        this.commonService.judgeTheResponse(res, "新增", res.errorMessage);
+        this.commonService.judgeTheResponse(res, "新增", res.errorMessage, scoreSpermForm);
         if (this.courseOfTreatmentId){
           this.operateSpermService.getCurrentSpermScores(this.courseOfTreatmentId)
         }
-        this.onCancel();
       })
     }
   }

@@ -40,6 +40,9 @@ export class ThawSpermComponent implements OnInit, OnDestroy {
     const spermFromCourseOfTreatmentId = this.commonService.getSpermFromCourseOfTreatmentId();
     if (spermFromCourseOfTreatmentId) {
       this.operateSpermService.getSpermFreeze(spermFromCourseOfTreatmentId).subscribe(res => {
+        if (res.length<=0){
+          this.hasSpermFreezes = "無可解凍的精蟲";
+        }
         this.spermFreezes = res;
       })
     }
@@ -65,6 +68,7 @@ export class ThawSpermComponent implements OnInit, OnDestroy {
   spermThawMethods: CommonDto[] = [];
   spermFreezes: SpermFreezeDto[] = [];
   mediums: MediumDto[] = [];
+  hasSpermFreezes = "";
   isSelectAll: boolean = false;
   isOtherSpermThawMethod: boolean = false;
   faListCheck = faListCheck;

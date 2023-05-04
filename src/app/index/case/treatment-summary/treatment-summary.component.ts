@@ -18,6 +18,7 @@ import { FreezeSummaryService } from 'src/app/@Service/freeze-summary.service';
 export class TreatmentSummaryComponent implements OnInit, OnDestroy {
   constructor(private treatmentService: TreatmentService, private functionHeaderService: FunctionHeaderService, private commonService:CommonService, private freezeSummaryService:FreezeSummaryService){}
   ngOnDestroy(): void {
+    this.openSubfunctionSubscription?.unsubscribe();
     this.treatmentService.selectedOvumDetails.length = 0;
   }
   ngOnInit(): void {
@@ -30,7 +31,7 @@ export class TreatmentSummaryComponent implements OnInit, OnDestroy {
     this.functionHeaderService.getSubfunctions(FunctionEnum.treatmentSummary).subscribe(res=>{
       this.subfunctions = res;
     })
-    this.functionHeaderService.isOpenSubfunction.subscribe(res=>{
+    this.openSubfunctionSubscription = this.functionHeaderService.isOpenSubfunction.subscribe(res=>{
       this.treatmentService.selectedOvumDetails = this.treatmentSummarys.filter(x=>x.isChecked);
       if (this.treatmentService.selectedOvumDetails.length <= 0){
         this.commonService.showAlertMessage("", "請選擇卵子或胚胎");
@@ -60,8 +61,9 @@ export class TreatmentSummaryComponent implements OnInit, OnDestroy {
       this.treatmentSummarys = res;
     })
   }
-  currentCourseOfTreatmentId: string | undefined;
-  functionSubscription: Subscription | undefined ;
+  // currentCourseOfTreatmentId: string | undefined;
+  // functionSubscription: Subscription | undefined ;
+  openSubfunctionSubscription?:Subscription;
   treatmentSummarys: TreatmentSummaryDto[] = [];
   isSelectAll: boolean = false;
   faTable = faTable;

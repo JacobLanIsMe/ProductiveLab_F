@@ -1,6 +1,6 @@
 export class GetSpermFreezeSummaryDto{
     constructor(
-        public spermSourceName: string,
+        public spermSource: string,
         public courseOfTreatmentSqlId: number,
         public spermSituation: string,
         public surgicalTime: Date,

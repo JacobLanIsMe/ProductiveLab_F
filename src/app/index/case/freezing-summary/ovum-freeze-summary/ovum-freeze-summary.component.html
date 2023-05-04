@@ -1,15 +1,17 @@
-<app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
-<ng-container *ngIf="ovumFreezeSummary.length > 0">
-    <div class="d-flex justify-content-between">
-        <div>
-            <app-title [title]="'卵子冷凍總覽'" [icon]="faList"></app-title>
-        </div>
-        <div>
-            <app-subfunction-header></app-subfunction-header>
-        </div>
+<div class="d-flex justify-content-between">
+    <div>
+        <app-title [title]="'卵子冷凍總覽'" [icon]="faList"></app-title>
     </div>
-    <hr>
-    <div style="width:100%;overflow-x: auto;">
+    <div>
+        <app-subfunction-header></app-subfunction-header>
+    </div>
+</div>
+<hr>
+<div style="width:100%;overflow-x: auto;">
+    <app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
+    <div class="text-center" *ngIf="ovumFreezeSummary.length <= 0">{{ovumFreezeResult}}</div>
+    <ng-container *ngIf="ovumFreezeSummary.length > 0">
+
         <table class="table table-hover" style="text-align: center;white-space:nowrap;">
             <thead>
                 <tr>
@@ -96,5 +98,6 @@
                 </tr>
             </tbody>
         </table>
-    </div>
-</ng-container>
+
+    </ng-container>
+</div>

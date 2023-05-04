@@ -49,7 +49,6 @@ export class ThawOvumEmbryoFormComponent implements OnInit, OnDestroy {
     this.mediumSubscription = this.manageMediumService.selectedMediums.subscribe(res=>{
       this.manageMediumService.setupMediumFormArray(res, <FormArray>(this.thawOvumForm.get("mediumInUseIds")))
     })
-    
   }
   @Input() functionName?:string;
   thawMediumSubscription?:Subscription;
