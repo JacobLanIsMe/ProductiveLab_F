@@ -62,6 +62,7 @@ export class FreezeSpermComponent implements OnInit, OnDestroy{
       })
       this.isSelectOtherMedium = res.mediumTypeId === MediumTypeEnum.other ? true : false;
     })
+    
   }
   mediumSubscription?:Subscription;
   selectedMediumSubscription?:Subscription;
@@ -77,7 +78,6 @@ export class FreezeSpermComponent implements OnInit, OnDestroy{
   embryologists: EmbryologistDto[] = [];
   isSelectOtherMedium = false;
   vialCount = 0;
-  isOpenMediumForm = false;
   selectedLocations: StorageLocation[] = [];
   
   onAddLocations(){

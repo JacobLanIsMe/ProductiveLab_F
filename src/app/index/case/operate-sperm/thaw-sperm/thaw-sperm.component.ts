@@ -70,6 +70,7 @@ export class ThawSpermComponent implements OnInit, OnDestroy {
   faListCheck = faListCheck;
   spermOwnerSqlId?: number = this.operateSpermService.baseOperateSpermInfo?.spermOwner.customerSqlId;
   spermOwnerName?: string = this.operateSpermService.baseOperateSpermInfo?.spermOwner.customerName;
+ 
   selectSpermThawMethod(event: any) {
     this.isOtherSpermThawMethod = +event.target.value === SpermThawMethodEnum.other ? true : false
   }

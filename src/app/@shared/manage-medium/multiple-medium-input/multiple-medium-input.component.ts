@@ -14,9 +14,7 @@ export class MultipleMediumInputComponent implements OnInit, OnDestroy {
     this.openMediumSubscription?.unsubscribe();
   }
   ngOnInit(): void {
-    this.openMediumSubscription = this.manageMediumService.isOpenMediumForm.subscribe(res=>{
-      this.isOpenMediumForm = res;
-    })
+    
   }
   @Input() mediums:MediumDto[] = [];
   openMediumSubscription?:Subscription;

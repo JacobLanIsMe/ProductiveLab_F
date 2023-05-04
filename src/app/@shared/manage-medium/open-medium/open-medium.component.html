@@ -1,7 +1,6 @@
 <div class="alertContainer">
-    <div class="alertBox w-50">
-        <div class="fs-5 fw-bold text-warning-emphasis"><fa-icon [icon]="faSquarePlus" class="me-3"></fa-icon>開封培養液
-        </div>
+    <div class="alertBox">
+        <app-form-title [formTitle]="'開封培養液'" [icon]="faSquarePlus"></app-form-title>
         <hr>
         <form [formGroup]="mediumForm" (ngSubmit)="onSubmit(mediumForm)">
             <div class="input-group mb-3">
