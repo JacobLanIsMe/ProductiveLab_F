@@ -16,9 +16,8 @@ export class OperateSpermService {
   constructor(private http:HttpClient) { }
   baseOperateSpermInfo?: BaseOperateSpermInfoDto
   isOpenSelectSpermFreeze = new Subject<boolean>();
-  currentSpermScores = new Subject<SpermScoreDto[]>();
-  currentSpermScoreArray: SpermScoreDto[] = [];
-  previousSpermScoreArray: SpermScoreDto[] = [];
+  allSpermScore = new Subject<SpermScoreDto[]>();
+  allSpermScoreArray: SpermScoreDto[] = [];
   getOriginInfoOfSperm(courseOfTreatmentId: string){
     return this.http.get<BaseOperateSpermInfoDto>("/api/OperateSperm/GetOriginInfoOfSperm", {
       params: new HttpParams().append("courseOfTreatmentId", courseOfTreatmentId)
@@ -29,14 +28,29 @@ export class OperateSpermService {
   }
   
   getSpermScores(courseOfTreatmentId: string){
-    return this.http.get<SpermScoreDto[]>("/api/OperateSperm/GetSpermScore", {
+    this.http.get<SpermScoreDto[]>("/api/OperateSperm/GetSpermScores", {
       params: new HttpParams().append("courseOfTreatmentId", courseOfTreatmentId)
-    })
-  }
-  getCurrentSpermScores(courseOfTreatmentId: string){
-    this.getSpermScores(courseOfTreatmentId).subscribe(res=>{
-      this.currentSpermScoreArray = res;
-      this.currentSpermScores.next(res);
+    }).subscribe(res=>{
+      res.forEach(x=>{
+        const index = this.allSpermScoreArray.findIndex(y=>y.spermScoreTimePointId === x.spermScoreTimePointId && y.courseOfTreatmentId === x.courseOfTreatmentId);
+        if (index !== -1){
+          this.allSpermScoreArray.splice(index, 1);
+        }
+        this.allSpermScoreArray.push(x);
+      })
+      this.allSpermScoreArray.sort(function(a, b){
+        if (a.courseOfTreatmentSqlId > b.courseOfTreatmentSqlId){
+          return 1
+        }
+        else if (a.courseOfTreatmentSqlId < b.courseOfTreatmentSqlId){
+          return -1
+        }
+        else{
+          return a.spermScoreTimePointId - b.spermScoreTimePointId
+        }
+        
+      })
+      this.allSpermScore.next(this.allSpermScoreArray);
     })
   }
   updateExistingSpermScore(form:FormGroup){

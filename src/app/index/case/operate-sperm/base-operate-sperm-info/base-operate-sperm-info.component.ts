@@ -17,10 +17,11 @@ export class BaseOperateSpermInfoComponent implements OnInit, OnDestroy {
   constructor(private operateSpermService: OperateSpermService, private commonService: CommonService, private functionHeaderService:FunctionHeaderService){}
   ngOnDestroy(): void {
     this.spermScoreSubscription?.unsubscribe();
+    this.operateSpermService.allSpermScoreArray.length = 0;
   }
   ngOnInit(): void {
-    this.spermScoreSubscription = this.operateSpermService.currentSpermScores.subscribe(res => {
-      this.currentSpermScores = res;
+    this.spermScoreSubscription = this.operateSpermService.allSpermScore.subscribe(res => {
+      this.allSpermScore = res;
     })
     const courseOfTreatmentId = this.commonService.getCourseOfTreatmentId();
     const spermFromCourseOfTreatmentId = this.commonService.getSpermFromCourseOfTreatmentId();
@@ -29,12 +30,9 @@ export class BaseOperateSpermInfoComponent implements OnInit, OnDestroy {
         this.operateSpermService.baseOperateSpermInfo = res;
         this.baseOperateSpermInfo = res;
       });
-      this.operateSpermService.getCurrentSpermScores(courseOfTreatmentId);
+      this.operateSpermService.getSpermScores(courseOfTreatmentId);
       if (spermFromCourseOfTreatmentId && courseOfTreatmentId.toUpperCase() != spermFromCourseOfTreatmentId.toUpperCase()){
-        this.operateSpermService.getSpermScores(spermFromCourseOfTreatmentId).subscribe(res=>{
-          this.operateSpermService.previousSpermScoreArray = res;
-          this.previousSpermScores =res;
-        });
+        this.operateSpermService.getSpermScores(spermFromCourseOfTreatmentId);
       }
     }
     this.functionHeaderService.getSubfunctions(FunctionEnum.operateSperm).subscribe(res=>{
@@ -44,7 +42,6 @@ export class BaseOperateSpermInfoComponent implements OnInit, OnDestroy {
   spermScoreSubscription?: Subscription;
   baseOperateSpermInfo?: BaseOperateSpermInfoDto;
   faMicroscope = faMicroscope;
-  currentSpermScores: SpermScoreDto[] = [];
-  previousSpermScores: SpermScoreDto[] = [];
+  allSpermScore: SpermScoreDto[] = [];
   subfunctions:FunctionDto[]=[];
 }

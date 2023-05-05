@@ -24,7 +24,7 @@
                     <th>療程編號</th>
                     <th>身分別</th>
                     <th>卵子來源療程編號</th>
-                    <th>卵子編號NO</th>
+                    <th>卵子編號</th>
                     <th>取卵日</th>
                     <th>解凍日</th>
                     <th>移入日</th>
@@ -59,13 +59,13 @@
                     <td>{{item.courseOfTreatmentSqlId}}</td>
                     <td>{{item.ovumSource}}</td>
                     <td>{{item.ovumFromCourseOfTreatmentSqlId}}</td>
-                    <td>{{item.ovumNumber}}</td>
+                    <td>No. {{item.ovumNumber}}</td>
                     <td>{{item.ovumPickupTime | date:"yyyy-MM-dd"}}</td>
                     <td>{{item.thawTime}}</td>
                     <td>移入日</td>
                     <td>{{item.freezeTime | date:"yyyy-MM-dd"}}</td>
                     <td>{{item.freezeObservationNoteInfo.fertilisationResultName}}</td>
-                    <td>Day: {{item.freezeObservationNoteInfo.day}}</td>
+                    <td>Day {{item.freezeObservationNoteInfo.day}}</td>
                     <td>卵子等級</td>
                     <td>{{item.freezeStorageInfo.unitInfo.unitName}}</td>
                     <td>{{item.freezeStorageInfo.topColorName}}</td>

@@ -20,10 +20,11 @@
       <div class="col-5"><span class="fw-bold">取精方式:
         </span><span>{{baseOperateSpermInfo.spermRetrievalMethodName}}</span></div>
     </div>
-    <ng-container *ngIf="currentSpermScores.length > 0 || previousSpermScores.length > 0">
+    <ng-container *ngIf="allSpermScore.length > 0">
       <table class="table table-hover mt-3">
         <thead>
           <tr class="table-warning">
+            <th scope="col">療程編號</th>
             <th scope="col">時間點</th>
             <th scope="col">禁慾天數</th>
             <th scope="col">體積</th>
@@ -38,7 +39,8 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let score of previousSpermScores">
+          <tr *ngFor="let score of allSpermScore">
+            <td>{{score.courseOfTreatmentSqlId}}</td>
             <td>{{score.spermScoreTimePoint}}</td>
             <td>{{score.abstinence}}</td>
             <td>{{score.volume}}</td>
@@ -51,7 +53,7 @@
             <td>{{score.embryologistName}}</td>
             <td>{{score.recordTime | date:"yyyy-MM-dd hh:mm:ss"}}</td>
           </tr>
-          <tr *ngFor="let score of currentSpermScores">
+          <!-- <tr *ngFor="let score of currentSpermScores">
             <td>{{score.spermScoreTimePoint}}</td>
             <td>{{score.abstinence}}</td>
             <td>{{score.volume}}</td>
@@ -63,7 +65,7 @@
             <td>{{score.morphology}}</td>
             <td>{{score.embryologistName}}</td>
             <td>{{score.recordTime | date:"yyyy-MM-dd hh:mm:ss"}}</td>
-          </tr>
+          </tr> -->
         </tbody>
       </table>
     </ng-container>

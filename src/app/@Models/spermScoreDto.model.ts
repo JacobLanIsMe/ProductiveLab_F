@@ -12,8 +12,10 @@ export class SpermScoreDto{
         public embryologist: string,
         public embryologistName: string,
         public courseOfTreatmentId: string,
+        public courseOfTreatmentSqlId: number,
         public morphology?: number,
         public abstinence?: number,
+        
         
 
         

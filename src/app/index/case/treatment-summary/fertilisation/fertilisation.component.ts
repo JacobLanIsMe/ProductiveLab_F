@@ -27,8 +27,10 @@ export class FertilisationComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.updatedMediumSubscription?.unsubscribe();
     this.selectedMediumSubscription?.unsubscribe();
+    this.spermScoreSubscription?.unsubscribe();
     this.manageMediumService.selectedMediumArray.length = 0;
     this.treatmentService.selectedOvumDetails.length = 0;
+    this.operateSpermService.allSpermScoreArray.length = 0;
   }
   ngOnInit(): void {
     this.fertilisationForm = new FormGroup({
@@ -56,20 +58,22 @@ export class FertilisationComponent implements OnInit, OnDestroy {
     this.selectedMediumSubscription = this.manageMediumService.selectedMediums.subscribe(res=>{
       this.manageMediumService.setupMediumFormArray(res, <FormArray>(this.fertilisationForm.get("mediumInUseIds")))
     })
+    this.spermScoreSubscription = this.operateSpermService.allSpermScore.subscribe(res=>{
+      this.spermScores = res;
+    })
     this.courseOfTreatmentId = this.commonService.getCourseOfTreatmentId();
     if (this.courseOfTreatmentId){
       this.operateSpermService.getOriginInfoOfSperm(this.courseOfTreatmentId).subscribe(res=>{
         this.originOfSpermInfo = res;
       });
-      this.operateSpermService.getSpermScores(this.courseOfTreatmentId).subscribe(res=>{
-        this.spermScores = res
-      })
+      this.operateSpermService.getSpermScores(this.courseOfTreatmentId);
     }
     
   }
   @Input() subfunction: FunctionDto|null = null;
   updatedMediumSubscription?:Subscription;
   selectedMediumSubscription?:Subscription;
+  spermScoreSubscription?:Subscription;
   courseOfTreatmentId:string|null = null;
   faHeart = faHeart;
   isOtherIncubator: boolean = false;

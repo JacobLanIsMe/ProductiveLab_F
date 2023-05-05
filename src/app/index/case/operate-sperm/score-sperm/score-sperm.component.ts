@@ -51,7 +51,7 @@ export class ScoreSpermComponent implements OnInit {
         this.embryologists = embryologists;
       }
     })
-    const existingSpermScores = this.operateSpermService.previousSpermScoreArray.concat(this.operateSpermService.currentSpermScoreArray);
+    const existingSpermScores = this.operateSpermService.allSpermScoreArray;
     existingSpermScores.forEach(x=>{
       if (x.spermScoreTimePointId == this.spermScoreTimePointId){
         this.hasExistingSpermScore = true;
@@ -91,7 +91,7 @@ export class ScoreSpermComponent implements OnInit {
       this.operateSpermService.updateExistingSpermScore(scoreSpermForm).subscribe(res=>{
         this.commonService.judgeTheResponse(res, "更新", res.errorMessage, scoreSpermForm);
         if (this.courseOfTreatmentId){
-          this.operateSpermService.getCurrentSpermScores(this.courseOfTreatmentId)
+          this.operateSpermService.getSpermScores(this.courseOfTreatmentId)
         }
       })
     }
@@ -99,7 +99,7 @@ export class ScoreSpermComponent implements OnInit {
       this.operateSpermService.addSpermScore(scoreSpermForm).subscribe(res=>{
         this.commonService.judgeTheResponse(res, "新增", res.errorMessage, scoreSpermForm);
         if (this.courseOfTreatmentId){
-          this.operateSpermService.getCurrentSpermScores(this.courseOfTreatmentId)
+          this.operateSpermService.getSpermScores(this.courseOfTreatmentId)
         }
       })
     }
