@@ -31,17 +31,17 @@ export class OvumBankTransferComponent implements OnInit, OnDestroy {
   ovumTransferSubfunctions: FunctionDto[] = [];
   onSearch(){
     this.isLoading = true;
-    this.donorOvumFreezesSubscription = this.freezeSummaryService.donorOvumFreezes.subscribe(res=>{
+    this.donorOvumFreezesSubscription = this.freezeSummaryService.donorOvums.subscribe(res=>{
       this.isLoading = false;
       if (res.length){
         this.searchResult = undefined;
         this.donorOvumFreezes = res;
       }
       else{
-        this.searchResult = "查無此病歷號的冷凍卵子";
+        this.searchResult = "查無此病歷號的捐贈卵子";
       }
     })
-    this.freezeSummaryService.getDonorOvumFreezes(Number(this.keyword))
+    this.freezeSummaryService.getDonorOvums(Number(this.keyword))
     
   }
   onSelectedDonorOvumFreezes(event:GetOvumFreezeSummaryDto[]){

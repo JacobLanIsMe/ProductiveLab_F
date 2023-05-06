@@ -10,7 +10,7 @@
             <th>卵子來源病歷號</th>
             <th>卵子來源姓名</th>
             <th>療程編號</th>
-            <th>卵子編號NO</th>
+            <th>卵子編號</th>
             <th>取卵日</th>
             <th>冷凍日期</th>
             <th>冷凍天數</th>
@@ -35,10 +35,10 @@
             <td>{{item.ovumSourceOwner.customerSqlId}}</td>
             <td>{{item.ovumSourceOwner.customerName}}</td>
             <td>{{item.courseOfTreatmentSqlId}}</td>
-            <td>{{item.ovumNumber}}</td>
+            <td>No. {{item.ovumNumber}}</td>
             <td>{{item.ovumPickupTime | date:"yyyy-MM-dd" }}</td>
             <td>{{item.freezeTime | date:"yyyy-MM-dd"}}</td>
-            <td>Day:{{item.freezeObservationNoteInfo.day}}</td>
+            <td>Day {{item.freezeObservationNoteInfo.day}}</td>
             <td>{{item.freezeObservationNoteInfo.ovumMaturationName}}</td>
             <td>
                 <div *ngFor="let abnormality of item.freezeObservationNoteInfo.ovumAbnormalityName">

@@ -1,6 +1,7 @@
-<app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
+
 <app-title [title]="'觀察記錄'" [icon]="faNoteSticky"></app-title>
 <hr>
+<app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
 <ng-container *ngIf="observationNote.length">
     <table class="table table-bordered" style="text-align:center;">
         <thead>

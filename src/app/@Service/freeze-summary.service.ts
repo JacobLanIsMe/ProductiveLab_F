@@ -12,7 +12,7 @@ export class FreezeSummaryService {
   constructor(private http:HttpClient) { }
   ovumFreezeSummary = new Subject<GetOvumFreezeSummaryDto[]>();
   recipientOvumFreezes = new Subject<GetOvumFreezeSummaryDto[]>();
-  donorOvumFreezes = new Subject<GetOvumFreezeSummaryDto[]>();
+  donorOvums = new Subject<GetOvumFreezeSummaryDto[]>();
   embryoFreezes = new Subject<GetOvumFreezeSummaryDto[]>();
   selectedRecipientOvumFreezeArray: GetOvumFreezeSummaryDto[] = [];
   selectedDonorOvumFreezeArray: GetOvumFreezeSummaryDto[] = [];
@@ -36,11 +36,11 @@ export class FreezeSummaryService {
       this.recipientOvumFreezes.next(res);
     })
   }
-  getDonorOvumFreezes(keyword:number){
-    this.http.get<GetOvumFreezeSummaryDto[]>("/api/FreezeSummary/GetDonorOvumFreezes", {
+  getDonorOvums(keyword:number){
+    this.http.get<GetOvumFreezeSummaryDto[]>("/api/FreezeSummary/GetDonorOvums", {
       params: new HttpParams().append("customerSqlId", keyword)
     }).subscribe(res=>{
-      this.donorOvumFreezes.next(res);
+      this.donorOvums.next(res);
     })
   }
   checkOvumsOnSameTop(event:any, storageUnitId:number,freezeSummaryArray:GetOvumFreezeSummaryDto[]){
