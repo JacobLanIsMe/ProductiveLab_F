@@ -25,6 +25,9 @@ export class ThawOvumComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.recipientOvumFreezesSubscription = this.freezeSummaryService.recipientOvumFreezes.subscribe(res=>{
       this.isLoading = false;
+      if (res.length <= 0){
+        this.recipientOvumFreezesResult = "查無相關資料";
+      }
       this.recipientOvumFreezes = res;
     })
     if (this.courseOfTreatmentId){
@@ -49,7 +52,8 @@ export class ThawOvumComponent implements OnInit, OnDestroy {
   courseOfTreatmentId = this.commonService.getCourseOfTreatmentId();
   faListCheck = faListCheck;
   openSubfunction: FunctionDto | null = null;
-  recipientOvumFreezes: GetOvumFreezeSummaryDto[] = []
+  recipientOvumFreezes: GetOvumFreezeSummaryDto[] = [];
+  recipientOvumFreezesResult?:string;
   thawOvumSubfunctions: FunctionDto[] = [];
   isLoading = true;
   onSelectedRecipientOvumFreezes(event:GetOvumFreezeSummaryDto[]){

@@ -68,7 +68,7 @@ export class ThawOvumEmbryoFormComponent implements OnInit, OnDestroy {
       (<FormArray>(this.thawOvumForm.get("freezeOvumDetailIds"))).push(new FormControl(x.freezeObservationNoteInfo.ovumDetailId))
     })
     this.treatmentService.addOvumThaw(form).subscribe(res=>{
-      this.commonService.judgeTheResponse(res, "解凍卵子", res.errorMessage, form)
+      this.commonService.judgeTheResponse(res, "解凍", res.errorMessage, form)
       const courseOfTreatmentId = this.commonService.getCourseOfTreatmentId();
       if (courseOfTreatmentId){
         this.freezeSummaryService.getRecipientOvumFreezes(courseOfTreatmentId);

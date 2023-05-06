@@ -41,7 +41,7 @@
                 <th>
                     <input type="checkbox"
                         (change)="onSelectOneOvum($event, item.freezeStorageInfo.unitInfo.storageUnitId)"
-                        [(ngModel)]="item.isChecked" [disabled]="item.thawTime != null">
+                        [(ngModel)]="item.isChecked">
                 </th>
                 <td>{{item.courseOfTreatmentSqlId}}</td>
                 <td>{{item.ovumNumber}}</td>

@@ -12,7 +12,7 @@
         <button type="button" class="btn btn-primary btn-sm" (click)="onSearch()">搜尋</button>
     </div>
 </div>
-<div class="mb-3">{{searchResult}}</div>
+<div class="mb-3 text-center" *ngIf="searchResult">{{searchResult}}</div>
 <div style="width:100%;overflow:auto;">
     <app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
     <app-ovum-freeze-table [ovumFreezes]="donorOvumFreezes"

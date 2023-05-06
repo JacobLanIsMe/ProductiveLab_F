@@ -30,6 +30,7 @@ export class OvumBankTransferComponent implements OnInit, OnDestroy {
   faBuildingColumns = faBuildingColumns;
   ovumTransferSubfunctions: FunctionDto[] = [];
   onSearch(){
+    this.searchResult = undefined;
     this.isLoading = true;
     this.donorOvumFreezesSubscription = this.freezeSummaryService.donorOvums.subscribe(res=>{
       this.isLoading = false;

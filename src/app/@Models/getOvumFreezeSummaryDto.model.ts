@@ -17,6 +17,7 @@ export class GetOvumFreezeSummaryDto{
         public freezeObservationNoteInfo:GetObservationNoteNameDto,
         public freezeStorageInfo:BaseStorage,
         public medium:string,
+        public isThawed: boolean,
         public isChecked:boolean
     ){}
 }

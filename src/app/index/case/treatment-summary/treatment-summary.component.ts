@@ -32,6 +32,10 @@ export class TreatmentSummaryComponent implements OnInit, OnDestroy {
       this.subfunctions = res;
     })
     this.openSubfunctionSubscription = this.functionHeaderService.isOpenSubfunction.subscribe(res=>{
+      if (res === null){
+        this.isOpenSubFunction = res;
+        return;
+      }
       this.treatmentService.selectedOvumDetails = this.treatmentSummarys.filter(x=>x.isChecked);
       if (this.treatmentService.selectedOvumDetails.length <= 0){
         this.commonService.showAlertMessage("", "請選擇卵子或胚胎");
@@ -43,7 +47,7 @@ export class TreatmentSummaryComponent implements OnInit, OnDestroy {
         })
         this.freezeSummaryService.getUnFreezingObservationNoteOvumDetails(ovumDetailIds).subscribe(res=>{
           if (res.length > 0){
-            let errorMessage = "卵子編號: \n";
+            let errorMessage = "卵子編號: ";
             res.forEach(x=>{
               const index = this.treatmentService.selectedOvumDetails.findIndex(y=>y.ovumDetailId === x);
               errorMessage += this.treatmentService.selectedOvumDetails[index].ovumNumber + ", "
@@ -61,8 +65,6 @@ export class TreatmentSummaryComponent implements OnInit, OnDestroy {
       this.treatmentSummarys = res;
     })
   }
-  // currentCourseOfTreatmentId: string | undefined;
-  // functionSubscription: Subscription | undefined ;
   openSubfunctionSubscription?:Subscription;
   treatmentSummarys: TreatmentSummaryDto[] = [];
   isSelectAll: boolean = false;

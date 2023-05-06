@@ -45,6 +45,7 @@ export class ThawEmbryoComponent implements OnInit, OnDestroy {
     this.embryoFreezes.forEach(x=>{
       x.isChecked = event.target.checked;
     })
+    this.freezeSummaryService.selectedRecipientOvumFreezeArray = this.embryoFreezes.filter(x=>x.isChecked);
   }
   onSelectOneOvum(event:any, unitId:number){
     this.freezeSummaryService.checkOvumsOnSameTop(event, unitId, this.embryoFreezes);
