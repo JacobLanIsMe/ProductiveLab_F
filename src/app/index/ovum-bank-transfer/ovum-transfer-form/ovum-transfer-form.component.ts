@@ -14,7 +14,7 @@ export class OvumTransferFormComponent implements OnInit {
   constructor(private commonService:CommonService, private freezeSummaryService:FreezeSummaryService, private functionHeaderService:FunctionHeaderService){}
   ngOnInit(): void {
     this.transferForm = new FormGroup({
-      "courseOfTreatmentSqlId": new FormControl(null, Validators.required),
+      "courseOfTreatmentSqlId": new FormControl(this.commonService.getCourseOfTreatmentSqlId(), Validators.required),
       "transferOvums": new FormArray([])
     })
     this.selectedDonorOvums = this.freezeSummaryService.selectedDonorOvumFreezeArray

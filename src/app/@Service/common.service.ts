@@ -49,6 +49,9 @@ export class CommonService implements OnDestroy {
   getCourseOfTreatmentId(){
     return localStorage.getItem(LocalStorageKey.courseOfTreatmentId);
   }
+  getCourseOfTreatmentSqlId(){
+    return localStorage.getItem(LocalStorageKey.courseOfTreatmentSqlId);
+  }
   getSpermFromCourseOfTreatmentId(){
     return localStorage.getItem(LocalStorageKey.spermFromCourseOfTreatmentId);
   }

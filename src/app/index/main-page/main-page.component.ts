@@ -1,7 +1,7 @@
 import { FunctionHeaderService } from './../../@Service/function-header.service';
 import { Subscription } from 'rxjs';
 import { MainPageService } from './../../@Service/main-page.service';
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MainPageDto } from 'src/app/@Models/mainPageDto.model';
 import { LocalStorageKey } from 'src/app/@Models/localStorageKey.model';
 
@@ -10,22 +10,19 @@ import { LocalStorageKey } from 'src/app/@Models/localStorageKey.model';
   templateUrl: './main-page.component.html',
   styleUrls: ['./main-page.component.css']
 })
-export class MainPageComponent implements OnInit, OnDestroy {
-  constructor(private mainPageService: MainPageService, private functionHeaderService: FunctionHeaderService){}
-  ngOnDestroy(): void {
-    this.paramsSubscription?.unsubscribe();
-  }
+export class MainPageComponent implements OnInit {
+  constructor(private mainPageService: MainPageService){}
   ngOnInit(): void {
     this.mainPageService.GetLabMainPageInfo().subscribe(response=>{
       this.isLoading = false;
       this.mainPageInfos = response;
     });
   }
-  paramsSubscription: Subscription | undefined;
   mainPageInfos: MainPageDto[] = [];
   isLoading = true;
-  onSelectCourse(courseId: string, ovumFromCourseOfTreatmentId:string, spermFromCourseOfTreatmentId:string){
+  onSelectCourse(courseId: string, courseOfTreatmentSqlId: number, ovumFromCourseOfTreatmentId:string, spermFromCourseOfTreatmentId:string){
     localStorage.setItem(LocalStorageKey.courseOfTreatmentId, courseId);
+    localStorage.setItem(LocalStorageKey.courseOfTreatmentSqlId, courseOfTreatmentSqlId.toString());
     localStorage.setItem(LocalStorageKey.ovumFromCourseOfTreatmentId, ovumFromCourseOfTreatmentId);
     localStorage.setItem(LocalStorageKey.spermFromCourseOfTreatmentId, spermFromCourseOfTreatmentId);
   }

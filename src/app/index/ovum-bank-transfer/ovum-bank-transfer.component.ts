@@ -47,9 +47,9 @@ export class OvumBankTransferComponent implements OnInit, OnDestroy {
     this.isLoading = true;
     this.donorOvumFreezesSubscription = this.freezeSummaryService.donorOvums.subscribe(res=>{
       this.isLoading = false;
+      this.donorOvumFreezes = res;
       if (res.length){
         this.searchResult = undefined;
-        this.donorOvumFreezes = res;
       }
       else{
         this.searchResult = "查無此病歷號的捐贈卵子";
