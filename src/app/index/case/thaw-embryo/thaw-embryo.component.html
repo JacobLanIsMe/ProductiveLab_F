@@ -5,6 +5,8 @@
 </div>
 <hr>
 <div style="width:100%;overflow:auto">
+    <div class="text-center" *ngIf="embryoFreezesResult">{{embryoFreezesResult}}</div>
+    <app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
     <table class="table" *ngIf="embryoFreezes.length">
         <thead>
             <tr>
@@ -84,4 +86,4 @@
         </tbody>
     </table>
 </div>
-<app-thaw-ovum-embryo-form *ngIf="isOpenSubfunction && isOpenSubfunction.functionId === 33" [functionName]="'解凍胚胎'"></app-thaw-ovum-embryo-form>
+<app-thaw-ovum-embryo-form *ngIf="isOpenSubfunction && isOpenSubfunction.functionId === 33" [function]="isOpenSubfunction"></app-thaw-ovum-embryo-form>

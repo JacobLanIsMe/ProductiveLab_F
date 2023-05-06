@@ -21,7 +21,14 @@ export class ThawEmbryoComponent implements OnInit, OnDestroy {
   }
   ngOnInit(): void {
      this.embryoFreezesSubscription = this.freezeSummaryService.embryoFreezes.subscribe(res=>{
-      this.embryoFreezes = res
+      this.isLoading = false;
+      if (res.length <= 0){
+        this.embryoFreezesResult = "查無相關資訊";
+      }
+      else{
+        this.embryoFreezesResult = undefined;
+        this.embryoFreezes = res
+      }
     })
     const courseOfTreatmentId = this.commonService.getCourseOfTreatmentId();
     if (courseOfTreatmentId){
@@ -41,6 +48,8 @@ export class ThawEmbryoComponent implements OnInit, OnDestroy {
   isOpenSubfunction: FunctionDto | null = null;
   faListCheck=faListCheck;
   isAllOvumChecked: boolean = false;
+  embryoFreezesResult?: string;
+  isLoading = true;
   onSelectAllOvum(event:any){
     this.embryoFreezes.forEach(x=>{
       x.isChecked = event.target.checked;

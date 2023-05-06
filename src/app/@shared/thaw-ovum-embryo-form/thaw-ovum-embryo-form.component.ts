@@ -3,6 +3,7 @@ import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { faListCheck } from '@fortawesome/free-solid-svg-icons';
 import { Subscription } from 'rxjs';
 import { EmbryologistDto } from 'src/app/@Models/embryologistDto.model';
+import { FunctionDto } from 'src/app/@Models/functionDto.model';
 import { GetOvumFreezeSummaryDto } from 'src/app/@Models/getOvumFreezeSummaryDto.model';
 import { MediumDto } from 'src/app/@Models/mediumDto.model';
 import { CommonService } from 'src/app/@Service/common.service';
@@ -50,7 +51,7 @@ export class ThawOvumEmbryoFormComponent implements OnInit, OnDestroy {
       this.manageMediumService.setupMediumFormArray(res, <FormArray>(this.thawOvumForm.get("mediumInUseIds")))
     })
   }
-  @Input() functionName?:string;
+  @Input() function!: FunctionDto;
   thawMediumSubscription?:Subscription;
   updatedInUseMediumSubscription?:Subscription;
   mediumSubscription?:Subscription;
@@ -71,7 +72,14 @@ export class ThawOvumEmbryoFormComponent implements OnInit, OnDestroy {
       this.commonService.judgeTheResponse(res, "解凍", res.errorMessage, form)
       const courseOfTreatmentId = this.commonService.getCourseOfTreatmentId();
       if (courseOfTreatmentId){
-        this.freezeSummaryService.getRecipientOvumFreezes(courseOfTreatmentId);
+        if (this.function.functionId === 31){
+          console.log("解凍卵子")
+          this.freezeSummaryService.getRecipientOvumFreezes(courseOfTreatmentId);
+        }
+        if (this.function.functionId === 33){
+          console.log("解凍胚胎");
+          this.freezeSummaryService.getEmbryoFreezes(courseOfTreatmentId);
+        }
       }
     })
   }

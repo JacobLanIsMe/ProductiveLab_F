@@ -12,4 +12,4 @@
 <app-ovum-bank-transfer></app-ovum-bank-transfer>
 
 
-<app-thaw-ovum-embryo-form [functionName]="'解凍卵子'" *ngIf="openSubfunction && openSubfunction.functionId === 31"></app-thaw-ovum-embryo-form>
+<app-thaw-ovum-embryo-form [function]="openSubfunction" *ngIf="openSubfunction && openSubfunction.functionId === 31"></app-thaw-ovum-embryo-form>
