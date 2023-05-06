@@ -6,19 +6,31 @@ import { faBuildingColumns } from '@fortawesome/free-solid-svg-icons';
 import { FunctionDto } from 'src/app/@Models/functionDto.model';
 import { FunctionHeaderService } from 'src/app/@Service/function-header.service';
 import { FunctionEnum } from 'src/app/@Enums/functionEnum.model';
+import { CommonService } from 'src/app/@Service/common.service';
 @Component({
   selector: 'app-ovum-bank-transfer',
   templateUrl: './ovum-bank-transfer.component.html',
   styleUrls: ['./ovum-bank-transfer.component.css']
 })
 export class OvumBankTransferComponent implements OnInit, OnDestroy {
-  constructor(private freezeSummaryService:FreezeSummaryService, private functionHeaderService:FunctionHeaderService){}
+  constructor(private freezeSummaryService:FreezeSummaryService, private functionHeaderService:FunctionHeaderService, private commonService:CommonService){}
   ngOnDestroy(): void {
     this.donorOvumFreezesSubscription?.unsubscribe();
   }
   ngOnInit(): void {
     this.functionHeaderService.getSubfunctions(FunctionEnum.ovumBankTransfer).subscribe(res=>{
       this.ovumTransferSubfunctions = res;
+    })
+    this.functionHeaderService.isOpenSubfunction.subscribe(res=>{
+      if (res === null){
+        this.isOpenSubfunction = res;
+        return;
+      }
+      if (this.freezeSummaryService.selectedDonorOvumFreezeArray.length <= 0){
+        this.commonService.showAlertMessage("", "請選擇欲轉移的卵子");
+        return;
+      }
+      this.isOpenSubfunction = res;
     })
   }
   
@@ -27,6 +39,7 @@ export class OvumBankTransferComponent implements OnInit, OnDestroy {
   donorOvumFreezes: GetOvumFreezeSummaryDto[] = [];
   searchResult?: string;
   isLoading = false;
+  isOpenSubfunction: FunctionDto | null = null;
   faBuildingColumns = faBuildingColumns;
   ovumTransferSubfunctions: FunctionDto[] = [];
   onSearch(){
@@ -43,7 +56,6 @@ export class OvumBankTransferComponent implements OnInit, OnDestroy {
       }
     })
     this.freezeSummaryService.getDonorOvums(Number(this.keyword))
-    
   }
   onSelectedDonorOvumFreezes(event:GetOvumFreezeSummaryDto[]){
     this.freezeSummaryService.selectedDonorOvumFreezeArray = event

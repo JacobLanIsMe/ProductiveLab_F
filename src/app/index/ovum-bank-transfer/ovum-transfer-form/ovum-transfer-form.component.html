@@ -1,0 +1,38 @@
+<div class="alertContainer">
+    <div class="alertBox">
+        <app-form-title [formTitle]="'卵子轉移'" [icon]="faMoneyBillTransfer"></app-form-title>
+        <hr>
+        <ng-container *ngIf="selectedDonorOvums.length > 0">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>卵子來源病歷號</th>
+                        <th>卵子來源姓名</th>
+                        <th>療程編號</th>
+                        <th>卵子編號</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of selectedDonorOvums">
+                        <td>{{item.ovumSourceOwner.customerSqlId}}</td>
+                        <td>{{item.ovumSourceOwner.customerName}}</td>
+                        <td>{{item.courseOfTreatmentSqlId}}</td>
+                        <td>No. {{item.ovumNumber}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </ng-container>
+
+        <form [formGroup]="transferForm" (ngSubmit)="onSubmit(transferForm)">
+            <div class="input-group mb-3">
+                <span class="input-group-text">療程編號</span>
+                <input type="text" class="form-control">
+            </div>
+            <div class="d-flex justify-content-end align-items-center">
+                <button type="button" class="btn btn-outline-primary btn-sm" (click)="onCancel()">取消</button>
+                <button class="btn btn-primary btn-sm ms-3">確認轉移</button>
+            </div>
+        </form>
+
+    </div>
+</div>
