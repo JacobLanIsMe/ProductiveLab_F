@@ -14,8 +14,9 @@ export class OvumTransferFormComponent implements OnInit {
   constructor(private commonService:CommonService, private freezeSummaryService:FreezeSummaryService, private functionHeaderService:FunctionHeaderService){}
   ngOnInit(): void {
     this.transferForm = new FormGroup({
-      "courseOfTreatmentSqlId": new FormControl(this.commonService.getCourseOfTreatmentSqlId(), Validators.required),
-      "transferOvums": new FormArray([])
+      "recipientCourseOfTreatmentSqlId": new FormControl(this.commonService.getCourseOfTreatmentSqlId(), Validators.required),
+      "donorCourseOfTreatmentId": new FormControl(null, Validators.required),
+      "transferOvumDetailIds": new FormArray([])
     })
     this.selectedDonorOvums = this.freezeSummaryService.selectedDonorOvumFreezeArray
   }
@@ -31,11 +32,15 @@ export class OvumTransferFormComponent implements OnInit {
       return;
     }
     else{
-      let formArray = <FormArray>(this.transferForm.get("transferOvums"));
+      let formArray = <FormArray>(this.transferForm.get("transferOvumDetailIds"));
       formArray.clear();
       this.freezeSummaryService.selectedDonorOvumFreezeArray.forEach(x=>{
         const formControl = new FormControl(x.freezeObservationNoteInfo.ovumDetailId);
         formArray.push(formControl);
+      });
+      const donorCourseOfTreatmentId = this.freezeSummaryService.selectedDonorOvumFreezeArray[0].courseOfTreatmentId;
+      this.transferForm.patchValue({
+        "donorCourseOfTreatmentId": donorCourseOfTreatmentId
       })
     }
     console.log(form.value)
