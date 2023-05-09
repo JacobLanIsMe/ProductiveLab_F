@@ -28,7 +28,11 @@ export class ThawOvumComponent implements OnInit, OnDestroy {
       if (res.length <= 0){
         this.recipientOvumFreezesResult = "查無相關資料";
       }
-      this.recipientOvumFreezes = res;
+      else{
+        this.recipientOvumFreezesResult = undefined;
+        this.recipientOvumFreezes = res;
+      }
+      
     })
     if (this.courseOfTreatmentId){
       this.freezeSummaryService.getRecipientOvumFreezes(this.courseOfTreatmentId);
@@ -43,7 +47,6 @@ export class ThawOvumComponent implements OnInit, OnDestroy {
       }
       this.openSubfunction = res;
     })
-    
   }
   openSubfunctionSubscription?:Subscription;
   selectedRecipientOvumFreezesSubscription?:Subscription;

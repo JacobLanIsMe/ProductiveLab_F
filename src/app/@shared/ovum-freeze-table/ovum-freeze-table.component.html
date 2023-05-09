@@ -38,17 +38,19 @@
             <td>No. {{item.ovumNumber}}</td>
             <td>{{item.ovumPickupTime | date:"yyyy-MM-dd" }}</td>
             <td>{{item.freezeTime | date:"yyyy-MM-dd"}}</td>
-            <td>Day {{item.freezeObservationNoteInfo.day}}</td>
-            <td>{{item.freezeObservationNoteInfo.ovumMaturationName}}</td>
+            <td><div *ngIf="item.freezeObservationNoteInfo">Day {{item.freezeObservationNoteInfo.day}}</div></td>
+            <td><div *ngIf="item.freezeObservationNoteInfo">{{item.freezeObservationNoteInfo.ovumMaturationName}}</div></td>
             <td>
+                <ng-container *ngIf="item.freezeObservationNoteInfo">
                 <div *ngFor="let abnormality of item.freezeObservationNoteInfo.ovumAbnormalityName">
                     {{abnormality}}
                 </div>
+                </ng-container>
             </td>
             <th>
                 <div class="m-auto d-flex justify-content-center align-items-center"
                     style="width:50px;aspect-ratio:1/1;"
-                    *ngIf="item.freezeObservationNoteInfo.observationNotePhotos.length>0">
+                    *ngIf="item.freezeObservationNoteInfo && item.freezeObservationNoteInfo.observationNotePhotos.length>0">
                     <img [src]="'data:image/gif;base64,' + item.freezeObservationNoteInfo.observationNotePhotos[0].imageBase64String"
                         style="max-width:100%;max-height:100%;">
                 </div>

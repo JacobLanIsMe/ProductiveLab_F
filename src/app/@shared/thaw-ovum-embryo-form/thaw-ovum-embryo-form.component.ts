@@ -34,7 +34,8 @@ export class ThawOvumEmbryoFormComponent implements OnInit, OnDestroy {
       "recheckEmbryologist": new FormControl(null, Validators.required),
       "mediumInUseIds": new FormArray([]),
       "freezeOvumDetailIds":new FormArray([]),
-      "courseOfTreatmentId":new FormControl(this.commonService.getCourseOfTreatmentId(), Validators.required)
+      "courseOfTreatmentId":new FormControl(this.commonService.getCourseOfTreatmentId(), Validators.required),
+      "ovumFromCourseOfTreatmentId": new FormControl(null)
     })
     this.employeeService.getAllEmbryologist().subscribe(res=>{
       this.embryologists = res;
@@ -65,19 +66,26 @@ export class ThawOvumEmbryoFormComponent implements OnInit, OnDestroy {
     this.functionHeaderService.isOpenSubfunction.next(null);
   }
   onSubmit(form:FormGroup){
-    this.freezeSummaryService.selectedRecipientOvumFreezeArray.forEach(x=>{
-      (<FormArray>(this.thawOvumForm.get("freezeOvumDetailIds"))).push(new FormControl(x.freezeObservationNoteInfo.ovumDetailId))
-    })
+    if (this.freezeSummaryService.selectedRecipientOvumFreezeArray.length > 0){
+      this.thawOvumForm.patchValue({
+        "ovumFromCourseOfTreatmentId": this.freezeSummaryService.selectedRecipientOvumFreezeArray[0].courseOfTreatmentId
+      });
+      this.freezeSummaryService.selectedRecipientOvumFreezeArray.forEach(x=>{
+        (<FormArray>(this.thawOvumForm.get("freezeOvumDetailIds"))).push(new FormControl(x.ovumDetailId))
+      })
+    }
+    else{
+      this.commonService.showAlertMessage("","請選擇欲解凍的卵子");
+      return;
+    }
     this.treatmentService.addOvumThaw(form).subscribe(res=>{
       this.commonService.judgeTheResponse(res, "解凍", res.errorMessage, form)
       const courseOfTreatmentId = this.commonService.getCourseOfTreatmentId();
       if (courseOfTreatmentId){
         if (this.function.functionId === 31){
-          console.log("解凍卵子")
           this.freezeSummaryService.getRecipientOvumFreezes(courseOfTreatmentId);
         }
-        if (this.function.functionId === 33){
-          console.log("解凍胚胎");
+        if (this.function.functionId === 32){
           this.freezeSummaryService.getEmbryoFreezes(courseOfTreatmentId);
         }
       }

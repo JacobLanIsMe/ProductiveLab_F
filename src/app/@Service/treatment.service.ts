@@ -87,4 +87,7 @@ export class TreatmentService {
   addOvumThaw(form:FormGroup){
     return this.http.post<BaseResponseDto>("/api/Treatment/AddOvumThaw", form.value);
   }
+  ovumBankTransfer(form:FormGroup){
+    return this.http.post<BaseResponseDto>("/api/Treatment/OvumBankTransfer", form.value);
+  }
 }
