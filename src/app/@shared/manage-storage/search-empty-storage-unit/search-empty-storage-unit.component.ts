@@ -16,7 +16,7 @@ import { OvumFreezeStorageDto } from 'src/app/@Models/ovumFreezeStorageDto.model
   styleUrls: ['./search-empty-storage-unit.component.css']
 })
 export class SearchEmptyStorageUnitComponent implements OnInit, OnDestroy {
-  @Input() subfunction: FunctionDto|null = null;
+ 
   constructor(private manageStorageService: ManageStorageService, private commonService:CommonService, private treatmentService:TreatmentService){}
   ngOnDestroy(): void {
     this.locationSubscription?.unsubscribe();
@@ -47,16 +47,17 @@ export class SearchEmptyStorageUnitComponent implements OnInit, OnDestroy {
     this.locationSubscription = this.manageStorageService.selectedLocations.subscribe(res=>{
       this.selectedLocations = res
     })
-    const courseOfTreatmentId = this.commonService.getCourseOfTreatmentId();
-    if (courseOfTreatmentId){
-      this.manageStorageService.getOvumFreezeStorageInfo(courseOfTreatmentId).subscribe(res=>{
+    if (this.selectedOvumDetailId){
+      this.manageStorageService.getOvumFreezeStorageInfo(this.selectedOvumDetailId).subscribe(res=>{
         this.ovumFreezeStorages = res;
       })
-      this.treatmentService.getOvumOwnerInfo(courseOfTreatmentId).subscribe(res=>{
+      this.treatmentService.getOvumOwnerInfo(this.selectedOvumDetailId).subscribe(res=>{
         this.ovumOwner = res;
       })
     }
   }
+  @Input() subfunction: FunctionDto|null = null;
+  @Input() selectedOvumDetailId?: string;
   locationSubscription?:Subscription;
   storageTankStatuses?: StorageTankStatusDto[];
   selectedCanistId = 0;

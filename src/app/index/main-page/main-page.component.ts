@@ -20,10 +20,9 @@ export class MainPageComponent implements OnInit {
   }
   mainPageInfos: MainPageDto[] = [];
   isLoading = true;
-  onSelectCourse(courseId: string, courseOfTreatmentSqlId: number, ovumFromCourseOfTreatmentId:string, spermFromCourseOfTreatmentId:string){
+  onSelectCourse(courseId: string, courseOfTreatmentSqlId: number, spermFromCourseOfTreatmentId:string){
     localStorage.setItem(LocalStorageKey.courseOfTreatmentId, courseId);
     localStorage.setItem(LocalStorageKey.courseOfTreatmentSqlId, courseOfTreatmentSqlId.toString());
-    localStorage.setItem(LocalStorageKey.ovumFromCourseOfTreatmentId, ovumFromCourseOfTreatmentId);
     localStorage.setItem(LocalStorageKey.spermFromCourseOfTreatmentId, spermFromCourseOfTreatmentId);
   }
 }

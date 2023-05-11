@@ -30,9 +30,9 @@ export class ManageStorageService {
       params: new HttpParams().append("tankId", tankId).append("canistId", canistId)
     })
   }
-  getOvumFreezeStorageInfo(courseOfTreatmentId: string){
+  getOvumFreezeStorageInfo(ovumDetailId: string){
     return this.http.get<OvumFreezeStorageDto[]>("/api/StorageManager/GetOvumFreezeStorageInfo", {
-      params: new HttpParams().append("courseOfTreatmentId", courseOfTreatmentId)
+      params: new HttpParams().append("ovumDetailId", ovumDetailId)
     })
   }
 }

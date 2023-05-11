@@ -2,7 +2,7 @@
     <div class="alertBox" style="width:90vw;height:90vh;">
         <div class="d-flex justify-content-around h-100">
             <div style="height:100%; overflow-y:auto;">
-                <app-search-empty-storage-unit [subfunction]="subfunction"></app-search-empty-storage-unit>
+                <app-search-empty-storage-unit [subfunction]="subfunction" [selectedOvumDetailId]="firstSelectedOvumDetailId"></app-search-empty-storage-unit>
             </div>
             <div style="height:100%;overflow:auto;">
                 <app-form-title *ngIf="subfunction" [formTitle]="subfunction.name" [icon]="faSnowflake"></app-form-title>

@@ -49,10 +49,14 @@ export class FreezeOvumComponent implements OnInit,OnDestroy {
       this.mediums=this.manageMediumService.getOvumFreezeAndOtherMediun(res);
     })
     this.manageMediumService.getUpdatedInUseMediums();
-    const selectedOvumDetailIds = this.treatmentService.selectedOvumDetails.map(x=>x.ovumDetailId)
-    this.observationNoteService.getFreezeObservationNotes(selectedOvumDetailIds).subscribe(res=>{
-      this.selectedObservationNotes = res;
-    });
+    const selectedOvumDetailIds = this.treatmentService.selectedOvumDetails.map(x=>x.ovumDetailId);
+    if (selectedOvumDetailIds.length > 0){
+      this.observationNoteService.getFreezeObservationNotes(selectedOvumDetailIds).subscribe(res=>{
+        this.selectedObservationNotes = res;
+      });
+      this.firstSelectedOvumDetailId = selectedOvumDetailIds[0];
+    }
+    
     this.employeeService.getAllEmbryologist().subscribe(res=>{
       this.embryologists = res;
     })
@@ -79,6 +83,7 @@ export class FreezeOvumComponent implements OnInit,OnDestroy {
   isChooseOtherMedium = false;
   selectedLocations: StorageLocation[] = [];
   selectedObservationNotes: GetObservationNoteNameDto[] = [];
+  firstSelectedOvumDetailId?: string;
   onSelectMedium(event:any){
     const selectedMedium = this.mediums.filter(x=>x.mediumInUseId === event.target.value);
     if (selectedMedium.length>0){

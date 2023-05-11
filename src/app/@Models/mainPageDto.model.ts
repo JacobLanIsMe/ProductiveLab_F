@@ -11,7 +11,6 @@ export class MainPageDto{
         public doctor: string,
         public treatment: TreatmentDto,
         public treatmentStatus: string,
-        public ovumFromCourseOfTreatmentId:string,
         public spermFromCourseOfTreatmentId:string
         ){}
 }

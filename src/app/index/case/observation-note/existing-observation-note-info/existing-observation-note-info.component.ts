@@ -15,6 +15,7 @@ export class ExistingObservationNoteInfoComponent implements OnInit {
   ngOnInit(): void {
     if (this.observationNoteService.selectedObservationNoteId){
       this.observationNoteService.getExistingObservationNoteName(this.observationNoteService.selectedObservationNoteId).subscribe(res=>{
+        this.isLoading = false;
         this.existingObservationNote = res;
         if (res.observationNotePhotos.length>0){
           res.observationNotePhotos.forEach(x=>{
@@ -32,6 +33,7 @@ export class ExistingObservationNoteInfoComponent implements OnInit {
   selectedOvumPickup = this.observationNoteService.selectedOvumPickup;
   selectedDay = this.observationNoteService.selectedDay;
   faList = faList;
+  isLoading = true;
   onShowPhoto(photoBase64String:string){
     this.mainPhotoBase64String = photoBase64String;
   }

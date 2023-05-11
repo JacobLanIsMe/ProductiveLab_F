@@ -14,7 +14,7 @@
       <tr>
         <th scope="col">全選<span class="ms-1"><input type="checkbox" [(ngModel)]="isSelectAll"
               (click)="onSelectAll($event)"></span></th>
-        <th scope="col">卵子 No.</th>
+        <th scope="col">卵子編號</th>
         <th scope="col">用途/來源療程編號</th>
         <th scope="col">狀態</th>
         <th scope="col">卵胚天數</th>
@@ -25,7 +25,7 @@
     <tbody>
       <tr *ngFor="let ovum of treatmentSummarys">
         <td><input type="checkbox" [(ngModel)]="ovum.isChecked" (change)="onSelectOvum()"></td>
-        <td>{{ovum.ovumNumber}}</td>
+        <td>No. {{ovum.ovumNumber}}</td>
         <td>{{ovum.ovumSource}}/{{ovum.ovumFromCourseOfTreatmentSqlId}}</td>
         <td>{{ovum.ovumDetailStatus}}</td>
         <td>{{ovum.dateOfEmbryo}}</td>

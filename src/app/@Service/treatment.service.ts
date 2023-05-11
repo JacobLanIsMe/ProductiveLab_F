@@ -67,9 +67,9 @@ export class TreatmentService {
   addOvumFreeze(form:FormGroup){
     return this.http.post<BaseResponseDto>("/api/Treatment/AddOvumFreeze", form.value);
   }
-  getOvumOwnerInfo(courseOfTreatmentId:string){
+  getOvumOwnerInfo(ovumDetailId:string){
     return this.http.get<BaseCustomerInfoDto>("/api/Treatment/GetOvumOwnerInfo", {
-      params: new HttpParams().append("courseOfTreatmentId",courseOfTreatmentId)
+      params: new HttpParams().append("ovumDetailId",ovumDetailId)
     })
   }
   getTopColors(){
