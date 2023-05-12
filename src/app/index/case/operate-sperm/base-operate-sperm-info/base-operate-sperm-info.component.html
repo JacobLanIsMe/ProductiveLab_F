@@ -1,73 +1,49 @@
 <div class="d-flex justify-content-between">
-<app-title [icon]="faMicroscope" [title]="'精蟲處理'"></app-title>
-<app-subfunction-header [subfunctions]="subfunctions"></app-subfunction-header>
+  <app-title [icon]="faMicroscope" [title]="'精蟲處理'"></app-title>
+  <app-subfunction-header [subfunctions]="subfunctions"></app-subfunction-header>
 </div>
 <hr>
-<ng-container *ngIf="baseOperateSpermInfo">
-  <div class="mb-3">
-    <div class="fs-6 fw-bold text-warning-emphasis mb-1">精蟲資訊: </div>
-    <div class="row">
-      <div class="col-3"><span class="fw-bold">病歷號:
-        </span><span>{{baseOperateSpermInfo.spermOwner.customerSqlId}}</span></div>
-      <div class="col-5"><span class="fw-bold">姓名: </span><span>{{baseOperateSpermInfo.spermOwner.customerName}}</span>
-      </div>
-      <div class="col-4"><span class="fw-bold">出生年月日: </span><span>{{baseOperateSpermInfo.spermOwner.birthday | date:
-          "yyyy/MM/dd"}}</span></div>
-    </div>
-    <div class="row">
-      <div class="col-3"><span class="fw-bold">精蟲來源: </span><span>{{baseOperateSpermInfo.spermSituationName}}精蟲</span>
-      </div>
-      <div class="col-5"><span class="fw-bold">取精方式:
-        </span><span>{{baseOperateSpermInfo.spermRetrievalMethodName}}</span></div>
-    </div>
-    <ng-container *ngIf="allSpermScore.length > 0">
-      <table class="table table-hover mt-3">
-        <thead>
-          <tr class="table-warning">
-            <th scope="col">療程編號</th>
-            <th scope="col">時間點</th>
-            <th scope="col">禁慾天數</th>
-            <th scope="col">體積</th>
-            <th scope="col">濃度 (X10^6)</th>
-            <th scope="col">活動力A</th>
-            <th scope="col">活動力B</th>
-            <th scope="col">活動力C</th>
-            <th scope="col">活動力D</th>
-            <th scope="col">型態</th>
-            <th scope="col">處理者</th>
-            <th scope="col">紀錄時間</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let score of allSpermScore">
-            <td>{{score.courseOfTreatmentSqlId}}</td>
-            <td>{{score.spermScoreTimePoint}}</td>
-            <td>{{score.abstinence}}</td>
-            <td>{{score.volume}}</td>
-            <td>{{score.concentration}}</td>
-            <td>{{score.activityA}}</td>
-            <td>{{score.activityB}}</td>
-            <td>{{score.activityC}}</td>
-            <td>{{score.activityD}}</td>
-            <td>{{score.morphology}}</td>
-            <td>{{score.embryologistName}}</td>
-            <td>{{score.recordTime | date:"yyyy-MM-dd hh:mm:ss"}}</td>
-          </tr>
-          <!-- <tr *ngFor="let score of currentSpermScores">
-            <td>{{score.spermScoreTimePoint}}</td>
-            <td>{{score.abstinence}}</td>
-            <td>{{score.volume}}</td>
-            <td>{{score.concentration}}</td>
-            <td>{{score.activityA}}</td>
-            <td>{{score.activityB}}</td>
-            <td>{{score.activityC}}</td>
-            <td>{{score.activityD}}</td>
-            <td>{{score.morphology}}</td>
-            <td>{{score.embryologistName}}</td>
-            <td>{{score.recordTime | date:"yyyy-MM-dd hh:mm:ss"}}</td>
-          </tr> -->
-        </tbody>
-      </table>
-    </ng-container>
-  </div>
-</ng-container>
+<div *ngIf="allSpermScore.length" style="width:100%;overflow:auto;">
+  <table class="table table-hover mt-3">
+    <thead>
+      <tr class="table-warning">
+        <th scope="col">精蟲來源病歷號</th>
+        <th scope="col">精蟲來源姓名</th>
+        <th scope="col">精蟲來源</th>
+        <th scope="col">精蟲取經方式</th>
+        <th scope="col">療程編號</th>
+        <th scope="col">時間點</th>
+        <th scope="col">禁慾天數</th>
+        <th scope="col">體積</th>
+        <th scope="col">濃度 (X10^6)</th>
+        <th scope="col">活動力A</th>
+        <th scope="col">活動力B</th>
+        <th scope="col">活動力C</th>
+        <th scope="col">活動力D</th>
+        <th scope="col">型態</th>
+        <th scope="col">處理者</th>
+        <th scope="col">紀錄時間</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of allSpermScore">
+        <td>{{item.baseSpermInfo.spermOwner.customerSqlId}}</td>
+        <td>{{item.baseSpermInfo.spermOwner.customerName}}</td>
+        <td>{{item.baseSpermInfo.spermSituationName}}</td>
+        <td>{{item.baseSpermInfo.spermRetrievalMethodName}}</td>
+        <td>{{item.courseOfTreatmentSqlId}}</td>
+        <td>{{item.spermScoreTimePoint}}</td>
+        <td>{{item.abstinence}}</td>
+        <td>{{item.volume}}</td>
+        <td>{{item.concentration}}</td>
+        <td>{{item.activityA}}</td>
+        <td>{{item.activityB}}</td>
+        <td>{{item.activityC}}</td>
+        <td>{{item.activityD}}</td>
+        <td>{{item.morphology}}</td>
+        <td>{{item.embryologistName}}</td>
+        <td>{{item.recordTime | date:"yyyy-MM-dd hh:mm:ss"}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

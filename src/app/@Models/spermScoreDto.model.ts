@@ -1,3 +1,5 @@
+import { BaseOperateSpermInfoDto } from "./baseOperateSpermInfoDto.model";
+
 export class SpermScoreDto{
     constructor(
         public volume: number,
@@ -13,8 +15,10 @@ export class SpermScoreDto{
         public embryologistName: string,
         public courseOfTreatmentId: string,
         public courseOfTreatmentSqlId: number,
+        public baseSpermInfo: BaseOperateSpermInfoDto,
         public morphology?: number,
         public abstinence?: number,
+        
         
         
 

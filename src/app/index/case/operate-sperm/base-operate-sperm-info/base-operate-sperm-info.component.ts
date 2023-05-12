@@ -17,30 +17,20 @@ export class BaseOperateSpermInfoComponent implements OnInit, OnDestroy {
   constructor(private operateSpermService: OperateSpermService, private commonService: CommonService, private functionHeaderService:FunctionHeaderService){}
   ngOnDestroy(): void {
     this.spermScoreSubscription?.unsubscribe();
-    this.operateSpermService.allSpermScoreArray.length = 0;
   }
   ngOnInit(): void {
     this.spermScoreSubscription = this.operateSpermService.allSpermScore.subscribe(res => {
       this.allSpermScore = res;
     })
     const courseOfTreatmentId = this.commonService.getCourseOfTreatmentId();
-    const spermFromCourseOfTreatmentId = this.commonService.getSpermFromCourseOfTreatmentId();
     if (courseOfTreatmentId){
-      this.operateSpermService.getOriginInfoOfSperm(courseOfTreatmentId).subscribe(res=>{
-        this.operateSpermService.baseOperateSpermInfo = res;
-        this.baseOperateSpermInfo = res;
-      });
       this.operateSpermService.getSpermScores(courseOfTreatmentId);
-      if (spermFromCourseOfTreatmentId && courseOfTreatmentId.toUpperCase() != spermFromCourseOfTreatmentId.toUpperCase()){
-        this.operateSpermService.getSpermScores(spermFromCourseOfTreatmentId);
-      }
     }
     this.functionHeaderService.getSubfunctions(FunctionEnum.operateSperm).subscribe(res=>{
       this.subfunctions = res;
     })
   }
   spermScoreSubscription?: Subscription;
-  baseOperateSpermInfo?: BaseOperateSpermInfoDto;
   faMicroscope = faMicroscope;
   allSpermScore: SpermScoreDto[] = [];
   subfunctions:FunctionDto[]=[];

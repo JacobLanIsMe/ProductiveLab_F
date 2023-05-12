@@ -14,13 +14,15 @@ import { MediumTypeEnum } from 'src/app/@Enums/mediumTypeEnum.model';
 import { Subscription } from 'rxjs';
 import { CommonDto } from 'src/app/@Models/commonDto.model';
 import { StorageLocation } from 'src/app/@Models/storageLocation.model';
+import { TreatmentService } from 'src/app/@Service/treatment.service';
+import { BaseCustomerInfoDto } from 'src/app/@Models/baseCustomerInfoDto.model';
 @Component({
   selector: 'app-freeze-sperm',
   templateUrl: './freeze-sperm.component.html',
   styleUrls: ['./freeze-sperm.component.css']
 })
 export class FreezeSpermComponent implements OnInit, OnDestroy{
-  constructor(private operateSpermService:OperateSpermService, private manageStorageService:ManageStorageService, private manageMediumService: ManageMediumService, private dateService:DateService, private employeeService: EmployeeService, private functionHeaderService:FunctionHeaderService, private commonService: CommonService){}
+  constructor(private operateSpermService:OperateSpermService, private manageStorageService:ManageStorageService, private manageMediumService: ManageMediumService, private dateService:DateService, private employeeService: EmployeeService, private functionHeaderService:FunctionHeaderService, private commonService: CommonService, private treatmentService:TreatmentService){}
   ngOnDestroy(): void {
     this.mediumSubscription?.unsubscribe();
     this.selectedMediumSubscription?.unsubscribe();
@@ -62,6 +64,11 @@ export class FreezeSpermComponent implements OnInit, OnDestroy{
       })
       this.isSelectOtherMedium = res.mediumTypeId === MediumTypeEnum.other ? true : false;
     })
+    if (courseOfTreatmentId){
+      this.treatmentService.getCustomerByCourseOfTreatmentId(courseOfTreatmentId).subscribe(res=>{
+        this.spermOwner = res;
+      })
+    }
     
   }
   mediumSubscription?:Subscription;
@@ -69,7 +76,7 @@ export class FreezeSpermComponent implements OnInit, OnDestroy{
   locationSubscription?:Subscription;
   freezeSpermForm!: FormGroup;
   spermFromCourseOfTreatmentId: string | undefined;
-  spermOwner = this.operateSpermService.baseOperateSpermInfo?.spermOwner;
+  spermOwner?: BaseCustomerInfoDto;
   faSnowflake = faSnowflake;
   faXmark = faXmark;
   spermFreezeOperateMethods: CommonDto[] = [];
@@ -106,7 +113,6 @@ export class FreezeSpermComponent implements OnInit, OnDestroy{
     form.patchValue({
       "spermFreezeOperationMethodId": +form.value.spermFreezeOperationMethodId
     })
-    // console.log(this.selectedLocations)
     this.operateSpermService.addSpermFreeze(form).subscribe(res=>{
       this.commonService.judgeTheResponse(res, "冷凍精蟲", res.errorMessage, form);
     })

@@ -23,7 +23,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let item of mainPageInfos" [routerLink]="['/index', 'case', item.courseOfTreatmentId, 'treatmentSummary']" (click)="onSelectCourse(item.courseOfTreatmentId, item.courseOfTreatmentSqlId, item.spermFromCourseOfTreatmentId)">
+            <tr *ngFor="let item of mainPageInfos" [routerLink]="['/index', 'case', item.courseOfTreatmentId, 'treatmentSummary']" (click)="onSelectCourse(item.courseOfTreatmentId, item.courseOfTreatmentSqlId)">
                 <th scope="row">{{item.courseOfTreatmentSqlId}}</th>
                 <td>{{item.treatmentDay }}</td>
                 <td>{{item.surgicalTime | date: "yyyy/MM/dd hh:00" }}</td>

@@ -30,7 +30,7 @@ export class FertilisationComponent implements OnInit, OnDestroy {
     this.spermScoreSubscription?.unsubscribe();
     this.manageMediumService.selectedMediumArray.length = 0;
     this.treatmentService.selectedOvumDetails.length = 0;
-    this.operateSpermService.allSpermScoreArray.length = 0;
+    // this.operateSpermService.allSpermScoreArray.length = 0;
   }
   ngOnInit(): void {
     this.fertilisationForm = new FormGroup({
@@ -63,9 +63,6 @@ export class FertilisationComponent implements OnInit, OnDestroy {
     })
     this.courseOfTreatmentId = this.commonService.getCourseOfTreatmentId();
     if (this.courseOfTreatmentId){
-      this.operateSpermService.getOriginInfoOfSperm(this.courseOfTreatmentId).subscribe(res=>{
-        this.originOfSpermInfo = res;
-      });
       this.operateSpermService.getSpermScores(this.courseOfTreatmentId);
     }
     
@@ -83,7 +80,7 @@ export class FertilisationComponent implements OnInit, OnDestroy {
   mediums: MediumDto[] = [];
   embryologists: EmbryologistDto[] = [];
   selectedOvumDetails:TreatmentSummaryDto[] = this.treatmentService.selectedOvumDetails;
-  originOfSpermInfo?: BaseOperateSpermInfoDto;
+  // originOfSpermInfo?: BaseOperateSpermInfoDto;
   spermScores: SpermScoreDto[] = [];
   onSelectIncubator(event:any){
     this.isOtherIncubator = +event.target.value === IncubatorEnum.other ? true : false
@@ -92,10 +89,6 @@ export class FertilisationComponent implements OnInit, OnDestroy {
     this.functionHeaderService.isOpenSubfunction.next(null);
   }
   onSubmit(form:FormGroup){
-    if (!this.originOfSpermInfo){
-      this.commonService.showAlertMessage("", "此療程編號沒有能受精的精子來源");
-      return;
-    }
     if (this.spermScores.length <= 0){
       this.commonService.showAlertMessage("", "精子尚未評分");
       return;

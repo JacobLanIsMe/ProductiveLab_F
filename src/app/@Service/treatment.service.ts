@@ -61,6 +61,16 @@ export class TreatmentService {
   getAllCustomer(){
     return this.http.get<BaseCustomerInfoDto[]>("/api/Treatment/GetAllCustomer");
   }
+  getCustomerByCustomerSqlId(customerSqlId:number){
+    return this.http.get<BaseCustomerInfoDto>("/api/Treatment/GetCustomerByCustomerSqlId", {
+      params:new HttpParams().append("customerSqlId", customerSqlId)
+    })
+  }
+  getCustomerByCourseOfTreatmentId(courseOfTreatmentId:string){
+    return this.http.get<BaseCustomerInfoDto>("/api/Treatment/GetCustomerByCourseOfTreatmentId", {
+      params:new HttpParams().append("courseOfTreatmentId", courseOfTreatmentId)
+    })
+  }
   addCourseOfTreatment(form: FormGroup){
     return this.http.post<BaseResponseDto>("/api/Treatment/AddCourseOfTreatment", form.value);
   }

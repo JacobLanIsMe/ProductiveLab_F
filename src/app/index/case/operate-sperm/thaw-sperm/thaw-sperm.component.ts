@@ -14,13 +14,15 @@ import { ManageMediumService } from 'src/app/@Service/manage-medium.service';
 import { MediumDto } from 'src/app/@Models/mediumDto.model';
 import { Subscription } from 'rxjs';
 import { FunctionDto } from 'src/app/@Models/functionDto.model';
+import { BaseCustomerInfoDto } from 'src/app/@Models/baseCustomerInfoDto.model';
+import { TreatmentService } from 'src/app/@Service/treatment.service';
 @Component({
   selector: 'app-thaw-sperm',
   templateUrl: './thaw-sperm.component.html',
   styleUrls: ['./thaw-sperm.component.css']
 })
 export class ThawSpermComponent implements OnInit, OnDestroy {
-  constructor(private operateSpermService: OperateSpermService, private functionHeaderService: FunctionHeaderService, private commonService: CommonService, private dateService: DateService, private employeeService: EmployeeService, private manageMediumService:ManageMediumService) { }
+  constructor(private operateSpermService: OperateSpermService, private functionHeaderService: FunctionHeaderService, private commonService: CommonService, private dateService: DateService, private employeeService: EmployeeService, private manageMediumService:ManageMediumService, private treatmentService:TreatmentService) { }
   ngOnDestroy(): void {
     this.updatedMediumSubscription?.unsubscribe();
     this.selectedMediumSubscription?.unsubscribe();
@@ -37,15 +39,7 @@ export class ThawSpermComponent implements OnInit, OnDestroy {
       "otherSpermThawMethod": new FormControl(null),
       "mediumInUseIds": new FormArray([])
     })
-    const spermFromCourseOfTreatmentId = this.commonService.getSpermFromCourseOfTreatmentId();
-    if (spermFromCourseOfTreatmentId) {
-      this.operateSpermService.getSpermFreeze(spermFromCourseOfTreatmentId).subscribe(res => {
-        if (res.length<=0){
-          this.hasSpermFreezes = "無可解凍的精蟲";
-        }
-        this.spermFreezes = res;
-      })
-    }
+   
     this.employeeService.getAllEmbryologist().subscribe(res => {
       this.embryologists = res;
     })
@@ -68,13 +62,12 @@ export class ThawSpermComponent implements OnInit, OnDestroy {
   spermThawMethods: CommonDto[] = [];
   spermFreezes: SpermFreezeDto[] = [];
   mediums: MediumDto[] = [];
-  hasSpermFreezes = "";
+  hasSpermFreezes?: string;
   isSelectAll: boolean = false;
   isOtherSpermThawMethod: boolean = false;
   faListCheck = faListCheck;
-  spermOwnerSqlId?: number = this.operateSpermService.baseOperateSpermInfo?.spermOwner.customerSqlId;
-  spermOwnerName?: string = this.operateSpermService.baseOperateSpermInfo?.spermOwner.customerName;
- 
+  spermOwner?: BaseCustomerInfoDto;
+  keyword?: string;
   selectSpermThawMethod(event: any) {
     this.isOtherSpermThawMethod = +event.target.value === SpermThawMethodEnum.other ? true : false
   }
@@ -86,6 +79,22 @@ export class ThawSpermComponent implements OnInit, OnDestroy {
   onSelectLocation() {
     let arr = this.spermFreezes.filter(x => !x.isChecked);
     this.isSelectAll = arr.length ? false : true;
+  }
+  onSearch(){
+    if (this.keyword){
+      this.operateSpermService.getSpermFreeze(Number(this.keyword)).subscribe(res=>{
+        if (res.length <= 0){
+          this.hasSpermFreezes = "此病歷號無可解凍的精蟲";
+        }
+        else{
+          this.hasSpermFreezes = undefined;
+        }
+        this.spermFreezes = res
+      })
+      this.treatmentService.getCustomerByCustomerSqlId(Number(this.keyword)).subscribe(res=>{
+        this.spermOwner = res;
+      })
+    }
   }
   onCancel() {
     this.functionHeaderService.isOpenSubfunction.next(null);

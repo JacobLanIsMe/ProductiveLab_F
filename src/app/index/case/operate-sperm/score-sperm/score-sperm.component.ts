@@ -3,18 +3,22 @@ import { EmployeeService } from './../../../../@Service/employee.service';
 import { DateService } from './../../../../@Service/date.service';
 import { OperateSpermService } from './../../../../@Service/operate-sperm.service';
 import { FunctionHeaderService } from './../../../../@Service/function-header.service';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { FunctionDto } from 'src/app/@Models/functionDto.model';
 import { faStopwatch } from '@fortawesome/free-solid-svg-icons';
 import { EmbryologistDto } from 'src/app/@Models/embryologistDto.model';
+import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-score-sperm',
   templateUrl: './score-sperm.component.html',
   styleUrls: ['./score-sperm.component.css']
 })
-export class ScoreSpermComponent implements OnInit {
+export class ScoreSpermComponent implements OnInit, OnDestroy {
   constructor(private functionHeaderService: FunctionHeaderService, private operateSpermService: OperateSpermService, private dateService: DateService, private employeeService: EmployeeService, private commonService: CommonService){}
+  ngOnDestroy(): void {
+    this.spermScoreSubscription?.unsubscribe();
+  }
   ngOnInit(): void {
     switch (this.subfunction?.functionId){
       case 23:
@@ -31,7 +35,6 @@ export class ScoreSpermComponent implements OnInit {
         break;
     }
     this.courseOfTreatmentId = this.commonService.getCourseOfTreatmentId();
-    this.spermFromCourseOfTreatmentId = this.commonService.getSpermFromCourseOfTreatmentId();
     this.scoreSpermForm = new FormGroup({
       "volume": new FormControl(null, Validators.required),
       "concentration": new FormControl(null, Validators.required),
@@ -51,37 +54,38 @@ export class ScoreSpermComponent implements OnInit {
         this.embryologists = embryologists;
       }
     })
-    const existingSpermScores = this.operateSpermService.allSpermScoreArray;
-    existingSpermScores.forEach(x=>{
-      if (x.spermScoreTimePointId == this.spermScoreTimePointId){
-        this.hasExistingSpermScore = true;
-        this.scoreSpermForm.patchValue({
-          "volume": x.volume,
-          "concentration": x.concentration,
-          "activityA": x.activityA,
-          "activityB": x.activityB,
-          "activityC": x.activityC,
-          "activityD": x.activityD,
-          "morphology": x.morphology,
-          "abstinence": x.abstinence,
-          "recordTime": x.recordTime,
-          "embryologist": x.embryologist.toUpperCase()
-        });
-      }
+    this.spermScoreSubscription = this.operateSpermService.allSpermScore.subscribe(res=>{
+      res.forEach(x=>{
+        if (x.spermScoreTimePointId == this.spermScoreTimePointId){
+          this.hasExistingSpermScore = true;
+          this.scoreSpermForm.patchValue({
+            "volume": x.volume,
+            "concentration": x.concentration,
+            "activityA": x.activityA,
+            "activityB": x.activityB,
+            "activityC": x.activityC,
+            "activityD": x.activityD,
+            "morphology": x.morphology,
+            "abstinence": x.abstinence,
+            "recordTime": x.recordTime,
+            "embryologist": x.embryologist.toUpperCase()
+          });
+        }
+      })
     })
-    
-    if (this.courseOfTreatmentId && this.spermFromCourseOfTreatmentId && this.courseOfTreatmentId.toUpperCase() != this.spermFromCourseOfTreatmentId.toUpperCase() && (this.spermScoreTimePointId === 1 || this.spermScoreTimePointId === 2)){
-      this.scoreSpermForm.disable();
+    if (this.courseOfTreatmentId){
+      this.operateSpermService.getSpermScores(this.courseOfTreatmentId);
     }
+    
   }
   @Input() subfunction: FunctionDto | undefined
+  spermScoreSubscription?:Subscription;
   scoreSpermForm!: FormGroup;
   spermScoreTimePointId: number | undefined;
   embryologists?: EmbryologistDto[];
   hasExistingSpermScore: boolean = false;
   faStopwatch = faStopwatch;
   courseOfTreatmentId?: string | null;
-  spermFromCourseOfTreatmentId?: string | null;
 
   onCancel(){
     this.functionHeaderService.isOpenSubfunction.next(null);
