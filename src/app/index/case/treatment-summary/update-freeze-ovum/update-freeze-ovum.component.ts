@@ -7,13 +7,15 @@ import { DateService } from 'src/app/@Service/date.service';
 import { ManageMediumService } from 'src/app/@Service/manage-medium.service';
 import { faSnowflake } from '@fortawesome/free-solid-svg-icons';
 import { TreatmentService } from 'src/app/@Service/treatment.service';
+import { EmbryologistDto } from 'src/app/@Models/embryologistDto.model';
+import { EmployeeService } from 'src/app/@Service/employee.service';
 @Component({
   selector: 'app-update-freeze-ovum',
   templateUrl: './update-freeze-ovum.component.html',
   styleUrls: ['./update-freeze-ovum.component.css']
 })
 export class UpdateFreezeOvumComponent implements OnInit, OnDestroy {
-  constructor(private dateService:DateService,private manageMediumService: ManageMediumService, private treatmentService:TreatmentService){}
+  constructor(private dateService:DateService,private manageMediumService: ManageMediumService, private treatmentService:TreatmentService, private employeeService:EmployeeService){}
   ngOnDestroy(): void {
     this.freezeMediumSubscription?.unsubscribe();
     this.mediumSubscription?.unsubscribe();
@@ -35,10 +37,14 @@ export class UpdateFreezeOvumComponent implements OnInit, OnDestroy {
       })
       this.isSelectOtherMedium = res.mediumTypeId === MediumTypeEnum.other ? true : false;
     })
+    this.employeeService.getAllEmbryologist().subscribe(res=>{
+      this.embryologists = res;
+    })
     this.mediumSubscription = this.manageMediumService.updatedInUseMedium.subscribe(res=>{
       this.freezeMediums = this.manageMediumService.getOvumFreezeAndOtherMediun(res);
     })
     this.manageMediumService.getUpdatedInUseMediums();
+
   }
   freezeMediumSubscription?:Subscription;
   mediumSubscription?:Subscription;
@@ -46,6 +52,7 @@ export class UpdateFreezeOvumComponent implements OnInit, OnDestroy {
   freezeMediums:MediumDto[] = []
   isSelectOtherMedium = false;
   faSnowflake = faSnowflake;
+  embryologists: EmbryologistDto[] = [];
   onCancel(){
     this.treatmentService.isOpenUpdateFreezeOvum.next(false);
   }

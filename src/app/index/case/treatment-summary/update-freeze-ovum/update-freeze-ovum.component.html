@@ -7,6 +7,15 @@
                 <span class="input-group-text">操作時間</span>
                 <input type="datetime-local" class="form-control" formControlName="operationTime">
             </div>
+            <div class="input-group mb-3">
+                <span class="input-group-text">操作胚胎師</span>
+                <select class="form-select" formControlName="embryologist">
+                    <ng-container *ngIf="embryologists.length">
+                        <option *ngFor="let embryologist of embryologists" [value]="embryologist.employeeId">
+                            {{embryologist.name}}</option>
+                    </ng-container>
+                </select>
+            </div>
             <app-medium-input [name]="'冷凍液'" [mediums]="freezeMediums" [isMultiple]="false"></app-medium-input>
             <div class="input-group mb-3" *ngIf="isSelectOtherMedium">
                 <span class="input-group-text">其他冷凍液</span>
