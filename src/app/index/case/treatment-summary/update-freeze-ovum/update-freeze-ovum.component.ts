@@ -6,13 +6,14 @@ import { MediumDto } from 'src/app/@Models/mediumDto.model';
 import { DateService } from 'src/app/@Service/date.service';
 import { ManageMediumService } from 'src/app/@Service/manage-medium.service';
 import { faSnowflake } from '@fortawesome/free-solid-svg-icons';
+import { TreatmentService } from 'src/app/@Service/treatment.service';
 @Component({
   selector: 'app-update-freeze-ovum',
   templateUrl: './update-freeze-ovum.component.html',
   styleUrls: ['./update-freeze-ovum.component.css']
 })
 export class UpdateFreezeOvumComponent implements OnInit, OnDestroy {
-  constructor(private dateService:DateService,private manageMediumService: ManageMediumService){}
+  constructor(private dateService:DateService,private manageMediumService: ManageMediumService, private treatmentService:TreatmentService){}
   ngOnDestroy(): void {
     this.freezeMediumSubscription?.unsubscribe();
     this.mediumSubscription?.unsubscribe();
@@ -45,6 +46,9 @@ export class UpdateFreezeOvumComponent implements OnInit, OnDestroy {
   freezeMediums:MediumDto[] = []
   isSelectOtherMedium = false;
   faSnowflake = faSnowflake;
+  onCancel(){
+    this.treatmentService.isOpenUpdateFreezeOvum.next(false);
+  }
   onSubmit(form: FormGroup){
     console.log(form.value)
   }

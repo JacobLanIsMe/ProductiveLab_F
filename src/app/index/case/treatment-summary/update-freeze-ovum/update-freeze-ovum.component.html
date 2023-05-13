@@ -1,11 +1,21 @@
-<app-form-title [formTitle]="'編輯冷凍入庫'" [icon]="faSnowflake"></app-form-title>
-<hr>
-<form [formGroup]="updateFreezeOvumForm" (ngSubmit)="onSubmit(updateFreezeOvumForm)">
-
-    <app-medium-input [name]="'冷凍液'" [mediums]="freezeMediums" [isMultiple]="false"></app-medium-input>
-    <div class="input-group mb-3" *ngIf="isSelectOtherMedium">
-        <span class="input-group-text">其他冷凍液</span>
-        <input type="text" class="form-control" formControlName="otherFreezeMediumName">
+<div class="alertContainer">
+    <div class="alertBox">
+        <app-form-title [formTitle]="'編輯冷凍入庫'" [icon]="faSnowflake"></app-form-title>
+        <hr>
+        <form [formGroup]="updateFreezeOvumForm" (ngSubmit)="onSubmit(updateFreezeOvumForm)">
+            <div class="input-group mb-3">
+                <span class="input-group-text">操作時間</span>
+                <input type="datetime-local" class="form-control" formControlName="operationTime">
+            </div>
+            <app-medium-input [name]="'冷凍液'" [mediums]="freezeMediums" [isMultiple]="false"></app-medium-input>
+            <div class="input-group mb-3" *ngIf="isSelectOtherMedium">
+                <span class="input-group-text">其他冷凍液</span>
+                <input type="text" class="form-control" formControlName="otherFreezeMediumName">
+            </div>
+            <div>
+                <button type="button" class="btn btn-outline-primary btn-sm" (click)="onCancel()">取消</button>
+                <button class="btn btn-primary btn-sm">確認更新</button>
+            </div>
+        </form>
     </div>
-
-</form>
+</div>

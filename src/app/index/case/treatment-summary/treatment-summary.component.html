@@ -35,7 +35,7 @@
         </td>
         <td>{{ovum.observationNote}}</td>
         <td>
-          <button class="btn btn-warning btn-sm">編輯</button>
+          <button type="button" class="btn btn-warning btn-sm" (click)="onEdit()">編輯</button>
         </td>
       </tr>
     </tbody>
@@ -44,3 +44,4 @@
 <app-freeze-ovum *ngIf="isOpenSubFunction && isOpenSubFunction.functionId === 15"
   [subfunction]="isOpenSubFunction"></app-freeze-ovum>
 <app-fertilisation *ngIf="isOpenSubFunction && isOpenSubFunction.functionId === 16" [subfunction]="isOpenSubFunction"></app-fertilisation>
+<app-update-freeze-ovum *ngIf="isOpenUpdateFreezeOvum"></app-update-freeze-ovum >

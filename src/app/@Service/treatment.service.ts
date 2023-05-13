@@ -17,6 +17,7 @@ export class TreatmentService {
   baseTreatmentInfo?: BaseTreatmentInfoDto;
   selectedOvumDetails:TreatmentSummaryDto[] = [];
   treatmentSummary = new Subject<TreatmentSummaryDto[]>();
+  isOpenUpdateFreezeOvum = new Subject<boolean>();
   addOvumPickupNote(form: FormGroup){
     return this.http.post<BaseResponseDto>("/api/Treatment/AddOvumPickupNote", form.value);
   }

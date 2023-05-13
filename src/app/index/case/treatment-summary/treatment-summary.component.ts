@@ -19,6 +19,8 @@ export class TreatmentSummaryComponent implements OnInit, OnDestroy {
   constructor(private treatmentService: TreatmentService, private functionHeaderService: FunctionHeaderService, private commonService:CommonService, private freezeSummaryService:FreezeSummaryService){}
   ngOnDestroy(): void {
     this.openSubfunctionSubscription?.unsubscribe();
+    this.treatmentSubscription?.unsubscribe();
+    this.openUpdateFreezeOvumSubscription?.unsubscribe();
     this.treatmentService.selectedOvumDetails.length = 0;
   }
   ngOnInit(): void {
@@ -61,15 +63,21 @@ export class TreatmentSummaryComponent implements OnInit, OnDestroy {
       }
       this.isOpenSubFunction = res;
     })
-    this.treatmentService.treatmentSummary.subscribe(res=>{
+    this.treatmentSubscription = this.treatmentService.treatmentSummary.subscribe(res=>{
       this.treatmentSummarys = res;
+    })
+    this.openUpdateFreezeOvumSubscription = this.treatmentService.isOpenUpdateFreezeOvum.subscribe(res=>{
+      this.isOpenUpdateFreezeOvum = res;
     })
   }
   openSubfunctionSubscription?:Subscription;
+  treatmentSubscription?:Subscription;
+  openUpdateFreezeOvumSubscription?:Subscription;
   treatmentSummarys: TreatmentSummaryDto[] = [];
   isSelectAll: boolean = false;
   faTable = faTable;
   isOpenSubFunction: FunctionDto | null = null;
+  isOpenUpdateFreezeOvum = false;
   subfunctions:FunctionDto[]=[];
   onSelectAll(event: any){
     if (event.target.checked){
@@ -87,6 +95,8 @@ export class TreatmentSummaryComponent implements OnInit, OnDestroy {
   onSelectOvum(){
     this.isSelectAll = this.treatmentService.isAllTreatmentSummaryChecked(this.treatmentSummarys);
   }
-
+  onEdit(){
+    this.treatmentService.isOpenUpdateFreezeOvum.next(true);
+  }
 
 }
