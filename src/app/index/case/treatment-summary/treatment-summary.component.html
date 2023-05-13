@@ -12,14 +12,15 @@
   <table class="table table-hover" style="text-align:center">
     <thead>
       <tr>
-        <th scope="col">全選<span class="ms-1"><input type="checkbox" [(ngModel)]="isSelectAll"
+        <th>全選<span class="ms-1"><input type="checkbox" [(ngModel)]="isSelectAll"
               (click)="onSelectAll($event)"></span></th>
-        <th scope="col">卵子編號</th>
-        <th scope="col">用途/來源療程編號</th>
-        <th scope="col">狀態</th>
-        <th scope="col">卵胚天數</th>
-        <th scope="col">受精狀態</th>
-        <th scope="col">觀察記錄</th>
+        <th>卵子編號</th>
+        <th>用途/來源療程編號</th>
+        <th>狀態</th>
+        <th>卵胚天數</th>
+        <th>受精狀態</th>
+        <th>觀察記錄</th>
+        <th>功能</th>
       </tr>
     </thead>
     <tbody>
@@ -33,7 +34,9 @@
           <span *ngIf="ovum.hasFertilization">已受精</span>
         </td>
         <td>{{ovum.observationNote}}</td>
-
+        <td>
+          <button class="btn btn-warning btn-sm">編輯</button>
+        </td>
       </tr>
     </tbody>
   </table>

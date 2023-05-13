@@ -27,6 +27,7 @@ export class FreezeSpermComponent implements OnInit, OnDestroy{
     this.mediumSubscription?.unsubscribe();
     this.selectedMediumSubscription?.unsubscribe();
     this.locationSubscription?.unsubscribe();
+    this.freezeMediumSubscription?.unsubscribe();
     this.manageMediumService.selectedMediumArray = []
   }
   ngOnInit(): void {
@@ -58,7 +59,7 @@ export class FreezeSpermComponent implements OnInit, OnDestroy{
     this.locationSubscription = this.manageStorageService.selectedLocations.subscribe(res=>{
       this.selectedLocations = res;
     })
-    this.manageMediumService.selectedMedium.subscribe(res=>{
+    this.freezeMediumSubscription = this.manageMediumService.selectedMedium.subscribe(res=>{
       this.freezeSpermForm.patchValue({
         "freezeMedium": res.mediumInUseId
       })
@@ -74,6 +75,7 @@ export class FreezeSpermComponent implements OnInit, OnDestroy{
   mediumSubscription?:Subscription;
   selectedMediumSubscription?:Subscription;
   locationSubscription?:Subscription;
+  freezeMediumSubscription?:Subscription;
   freezeSpermForm!: FormGroup;
   spermFromCourseOfTreatmentId: string | undefined;
   spermOwner?: BaseCustomerInfoDto;

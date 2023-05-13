@@ -14,19 +14,11 @@ import { CommonDto } from '../@Models/commonDto.model';
 export class OperateSpermService {
 
   constructor(private http:HttpClient) { }
-  // baseOperateSpermInfo?: BaseOperateSpermInfoDto
   isOpenSelectSpermFreeze = new Subject<boolean>();
   allSpermScore = new Subject<SpermScoreDto[]>();
-  // allSpermScoreArray: SpermScoreDto[] = [];
-  // getOriginInfoOfSperm(courseOfTreatmentId: string){
-  //   return this.http.get<BaseOperateSpermInfoDto>("/api/OperateSperm/GetOriginInfoOfSperm", {
-  //     params: new HttpParams().append("courseOfTreatmentId", courseOfTreatmentId)
-  //   })
-  // }
   addSpermScore(form: FormGroup){
     return this.http.post<BaseResponseDto>("/api/OperateSperm/AddSpermScore", form.value);
   }
-  
   getSpermScores(courseOfTreatmentId: string){
     this.http.get<SpermScoreDto[]>("/api/OperateSperm/GetSpermScores", {
       params: new HttpParams().append("courseOfTreatmentId", courseOfTreatmentId)

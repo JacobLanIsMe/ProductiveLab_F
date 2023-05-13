@@ -54,6 +54,7 @@ import { OvumFreezeTableComponent } from './@shared/ovum-freeze-table/ovum-freez
 import { AddCustomerComponent } from './index/header/add-customer/add-customer.component';
 import { LoadingSpinnerComponent } from './@shared/loading-spinner/loading-spinner.component';
 import { OvumTransferFormComponent } from './index/ovum-bank-transfer/ovum-transfer-form/ovum-transfer-form.component';
+import { UpdateFreezeOvumComponent } from './index/case/treatment-summary/update-freeze-ovum/update-freeze-ovum.component';
 
 
 @NgModule({
@@ -107,7 +108,8 @@ import { OvumTransferFormComponent } from './index/ovum-bank-transfer/ovum-trans
     OvumFreezeTableComponent,
     AddCustomerComponent,
     LoadingSpinnerComponent,
-    OvumTransferFormComponent
+    OvumTransferFormComponent,
+    UpdateFreezeOvumComponent
   ],
   imports: [
     BrowserModule,

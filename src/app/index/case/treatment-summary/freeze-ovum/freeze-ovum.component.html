@@ -2,10 +2,12 @@
     <div class="alertBox" style="width:90vw;height:90vh;">
         <div class="d-flex justify-content-around h-100">
             <div style="height:100%; overflow-y:auto;">
-                <app-search-empty-storage-unit [subfunction]="subfunction" [selectedOvumDetailId]="firstSelectedOvumDetailId"></app-search-empty-storage-unit>
+                <app-search-empty-storage-unit [subfunction]="subfunction"
+                    [selectedOvumDetailId]="firstSelectedOvumDetailId"></app-search-empty-storage-unit>
             </div>
             <div style="height:100%;overflow:auto;">
-                <app-form-title *ngIf="subfunction" [formTitle]="subfunction.name" [icon]="faSnowflake"></app-form-title>
+                <app-form-title *ngIf="subfunction" [formTitle]="subfunction.name"
+                    [icon]="faSnowflake"></app-form-title>
                 <hr>
                 <div *ngIf="selectedObservationNotes.length" style="width:100%;overflow:auto">
                     <table class="table" style="font-size:0.5em;">
@@ -86,26 +88,12 @@
                             </select>
                         </div>
                     </ng-container>
-                    <div class="mb-3 d-flex justify-content-between align-items-center">
-                        <div class="input-group w-75">
-                            <span class="input-group-text">冷凍液</span>
-                            <select class="form-select" formControlName="mediumInUseId"
-                                (change)="onSelectMedium($event)">
-                                <ng-container *ngIf="mediums.length > 0">
-                                    <option *ngFor="let medium of mediums" [value]="medium.mediumInUseId">
-                                        {{medium.name}}</option>
-                                </ng-container>
-                            </select>
-                        </div>
-                        <div>
-                            <button type="button" class="btn btn-outline-secondary btn-sm"
-                                (click)="onOpenMediumForm()">開封培養液</button>
-                        </div>
-                    </div>
-                    <div class="input-group mb-3" *ngIf="isChooseOtherMedium">
+                    <app-medium-input [name]="'培養液'" [mediums]="mediums" [isMultiple]="false"></app-medium-input>
+                    <div class="input-group mb-3" *ngIf="isSelectOtherMedium">
                         <span class="input-group-text">其他培養液</span>
                         <input type="text" class="form-control" formControlName="otherMediumName">
                     </div>
+                    
                     <div class="input-group mb-3">
                         <span class="input-group-text">備註</span>
                         <textarea class="form-control" formControlName="memo"></textarea>
@@ -119,4 +107,3 @@
         </div>
     </div>
 </div>
-<app-open-medium *ngIf="isOpenMediumForm"></app-open-medium>

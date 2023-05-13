@@ -1,0 +1,11 @@
+<app-form-title [formTitle]="'編輯冷凍入庫'" [icon]="faSnowflake"></app-form-title>
+<hr>
+<form [formGroup]="updateFreezeOvumForm" (ngSubmit)="onSubmit(updateFreezeOvumForm)">
+
+    <app-medium-input [name]="'冷凍液'" [mediums]="freezeMediums" [isMultiple]="false"></app-medium-input>
+    <div class="input-group mb-3" *ngIf="isSelectOtherMedium">
+        <span class="input-group-text">其他冷凍液</span>
+        <input type="text" class="form-control" formControlName="otherFreezeMediumName">
+    </div>
+
+</form>
