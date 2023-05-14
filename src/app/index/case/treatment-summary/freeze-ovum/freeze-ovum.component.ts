@@ -39,9 +39,9 @@ export class FreezeOvumComponent implements OnInit,OnDestroy {
       "storageUnitId": new FormControl(null),
       "mediumInUseId": new FormControl(null, Validators.required),
       "otherMediumName": new FormControl(null),
-      "ovumMorphology_A": new FormControl(0,Validators.required),
-      "ovumMorphology_B": new FormControl(0, Validators.required),
-      "ovumMorphology_C": new FormControl(0, Validators.required),
+      "ovumMorphology_A": new FormControl(0, [Validators.required, Validators.min(0)]),
+      "ovumMorphology_B": new FormControl(0, [Validators.required, Validators.min(0)]),
+      "ovumMorphology_C": new FormControl(0, [Validators.required, Validators.min(0)]),
       "memo": new FormControl(null),
       "topColorId": new FormControl(null, Validators.required)
     })

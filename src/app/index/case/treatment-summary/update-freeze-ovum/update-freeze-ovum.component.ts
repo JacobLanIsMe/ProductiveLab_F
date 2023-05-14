@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { MediumTypeEnum } from 'src/app/@Enums/mediumTypeEnum.model';
@@ -9,6 +9,7 @@ import { faSnowflake } from '@fortawesome/free-solid-svg-icons';
 import { TreatmentService } from 'src/app/@Service/treatment.service';
 import { EmbryologistDto } from 'src/app/@Models/embryologistDto.model';
 import { EmployeeService } from 'src/app/@Service/employee.service';
+import { TreatmentSummaryDto } from 'src/app/@Models/treatmentSummaryDto.model';
 @Component({
   selector: 'app-update-freeze-ovum',
   templateUrl: './update-freeze-ovum.component.html',
@@ -24,9 +25,9 @@ export class UpdateFreezeOvumComponent implements OnInit, OnDestroy {
     this.updateFreezeOvumForm = new FormGroup({
       "operationTime": new FormControl(this.dateService.getTodayDateTimeString(new Date()), Validators.required),
       "embryologist": new FormControl(null, Validators.required),
-      "ovumMorphology_A": new FormControl(null),
-      "ovumMorphology_B": new FormControl(null),
-      "ovumMorphology_C": new FormControl(null),
+      "ovumMorphology_A": new FormControl(0, [Validators.required, Validators.min(0)]),
+      "ovumMorphology_B": new FormControl(0, [Validators.required, Validators.min(0)]),
+      "ovumMorphology_C": new FormControl(0, [Validators.required, Validators.min(0)]),
       "freezeMedium": new FormControl(null, Validators.required),
       "otherFreezeMediumName": new FormControl(null),
       "memo": new FormControl(null),
@@ -44,8 +45,9 @@ export class UpdateFreezeOvumComponent implements OnInit, OnDestroy {
       this.freezeMediums = this.manageMediumService.getOvumFreezeAndOtherMediun(res);
     })
     this.manageMediumService.getUpdatedInUseMediums();
-
+    
   }
+  @Input() selectedOvums: TreatmentSummaryDto[] = []
   freezeMediumSubscription?:Subscription;
   mediumSubscription?:Subscription;
   updateFreezeOvumForm!: FormGroup;

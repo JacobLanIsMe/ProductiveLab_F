@@ -2,6 +2,72 @@
     <div class="alertBox">
         <app-form-title [formTitle]="'編輯冷凍入庫'" [icon]="faSnowflake"></app-form-title>
         <hr>
+        <div *ngIf="selectedOvums.length" style="width:100%;overflow:auto">
+            <table class="table" style="font-size:0.5em;">
+                <thead>
+                    <tr>
+                        <th>卵子編號</th>
+                        <th>天數</th>
+                        <th>受精結果</th>
+                        <th>最後觀察狀態/等級</th>
+                        <th>冷凍日</th>
+                        <th>PGS編號</th>
+                        <th>PGS結果</th>
+                        <th>KID Score</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of selectedOvums">
+                        <th scope="row">No. {{item.ovumNumber}}</th>
+                        <td>Day: {{item.dateOfEmbryo}}</td>
+                        <td *ngIf="item.observationNote && item.observationNote.fertilisationResultName">{{item.observationNote.fertilisationResultName}}</td>
+                        <td>
+                            <ng-container
+                                *ngIf="item.observationNote && (item.observationNote.blastocystScore_Expansion_Name || item.observationNote.blastocystScore_ICE_Name || item.observationNote.blastocystScore_TE_Name)">
+                                <div>囊胚期胚胎評分:
+                                    {{item.observationNote.blastocystScore_Expansion_Name}}{{item.observationNote.blastocystScore_ICE_Name}}{{item.observationNote.blastocystScore_TE_Name}}
+                                </div>
+                            </ng-container>
+                            <ng-container
+                                *ngIf="item.observationNote && (item.observationNote.blastomereScore_C_Name || item.observationNote.blastomereScore_G_Name || item.observationNote.blastomereScore_F_Name)">
+                                <div>分裂期胚胎評分:
+                                    {{item.observationNote.blastomereScore_C_Name}}G{{item.observationNote.blastomereScore_G_Name}}F{{item.observationNote.blastomereScore_F_Name}}
+                                </div>
+                            </ng-container>
+                            <ng-container *ngIf="item.observationNote && item.observationNote.ovumMaturationName">
+                                <div>卵子成熟度: {{item.observationNote.ovumMaturationName}}</div>
+                            </ng-container>
+                        </td>
+                        <td *ngIf="item.observationNote && item.observationNote.observationTime">{{item.observationNote.observationTime | date:"yyyy-MM-dd"}}</td>
+                        <td *ngIf="item.observationNote && item.observationNote.pgtaNumber">{{item.observationNote.pgtaNumber}}</td>
+                        <td *ngIf="item.observationNote && item.observationNote.pgtaResult">{{item.observationNote.pgtaResult}}</td>
+                        <td *ngIf="item.observationNote && item.observationNote.kidScore">{{item.observationNote.kidScore}}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <ng-container *ngIf="selectedOvums[0].freezeStorageInfo">
+                <table class="table" style="font-size:0.5em;">
+                    <thead>
+                        <tr>
+                            <th>Tank</th>
+                            <th>Canist</th>
+                            <th>String編號</th>
+                            <th>Top</th>
+                            <th>Top顏色</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>{{selectedOvums[0].freezeStorageInfo.tankInfo.tankName}}</td>
+                            <td>{{selectedOvums[0].freezeStorageInfo.canistName}}</td>
+                            <td>{{selectedOvums[0].freezeStorageInfo.stripBoxId}}</td>
+                            <td>{{selectedOvums[0].freezeStorageInfo.unitInfo.unitName}}</td>
+                            <td>{{selectedOvums[0].freezeStorageInfo.topColorName}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </ng-container>
+        </div>
         <form [formGroup]="updateFreezeOvumForm" (ngSubmit)="onSubmit(updateFreezeOvumForm)">
             <div class="input-group mb-3">
                 <span class="input-group-text">操作時間</span>
@@ -16,14 +82,28 @@
                     </ng-container>
                 </select>
             </div>
+            
+            <div class="input-group mb-3">
+                <span class="input-group-text">卵子型態</span>
+                <span class="input-group-text">A</span>
+                <input type="number" class="form-control" style="width:7vw" formControlName="ovumMorphology_A">
+                <span class="input-group-text">B</span>
+                <input type="number" class="form-control" style="width:7vw" formControlName="ovumMorphology_B">
+                <span class="input-group-text">C</span>
+                <input type="number" class="form-control" style="width:7vw" formControlName="ovumMorphology_C">
+            </div>
             <app-medium-input [name]="'冷凍液'" [mediums]="freezeMediums" [isMultiple]="false"></app-medium-input>
             <div class="input-group mb-3" *ngIf="isSelectOtherMedium">
                 <span class="input-group-text">其他冷凍液</span>
                 <input type="text" class="form-control" formControlName="otherFreezeMediumName">
             </div>
-            <div>
+            <div class="input-group mb-3">
+                <span class="input-group-text">備註</span>
+                <textarea class="form-control" formControlName="memo"></textarea>
+            </div>
+            <div class="d-flex justify-content-end align-items-center">
                 <button type="button" class="btn btn-outline-primary btn-sm" (click)="onCancel()">取消</button>
-                <button class="btn btn-primary btn-sm">確認更新</button>
+                <button class="btn btn-primary btn-sm ms-3" [disabled]="!updateFreezeOvumForm.valid">確認更新</button>
             </div>
         </form>
     </div>

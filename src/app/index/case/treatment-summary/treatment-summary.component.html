@@ -25,17 +25,25 @@
     </thead>
     <tbody>
       <tr *ngFor="let ovum of treatmentSummarys">
-        <td><input type="checkbox" [(ngModel)]="ovum.isChecked" (change)="onSelectOvum()"></td>
+        <td><input type="checkbox" [(ngModel)]="ovum.isChecked" (change)="onSelectOvum(ovum)"></td>
         <td>No. {{ovum.ovumNumber}}</td>
         <td>{{ovum.ovumSource}}/{{ovum.ovumFromCourseOfTreatmentSqlId}}</td>
         <td>{{ovum.ovumDetailStatus}}</td>
-        <td>{{ovum.dateOfEmbryo}}</td>
+        <td>Day: {{ovum.dateOfEmbryo}}</td>
         <td>
           <span *ngIf="ovum.hasFertilization">已受精</span>
         </td>
-        <td>{{ovum.observationNote}}</td>
         <td>
-          <button type="button" class="btn btn-warning btn-sm" (click)="onEdit()">編輯</button>
+          <div>{{ovum.observationNote.observationTypeName}}</div>
+          <ng-container *ngIf="ovum.observationNote.observationNotePhotos.length && ovum.observationNote.observationNotePhotos[0].imageBase64String">
+            <div class="m-auto d-flex justify-content-center align-items-center" style="width:50px;aspect-ratio:1/1;">
+                <img [src]="'data:image/gif;base64,' + ovum.observationNote.observationNotePhotos[0].imageBase64String" alt=""
+                    style="max-width:100%;max-height:100%;">
+            </div>
+        </ng-container>
+        </td>
+        <td>
+          <button type="button" class="btn btn-warning btn-sm" *ngIf="ovum.freezeStorageInfo" (click)="onEdit(ovum)">編輯</button>
         </td>
       </tr>
     </tbody>
@@ -44,4 +52,4 @@
 <app-freeze-ovum *ngIf="isOpenSubFunction && isOpenSubFunction.functionId === 15"
   [subfunction]="isOpenSubFunction"></app-freeze-ovum>
 <app-fertilisation *ngIf="isOpenSubFunction && isOpenSubFunction.functionId === 16" [subfunction]="isOpenSubFunction"></app-fertilisation>
-<app-update-freeze-ovum *ngIf="isOpenUpdateFreezeOvum"></app-update-freeze-ovum >
+<app-update-freeze-ovum *ngIf="isOpenUpdateFreezeOvum" [selectedOvums]="selectedOvums"></app-update-freeze-ovum >

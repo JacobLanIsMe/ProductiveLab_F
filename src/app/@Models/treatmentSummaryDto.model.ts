@@ -1,3 +1,6 @@
+import { BaseStorage } from "./baseStorage.model";
+import { GetObservationNoteNameDto } from "./getObservationNoteNameDto.model";
+
 export class TreatmentSummaryDto{
     constructor(
         public ovumDetailId: string,
@@ -7,8 +10,9 @@ export class TreatmentSummaryDto{
         public dateOfEmbryo: number,
         public ovumNumber: number,
         public hasFertilization: boolean,
-        public observationNote: string,
+        public observationNote: GetObservationNoteNameDto,
         public ovumSource: string,
+        public freezeStorageInfo: BaseStorage,
         public isChecked: boolean
     ){}
 }
