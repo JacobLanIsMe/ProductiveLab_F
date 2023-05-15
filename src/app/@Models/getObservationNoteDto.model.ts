@@ -8,7 +8,7 @@ export class GetObservationNoteDto {
         public ovumMaturationId: string,
         public observationTypeId: string,
         public ovumAbnormalityId: string,
-        public fertilisationResultId: string,
+        public fertilizationResultId: string,
         public blastomereScore_C_Id: string,
         public blastomereScore_G_Id: string,
         public blastomereScore_F_Id: string,

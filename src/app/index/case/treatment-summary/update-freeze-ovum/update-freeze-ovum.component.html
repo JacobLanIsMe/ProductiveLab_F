@@ -20,7 +20,7 @@
                     <tr *ngFor="let item of selectedOvums">
                         <th scope="row">No. {{item.ovumNumber}}</th>
                         <td>Day: {{item.dateOfEmbryo}}</td>
-                        <td *ngIf="item.observationNote && item.observationNote.fertilisationResultName">{{item.observationNote.fertilisationResultName}}</td>
+                        <td *ngIf="item.observationNote && item.observationNote.fertilizationResultName">{{item.observationNote.fertilizationResultName}}</td>
                         <td>
                             <ng-container
                                 *ngIf="item.observationNote && (item.observationNote.blastocystScore_Expansion_Name || item.observationNote.blastocystScore_ICE_Name || item.observationNote.blastocystScore_TE_Name)">

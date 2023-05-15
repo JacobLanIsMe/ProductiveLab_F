@@ -27,7 +27,7 @@
                             <tr *ngFor="let observationNote of selectedObservationNotes">
                                 <th scope="row">{{observationNote.ovumNumber}}</th>
                                 <td>Day: {{observationNote.day}}</td>
-                                <td>{{observationNote.fertilisationResultName}}</td>
+                                <td>{{observationNote.fertilizationResultName}}</td>
                                 <td>
                                     <ng-container
                                         *ngIf="observationNote.blastocystScore_Expansion_Name || observationNote.blastocystScore_ICE_Name || observationNote.blastocystScore_TE_Name">

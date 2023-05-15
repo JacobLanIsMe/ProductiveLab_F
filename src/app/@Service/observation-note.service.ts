@@ -41,8 +41,8 @@ export class ObservationNoteService {
   getOvumAbnormality(){
     return this.http.get<CommonDto[]>("/api/ObservationNote/GetOvumAbnormality");
   }
-  getFertilisationResult(){
-    return this.http.get<CommonDto[]>("/api/ObservationNote/GetFertilisationResult");
+  getFertilizationResult(){
+    return this.http.get<CommonDto[]>("/api/ObservationNote/GetFertilizationResult");
   }
   getBlastomereScore(){
     return this.http.get<BlastomereScoreDto>("/api/ObservationNote/GetBlastomereScore");

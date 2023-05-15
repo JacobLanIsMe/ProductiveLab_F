@@ -12,8 +12,8 @@
   <table class="table table-hover" style="text-align:center">
     <thead>
       <tr>
-        <th>全選<span class="ms-1"><input type="checkbox" [(ngModel)]="isSelectAll"
-              (click)="onSelectAll($event)"></span></th>
+        <th>全選<span class="ms-1"><input type="checkbox" [(ngModel)]="isSelectAll" (click)="onSelectAll($event)"></span>
+        </th>
         <th>卵子編號</th>
         <th>用途/來源療程編號</th>
         <th>狀態</th>
@@ -31,19 +31,34 @@
         <td>{{ovum.ovumDetailStatus}}</td>
         <td>Day: {{ovum.dateOfEmbryo}}</td>
         <td>
-          <span *ngIf="ovum.hasFertilization">已受精</span>
+          <div style="font-size:0.8em">
+            <div *ngIf="ovum.fertilizationTime">{{ovum.fertilizationTime | date:"yyyy-MM-dd"}}</div>
+            <div *ngIf="ovum.fertilizationMethod">{{ovum.fertilizationMethod}}</div>
+            <div *ngIf="ovum.observationNote && ovum.observationNote.fertilizationResultName">
+              {{ovum.observationNote.fertilizationResultName}}</div>
+          </div>
         </td>
         <td>
-          <div>{{ovum.observationNote.observationTypeName}}</div>
-          <ng-container *ngIf="ovum.observationNote.observationNotePhotos.length && ovum.observationNote.observationNotePhotos[0].imageBase64String">
-            <div class="m-auto d-flex justify-content-center align-items-center" style="width:50px;aspect-ratio:1/1;">
-                <img [src]="'data:image/gif;base64,' + ovum.observationNote.observationNotePhotos[0].imageBase64String" alt=""
-                    style="max-width:100%;max-height:100%;">
-            </div>
-        </ng-container>
+          <div *ngIf="ovum.observationNote" style="font-size:0.8em">
+            <div>{{ovum.observationNote.observationTime | date:"yyyy-MM-dd hh-mm-ss"}}</div>
+            <div>{{ovum.observationNote.observationTypeName}}</div>
+            <div *ngIf="ovum.observationNote.ovumMaturationName">{{ovum.observationNote.ovumMaturationName}}</div>
+            <div *ngIf="ovum.observationNote.ovumAbnormalityName">{{ovum.observationNote.ovumAbnormalityName}}</div>
+            <div>{{ovum.observationNote.blastocystScore_Expansion_Name}}{{ovum.observationNote.blastocystScore_ICE_Name}}{{ovum.observationNote.blastocystScore_TE_Name}}</div>
+            <div *ngIf="ovum.observationNote.embryoStatusName && ovum.observationNote.embryoStatusName.length">{{ovum.observationNote.embryoStatusName}}</div>
+            <div *ngIf="ovum.observationNote.kidScore">KID Score: {{ovum.observationNote.kidScore}}</div>
+            <ng-container
+              *ngIf="ovum.observationNote.observationNotePhotos && ovum.observationNote.observationNotePhotos.length && ovum.observationNote.observationNotePhotos[0].imageBase64String">
+              <div class="m-auto d-flex justify-content-center align-items-center" style="width:50px;aspect-ratio:1/1;">
+                <img [src]="'data:image/gif;base64,' + ovum.observationNote.observationNotePhotos[0].imageBase64String"
+                  alt="" style="max-width:100%;max-height:100%;">
+              </div>
+            </ng-container>
+          </div>
         </td>
         <td>
-          <button type="button" class="btn btn-warning btn-sm" *ngIf="ovum.freezeStorageInfo" (click)="onEdit(ovum)">編輯</button>
+          <button type="button" class="btn btn-warning btn-sm" *ngIf="ovum.freezeStorageInfo"
+            (click)="onEdit(ovum)">編輯</button>
         </td>
       </tr>
     </tbody>
@@ -51,5 +66,6 @@
 </div>
 <app-freeze-ovum *ngIf="isOpenSubFunction && isOpenSubFunction.functionId === 15"
   [subfunction]="isOpenSubFunction"></app-freeze-ovum>
-<app-fertilisation *ngIf="isOpenSubFunction && isOpenSubFunction.functionId === 16" [subfunction]="isOpenSubFunction"></app-fertilisation>
-<app-update-freeze-ovum *ngIf="isOpenUpdateFreezeOvum" [selectedOvums]="selectedOvums"></app-update-freeze-ovum >
+<app-fertilisation *ngIf="isOpenSubFunction && isOpenSubFunction.functionId === 16"
+  [subfunction]="isOpenSubFunction"></app-fertilisation>
+<app-update-freeze-ovum *ngIf="isOpenUpdateFreezeOvum" [selectedOvums]="selectedOvums"></app-update-freeze-ovum>

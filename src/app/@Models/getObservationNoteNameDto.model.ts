@@ -15,7 +15,7 @@ export class GetObservationNoteNameDto{
         public ovumMaturationName:string,
         public observationTypeName:string,
         public ovumAbnormalityName:string[],
-        public fertilisationResultName:string,
+        public fertilizationResultName:string,
         public blastomereScore_C_Name:string,
         public blastomereScore_G_Name:string,
         public blastomereScore_F_Name:string,

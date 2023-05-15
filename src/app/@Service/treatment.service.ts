@@ -93,14 +93,14 @@ export class TreatmentService {
   getTopColors(){
     return this.http.get<CommonDto[]>("/api/Treatment/GetTopColors");
   }
-  getFertilisationMethods(){
-    return this.http.get<CommonDto[]>("/api/Treatment/GetFertilisationMethods");
+  getFertilizationMethods(){
+    return this.http.get<CommonDto[]>("/api/Treatment/GetFertilizationMethods");
   }
   getIncubators(){
     return this.http.get<CommonDto[]>("/api/Treatment/GetIncubators");
   }
-  addFertilisation(form:FormGroup){
-    return this.http.post<BaseResponseDto>("/api/Treatment/AddFertilisation", form.value);
+  addFertilization(form:FormGroup){
+    return this.http.post<BaseResponseDto>("/api/Treatment/AddFertilization", form.value);
   }
   addOvumThaw(form:FormGroup){
     return this.http.post<BaseResponseDto>("/api/Treatment/AddOvumThaw", form.value);

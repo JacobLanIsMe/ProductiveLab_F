@@ -33,17 +33,17 @@ export class FertilisationComponent implements OnInit, OnDestroy {
     // this.operateSpermService.allSpermScoreArray.length = 0;
   }
   ngOnInit(): void {
-    this.fertilisationForm = new FormGroup({
-      "fertilisationTime": new FormControl(this.dateService.getTodayDateTimeString(new Date()), Validators.required),
-      "fertilisationMethodId": new FormControl(null, Validators.required),
+    this.fertilizationForm = new FormGroup({
+      "fertilizationTime": new FormControl(this.dateService.getTodayDateTimeString(new Date()), Validators.required),
+      "fertilizationMethodId": new FormControl(null, Validators.required),
       "incubatorId": new FormControl(null, Validators.required),
       "otherIncubator": new FormControl(null),
       "mediumInUseIds": new FormArray([]),
       "embryologist": new FormControl(null, Validators.required),
       "ovumDetailIds": new FormArray([])
     })
-    this.treatmentService.getFertilisationMethods().subscribe(res=>{
-      this.fertilisationMethods = res;
+    this.treatmentService.getFertilizationMethods().subscribe(res=>{
+      this.fertilizationMethods = res;
     })
     this.treatmentService.getIncubators().subscribe(res=>{
       this.incubators = res;
@@ -56,7 +56,7 @@ export class FertilisationComponent implements OnInit, OnDestroy {
     })
     this.manageMediumService.getUpdatedInUseMediums();
     this.selectedMediumSubscription = this.manageMediumService.selectedMediums.subscribe(res=>{
-      this.manageMediumService.setupMediumFormArray(res, <FormArray>(this.fertilisationForm.get("mediumInUseIds")))
+      this.manageMediumService.setupMediumFormArray(res, <FormArray>(this.fertilizationForm.get("mediumInUseIds")))
     })
     this.spermScoreSubscription = this.operateSpermService.allSpermScore.subscribe(res=>{
       this.spermScores = res;
@@ -74,13 +74,12 @@ export class FertilisationComponent implements OnInit, OnDestroy {
   courseOfTreatmentId:string|null = null;
   faHeart = faHeart;
   isOtherIncubator: boolean = false;
-  fertilisationForm!: FormGroup;
-  fertilisationMethods: CommonDto[] = [];
+  fertilizationForm!: FormGroup;
+  fertilizationMethods: CommonDto[] = [];
   incubators: CommonDto[] = [];
   mediums: MediumDto[] = [];
   embryologists: EmbryologistDto[] = [];
   selectedOvumDetails:TreatmentSummaryDto[] = this.treatmentService.selectedOvumDetails;
-  // originOfSpermInfo?: BaseOperateSpermInfoDto;
   spermScores: SpermScoreDto[] = [];
   onSelectIncubator(event:any){
     this.isOtherIncubator = +event.target.value === IncubatorEnum.other ? true : false
@@ -98,13 +97,13 @@ export class FertilisationComponent implements OnInit, OnDestroy {
       return;
     }
     else{
-      const ovumPickupDetailIdFormArray = <FormArray>(this.fertilisationForm.get("ovumDetailIds"));
+      const ovumPickupDetailIdFormArray = <FormArray>(this.fertilizationForm.get("ovumDetailIds"));
       ovumPickupDetailIdFormArray.clear();
       this.treatmentService.selectedOvumDetails.forEach(x=>{
         ovumPickupDetailIdFormArray.push(new FormControl(x.ovumDetailId));
       })
     }
-    this.treatmentService.addFertilisation(form).subscribe(res=>{
+    this.treatmentService.addFertilization(form).subscribe(res=>{
       this.commonService.judgeTheResponse(res, "受精", res.errorMessage, form);
       if (this.courseOfTreatmentId){
         this.treatmentService.updateTreatmentSummary(this.courseOfTreatmentId);

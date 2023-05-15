@@ -34,8 +34,8 @@ export class ObservationNoteFormComponent implements OnInit {
     this.observationNoteService.getOvumAbnormality().subscribe(res => {
       this.ovumAbnormalities = res;
     })
-    this.observationNoteService.getFertilisationResult().subscribe(res => {
-      this.fertilisationResults = res;
+    this.observationNoteService.getFertilizationResult().subscribe(res => {
+      this.fertilizationResults = res;
     })
     this.observationNoteService.getBlastomereScore().subscribe(res => {
       this.blastomereScore = res;
@@ -55,7 +55,7 @@ export class ObservationNoteFormComponent implements OnInit {
       "embryologist": new FormControl(null, Validators.required),
       "ovumMaturationId": new FormControl(null),
       "observationTypeId": new FormControl(null),
-      "fertilisationResultId": new FormControl(null),
+      "fertilizationResultId": new FormControl(null),
       "blastomereScore_C_Id": new FormControl("C"),
       "blastomereScore_G_Id": new FormControl("G"),
       "blastomereScore_F_Id": new FormControl("F"),
@@ -76,7 +76,7 @@ export class ObservationNoteFormComponent implements OnInit {
           "embryologist":res.embryologist.toUpperCase(),
           "ovumMaturationId": res.ovumMaturationId,
           "observationTypeId": res.observationTypeId,
-          "fertilisationResultId": res.fertilisationResultId,
+          "fertilizationResultId": res.fertilizationResultId,
           "blastomereScore_C_Id": res.blastomereScore_C_Id,
           "blastomereScore_G_Id": res.blastomereScore_G_Id,
           "blastomereScore_F_Id": res.blastomereScore_F_Id,
@@ -108,7 +108,7 @@ export class ObservationNoteFormComponent implements OnInit {
   ovumMaturations?: CommonDto[];
   observationTypes?: CommonDto[];
   ovumAbnormalities?: CommonDto[];
-  fertilisationResults?: CommonDto[];
+  fertilizationResults?: CommonDto[];
   blastomereScore?: BlastomereScoreDto;
   embryoStatuses?: CommonDto[];
   blastocystScore?: BlastocystScoreDto;
