@@ -71,7 +71,7 @@
         <form [formGroup]="updateFreezeOvumForm" (ngSubmit)="onSubmit(updateFreezeOvumForm)">
             <div class="input-group mb-3">
                 <span class="input-group-text">操作時間</span>
-                <input type="datetime-local" class="form-control" formControlName="operationTime">
+                <input type="datetime-local" class="form-control" formControlName="freezeTime">
             </div>
             <div class="input-group mb-3">
                 <span class="input-group-text">操作胚胎師</span>
@@ -95,7 +95,7 @@
             <app-medium-input [name]="'冷凍液'" [mediums]="freezeMediums" [isMultiple]="false"></app-medium-input>
             <div class="input-group mb-3" *ngIf="isSelectOtherMedium">
                 <span class="input-group-text">其他冷凍液</span>
-                <input type="text" class="form-control" formControlName="otherFreezeMediumName">
+                <input type="text" class="form-control" formControlName="otherMediumName">
             </div>
             <div class="input-group mb-3">
                 <span class="input-group-text">備註</span>

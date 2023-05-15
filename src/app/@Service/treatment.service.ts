@@ -8,6 +8,7 @@ import { TreatmentDto } from '../@Models/treatmentDto.model';
 import { Subject, map } from 'rxjs';
 import { BaseCustomerInfoDto } from '../@Models/baseCustomerInfoDto.model';
 import { CommonDto } from '../@Models/commonDto.model';
+import { AddOvumFreezeDto } from '../@Models/addOvumFreezeDto.model';
 
 @Injectable({
   providedIn: 'root'
@@ -18,6 +19,7 @@ export class TreatmentService {
   selectedOvumDetails:TreatmentSummaryDto[] = [];
   treatmentSummary = new Subject<TreatmentSummaryDto[]>();
   isOpenUpdateFreezeOvum = new Subject<boolean>();
+  isSelectAllTreatmentSummary = new Subject<boolean>();
   addOvumPickupNote(form: FormGroup){
     return this.http.post<BaseResponseDto>("/api/Treatment/AddOvumPickupNote", form.value);
   }
@@ -44,16 +46,13 @@ export class TreatmentService {
   updateTreatmentSummary(courseOfTreatmentId:string){
     this.getTreatmentSummary(courseOfTreatmentId).subscribe(res=>{
       this.treatmentSummary.next(res);
+      this.isAllTreatmentSummaryChecked(res);
     })
   }
   isAllTreatmentSummaryChecked(treatmentSummarys: TreatmentSummaryDto[]){
     let arr = treatmentSummarys.filter(x=>x.isChecked === false);
-    if (arr.length > 0){
-      return false;
-    }
-    else{
-      return true;
-    }
+    const selectAllTreatmentSummary = arr.length > 0 ? false : true;
+    this.isSelectAllTreatmentSummary.next(selectAllTreatmentSummary);
   }
   
   getAllTreatment(){
@@ -77,6 +76,14 @@ export class TreatmentService {
   }
   addOvumFreeze(form:FormGroup){
     return this.http.post<BaseResponseDto>("/api/Treatment/AddOvumFreeze", form.value);
+  }
+  updateOvumFreeze(form:FormGroup){
+    return this.http.post<BaseResponseDto>("/api/Treatment/UpdateOvumFreeze", form.value);
+  }
+  getOvumFreeze(ovumDetailId:string){
+    return this.http.get<AddOvumFreezeDto>("/api/Treatment/GetOvumFreeze", {
+      params: new HttpParams().append("ovumDetailId", ovumDetailId)
+    })
   }
   getOvumOwnerInfo(ovumDetailId:string){
     return this.http.get<BaseCustomerInfoDto>("/api/Treatment/GetOvumOwnerInfo", {

@@ -69,6 +69,9 @@ export class TreatmentSummaryComponent implements OnInit, OnDestroy {
     this.openUpdateFreezeOvumSubscription = this.treatmentService.isOpenUpdateFreezeOvum.subscribe(res => {
       this.isOpenUpdateFreezeOvum = res;
     })
+    this.treatmentService.isSelectAllTreatmentSummary.subscribe(res=>{
+      this.isSelectAll = res;
+    })
   }
   openSubfunctionSubscription?: Subscription;
   treatmentSubscription?: Subscription;
@@ -93,7 +96,7 @@ export class TreatmentSummaryComponent implements OnInit, OnDestroy {
         }
       })
     }
-    this.isSelectAll = this.treatmentService.isAllTreatmentSummaryChecked(this.treatmentSummarys);
+    this.treatmentService.isAllTreatmentSummaryChecked(this.treatmentSummarys);
   }
   onEdit(ovum: TreatmentSummaryDto) {
     this.selectedOvums.length = 0;
