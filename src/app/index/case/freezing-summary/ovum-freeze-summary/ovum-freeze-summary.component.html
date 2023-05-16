@@ -8,7 +8,7 @@
 </div>
 <hr>
 <div style="width:100%;overflow-x: auto;">
-    <app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
+    <app-loading-spinner *ngIf="isLoading"></app-loading-spinner>    
     <div class="text-center" *ngIf="ovumFreezeSummary.length <= 0">{{ovumFreezeResult}}</div>
     <ng-container *ngIf="ovumFreezeSummary.length > 0">
 
@@ -61,12 +61,12 @@
                     <td>{{item.ovumFromCourseOfTreatmentSqlId}}</td>
                     <td>No. {{item.ovumNumber}}</td>
                     <td>{{item.ovumPickupTime | date:"yyyy-MM-dd"}}</td>
-                    <td>{{item.thawTime}}</td>
+                    <td>{{item.thawTime | date: "yyyy-MM-dd"}}</td>
                     <td>移入日</td>
                     <td>{{item.freezeTime | date:"yyyy-MM-dd"}}</td>
                     <td>{{item.freezeObservationNoteInfo.fertilizationResultName}}</td>
                     <td>Day {{item.freezeObservationNoteInfo.day}}</td>
-                    <td>卵子等級</td>
+                    <td>{{item.freezeObservationNoteInfo.ovumMaturationName}}</td>
                     <td>{{item.freezeStorageInfo.unitInfo.unitName}}</td>
                     <td>{{item.freezeStorageInfo.topColorName}}</td>
                     <td>{{item.freezeStorageInfo.tankInfo.tankName}}</td>

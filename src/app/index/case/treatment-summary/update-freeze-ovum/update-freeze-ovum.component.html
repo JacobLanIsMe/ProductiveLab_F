@@ -3,7 +3,7 @@
         <app-form-title [formTitle]="'編輯冷凍入庫'" [icon]="faSnowflake"></app-form-title>
         <hr>
         <div *ngIf="selectedOvums.length" style="width:100%;overflow:auto">
-            <table class="table" style="font-size:0.5em;">
+            <table class="table" style="font-size:0.8em;">
                 <thead>
                     <tr>
                         <th>卵子編號</th>
@@ -18,7 +18,7 @@
                 </thead>
                 <tbody>
                     <tr *ngFor="let item of selectedOvums">
-                        <th scope="row">No. {{item.ovumNumber}}</th>
+                        <td>No. {{item.ovumNumber}}</td>
                         <td>Day: {{item.dateOfEmbryo}}</td>
                         <td *ngIf="item.observationNote && item.observationNote.fertilizationResultName">{{item.observationNote.fertilizationResultName}}</td>
                         <td>
@@ -46,7 +46,7 @@
                 </tbody>
             </table>
             <ng-container *ngIf="selectedOvums[0].freezeStorageInfo">
-                <table class="table" style="font-size:0.5em;">
+                <table class="table" style="font-size:0.8em;">
                     <thead>
                         <tr>
                             <th>Tank</th>

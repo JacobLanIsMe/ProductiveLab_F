@@ -8,8 +8,9 @@
   </div>
 </div>
 <hr>
+<app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
 <div style="width:100%;overflow-x:auto;">
-  <table class="table table-hover" style="text-align:center">
+  <table class="table table-hover" style="text-align:center" *ngIf="treatmentSummarys.length">
     <thead>
       <tr>
         <th>全選<span class="ms-1"><input type="checkbox" [(ngModel)]="isSelectAll" (click)="onSelectAll($event)"></span>
@@ -40,7 +41,7 @@
         </td>
         <td>
           <div *ngIf="ovum.observationNote" style="font-size:0.8em">
-            <div>{{ovum.observationNote.observationTime | date:"yyyy-MM-dd hh-mm-ss"}}</div>
+            <div>{{ovum.observationNote.observationTime | date:"yyyy-MM-dd hh:mm:ss"}}</div>
             <div>{{ovum.observationNote.observationTypeName}}</div>
             <div *ngIf="ovum.observationNote.ovumMaturationName">{{ovum.observationNote.ovumMaturationName}}</div>
             <div *ngIf="ovum.observationNote.ovumAbnormalityName">{{ovum.observationNote.ovumAbnormalityName}}</div>

@@ -1,2 +1,67 @@
+<div class="d-flex justify-content-center">
+    <div class="w-75">
+        <app-title [title]="'外院轉入'" [icon]="faDownload"></app-title>
+        <hr>
+        <div class="d-flex justify-content-around align-items-start">
+            <app-search-empty-storage-unit></app-search-empty-storage-unit>
+            <form [formGroup]="transferInForm" (ngSubmit)="onSubmit(transferInForm)">
+                <div class="input-group mb-3">
+                    <span class="input-group-text">轉入時間</span>
+                    <input type="datetime-local" class="form-control" formControlName="transferInTime">
+                </div>
+                <div class="input-group mb-3">
+                    <span class="input-group-text">轉入項目</span>
+                    <select class="form-select" formControlName="transferInCell" (change)="onCellChange()">
+                        <option value="1">卵子</option>
+                        <option value="2">胚胎</option>
+                        <option value="3">精蟲</option>
+                    </select>
+                </div>
+                <div class="input-group mb-3">
+                    <span class="input-group-text">用途</span>
+                    <select class="form-select" formControlName="germSource">
+                        <option value="1">自用</option>
+                        <option value="2">捐贈</option>
+                    </select>
+                </div>
+                <div class="input-group mb-3">
+                    <span class="input-group-text">冷凍時間</span>
+                    <input type="datetime-local" class="form-control" formControlName="freezeTime">
+                </div>
+                <app-medium-input [name]="'冷凍液'" [mediums]="transferInForm.value.transferInCell === '3' ? spermFreezeMediums : ovumFreezeMediums"></app-medium-input>
+                <div class="input-group mb-3" *ngIf="isSelectOtherMedium">
+                    <span class="input-group-text">其他培養液</span>
+                    <input type="text" class="form-control" formControlName="otherFreezeMedium">
+                </div>
+                <div class="input-group mb-3">
+                    <span class="input-group-text">數量</span>
+                    <input type="number" class="form-control" formControlName="count" (change)="onCountChange()">
+                </div>
+                <app-show-selected-storage-unit></app-show-selected-storage-unit>
 
-<app-search-empty-storage-unit></app-search-empty-storage-unit>
+                <div formArrayName="ovumInfos">
+                    <ng-container *ngFor="let item of getOvumInfosFormArray(); let i = index" [formGroupName]="i">
+                        <div class="input-group mb-3">
+                            <span class="input-group-text">卵子成熟度</span>
+                            <select class="form-select" formControlName="ovumMaturationId">
+                                <option *ngFor="let ovumMaturation of ovumMaturations" [value]="ovumMaturation.id">
+                                    {{ovumMaturation.name}}</option>
+                                <option></option>
+                            </select>
+                        </div>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text">實驗室天數</span>
+                            <input type="number" class="form-control" formControlName="day">
+                        </div>
+                    </ng-container>
+                </div>
+
+
+                <div>
+                    <button type="button" class="btn btn-outline-primary btn-sm">清除</button>
+                    <button class="btn btn-primary btn-sm">確認轉入</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

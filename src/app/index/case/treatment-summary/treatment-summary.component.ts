@@ -21,12 +21,14 @@ export class TreatmentSummaryComponent implements OnInit, OnDestroy {
     this.openSubfunctionSubscription?.unsubscribe();
     this.treatmentSubscription?.unsubscribe();
     this.openUpdateFreezeOvumSubscription?.unsubscribe();
+    this.selectAllSubscription?.unsubscribe();
     this.treatmentService.selectedOvumDetails.length = 0;
   }
   ngOnInit(): void {
     const courseOfTreatmentId = localStorage.getItem(LocalStorageKey.courseOfTreatmentId);
     if (courseOfTreatmentId) {
       this.treatmentService.getTreatmentSummary(courseOfTreatmentId).subscribe(res => {
+        this.isLoading = false;
         this.treatmentSummarys = res;
       })
     }
@@ -69,20 +71,22 @@ export class TreatmentSummaryComponent implements OnInit, OnDestroy {
     this.openUpdateFreezeOvumSubscription = this.treatmentService.isOpenUpdateFreezeOvum.subscribe(res => {
       this.isOpenUpdateFreezeOvum = res;
     })
-    this.treatmentService.isSelectAllTreatmentSummary.subscribe(res=>{
+    this.selectAllSubscription = this.treatmentService.isSelectAllTreatmentSummary.subscribe(res=>{
       this.isSelectAll = res;
     })
   }
   openSubfunctionSubscription?: Subscription;
   treatmentSubscription?: Subscription;
   openUpdateFreezeOvumSubscription?: Subscription;
+  selectAllSubscription?:Subscription;
   treatmentSummarys: TreatmentSummaryDto[] = [];
   isSelectAll: boolean = false;
   faTable = faTable;
   isOpenSubFunction: FunctionDto | null = null;
   isOpenUpdateFreezeOvum = false;
   subfunctions: FunctionDto[] = [];
-  selectedOvums: TreatmentSummaryDto[] = []
+  selectedOvums: TreatmentSummaryDto[] = [];
+  isLoading: boolean = true;
   onSelectAll(event: any) {
     this.treatmentSummarys.forEach(x => {
       x.isChecked = event.target.checked
