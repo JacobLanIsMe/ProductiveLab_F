@@ -1,5 +1,5 @@
 <div class="d-flex justify-content-center">
-    <div class="w-75">
+    <div class="w-100">
         <app-title [title]="'外院轉入'" [icon]="faDownload"></app-title>
         <hr>
         <div class="d-flex justify-content-around align-items-start">
@@ -11,7 +11,7 @@
                 </div>
                 <div class="input-group mb-3">
                     <span class="input-group-text">轉入項目</span>
-                    <select class="form-select" formControlName="transferInCell" (change)="onCellChange()">
+                    <select class="form-select" formControlName="transferInCellType" (change)="onCellChange()">
                         <option value="1">卵子</option>
                         <option value="2">胚胎</option>
                         <option value="3">精蟲</option>
@@ -28,9 +28,9 @@
                     <span class="input-group-text">冷凍時間</span>
                     <input type="datetime-local" class="form-control" formControlName="freezeTime">
                 </div>
-                <app-medium-input [name]="'冷凍液'" [mediums]="transferInForm.value.transferInCell === '3' ? spermFreezeMediums : ovumFreezeMediums"></app-medium-input>
+                <app-medium-input [name]="'冷凍液'" [mediums]="transferInForm.value.transferInCellType === '3' ? spermFreezeMediums : ovumFreezeMediums"></app-medium-input>
                 <div class="input-group mb-3" *ngIf="isSelectOtherMedium">
-                    <span class="input-group-text">其他培養液</span>
+                    <span class="input-group-text">其他冷凍液</span>
                     <input type="text" class="form-control" formControlName="otherFreezeMedium">
                 </div>
                 <div class="input-group mb-3">
@@ -38,28 +38,107 @@
                     <input type="number" class="form-control" formControlName="count" (change)="onCountChange()">
                 </div>
                 <app-show-selected-storage-unit></app-show-selected-storage-unit>
-
-                <div formArrayName="ovumInfos">
-                    <ng-container *ngFor="let item of getOvumInfosFormArray(); let i = index" [formGroupName]="i">
-                        <div class="input-group mb-3">
-                            <span class="input-group-text">卵子成熟度</span>
-                            <select class="form-select" formControlName="ovumMaturationId">
-                                <option *ngFor="let ovumMaturation of ovumMaturations" [value]="ovumMaturation.id">
-                                    {{ovumMaturation.name}}</option>
-                                <option></option>
-                            </select>
-                        </div>
-                        <div class="input-group mb-3">
-                            <span class="input-group-text">實驗室天數</span>
-                            <input type="number" class="form-control" formControlName="day">
-                        </div>
-                    </ng-container>
-                </div>
+                <ng-container *ngIf="transferInForm.value.transferInCellType === '1'">
+                    <div formArrayName="ovumInfos">
+                        <ng-container *ngFor="let item of getOvumInfosFormArray(); let i = index" [formGroupName]="i">
+                            <div class="input-group mb-3">
+                                <span class="input-group-text">卵子成熟度</span>
+                                <select class="form-select" formControlName="ovumMaturationId">
+                                    <option *ngFor="let ovumMaturation of ovumMaturations" [value]="ovumMaturation.id">
+                                        {{ovumMaturation.name}}</option>
+                                    <option></option>
+                                </select>
+                            </div>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text">實驗室天數</span>
+                                <input type="number" class="form-control" formControlName="day">
+                            </div>
+                        </ng-container>
+                    </div>
+                </ng-container>
+                <ng-container *ngIf="transferInForm.value.transferInCellType === '2'">
+                    <div formArrayName="embryoInfos">
+                        <ng-container *ngFor="let item of getEmbryoInfosFormArray(); let i = index" [formGroupName]="i">
+                            <div class="input-group mb-3">
+                                <span class="input-group-text">受精結果</span>
+                                <select class="form-select" formControlName="fertilizationResultId">
+                                    <option *ngFor="let fertilizationResult of fertilizationResults" [value]="fertilizationResult.id">
+                                        {{fertilizationResult.name}}</option>
+                                    <option></option>
+                                </select>
+                            </div>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text">分裂期胚胎評分</span>
+                                <select class="form-select" formControlName="blastomereScore_C_Id">
+                                    <option>C</option>
+                                    <option *ngFor="let blastomereScore_C of blastomereScore?.blastomereScore_C"
+                                        [value]="blastomereScore_C.id">{{blastomereScore_C.name}}</option>
+                                    <option></option>
+                                </select>
+                                <select class="form-select" formControlName="blastomereScore_G_Id">
+                                    <option>G</option>
+                                    <option *ngFor="let blastomereScore_G of blastomereScore?.blastomereScore_G"
+                                        [value]="blastomereScore_G.id">{{blastomereScore_G.name}}</option>
+                                    <option></option>
+                                </select>
+                                <select class="form-select" formControlName="blastomereScore_F_Id">
+                                    <option>F</option>
+                                    <option *ngFor="let blastomereScore_F of blastomereScore?.blastomereScore_F"
+                                        [value]="blastomereScore_F.id">{{blastomereScore_F.name}}</option>
+                                    <option></option>
+                                </select>
+                            </div>
+                            <div class="input-group input-group-sm mb-3">
+                                <span class="input-group-text">胚胎狀態</span>
+                                <div class="btn-group" role="group">
+                                    <ng-container *ngFor="let embryoStatus of embryoStatuses">
+                                        <input type="checkbox" class="btn-check" [id]="'embryoStatus'+embryoStatus.id+'-'+i" (change)="onChangeEmbryoStatus(i, embryoStatus.id)">
+                                        <label class="btn btn-outline-secondary btn-sm" [for]="'embryoStatus'+embryoStatus.id+'-'+i">{{embryoStatus.name}}</label>
+                                    </ng-container>
+                                </div>
+                            </div>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text">囊胚期胚胎評分</span>
+                                <select class="form-select" formControlName="blastocystScore_Expansion_Id">
+                                    <option>Expansion</option>
+                                    <option *ngFor="let expansion of blastocystScore?.blastocystScore_Expansion" [value]="expansion.id">
+                                        {{expansion.name}}</option>
+                                    <option></option>
+                                </select>
+                                <select class="form-select" formControlName="blastocystScore_ICE_Id">
+                                    <option>ICE</option>
+                                    <option *ngFor="let ice of blastocystScore?.blastocystScore_ICE" [value]="ice.id">{{ice.name}}
+                                    </option>
+                                    <option></option>
+                                </select>
+                                <select class="form-select" formControlName="blastocystScore_TE_Id">
+                                    <option>TE</option>
+                                    <option *ngFor="let te of blastocystScore?.blastocystScore_TE" [value]="te.id">{{te.name}}</option>
+                                    <option></option>
+                                </select>
+                            </div>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text">實驗室天數</span>
+                                <input type="number" class="form-control" formControlName="day">
+                            </div>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text">KID Score</span>
+                                <input type="number" step="0.1" class="form-control" formControlName="kidScore">
+                            </div>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text">PGTA報告</span>
+                                <input type="number" class="form-control" placeholder="PGTA編號" formControlName="pgtaNumber">
+                                <input type="text" class="form-control" placeholder="PGTA結果" formControlName="pgtaResult">
+                                <input type="text" class="form-control" placeholder="PGTM結果" formControlName="pgtmResult">
+                            </div>
+                        </ng-container>
+                    </div>
+                </ng-container>
 
 
                 <div>
                     <button type="button" class="btn btn-outline-primary btn-sm">清除</button>
-                    <button class="btn btn-primary btn-sm">確認轉入</button>
+                    <button class="btn btn-primary btn-sm" [disabled]="!transferInForm.value">確認轉入</button>
                 </div>
             </form>
         </div>

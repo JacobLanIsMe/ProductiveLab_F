@@ -104,15 +104,15 @@ export class ObservationNoteFormComponent implements OnInit {
     }
   }
   observationNoteForm!: FormGroup;
-  embryologists?: EmbryologistDto[];
-  ovumMaturations?: CommonDto[];
-  observationTypes?: CommonDto[];
-  ovumAbnormalities?: CommonDto[];
-  fertilizationResults?: CommonDto[];
+  embryologists: EmbryologistDto[] = [];
+  ovumMaturations: CommonDto[] = [];
+  observationTypes: CommonDto[] = [];
+  ovumAbnormalities: CommonDto[] = [];
+  fertilizationResults: CommonDto[] = [];
   blastomereScore?: BlastomereScoreDto;
-  embryoStatuses?: CommonDto[];
+  embryoStatuses: CommonDto[] = [];
   blastocystScore?: BlastocystScoreDto;
-  operationTypes?: CommonDto[];
+  operationTypes: CommonDto[] = [];
   faList = faList;
   faCircleXmark = faCircleXmark;
   baseTreatmentInfo?: BaseTreatmentInfoDto = this.treatmentService.baseTreatmentInfo;
