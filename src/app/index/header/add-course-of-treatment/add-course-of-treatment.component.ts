@@ -8,6 +8,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Component, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
 import { EmbryologistDto } from 'src/app/@Models/embryologistDto.model';
 import { BaseCustomerInfoDto } from 'src/app/@Models/baseCustomerInfoDto.model';
+import { CommonDto } from 'src/app/@Models/commonDto.model';
 
 @Component({
   selector: 'app-add-course-of-treatment',
@@ -23,8 +24,17 @@ export class AddCourseOfTreatmentComponent implements OnInit {
     this.employeeService.getAllEmbryologist().subscribe(res=>{
       this.embryologists = res;
     })
-    this.treatmentService.getAllTreatment().subscribe(res=>{
-      this.treatments = res;
+    this.treatmentService.getGermCellSituations().subscribe(res=>{
+      this.germCellSituations = res;
+    })
+    this.treatmentService.getGermCellSources().subscribe(res=>{
+      this.germCellSources = res;
+    })
+    this.treatmentService.getGermCellOperations().subscribe(res=>{
+      this.germCellOperations = res;
+    })
+    this.treatmentService.getSpermRetrievalMethods().subscribe(res=>{
+      this.spermRetrievalMethods = res;
     })
     this.treatmentService.getAllCustomer().subscribe(res=>{
       this.customers = res;
@@ -32,7 +42,15 @@ export class AddCourseOfTreatmentComponent implements OnInit {
     this.addCourseOfTreatmentForm = new FormGroup({
       "doctorId": new FormControl(null, Validators.required),
       "customerId": new FormControl(null, Validators.required),
-      "treatmentId": new FormControl(null, Validators.required),
+      "ovumSituationId": new FormControl("狀態"),
+      "ovumSourceId": new FormControl("用途"),
+      "ovumOperationId": new FormControl("操作"),
+      "spermSituationId": new FormControl("狀態"),
+      "spermSourceId": new FormControl("用途"),
+      "spermOperationId": new FormControl("操作"),
+      "SpermRetrievalMethodId": new FormControl("取經方式"),
+      "embryoSituationId": new FormControl("狀態"),
+      "embryoOperationId": new FormControl("操作"),
       "surgicalTime": new FormControl(this.dateService.getTodayDateTimeString(new Date()), Validators.required),
       "memo": new FormControl(null),
     })
@@ -41,15 +59,17 @@ export class AddCourseOfTreatmentComponent implements OnInit {
   addCourseOfTreatmentForm!: FormGroup;
   doctors: EmbryologistDto[] = [];
   embryologists: EmbryologistDto[] = [];
-  treatments: TreatmentDto[] = [];
+  germCellSituations: CommonDto[] = [];
+  germCellSources: CommonDto[] = [];
+  germCellOperations: CommonDto[] = [];
+  spermRetrievalMethods: CommonDto[] = [];
   customers: BaseCustomerInfoDto[] = [];
   onCancel(){
     this.functionHeaderService.isOpenAddCourseOfTreatment.next(false);
   }
   onSubmit(form: FormGroup){
     this.treatmentService.addCourseOfTreatment(form).subscribe(res=>{
-      this.commonService.judgeTheResponse(res, "新增療程", res.errorMessage);
+      this.commonService.judgeTheResponse(res, "新增療程", res.errorMessage, form);
     })
-    this.onCancel();
   }
 }

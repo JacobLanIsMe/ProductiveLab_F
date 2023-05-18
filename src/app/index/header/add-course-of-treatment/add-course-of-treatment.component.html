@@ -14,19 +14,66 @@
                 </select>
             </div>
             <div class="input-group mb-3">
-                <span class="input-group-text">療程名稱</span>
-                <select class="form-select" formControlName="treatmentId">
-                    <option *ngFor="let treatment of treatments" [value]="treatment.treatmentId">
-                        {{treatment.ovumSituationName}}-
-                        {{treatment.ovumSourceName}}-
-                        {{treatment.ovumOperationName}}-
-                        {{treatment.spermSituationName}}-
-                        {{treatment.spermSourceName}}-
-                        {{treatment.spermOperationName}}-
-                        {{treatment.spermRetrievalMethodName}}-
-                        {{treatment.embryoSituationName}}-
-                        {{treatment.embryoOperationName}}
-                    </option>
+                <span class="input-group-text">卵子療程</span>
+                <select class="form-select" formControlName="ovumSituationId">
+                    <option>狀態</option>
+                    <option *ngFor="let item of germCellSituations"
+                        [value]="item.id">{{item.name}}</option>
+                    <option></option>
+                </select>
+                <select class="form-select" formControlName="ovumSourceId">
+                    <option>用途</option>
+                    <option *ngFor="let item of germCellSources"
+                        [value]="item.id">{{item.name}}</option>
+                    <option></option>
+                </select>
+                <select class="form-select" formControlName="ovumOperationId">
+                    <option>操作</option>
+                    <option *ngFor="let item of germCellOperations"
+                        [value]="item.id">{{item.name}}</option>
+                    <option></option>
+                </select>
+            </div>
+            <div class="input-group mb-3">
+                <span class="input-group-text">精蟲療程</span>
+                <select class="form-select" formControlName="spermSituationId">
+                    <option>狀態</option>
+                    <option *ngFor="let item of germCellSituations"
+                        [value]="item.id">{{item.name}}</option>
+                    <option></option>
+                </select>
+                <select class="form-select" formControlName="spermSourceId">
+                    <option>用途</option>
+                    <option *ngFor="let item of germCellSources"
+                        [value]="item.id">{{item.name}}</option>
+                    <option></option>
+                </select>
+                <select class="form-select" formControlName="spermOperationId">
+                    <option>操作</option>
+                    <option *ngFor="let item of germCellOperations"
+                        [value]="item.id">{{item.name}}</option>
+                    <option></option>
+                </select>
+                <select class="form-select" formControlName="SpermRetrievalMethodId">
+                    <option>取經方式</option>
+                    <option *ngFor="let item of spermRetrievalMethods"
+                        [value]="item.id">{{item.name}}</option>
+                    <option></option>
+                </select>
+            </div>
+            <div class="input-group mb-3">
+                <span class="input-group-text">胚胎療程</span>
+                <select class="form-select" formControlName="embryoSituationId">
+                    <option>狀態</option>
+                    <option *ngFor="let item of germCellSituations"
+                        [value]="item.id">{{item.name}}</option>
+                    <option></option>
+                </select>
+                <select class="form-select" formControlName="embryoOperationId">
+                    <option>操作</option>
+                    <option *ngFor="let item of germCellOperations"
+                        [value]="item.id">{{item.name}}</option>
+                    <option></option>
                 </select>
             </div>
             <div class="input-group mb-3">

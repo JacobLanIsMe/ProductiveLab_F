@@ -1,3 +1,4 @@
+import { ActivatedRoute } from '@angular/router';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { FormGroup } from '@angular/forms';
@@ -55,8 +56,17 @@ export class TreatmentService {
     this.isSelectAllTreatmentSummary.next(selectAllTreatmentSummary);
   }
   
-  getAllTreatment(){
-    return this.http.get<TreatmentDto[]>("/api/Treatment/GetAllTreatment");
+  getGermCellSituations(){
+    return this.http.get<CommonDto[]>("/api/Treatment/GetGermCellSituations");
+  }
+  getGermCellSources(){
+    return this.http.get<CommonDto[]>("/api/Treatment/GetGermCellSources")
+  }
+  getGermCellOperations(){
+    return this.http.get<CommonDto[]>("/api/Treatment/GetGermCellOperations")
+  }
+  getSpermRetrievalMethods(){
+    return this.http.get<CommonDto[]>("/api/Treatment/GetSpermRetrievalMethods")
   }
   getAllCustomer(){
     return this.http.get<BaseCustomerInfoDto[]>("/api/Treatment/GetAllCustomer");
