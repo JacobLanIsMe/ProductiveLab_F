@@ -13,13 +13,15 @@ import { BlastomereScoreDto } from 'src/app/@Models/blastomereScoreDto.model';
 import { BlastocystScoreDto } from 'src/app/@Models/blastocystScoreDto.model';
 import { TransferInService } from 'src/app/@Service/transfer-in.service';
 import { CommonService } from 'src/app/@Service/common.service';
+import { EmbryologistDto } from 'src/app/@Models/embryologistDto.model';
+import { EmployeeService } from 'src/app/@Service/employee.service';
 @Component({
   selector: 'app-transfer-in-from-other',
   templateUrl: './transfer-in-from-other.component.html',
   styleUrls: ['./transfer-in-from-other.component.css']
 })
 export class TransferInFromOtherComponent implements OnInit, OnDestroy {
-  constructor(private dateService: DateService, private manageMediumService: ManageMediumService, private manageStorageService: ManageStorageService, private observationNoteService:ObservationNoteService, private transferInService:TransferInService, private commonService:CommonService) { }
+  constructor(private dateService: DateService, private manageMediumService: ManageMediumService, private manageStorageService: ManageStorageService, private observationNoteService:ObservationNoteService, private transferInService:TransferInService, private commonService:CommonService, private employeeService:EmployeeService) { }
   ngOnDestroy(): void {
     this.selectedMediumSubscription?.unsubscribe();
     this.mediumSubscription?.unsubscribe();
@@ -28,8 +30,9 @@ export class TransferInFromOtherComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.transferInForm = new FormGroup({
       "transferInTime": new FormControl(this.dateService.getTodayDateTimeString(new Date()), Validators.required),
+      "embryologist": new FormControl(null, Validators.required),
       "transferInCellType": new FormControl(null, Validators.required),
-      "germSource": new FormControl(null, Validators.required),
+      "germSourceId": new FormControl(null, Validators.required),
       "freezeTime": new FormControl(null, Validators.required),
       "freezeMediumId": new FormControl(null, Validators.required),
       "otherFreezeMedium": new FormControl(null),
@@ -74,6 +77,9 @@ export class TransferInFromOtherComponent implements OnInit, OnDestroy {
     this.observationNoteService.getBlastocystScore().subscribe(res => {
       this.blastocystScore = res;
     })
+    this.employeeService.getAllEmbryologist().subscribe(res => {
+      this.embryologists = res;
+    })
   }
   mediumSubscription?: Subscription;
   selectedMediumSubscription?: Subscription;
@@ -90,6 +96,7 @@ export class TransferInFromOtherComponent implements OnInit, OnDestroy {
   fertilizationResults: CommonDto[] = [];
   blastomereScore?: BlastomereScoreDto;
   embryoStatuses: CommonDto[] = [];
+  embryologists: EmbryologistDto[] = [];
   blastocystScore?: BlastocystScoreDto;
   mockMedium = new MediumDto("", "", new Date(), new Date(), "", false, 0,);
   getOvumInfosFormArray(){

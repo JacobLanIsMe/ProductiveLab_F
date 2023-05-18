@@ -10,6 +10,13 @@
                     <input type="datetime-local" class="form-control" formControlName="transferInTime">
                 </div>
                 <div class="input-group mb-3">
+                    <span class="input-group-text">處理者</span>
+                    <select class="form-select" formControlName="embryologist">
+                        <option *ngFor="let embryologist of embryologists" [value]="embryologist.employeeId">
+                            {{embryologist.name}}</option>
+                    </select>
+                </div>
+                <div class="input-group mb-3">
                     <span class="input-group-text">轉入項目</span>
                     <select class="form-select" formControlName="transferInCellType" (change)="onCellChange()">
                         <option value="1">卵子</option>
@@ -19,7 +26,7 @@
                 </div>
                 <div class="input-group mb-3">
                     <span class="input-group-text">用途</span>
-                    <select class="form-select" formControlName="germSource">
+                    <select class="form-select" formControlName="germSourceId">
                         <option value="1">自用</option>
                         <option value="2">捐贈</option>
                     </select>
