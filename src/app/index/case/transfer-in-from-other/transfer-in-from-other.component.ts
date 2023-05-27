@@ -29,6 +29,7 @@ export class TransferInFromOtherComponent implements OnInit, OnDestroy {
   }
   ngOnInit(): void {
     this.transferInForm = new FormGroup({
+      "courseOfTreatmentId": new FormControl(this.commonService.getCourseOfTreatmentId(),Validators.required),
       "transferInTime": new FormControl(this.dateService.getTodayDateTimeString(new Date()), Validators.required),
       "embryologist": new FormControl(null, Validators.required),
       "transferInCellType": new FormControl(null, Validators.required),
