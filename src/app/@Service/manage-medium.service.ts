@@ -36,6 +36,9 @@ export class ManageMediumService implements OnDestroy {
       this.updatedFrequentlyUsedMedium.next(res);
     })
   }
+  getInUseMediumByIds(mediumInUseIds: string[]){
+    return this.http.post<MediumDto[]>("/api/MediumManager/GetInUseMediumByIds", mediumInUseIds);
+  }
   getUpdatedInUseMediums() {
     this.http.get<MediumDto[]>("/api/MediumManager/GetInUseMediums").subscribe(res => {
       this.updatedInUseMedium.next(res);

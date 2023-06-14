@@ -36,12 +36,16 @@ export class UpdateFreezeOvumComponent implements OnInit, OnDestroy {
     })
     if (this.selectedOvums.length){
       this.treatmentService.getOvumFreeze(this.selectedOvums[0].ovumDetailId).subscribe(res=>{
+        this.manageMediumService.getInUseMediumByIds([res.mediumInUseId]).subscribe(mediums=>{
+          this.manageMediumService.selectedMedium.next(mediums[0])
+        })
         this.updateFreezeOvumForm.patchValue({
           "freezeTime": res.freezeTime,
           "embryologist": res.embryologist,
           "ovumMorphology_A": res.ovumMorphology_A,
           "ovumMorphology_B": res.ovumMorphology_B,
           "ovumMorphology_C": res.ovumMorphology_C,
+          "otherMediumName": res.otherMediumName,
           "memo": res.memo
         })
       })
@@ -81,6 +85,9 @@ export class UpdateFreezeOvumComponent implements OnInit, OnDestroy {
     if (!formArray.controls.length){
       this.commonService.showAlertMessage("","請選擇要修改的卵子");
       return
+    }
+    if (!this.isSelectOtherMedium){
+      this.updateFreezeOvumForm.get("otherMediumName")?.patchValue(null);
     }
     this.treatmentService.updateOvumFreeze(form).subscribe(res=>{
       this.commonService.judgeTheResponse(res, "更新冷凍入庫紀錄", res.errorMessage, form);
