@@ -11,5 +11,12 @@ export enum FunctionEnum{
     observationNote=10,
     operateSperm=11,
     transferInFromOther=12,
-    uploadReport=13
+    uploadReport=13,
+    transferOut=14,
+    freeze=15,
+    fertilize=16,
+    implant=17,
+    incubationSuspend=18,
+    report=19,
+    treatmentSuspend=20
 }

@@ -4,12 +4,11 @@ import { FunctionDto } from 'src/app/@Models/functionDto.model';
 import { DateService } from 'src/app/@Service/date.service';
 import { faSnowflake } from '@fortawesome/free-solid-svg-icons';
 import { EmployeeService } from 'src/app/@Service/employee.service';
-import { EmbryologistDto } from 'src/app/@Models/embryologistDto.model';
 import { FunctionHeaderService } from 'src/app/@Service/function-header.service';
 import { MediumDto } from 'src/app/@Models/mediumDto.model';
 import { ManageMediumService } from 'src/app/@Service/manage-medium.service';
 import { MediumTypeEnum } from 'src/app/@Enums/mediumTypeEnum.model';
-import { SubscribableOrPromise, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { ManageStorageService } from 'src/app/@Service/manage-storage.service';
 import { StorageLocation } from 'src/app/@Models/storageLocation.model';
 import { TreatmentService } from 'src/app/@Service/treatment.service';
@@ -17,6 +16,7 @@ import { CommonService } from 'src/app/@Service/common.service';
 import { ObservationNoteService } from 'src/app/@Service/observation-note.service';
 import { GetObservationNoteNameDto } from 'src/app/@Models/getObservationNoteNameDto.model';
 import { CommonDto } from 'src/app/@Models/commonDto.model';
+import { Common2Dto } from 'src/app/@Models/common2Dto.model';
 @Component({
   selector: 'app-freeze-ovum',
   templateUrl: './freeze-ovum.component.html',
@@ -78,7 +78,7 @@ export class FreezeOvumComponent implements OnInit,OnDestroy {
   freezeOvumForm!: FormGroup;
   topColors?: CommonDto[];
   faSnowflake = faSnowflake;
-  embryologists: EmbryologistDto[] = [];
+  embryologists: Common2Dto[] = [];
   mediumSubscription?:Subscription;
   mediums:MediumDto[] = [];
   isSelectOtherMedium = false;

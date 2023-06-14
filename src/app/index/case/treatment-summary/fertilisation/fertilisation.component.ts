@@ -10,13 +10,12 @@ import { MediumDto } from 'src/app/@Models/mediumDto.model';
 import { ManageMediumService } from 'src/app/@Service/manage-medium.service';
 import { Subscription } from 'rxjs';
 import { FunctionHeaderService } from 'src/app/@Service/function-header.service';
-import { EmbryologistDto } from 'src/app/@Models/embryologistDto.model';
 import { EmployeeService } from 'src/app/@Service/employee.service';
 import { TreatmentSummaryDto } from 'src/app/@Models/treatmentSummaryDto.model';
 import { OperateSpermService } from 'src/app/@Service/operate-sperm.service';
 import { CommonService } from 'src/app/@Service/common.service';
-import { BaseOperateSpermInfoDto } from 'src/app/@Models/baseOperateSpermInfoDto.model';
 import { SpermScoreDto } from 'src/app/@Models/spermScoreDto.model';
+import { Common2Dto } from 'src/app/@Models/common2Dto.model';
 @Component({
   selector: 'app-fertilisation',
   templateUrl: './fertilisation.component.html',
@@ -78,7 +77,7 @@ export class FertilisationComponent implements OnInit, OnDestroy {
   fertilizationMethods: CommonDto[] = [];
   incubators: CommonDto[] = [];
   mediums: MediumDto[] = [];
-  embryologists: EmbryologistDto[] = [];
+  embryologists: Common2Dto[] = [];
   selectedOvumDetails:TreatmentSummaryDto[] = this.treatmentService.selectedOvumDetails;
   spermScores: SpermScoreDto[] = [];
   onSelectIncubator(event:any){

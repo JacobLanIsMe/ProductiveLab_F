@@ -7,8 +7,8 @@ import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { FunctionDto } from 'src/app/@Models/functionDto.model';
 import { faStopwatch } from '@fortawesome/free-solid-svg-icons';
-import { EmbryologistDto } from 'src/app/@Models/embryologistDto.model';
 import { Subscription } from 'rxjs';
+import { Common2Dto } from 'src/app/@Models/common2Dto.model';
 @Component({
   selector: 'app-score-sperm',
   templateUrl: './score-sperm.component.html',
@@ -82,7 +82,7 @@ export class ScoreSpermComponent implements OnInit, OnDestroy {
   spermScoreSubscription?:Subscription;
   scoreSpermForm!: FormGroup;
   spermScoreTimePointId: number | undefined;
-  embryologists?: EmbryologistDto[];
+  embryologists?: Common2Dto[];
   hasExistingSpermScore: boolean = false;
   faStopwatch = faStopwatch;
   courseOfTreatmentId?: string | null;

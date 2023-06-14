@@ -39,7 +39,7 @@
                 <span class="input-group-text">解凍者</span>
                 <select class="form-select" formControlName="embryologist">
                     <ng-container *ngIf="embryologists.length">
-                        <option *ngFor="let embryologist of embryologists" [value]="embryologist.employeeId">
+                        <option *ngFor="let embryologist of embryologists" [value]="embryologist.id">
                             {{embryologist.name}}</option>
                     </ng-container>
                 </select>
@@ -49,7 +49,7 @@
                 <span class="input-group-text">覆核者</span>
                 <select class="form-select" formControlName="recheckEmbryologist">
                     <ng-container *ngIf="embryologists.length">
-                        <option *ngFor="let embryologist of embryologists" [value]="embryologist.employeeId">
+                        <option *ngFor="let embryologist of embryologists" [value]="embryologist.id">
                             {{embryologist.name}}</option>
                     </ng-container>
                 </select>

@@ -1,8 +1,7 @@
 import { TreatmentService } from './../../../../@Service/treatment.service';
-import { Component, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { CommonDto } from 'src/app/@Models/commonDto.model';
-import { EmbryologistDto } from 'src/app/@Models/embryologistDto.model';
 import { DateService } from 'src/app/@Service/date.service';
 import { EmployeeService } from 'src/app/@Service/employee.service';
 import { ObservationNoteService } from 'src/app/@Service/observation-note.service';
@@ -14,6 +13,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { CommonService } from 'src/app/@Service/common.service';
 import { ObservationNotePhotoDto } from 'src/app/@Models/observationNotePhotoDto.model';
 import { OperationTypeEnum } from 'src/app/@Enums/operationTypeEnum.model';
+import { Common2Dto } from 'src/app/@Models/common2Dto.model';
 @Component({
   selector: 'app-observation-note-form',
   templateUrl: './observation-note-form.component.html',
@@ -104,7 +104,7 @@ export class ObservationNoteFormComponent implements OnInit {
     }
   }
   observationNoteForm!: FormGroup;
-  embryologists: EmbryologistDto[] = [];
+  embryologists: Common2Dto[] = [];
   ovumMaturations: CommonDto[] = [];
   observationTypes: CommonDto[] = [];
   ovumAbnormalities: CommonDto[] = [];

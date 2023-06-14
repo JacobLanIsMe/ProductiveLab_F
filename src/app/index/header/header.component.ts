@@ -1,8 +1,7 @@
 import { FunctionDto } from '../../@Models/functionDto.model';
 import { FunctionHeaderService } from './../../@Service/function-header.service';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
-import { faL } from '@fortawesome/free-solid-svg-icons';
+import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
 @Component({

@@ -16,7 +16,7 @@
             <div class="input-group mb-3">
                 <span class="input-group-text">處理者</span>
                 <select class="form-select" formControlName="embryologist">
-                    <option *ngFor="let embryologist of embryologists" [value]="embryologist.employeeId">
+                    <option *ngFor="let embryologist of embryologists" [value]="embryologist.id">
                         {{embryologist.name}}</option>
                 </select>
             </div>

@@ -20,7 +20,9 @@
                     <tr *ngFor="let item of selectedOvums">
                         <td>No. {{item.ovumNumber}}</td>
                         <td>Day: {{item.dateOfEmbryo}}</td>
-                        <td *ngIf="item.observationNote && item.observationNote.fertilizationResultName">{{item.observationNote.fertilizationResultName}}</td>
+                        <td>
+                            <ng-container *ngIf="item.observationNote && item.observationNote.fertilizationResultName">{{item.observationNote.fertilizationResultName}}</ng-container>
+                        </td>
                         <td>
                             <ng-container
                                 *ngIf="item.observationNote && (item.observationNote.blastocystScore_Expansion_Name || item.observationNote.blastocystScore_ICE_Name || item.observationNote.blastocystScore_TE_Name)">
@@ -38,10 +40,18 @@
                                 <div>卵子成熟度: {{item.observationNote.ovumMaturationName}}</div>
                             </ng-container>
                         </td>
-                        <td *ngIf="item.observationNote && item.observationNote.observationTime">{{item.observationNote.observationTime | date:"yyyy-MM-dd"}}</td>
-                        <td *ngIf="item.observationNote && item.observationNote.pgtaNumber">{{item.observationNote.pgtaNumber}}</td>
-                        <td *ngIf="item.observationNote && item.observationNote.pgtaResult">{{item.observationNote.pgtaResult}}</td>
-                        <td *ngIf="item.observationNote && item.observationNote.kidScore">{{item.observationNote.kidScore}}</td>
+                        <td>
+                            <ng-container *ngIf="item.freezeTime">{{item.freezeTime | date:"yyyy-MM-dd"}}</ng-container>
+                        </td>
+                        <td>
+                            <ng-container *ngIf="item.observationNote && item.observationNote.pgtaNumber">{{item.observationNote.pgtaNumber}}</ng-container>
+                        </td>
+                        <td>
+                            <ng-container *ngIf="item.observationNote && item.observationNote.pgtaResult">{{item.observationNote.pgtaResult}}</ng-container>
+                        </td>
+                        <td>
+                            <ng-container *ngIf="item.observationNote && item.observationNote.kidScore">{{item.observationNote.kidScore}}</ng-container>
+                        </td>
                     </tr>
                 </tbody>
             </table>
@@ -77,7 +87,7 @@
                 <span class="input-group-text">操作胚胎師</span>
                 <select class="form-select" formControlName="embryologist">
                     <ng-container *ngIf="embryologists.length">
-                        <option *ngFor="let embryologist of embryologists" [value]="embryologist.employeeId">
+                        <option *ngFor="let embryologist of embryologists" [value]="embryologist.id">
                             {{embryologist.name}}</option>
                     </ng-container>
                 </select>

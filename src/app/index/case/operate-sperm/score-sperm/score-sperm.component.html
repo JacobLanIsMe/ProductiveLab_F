@@ -50,7 +50,7 @@
             <div class="input-group mb-3">
                 <span class="input-group-text">操作胚胎師</span>
                 <select class="form-select" formControlName="embryologist">
-                    <option *ngFor="let embryologist of embryologists" [value]="embryologist.employeeId">{{embryologist.name}}</option>
+                    <option *ngFor="let embryologist of embryologists" [value]="embryologist.id">{{embryologist.name}}</option>
                 </select>
             </div>
             <input type="number" class="d-none" formControlName="spermScoreTimePointId">

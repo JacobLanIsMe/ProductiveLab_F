@@ -62,7 +62,7 @@
                         <span class="input-group-text">操作胚胎師</span>
                         <select class="form-select" formControlName="embryologist">
                             <ng-container *ngIf="embryologists.length">
-                                <option *ngFor="let embryologist of embryologists" [value]="embryologist.employeeId">
+                                <option *ngFor="let embryologist of embryologists" [value]="embryologist.id">
                                     {{embryologist.name}}</option>
                             </ng-container>
                         </select>
@@ -88,7 +88,7 @@
                             </select>
                         </div>
                     </ng-container>
-                    <app-medium-input [name]="'培養液'" [mediums]="mediums" [isMultiple]="false"></app-medium-input>
+                    <app-medium-input [name]="'冷凍液'" [mediums]="mediums" [isMultiple]="false"></app-medium-input>
                     <div class="input-group mb-3" *ngIf="isSelectOtherMedium">
                         <span class="input-group-text">其他培養液</span>
                         <input type="text" class="form-control" formControlName="otherMediumName">

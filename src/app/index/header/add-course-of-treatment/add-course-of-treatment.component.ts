@@ -1,14 +1,13 @@
 import { CommonService } from './../../../@Service/common.service';
 import { TreatmentService } from './../../../@Service/treatment.service';
-import { TreatmentDto } from './../../../@Models/treatmentDto.model';
 import { DateService } from './../../../@Service/date.service';
 import { EmployeeService } from './../../../@Service/employee.service';
 import { FunctionHeaderService } from './../../../@Service/function-header.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { Component, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
-import { EmbryologistDto } from 'src/app/@Models/embryologistDto.model';
+import { Component, OnInit } from '@angular/core';
 import { BaseCustomerInfoDto } from 'src/app/@Models/baseCustomerInfoDto.model';
 import { CommonDto } from 'src/app/@Models/commonDto.model';
+import { Common2Dto } from 'src/app/@Models/common2Dto.model';
 
 @Component({
   selector: 'app-add-course-of-treatment',
@@ -57,8 +56,8 @@ export class AddCourseOfTreatmentComponent implements OnInit {
 
   }
   addCourseOfTreatmentForm!: FormGroup;
-  doctors: EmbryologistDto[] = [];
-  embryologists: EmbryologistDto[] = [];
+  doctors: Common2Dto[] = [];
+  embryologists: Common2Dto[] = [];
   germCellSituations: CommonDto[] = [];
   germCellSources: CommonDto[] = [];
   germCellOperations: CommonDto[] = [];

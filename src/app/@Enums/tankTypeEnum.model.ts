@@ -1,4 +1,4 @@
 export enum TankTypeEnum{
-    strip = 1,
-    box = 2
+    box = 1,
+    strip = 2
 }

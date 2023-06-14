@@ -13,8 +13,8 @@ import { BlastomereScoreDto } from 'src/app/@Models/blastomereScoreDto.model';
 import { BlastocystScoreDto } from 'src/app/@Models/blastocystScoreDto.model';
 import { TransferInService } from 'src/app/@Service/transfer-in.service';
 import { CommonService } from 'src/app/@Service/common.service';
-import { EmbryologistDto } from 'src/app/@Models/embryologistDto.model';
 import { EmployeeService } from 'src/app/@Service/employee.service';
+import { Common2Dto } from 'src/app/@Models/common2Dto.model';
 @Component({
   selector: 'app-transfer-in-from-other',
   templateUrl: './transfer-in-from-other.component.html',
@@ -97,7 +97,7 @@ export class TransferInFromOtherComponent implements OnInit, OnDestroy {
   fertilizationResults: CommonDto[] = [];
   blastomereScore?: BlastomereScoreDto;
   embryoStatuses: CommonDto[] = [];
-  embryologists: EmbryologistDto[] = [];
+  embryologists: Common2Dto[] = [];
   blastocystScore?: BlastocystScoreDto;
   mockMedium = new MediumDto("", "", new Date(), new Date(), "", false, 0,);
   getOvumInfosFormArray(){

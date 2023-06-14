@@ -36,7 +36,7 @@
                         <span class="input-group-text">操作胚胎師</span>
                         <select class="form-select" formControlName="embryologist">
                             <ng-container *ngIf="embryologists.length">
-                                <option *ngFor="let embryologist of embryologists" [value]="embryologist.employeeId">
+                                <option *ngFor="let embryologist of embryologists" [value]="embryologist.id">
                                     {{embryologist.name}}</option>
                             </ng-container>
                         </select>

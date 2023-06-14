@@ -11,6 +11,7 @@ export class TreatmentSummaryDto{
         public ovumNumber: number,
         public fertilizationTime: Date,
         public fertilizationMethod: string,
+        public freezeTime: Date,
         public observationNote: GetObservationNoteNameDto,
         public ovumSource: string,
         public freezeStorageInfo: BaseStorage,

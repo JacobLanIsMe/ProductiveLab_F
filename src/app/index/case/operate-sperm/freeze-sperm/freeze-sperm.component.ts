@@ -9,13 +9,13 @@ import { OperateSpermService } from './../../../../@Service/operate-sperm.servic
 import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { faSnowflake, faXmark } from '@fortawesome/free-solid-svg-icons';
-import { EmbryologistDto } from 'src/app/@Models/embryologistDto.model';
 import { MediumTypeEnum } from 'src/app/@Enums/mediumTypeEnum.model';
 import { Subscription } from 'rxjs';
 import { CommonDto } from 'src/app/@Models/commonDto.model';
 import { StorageLocation } from 'src/app/@Models/storageLocation.model';
 import { TreatmentService } from 'src/app/@Service/treatment.service';
 import { BaseCustomerInfoDto } from 'src/app/@Models/baseCustomerInfoDto.model';
+import { Common2Dto } from 'src/app/@Models/common2Dto.model';
 @Component({
   selector: 'app-freeze-sperm',
   templateUrl: './freeze-sperm.component.html',
@@ -84,7 +84,7 @@ export class FreezeSpermComponent implements OnInit, OnDestroy{
   spermFreezeOperateMethods: CommonDto[] = [];
   freezeMediums: MediumDto[] = [];
   mediums: MediumDto[] = [];
-  embryologists: EmbryologistDto[] = [];
+  embryologists: Common2Dto[] = [];
   isSelectOtherMedium = false;
   vialCount = 0;
   selectedLocations: StorageLocation[] = [];

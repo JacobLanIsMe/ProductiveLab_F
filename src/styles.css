@@ -18,11 +18,16 @@
     max-height: 90vh;
     overflow: auto;
 }
-::-webkit-scrollbar {
+/* ::-webkit-scrollbar {
     display: none;
-}
+} */
 table{
     text-align:center;
     vertical-align: middle;
     white-space: nowrap;
+}
+html, body { height: 100%; }
+body { 
+    margin: 0; 
+    font-family: Roboto, "Helvetica Neue", sans-serif;
 }

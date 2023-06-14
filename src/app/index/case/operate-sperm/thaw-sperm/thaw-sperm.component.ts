@@ -6,7 +6,6 @@ import { OperateSpermService } from 'src/app/@Service/operate-sperm.service';
 import { faListCheck } from '@fortawesome/free-solid-svg-icons';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { DateService } from 'src/app/@Service/date.service';
-import { EmbryologistDto } from 'src/app/@Models/embryologistDto.model';
 import { EmployeeService } from 'src/app/@Service/employee.service';
 import { CommonDto } from 'src/app/@Models/commonDto.model';
 import { SpermThawMethodEnum } from 'src/app/@Enums/spermThawMethodEnum.model';
@@ -16,6 +15,7 @@ import { Subscription } from 'rxjs';
 import { FunctionDto } from 'src/app/@Models/functionDto.model';
 import { BaseCustomerInfoDto } from 'src/app/@Models/baseCustomerInfoDto.model';
 import { TreatmentService } from 'src/app/@Service/treatment.service';
+import { Common2Dto } from 'src/app/@Models/common2Dto.model';
 @Component({
   selector: 'app-thaw-sperm',
   templateUrl: './thaw-sperm.component.html',
@@ -58,7 +58,7 @@ export class ThawSpermComponent implements OnInit, OnDestroy {
   updatedMediumSubscription?:Subscription;
   selectedMediumSubscription?:Subscription;
   thawSpermForm!: FormGroup;
-  embryologists: EmbryologistDto[] = [];
+  embryologists: Common2Dto[] = [];
   spermThawMethods: CommonDto[] = [];
   spermFreezes: SpermFreezeDto[] = [];
   mediums: MediumDto[] = [];

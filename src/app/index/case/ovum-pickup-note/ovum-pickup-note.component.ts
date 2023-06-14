@@ -4,11 +4,11 @@ import { DateService } from './../../../@Service/date.service';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { faClock, faList, faPerson } from '@fortawesome/free-solid-svg-icons';
-import { EmbryologistDto } from 'src/app/@Models/embryologistDto.model';
 import { MediumDto } from 'src/app/@Models/mediumDto.model';
 import { ManageMediumService } from 'src/app/@Service/manage-medium.service';
 import { CommonService } from 'src/app/@Service/common.service';
 import { Subscription } from 'rxjs';
+import { Common2Dto } from 'src/app/@Models/common2Dto.model';
 
 @Component({
   selector: 'app-ovum-pickup-note',
@@ -57,7 +57,7 @@ export class OvumPickupNoteComponent implements OnInit, OnDestroy {
   mediumSubscription?:Subscription;
   selectedMediumSubscription?:Subscription;
   ovumPickupForm!: FormGroup;
-  embryologists?: EmbryologistDto[];
+  embryologists?: Common2Dto[];
   isAlreadyAdded = false;
   faClock = faClock;
   faList = faList;

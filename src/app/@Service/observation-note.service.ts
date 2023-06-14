@@ -95,7 +95,7 @@ export class ObservationNoteService {
     formData.append("ovumMaturationId", form.value.ovumMaturationId);
     formData.append("observationTypeId", form.value.observationTypeId);
     formData.append("ovumAbnormalityId", JSON.stringify(ovumAbnormalityId));
-    formData.append("fertilisationResultId", form.value.fertilisationResultId);
+    formData.append("fertilizationResultId", form.value.fertilizationResultId);
     formData.append("blastomereScore_C_Id", form.value.blastomereScore_C_Id);
     formData.append("blastomereScore_G_Id", form.value.blastomereScore_G_Id);
     formData.append("blastomereScore_F_Id", form.value.blastomereScore_F_Id);

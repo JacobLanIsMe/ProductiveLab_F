@@ -7,10 +7,10 @@ import { DateService } from 'src/app/@Service/date.service';
 import { ManageMediumService } from 'src/app/@Service/manage-medium.service';
 import { faSnowflake } from '@fortawesome/free-solid-svg-icons';
 import { TreatmentService } from 'src/app/@Service/treatment.service';
-import { EmbryologistDto } from 'src/app/@Models/embryologistDto.model';
 import { EmployeeService } from 'src/app/@Service/employee.service';
 import { TreatmentSummaryDto } from 'src/app/@Models/treatmentSummaryDto.model';
 import { CommonService } from 'src/app/@Service/common.service';
+import { Common2Dto } from 'src/app/@Models/common2Dto.model';
 @Component({
   selector: 'app-update-freeze-ovum',
   templateUrl: './update-freeze-ovum.component.html',
@@ -38,7 +38,7 @@ export class UpdateFreezeOvumComponent implements OnInit, OnDestroy {
       this.treatmentService.getOvumFreeze(this.selectedOvums[0].ovumDetailId).subscribe(res=>{
         this.updateFreezeOvumForm.patchValue({
           "freezeTime": res.freezeTime,
-          "embryologist": res.embryologist.toUpperCase(),
+          "embryologist": res.embryologist,
           "ovumMorphology_A": res.ovumMorphology_A,
           "ovumMorphology_B": res.ovumMorphology_B,
           "ovumMorphology_C": res.ovumMorphology_C,
@@ -67,7 +67,7 @@ export class UpdateFreezeOvumComponent implements OnInit, OnDestroy {
   freezeMediums:MediumDto[] = []
   isSelectOtherMedium = false;
   faSnowflake = faSnowflake;
-  embryologists: EmbryologistDto[] = [];
+  embryologists: Common2Dto[] = [];
   onCancel(){
     this.treatmentService.isOpenUpdateFreezeOvum.next(false);
   }

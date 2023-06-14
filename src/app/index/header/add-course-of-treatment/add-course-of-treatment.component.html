@@ -1,10 +1,12 @@
 <div class="alertContainer">
     <div class="alertBox">
+        <app-form-title [formTitle]="'新增療程'"></app-form-title>
+        <hr>
         <form [formGroup]="addCourseOfTreatmentForm" (ngSubmit)="onSubmit(addCourseOfTreatmentForm)">
             <div class="input-group mb-3">
                 <span class="input-group-text">醫生</span>
                 <select class="form-select" formControlName="doctorId">
-                    <option *ngFor="let doctor of doctors" [value]="doctor.employeeId">{{doctor.name}}</option>
+                    <option *ngFor="let doctor of doctors" [value]="doctor.id">{{doctor.name}}</option>
                 </select>
             </div>
             <div class="input-group mb-3">
