@@ -1,7 +1,6 @@
 import { Subscription } from 'rxjs';
 import { OperateSpermService } from './../../../../@Service/operate-sperm.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { BaseOperateSpermInfoDto } from 'src/app/@Models/baseOperateSpermInfoDto.model';
 import { faMicroscope } from '@fortawesome/free-solid-svg-icons';
 import { SpermScoreDto } from 'src/app/@Models/spermScoreDto.model';
 import { CommonService } from 'src/app/@Service/common.service';

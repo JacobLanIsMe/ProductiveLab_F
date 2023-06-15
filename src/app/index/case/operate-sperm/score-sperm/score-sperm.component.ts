@@ -68,7 +68,7 @@ export class ScoreSpermComponent implements OnInit, OnDestroy {
             "morphology": x.morphology,
             "abstinence": x.abstinence,
             "recordTime": x.recordTime,
-            "embryologist": x.embryologist.toUpperCase()
+            "embryologist": x.embryologist
           });
         }
       })

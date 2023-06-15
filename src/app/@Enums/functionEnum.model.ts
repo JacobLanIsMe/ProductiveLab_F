@@ -18,5 +18,13 @@ export enum FunctionEnum{
     implant=17,
     incubationSuspend=18,
     report=19,
-    treatmentSuspend=20
+    treatmentSuspend=20,
+    freezeSperm = 22,
+    spermScore1 = 23,
+    spermScore2 = 24,
+    thawSperm = 25,
+    spermScore3 = 26,
+    spermScore4 = 27,
+
+    subThawOvum = 31
 }
