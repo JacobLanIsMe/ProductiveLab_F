@@ -15,6 +15,7 @@ export class OperateSpermService {
   constructor(private http:HttpClient) { }
   isOpenSelectSpermFreeze = new Subject<boolean>();
   allSpermScore = new Subject<SpermScoreDto[]>();
+  hasSpermFreeze = new Subject<boolean>();
   addSpermScore(form: FormGroup){
     return this.http.post<BaseResponseDto>("/api/OperateSperm/AddSpermScore", form.value);
   }
@@ -44,5 +45,12 @@ export class OperateSpermService {
   }
   addSpermThaw(form:FormGroup){
     return this.http.post<BaseResponseDto>("/api/OperateSperm/AddSpermThaw", form.value)
+  }
+  hasSpermFreezeByCourseOfTreatmentId(courseOfTreatmentId: string){
+    this.http.get<boolean>("api/OperateSperm/HasSpermFreezeByCourseOfTreatmentId", {
+      params: new HttpParams().append("courseOfTreatmentId", courseOfTreatmentId)
+    }).subscribe(res=>{
+      this.hasSpermFreeze.next(res);
+    })
   }
 }
