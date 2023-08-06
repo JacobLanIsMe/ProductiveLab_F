@@ -22,9 +22,9 @@
                         <div *ngFor="let note of notes" (click)="onOpenExistingObservationNote(ovum, i, note.observationNoteId)" style="cursor:pointer">
                             <div>{{note.observationType}}</div>
                             <div>{{note.observationTime| date:"yyyy/MM/dd hh:mm:ss"}}</div>
-                            <ng-container *ngIf="note.mainPhotoBase64">
+                            <ng-container *ngIf="note.mainPhoto">
                                 <div class="m-auto d-flex justify-content-center align-items-center" style="width:100px;aspect-ratio:1/1;">
-                                    <img [src]="'data:image/gif;base64,' + note.mainPhotoBase64" alt=""
+                                    <img [src]="note.mainPhoto" alt=""
                                         style="max-width:100%;max-height:100%;">
                                 </div>
                             </ng-container>
