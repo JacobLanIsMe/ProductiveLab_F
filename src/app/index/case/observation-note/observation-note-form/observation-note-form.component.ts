@@ -73,7 +73,7 @@ export class ObservationNoteFormComponent implements OnInit {
       this.observationNoteService.getExistingObservationNote(this.observationNoteService.selectedObservationNoteId).subscribe(res=>{
         this.observationNoteForm.patchValue({
           "ovumDetailId": res.ovumDetailId,
-          "embryologist":res.embryologist.toUpperCase(),
+          "embryologist":res.embryologist.toLowerCase(),
           "ovumMaturationId": res.ovumMaturationId,
           "observationTypeId": res.observationTypeId,
           "fertilizationResultId": res.fertilizationResultId,

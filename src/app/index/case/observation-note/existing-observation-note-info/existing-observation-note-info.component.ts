@@ -20,7 +20,7 @@ export class ExistingObservationNoteInfoComponent implements OnInit {
         if (res.observationNotePhotos.length>0){
           res.observationNotePhotos.forEach(x=>{
             if (x.isMainPhoto){
-              this.mainPhotoBase64String = x.imageBase64String;
+              this.mainPhotoName = x.photoName;
             }
           })
         }
@@ -28,14 +28,14 @@ export class ExistingObservationNoteInfoComponent implements OnInit {
     } 
   }
   existingObservationNote?: GetObservationNoteNameDto;
-  mainPhotoBase64String?: string;
+  mainPhotoName?: string;
   baseTreatmentInfo?: BaseTreatmentInfoDto = this.treatmentService.baseTreatmentInfo;
   selectedOvumPickup = this.observationNoteService.selectedOvumPickup;
   selectedDay = this.observationNoteService.selectedDay;
   faList = faList;
   isLoading = true;
-  onShowPhoto(photoBase64String:string){
-    this.mainPhotoBase64String = photoBase64String;
+  onShowPhoto(photoName:string){
+    this.mainPhotoName = photoName;
   }
   hasSpindleOperation(){
     if (this.existingObservationNote){

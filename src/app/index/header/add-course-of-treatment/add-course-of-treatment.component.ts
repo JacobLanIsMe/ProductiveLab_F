@@ -8,6 +8,7 @@ import { Component, OnInit } from '@angular/core';
 import { BaseCustomerInfoDto } from 'src/app/@Models/baseCustomerInfoDto.model';
 import { CommonDto } from 'src/app/@Models/commonDto.model';
 import { Common2Dto } from 'src/app/@Models/common2Dto.model';
+import { MainPageService } from 'src/app/@Service/main-page.service';
 
 @Component({
   selector: 'app-add-course-of-treatment',
@@ -15,7 +16,7 @@ import { Common2Dto } from 'src/app/@Models/common2Dto.model';
   styleUrls: ['./add-course-of-treatment.component.css']
 })
 export class AddCourseOfTreatmentComponent implements OnInit {
-  constructor(private functionHeaderService: FunctionHeaderService, private employeeService:EmployeeService, private dateService:DateService, private treatmentService: TreatmentService, private commonService: CommonService){}
+  constructor(private functionHeaderService: FunctionHeaderService, private employeeService:EmployeeService, private dateService:DateService, private treatmentService: TreatmentService, private commonService: CommonService, private mainPageService: MainPageService){}
   ngOnInit(): void {
     this.employeeService.getAllDoctor().subscribe(res=>{
       this.doctors = res;
@@ -68,6 +69,7 @@ export class AddCourseOfTreatmentComponent implements OnInit {
   }
   onSubmit(form: FormGroup){
     this.treatmentService.addCourseOfTreatment(form).subscribe(res=>{
+      this.mainPageService.GetUpdatedLabMainPageInfo();
       this.commonService.judgeTheResponse(res, "新增療程", res.errorMessage, form);
     })
   }

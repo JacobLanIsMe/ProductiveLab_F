@@ -45,9 +45,9 @@
             <div *ngIf="ovum.observationNote.embryoStatusName && ovum.observationNote.embryoStatusName.length">{{ovum.observationNote.embryoStatusName}}</div>
             <div *ngIf="ovum.observationNote.kidScore">KID Score: {{ovum.observationNote.kidScore}}</div>
             <ng-container
-              *ngIf="ovum.observationNote.observationNotePhotos && ovum.observationNote.observationNotePhotos.length && ovum.observationNote.observationNotePhotos[0].imageBase64String">
+              *ngIf="ovum.observationNote.observationNotePhotos && ovum.observationNote.observationNotePhotos.length && ovum.observationNote.observationNotePhotos[0].photoName">
               <div class="m-auto d-flex justify-content-center align-items-center" style="width:50px;aspect-ratio:1/1;">
-                <img [src]="'data:image/gif;base64,' + ovum.observationNote.observationNotePhotos[0].imageBase64String"
+                <img [src]="ovum.observationNote.observationNotePhotos[0].photoName"
                   alt="" style="max-width:100%;max-height:100%;">
               </div>
             </ng-container>
