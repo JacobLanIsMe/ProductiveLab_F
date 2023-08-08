@@ -56,6 +56,7 @@ import { LoadingSpinnerComponent } from './@shared/loading-spinner/loading-spinn
 import { OvumTransferFormComponent } from './index/ovum-bank-transfer/ovum-transfer-form/ovum-transfer-form.component';
 import { UpdateFreezeOvumComponent } from './index/case/treatment-summary/update-freeze-ovum/update-freeze-ovum.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { TreatmentSuspendComponent } from './index/case/treatment-summary/treatment-suspend/treatment-suspend.component';
 
 
 @NgModule({
@@ -110,7 +111,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     AddCustomerComponent,
     LoadingSpinnerComponent,
     OvumTransferFormComponent,
-    UpdateFreezeOvumComponent
+    UpdateFreezeOvumComponent,
+    TreatmentSuspendComponent
   ],
   imports: [
     BrowserModule,

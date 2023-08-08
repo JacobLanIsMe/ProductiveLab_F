@@ -45,11 +45,12 @@ export class TreatmentSummaryComponent implements OnInit, OnDestroy {
         this.commonService.showAlertMessage("", "請選擇卵子或胚胎");
         return;
       }
-      if (this.treatmentService.selectedOvumDetails.length > 4){
-        this.commonService.showAlertMessage("", "一個TOP最多只能凍四顆卵子");
-        return;
-      }
+      
       if (res && res.functionId === FunctionEnum.freeze) {
+        if (this.treatmentService.selectedOvumDetails.length > 4){
+          this.commonService.showAlertMessage("", "一個TOP最多只能凍四顆卵子");
+          return;
+        }
         let ovumDetailIds = this.treatmentService.selectedOvumDetails.map(x => {
           return x.ovumDetailId
         })

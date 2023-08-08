@@ -1,9 +1,9 @@
 import { CommonService } from './../../../@Service/common.service';
 import { ManageStorageService } from './../../../@Service/manage-storage.service';
 import { StorageTankTypeDto } from './../../../@Models/storageTankTypeDto.model';
-import { Component, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-
+import { faBox } from '@fortawesome/free-solid-svg-icons';
 @Component({
   selector: 'app-add-new-storage-tank',
   templateUrl: './add-new-storage-tank.component.html',
@@ -25,6 +25,7 @@ export class AddNewStorageTankComponent implements OnInit {
   }
   addNewTankForm!: FormGroup;
   storageTankType?: StorageTankTypeDto[];
+  faBox = faBox;
   onSubmit(form: FormGroup){
     this.manageStorageService.addNewTank(form).subscribe(res=>{
       this.commonService.judgeTheResponse(res, "新增", res.errorMessage);

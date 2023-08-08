@@ -14,6 +14,7 @@ export class HeaderComponent implements OnInit, OnDestroy{
   ngOnDestroy(): void {
     // this.functionSubscription?.unsubscribe();
     this.openAddCourseOfTreatmentSubscription?.unsubscribe();
+    this.openAddCustomerSubscription?.unsubscribe();
   }
   ngOnInit(): void {
     // this.functionSubscription = this.functionHeaderService.selectedFunction.subscribe(selectedFunction=>{
@@ -33,7 +34,7 @@ export class HeaderComponent implements OnInit, OnDestroy{
     this.openAddCourseOfTreatmentSubscription = this.functionHeaderService.isOpenAddCourseOfTreatment.subscribe(res=>{
       this.isOpenAddCourseOfTreatment = res;
     })
-    this.functionHeaderService.isOpenAddCustomer.subscribe(res=>{
+    this.openAddCustomerSubscription = this.functionHeaderService.isOpenAddCustomer.subscribe(res=>{
       this.isOpenAddCustomer = res
     })
   }
@@ -42,6 +43,7 @@ export class HeaderComponent implements OnInit, OnDestroy{
   commonFunctions: FunctionDto[] = [];
   isOpenAddCourseOfTreatment: boolean = false;
   openAddCourseOfTreatmentSubscription: Subscription | undefined;
+  openAddCustomerSubscription: Subscription | undefined;
   isOpenAddCustomer: boolean=false;
   onBackToMain(){
     this.router.navigate(["/index", "main"]);
