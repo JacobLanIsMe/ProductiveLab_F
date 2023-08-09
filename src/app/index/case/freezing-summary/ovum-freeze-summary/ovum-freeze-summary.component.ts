@@ -4,13 +4,16 @@ import { CommonService } from 'src/app/@Service/common.service';
 import { FreezeSummaryService } from 'src/app/@Service/freeze-summary.service';
 import { faList } from '@fortawesome/free-solid-svg-icons';
 import { Subscription } from 'rxjs';
+import { FunctionHeaderService } from 'src/app/@Service/function-header.service';
+import { FunctionEnum } from 'src/app/@Enums/functionEnum.model';
+import { FunctionDto } from 'src/app/@Models/functionDto.model';
 @Component({
   selector: 'app-ovum-freeze-summary',
   templateUrl: './ovum-freeze-summary.component.html',
   styleUrls: ['./ovum-freeze-summary.component.css']
 })
 export class OvumFreezeSummaryComponent implements OnInit, OnDestroy {
-  constructor(private freezeSummaryService:FreezeSummaryService, private commonService:CommonService){}
+  constructor(private freezeSummaryService:FreezeSummaryService, private commonService:CommonService, private functionHeaderService: FunctionHeaderService){}
   ngOnDestroy(): void {
     this.ovumFreezeSummarySubscription?.unsubscribe();
   }
@@ -31,6 +34,9 @@ export class OvumFreezeSummaryComponent implements OnInit, OnDestroy {
     if (courseOfTreatmentId){
       this.freezeSummaryService.getOvumFreezeSummary(courseOfTreatmentId);
     }
+    this.functionHeaderService.getSubfunctions(FunctionEnum.freezingSummary).subscribe(res => {
+      this.subfunctions = res.filter(x=>(x.functionId == FunctionEnum.changeOvumStorageLocation || x.functionId == FunctionEnum.ovumTransferOutFromFreezing || x.functionId == FunctionEnum.discardOvum));
+    })
   }
   ovumFreezeSummarySubscription?:Subscription;
   ovumFreezeSummary:GetOvumFreezeSummaryDto[] = []
@@ -38,6 +44,7 @@ export class OvumFreezeSummaryComponent implements OnInit, OnDestroy {
   faList = faList;
   isLoading = true;
   ovumFreezeResult = "";
+  subfunctions: FunctionDto[] = [];
   onSelectAllOvum(event:any){
     this.ovumFreezeSummary.forEach(x=>{
       x.isChecked = event.target.checked;

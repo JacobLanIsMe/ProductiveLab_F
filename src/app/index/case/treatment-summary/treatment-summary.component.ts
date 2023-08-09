@@ -45,9 +45,9 @@ export class TreatmentSummaryComponent implements OnInit, OnDestroy {
         this.commonService.showAlertMessage("", "請選擇卵子或胚胎");
         return;
       }
-      
+
       if (res && res.functionId === FunctionEnum.freeze) {
-        if (this.treatmentService.selectedOvumDetails.length > 4){
+        if (this.treatmentService.selectedOvumDetails.length > 4) {
           this.commonService.showAlertMessage("", "一個TOP最多只能凍四顆卵子");
           return;
         }
@@ -68,6 +68,19 @@ export class TreatmentSummaryComponent implements OnInit, OnDestroy {
           }
         })
       }
+      if (res && res.functionId === FunctionEnum.fertilize) {
+        let fertilizedOvums = this.treatmentService.selectedOvumDetails.filter(x => x.fertilizationTime);
+        let errorMsg = "卵子 ";
+        if (fertilizedOvums.length) {
+          fertilizedOvums.forEach(x => {
+            errorMsg += `No. ${x.ovumNumber},`;
+          })
+          errorMsg.substring(0, errorMsg.length - 1)
+          errorMsg += "已受精。"
+          this.commonService.showAlertMessage("", errorMsg);
+          return;
+        }
+      }
       this.isOpenSubFunction = res;
     })
     this.treatmentSubscription = this.treatmentService.treatmentSummary.subscribe(res => {
@@ -76,14 +89,14 @@ export class TreatmentSummaryComponent implements OnInit, OnDestroy {
     this.openUpdateFreezeOvumSubscription = this.treatmentService.isOpenUpdateFreezeOvum.subscribe(res => {
       this.isOpenUpdateFreezeOvum = res;
     })
-    this.selectAllSubscription = this.treatmentService.isSelectAllTreatmentSummary.subscribe(res=>{
+    this.selectAllSubscription = this.treatmentService.isSelectAllTreatmentSummary.subscribe(res => {
       this.isSelectAll = res;
     })
   }
   openSubfunctionSubscription?: Subscription;
   treatmentSubscription?: Subscription;
   openUpdateFreezeOvumSubscription?: Subscription;
-  selectAllSubscription?:Subscription;
+  selectAllSubscription?: Subscription;
   treatmentSummarys: TreatmentSummaryDto[] = [];
   isSelectAll: boolean = false;
   faTable = faTable;
@@ -98,7 +111,7 @@ export class TreatmentSummaryComponent implements OnInit, OnDestroy {
     })
   }
   onSelectOvum(ovum: TreatmentSummaryDto) {
-    if (ovum.freezeStorageInfo){
+    if (ovum.freezeStorageInfo) {
       this.treatmentSummarys.forEach(x => {
         if (x.freezeStorageInfo && x.freezeStorageInfo.unitInfo.storageUnitId === ovum.freezeStorageInfo.unitInfo.storageUnitId) {
           x.isChecked = ovum.isChecked
@@ -109,9 +122,9 @@ export class TreatmentSummaryComponent implements OnInit, OnDestroy {
   }
   onEdit(ovum: TreatmentSummaryDto) {
     this.selectedOvums.length = 0;
-    if (ovum.freezeStorageInfo){
-      this.treatmentSummarys.forEach(x=>{
-        if (x.freezeStorageInfo && x.freezeStorageInfo.unitInfo.storageUnitId === ovum.freezeStorageInfo.unitInfo.storageUnitId){
+    if (ovum.freezeStorageInfo) {
+      this.treatmentSummarys.forEach(x => {
+        if (x.freezeStorageInfo && x.freezeStorageInfo.unitInfo.storageUnitId === ovum.freezeStorageInfo.unitInfo.storageUnitId) {
           this.selectedOvums.push(x);
         }
       })

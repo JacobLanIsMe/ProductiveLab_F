@@ -19,12 +19,16 @@ export enum FunctionEnum{
     incubationSuspend=18,
     report=19,
     treatmentSuspend=20,
+    subThawOvum = 21,
     freezeSperm = 22,
     spermScore1 = 23,
     spermScore2 = 24,
     thawSperm = 25,
     spermScore3 = 26,
     spermScore4 = 27,
-
-    subThawOvum = 31
+    changeOvumStorageLocation = 28,
+    ovumTransferOutFromFreezing = 29,
+    discardOvum = 30,
+    spermTransferOut = 31,
+    discardSperm = 32
 }
