@@ -73,10 +73,10 @@ export class TreatmentSummaryComponent implements OnInit, OnDestroy {
         let errorMsg = "卵子 ";
         if (fertilizedOvums.length) {
           fertilizedOvums.forEach(x => {
-            errorMsg += `No. ${x.ovumNumber},`;
+            errorMsg += `No. ${x.ovumNumber}, `;
           })
-          errorMsg.substring(0, errorMsg.length - 1)
-          errorMsg += "已受精。"
+          errorMsg = errorMsg.substring(0, errorMsg.length - 2);
+          errorMsg += " 已受精。";
           this.commonService.showAlertMessage("", errorMsg);
           return;
         }
