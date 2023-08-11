@@ -30,5 +30,6 @@ export enum FunctionEnum{
     ovumTransferOutFromFreezing = 29,
     discardOvum = 30,
     spermTransferOut = 31,
-    discardSperm = 32
+    discardSperm = 32,
+    ovumTransferFromBank = 33
 }

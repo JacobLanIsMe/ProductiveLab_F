@@ -6,7 +6,7 @@
 <hr>
 <app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
 <div class="text-center" *ngIf="recipientOvumFreezesResult">{{recipientOvumFreezesResult}}</div>
-<div style="width:100%;overflow-x:auto;">
+<div class="mb-3" style="width:100%;overflow-x:auto;">
     <app-ovum-freeze-table [ovumFreezes]="recipientOvumFreezes" (selectedOvumFreezes)="onSelectedRecipientOvumFreezes($event)"></app-ovum-freeze-table>
 </div>
 <app-ovum-bank-transfer></app-ovum-bank-transfer>

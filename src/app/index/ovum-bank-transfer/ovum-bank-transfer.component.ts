@@ -34,7 +34,7 @@ export class OvumBankTransferComponent implements OnInit, OnDestroy {
       this.ovumTransferSubfunctions = res;
     })
     this.functionHeaderService.isOpenSubfunction.subscribe(res => {
-      if ((res?.functionId === 33 || res?.functionId === 34) && this.freezeSummaryService.selectedDonorOvumFreezeArray.length <= 0) {
+      if ((res?.functionId === FunctionEnum.ovumTransferFromBank || res?.functionId === 34) && this.freezeSummaryService.selectedDonorOvumFreezeArray.length <= 0) {
         this.commonService.showAlertMessage("", "請選擇欲轉移的卵子");
         return;
       }
